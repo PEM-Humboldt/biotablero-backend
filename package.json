@@ -12,7 +12,8 @@
   "dependencies": {
     "bookshelf": "0.13.3",
     "knex": "0.14.6",
-    "pg": "7.4.3"
+    "pg": "7.4.3",
+    "restify": "7.2.1"
   },
   "devDependencies": {
     "eslint": "5.5.0",

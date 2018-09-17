@@ -4,7 +4,7 @@
   "description": "Backend for 'Biotablero' project",
   "main": "src/app.js",
   "scripts": {
-    "start": "node src/app.js",
+    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --delay 3",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/eslint/bin/eslint.js src"
   },
@@ -17,7 +17,8 @@
   "devDependencies": {
     "eslint": "5.5.0",
     "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.14.0"
+    "eslint-plugin-import": "2.14.0",
+    "nodemon": "1.18.4"
   },
   "repository": {
     "type": "git",

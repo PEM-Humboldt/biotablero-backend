@@ -12,12 +12,7 @@ const cors = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 
-server.get('/geofences/ea/:ea_name', (req, res, next) => {
-  diContainer.biomePersistence.getBiomeByEA(req.params.ea_name).then((r) => {
-    res.send(r);
-    next();
-  });
-});
+diContainer.routes.forEach(router => router.applyRoutes(server));
 
 server.listen(4000, () => {
   console.log('%s listening at %s', server.name, server.url); // TODO: change console.log for a real logger

@@ -1,10 +1,14 @@
 const restify = require('restify');
 
+const diContainer = require('./di');
+
 const server = restify.createServer();
 
-server.get('/hello/:name', (req, res, next) => {
-  res.send(`hello ${req.params.name}`);
-  next();
+server.get('/geofences/ea/:ea_name', (req, res, next) => {
+  diContainer.biomePersistence.getBiomeByEA('CORPOBOYACA').then((r) => {
+    res.send(r);
+    next();
+  });
 });
 
 server.listen(4000, () => {

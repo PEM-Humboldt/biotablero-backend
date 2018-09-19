@@ -7,7 +7,7 @@ let conn = null;
 
 const connect = () => {
   if (conn !== null) return conn;
-  const knexClient = knex({
+  const knexClient = knex({ //Change these values for config variables
     client: 'pg',
     connection: {
       host: dbConfig.host,

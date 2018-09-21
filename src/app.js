@@ -5,6 +5,7 @@ const diContainer = require('./di');
 
 const server = restify.createServer();
 
+process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
 
 const cors = corsMiddleware({
   origins: ['*'], // TODO: Change this for a config variable

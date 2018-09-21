@@ -1,3 +1,6 @@
+process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
+
+const config = require('config');
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 
@@ -5,10 +8,8 @@ const diContainer = require('./di');
 
 const server = restify.createServer();
 
-process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
-
 const cors = corsMiddleware({
-  origins: ['*'], // TODO: Change this for a config variable
+  origins: config.origins,
 });
 server.pre(cors.preflight);
 server.use(cors.actual);

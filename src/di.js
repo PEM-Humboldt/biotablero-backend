@@ -1,5 +1,6 @@
 const Bottlejs = require('bottlejs');
 
+const pino = require('pino');
 const bookshelfConn = require('./persistence/connection');
 
 const BiomeByEAModel = require('./persistence/models/BiomeByEA');
@@ -11,6 +12,10 @@ const BiomeService = require('./service/biome');
 const GeofencesRoutes = require('./routes/geofences');
 
 const bottle = new Bottlejs();
+
+bottle.factory('logger', () => (
+  pino({ base: null, timestamp: () => `,"time": ${new Date(Date.now()).toUTCString()}` })
+));
 
 bottle.factory('bookshelfConn', () => bookshelfConn);
 bottle.factory('biomeByEA', container => BiomeByEAModel(container.bookshelfConn));

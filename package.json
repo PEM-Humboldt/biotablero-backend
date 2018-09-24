@@ -6,7 +6,8 @@
   "scripts": {
     "start": "./node_modules/nodemon/bin/nodemon.js --watch src --delay 3",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/eslint/bin/eslint.js src"
+    "lint": "./node_modules/eslint/bin/eslint.js src",
+    "gen_docs": "./node_modules/apidoc/bin/apidoc -i src/ -o docs/"
   },
   "license": "MIT",
   "dependencies": {
@@ -16,6 +17,7 @@
     "restify": "7.2.1"
   },
   "devDependencies": {
+    "apidoc": "0.17.6",
     "eslint": "5.5.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0",
@@ -29,5 +31,9 @@
   "bugs": {
     "url": "https://github.com/PEM-Humboldt/biotablero-backend/issues"
   },
-  "homepage": "https://github.com/PEM-Humboldt/biotablero-backend#readme"
+  "homepage": "https://github.com/PEM-Humboldt/biotablero-backend#readme",
+  "apidoc": {
+    "name": "Biotablero REST API",
+    "version": "0.1.0"
+  }
 }

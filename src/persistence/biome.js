@@ -11,7 +11,7 @@ module.exports = (bookshelfConn, { BiomeByEA }) => {
      */
     findBiomeByEA: envAuthority => (
       BiomeByEA
-        .where('id_eas', envAuthority)
+        .where('id_ea', envAuthority)
         .fetchAll({
           columns: ['gid', 'name_biome', 'id_ea', knex.raw('ST_AsGeoJSON(geom) as "geomGeoJSON"')],
         })

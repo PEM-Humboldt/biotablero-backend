@@ -4,9 +4,12 @@ const config = require('config');
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 
-const diContainer = require('./di');
+const diContainer = require('./util/di');
 
-const server = restify.createServer();
+const server = restify.createServer({
+  name: 'biotablero-backend',
+  version: '0.1.0',
+});
 const serverConfig = config.server;
 
 const cors = corsMiddleware({

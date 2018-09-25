@@ -14,7 +14,7 @@ const GeofencesRoutes = require('../routes/geofences');
 
 const bottle = new Bottlejs();
 
-bottle.factory('logger', () => logger());
+bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
 bottle.factory('bookshelfConn', () => bookshelfConn);

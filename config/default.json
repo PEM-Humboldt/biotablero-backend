@@ -9,5 +9,8 @@
   "server" : {
     "port": 4000,
     "origins": ["*"]
+  },
+  "logs": {
+    "dir": "logs"
   }
 }

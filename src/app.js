@@ -21,5 +21,5 @@ server.use(cors.actual);
 diContainer.routes.forEach(router => router.applyRoutes(server));
 
 server.listen(serverConfig.port, () => {
-  diContainer.logger.info('%s listening at %s', server.name, server.url);
+  diContainer.logger.info(`${server.name} listening at ${server.url}`);
 });

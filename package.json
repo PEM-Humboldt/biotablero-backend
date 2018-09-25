@@ -4,7 +4,7 @@
   "description": "Backend for 'Biotablero' project",
   "main": "src/app.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --delay 3",
+    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --watch config --delay 3",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/eslint/bin/eslint.js src",
     "gen_docs": "./node_modules/apidoc/bin/apidoc -i src/ -o docs/"
@@ -19,7 +19,8 @@
     "restify": "7.2.1",
     "restify-cors-middleware": "1.1.1",
     "restify-router": "0.5.0",
-    "topojson": "3.0.2"
+    "topojson": "3.0.2",
+    "winston": "3.1.0"
   },
   "devDependencies": {
     "apidoc": "0.17.6",

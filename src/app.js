@@ -1,20 +1,25 @@
+process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
+
+const config = require('config');
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 
-const diContainer = require('./di');
+const diContainer = require('./util/dependency_injection_container');
 
-const server = restify.createServer();
-
-process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
+const server = restify.createServer({
+  name: 'biotablero-backend',
+  version: '0.1.0',
+});
+const serverConfig = config.server;
 
 const cors = corsMiddleware({
-  origins: ['*'], // TODO: Change this for a config variable
+  origins: serverConfig.origins,
 });
 server.pre(cors.preflight);
 server.use(cors.actual);
 
 diContainer.routes.forEach(router => router.applyRoutes(server));
 
-server.listen(4000, () => {
-  console.log('%s listening at %s', server.name, server.url); // TODO: change console.log for a real logger
+server.listen(serverConfig.port, () => {
+  diContainer.logger.info(`${server.name} listening at ${server.url}`);
 });

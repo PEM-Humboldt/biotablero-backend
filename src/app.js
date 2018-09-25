@@ -4,7 +4,7 @@ const config = require('config');
 const restify = require('restify');
 const corsMiddleware = require('restify-cors-middleware');
 
-const diContainer = require('./util/di');
+const diContainer = require('./util/dependency_injection_container');
 
 const server = restify.createServer({
   name: 'biotablero-backend',

@@ -30,6 +30,8 @@ module.exports = (errorHandler, biome) => {
    * @apiSuccess {String} biome.id_ea env authority id
    * @apiSuccess {Object} biome.geomTopoJSON biome geometry in topoJson
    *
+   * @apiExample {curl} Example usage:
+   *  /geofences/ea/CORPOBOYACA
    * @apiUse getBiomeByEAExample
    */
   router.get('/geofences/ea/:ea_name', errorHandler((req, res, next) => (

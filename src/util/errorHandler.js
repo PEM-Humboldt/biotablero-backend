@@ -13,8 +13,8 @@ module.exports = logger => callback => (
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       res.send({
-        code: 500 || e.code,
-        userMsg: 'There was an internal error' || e.userMsg,
+        code: e.code || 500,
+        userMsg: e.message || e.userMsg || 'There was an internal error',
       });
     }
   }

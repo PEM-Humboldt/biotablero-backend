@@ -21,6 +21,8 @@ module.exports = (errorHandler, biome) => {
    * @api {get} /geofences/ea/:ea_name getBiomeByEA
    * @apiName getBiomeByEA
    * @apiVersion 0.1.0
+   * @apiDescription
+   * Find all biomes that belong to the given environmental authority
    *
    * @apiParam {String} ea_name environmental authority to filter biomes
    *

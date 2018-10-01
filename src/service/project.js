@@ -12,49 +12,42 @@ const prettyLabel = phrase => phrase
   .join(' ');
 
 /**
- * Given an array of values, construct an object with the first value of the array as key,
- * which value is an object with the second value of the array as key and so on until the last value
- * is the initial result passed to the function.
+ * Given a list of keys and a list of objects, construct an object where each first level key
+ * correspond to a different project values on the first element of keys array, the second level
+ * with the second key, and so on.
  *
  * @example
- * // returns { 1: { 2: { 3: 'last' } } }
- * createPath([1,2,3], 'last')
+ * // returns {
+ *  colombia: {
+ *    bogota: [{ country: "colombia", city: "bogota" }],
+ *    cali: [{ country: "colombia", city: "cali" }]
+ *  }
+ * }
+ * groupProjects(
+ *  ['country', 'city'],
+ *  [{ country: "colombia", city: "bogota" }, { country: "colombia", city: "cali" }]
+ * )
  *
- * @param {String[]} keys array of values to be used as keys
- * @param {Object} result constructed object
+ * @param {String[]} keys array with the object keys to be used to group projects
+ * @param {Object[]} projects array of objects to group
  */
-const createPath = (keys, result) => {
-  if (keys.length === 0) return result;
-  const val = keys[keys.length - 1];
-  keys.pop();
-  return createPath(keys, {
-    label: prettyLabel(`${val}`),
-    [val]: result,
+const groupProjects = (keys, projects) => {
+  const result = {};
+  projects.forEach((project) => {
+    // targetObj behaves like a moving reference to some result's section.
+    let targetObj = result;
+    let groupKey;
+    keys.forEach((key, idx) => {
+      groupKey = project[key];
+      if (idx < keys.length - 1) {
+        if (!targetObj[groupKey]) targetObj[groupKey] = {};
+        targetObj = targetObj[groupKey];
+      }
+    });
+    if (!targetObj[groupKey]) targetObj[groupKey] = [];
+    targetObj[groupKey].push(project);
   });
-};
-
-/**
- * Merge two objects including their nested properties.
- *
- * @param {Object} baseObj First object to merge
- * @param {Object} newObj Second object to merge
- */
-const mergeIntoObject = (baseObj, newObj) => {
-  const finalObject = baseObj;
-
-  Object.keys(newObj).forEach((propertyKey) => {
-    const propertyValue = baseObj[propertyKey];
-
-    if (typeof propertyValue === 'object' && !Array.isArray(propertyValue)) {
-      finalObject[propertyKey] = mergeIntoObject(baseObj[propertyKey], newObj[propertyKey]);
-    } else if (!propertyValue) {
-      finalObject[propertyKey] = newObj[propertyKey];
-    } else if (Array.isArray(propertyValue)) {
-      finalObject[propertyKey] = [...baseObj[propertyKey], ...newObj[propertyKey]];
-    }
-  });
-
-  return finalObject;
+  return result;
 };
 
 module.exports = projectPersistence => ({
@@ -81,17 +74,6 @@ module.exports = projectPersistence => ({
       throw new ReferenceError(`Some of ${groupProps} are not project properties`);
     }
 
-    let groupedProjects = {};
-    projects.forEach((project) => {
-      const newProject = {
-        ...project,
-        label: prettyLabel(project.name),
-      };
-      const vals = groupProps.map(v => project[v]);
-      const path = createPath(vals, [newProject]);
-      groupedProjects = mergeIntoObject(groupedProjects, path);
-    });
-
-    return groupedProjects;
+    return groupProjects(groupProps, projects);
   },
 });

@@ -2,6 +2,113 @@
   {
     "group": "company_projects",
     "type": "get",
+    "url": "/companies/:id_company/projects/:id_project",
+    "title": "getProjectById",
+    "name": "getProjectById",
+    "version": "0.1.0",
+    "description": "<p>Find a project by its id</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id_company",
+            "description": "<p>project's owner id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "id_project",
+            "description": "<p>project id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "project",
+            "description": "<p>project information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "project.gid",
+            "description": "<p>project id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.name",
+            "description": "<p>project name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.prj_status",
+            "description": "<p>project status</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.region",
+            "description": "<p>region in which is the project</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.area_ha",
+            "description": "<p>project area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.id_company",
+            "description": "<p>company that owns the project</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "project.label",
+            "description": "<p>pretty project name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"gid\": 1,\n  \"name\": \"ALFEREZ-SANMARCOS\",\n  \"prj_status\": \"DAA\",\n  \"region\": \"ZONA OCCIDENTE\",\n  \"area_ha\": \"233.73530000000\",\n  \"id_company\": 1,\n  \"label\": \"Alferez Sanmarcos\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/companies/1/projects/1",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/projects.js",
+    "groupTitle": "company_projects"
+  },
+  {
+    "group": "company_projects",
+    "type": "get",
     "url": "/companies/:id_company/projects",
     "title": "listProjectsByCompany",
     "name": "listProjectsByCompany",
@@ -12,7 +119,7 @@
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>company id to get projects</p>"

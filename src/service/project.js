@@ -76,4 +76,20 @@ module.exports = projectPersistence => ({
 
     return groupProjects(groupProps, projects);
   },
+
+  /**
+   * Get a project by its id
+   *
+   * @param {Number} projectId project id
+   *
+   * @return {Object} the project found
+   */
+  getProjectById: async (projectId) => {
+    const projectFound = await projectPersistence.findProjectById(projectId);
+    return {
+      ...projectFound,
+      geomGeoJSON: JSON.parse(projectFound.geomGeoJSON),
+      label: prettyLabel(projectFound.name),
+    };
+  },
 });

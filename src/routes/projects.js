@@ -39,6 +39,20 @@ const { Router } = require('restify-router');
  *  ]
  */
 
+/**
+  * @apiDefine getProjectByIdExample
+  * @apiSuccessExample {json} Success-Example:
+  *  {
+  *    "gid": 1,
+  *    "name": "ALFEREZ-SANMARCOS",
+  *    "prj_status": "DAA",
+  *    "region": "ZONA OCCIDENTE",
+  *    "area_ha": "233.73530000000",
+  *    "id_company": 1,
+  *    "label": "Alferez Sanmarcos"
+  *  }
+  */
+
 module.exports = (errorHandler, project) => {
   const router = new Router();
 
@@ -51,7 +65,7 @@ module.exports = (errorHandler, project) => {
    * Find all projects that belongs to a given company.
    * If group_props is passed, results will be grouped by the first prop, then by the second, so on.
    *
-   * @apiParam {String} id_company company id to get projects
+   * @apiParam {Number} id_company company id to get projects
    * @apiParam {String[]} [group_props] list of properties to group results by
    *
    * @apiSuccess {Object[]} project project information
@@ -79,6 +93,38 @@ module.exports = (errorHandler, project) => {
         next();
       });
   }));
+
+  /**
+   * @apiGroup company/projects
+   * @api {get} /companies/:id_company/projects/:id_project getProjectById
+   * @apiName getProjectById
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Find a project by its id
+   *
+   * @apiParam {Number} id_company project's owner id
+   * @apiParam {Number} id_project project id
+   *
+   * @apiSuccess {Object} project project information
+   * @apiSuccess {Number} project.gid project id
+   * @apiSuccess {String} project.name project name
+   * @apiSuccess {String} project.prj_status project status
+   * @apiSuccess {String} project.region region in which is the project
+   * @apiSuccess {String} project.area_ha project area
+   * @apiSuccess {String} project.id_company company that owns the project
+   * @apiSuccess {String} project.label pretty project name
+   *
+   * @apiExample {curl} Example usage:
+   *  /companies/1/projects/1
+   * @apiUse getProjectByIdExample
+   */
+  router.get('/company/:id_company/projects/:id_project', errorHandler((req, res, next) => (
+    project.getProjectById(req.params.id_project)
+      .then((projectFound) => {
+        res.send(projectFound);
+        next();
+      })
+  )));
 
   return router;
 };

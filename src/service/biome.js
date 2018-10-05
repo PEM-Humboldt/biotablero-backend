@@ -10,9 +10,6 @@ module.exports = biomePersistence => ({
      */
   getBiomeByEA: async (envAuthority) => {
     const biomes = await biomePersistence.findBiomeByEA(envAuthority);
-    return biomes.map(({ geomGeoJSON, ...others }) => ({
-      ...others,
-      geomTopoJSON: topojson.topology({ geomTopoJSON: JSON.parse(geomGeoJSON) }),
-    }));
+    return topojson.topology({ geomTopoJSON: biomes });
   },
 });

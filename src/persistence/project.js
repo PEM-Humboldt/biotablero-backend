@@ -1,4 +1,4 @@
-module.exports = (bookshelfConn, { GeoCompanyProject }) => {
+module.exports = (bookshelfConn, { GeoCompanyProjects }) => {
   const { knex } = bookshelfConn;
 
   return {
@@ -10,7 +10,7 @@ module.exports = (bookshelfConn, { GeoCompanyProject }) => {
      * @return {Array} JSON Objects
      */
     findProjectsByCompany: companyId => (
-      GeoCompanyProject
+      GeoCompanyProjects
         .where('id_company', companyId)
         .fetchAll({
           columns: ['gid', 'name', 'prj_status', 'region', 'area_ha', 'id_company'],
@@ -26,7 +26,7 @@ module.exports = (bookshelfConn, { GeoCompanyProject }) => {
      * @return {Object} the project information
      */
     findProjectById: projectId => (
-      GeoCompanyProject
+      GeoCompanyProjects
         .where('gid', projectId)
         .fetch({
           columns: ['gid', 'name', 'prj_status', 'region', 'area_ha', 'id_company',

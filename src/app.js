@@ -18,6 +18,7 @@ const cors = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 server.use(restify.plugins.queryParser({ mapParams: true }));
+server.use(restify.plugins.bodyParser());
 
 diContainer.routes.forEach(router => router.applyRoutes(server));
 

@@ -11,9 +11,10 @@ module.exports = logger => callback => (
     try {
       await callback(req, res, next);
     } catch (e) {
+      const code = typeof e.code === 'number' ? e.code : 500;
       logger.error(e.stack || e.Error || e.message || e);
-      res.send({
-        code: e.code || 500,
+      res.send(code, {
+        code,
         userMsg: e.message || e.userMsg || 'There was an internal error',
       });
     }

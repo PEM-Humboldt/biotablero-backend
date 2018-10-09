@@ -85,7 +85,7 @@ module.exports = (errorHandler, project) => {
    * @apiUse listProjectsByCompanyExample
    * @apiUse listProjectsByCompanyExample2
    */
-  router.get('/company/:id_company/projects', errorHandler((req, res, next) => {
+  router.get('/companies/:id_company/projects', errorHandler((req, res, next) => {
     const groupProps = (req.params.group_props) ? req.params.group_props.split(',') : null;
     return project.getProjectsByCompany(req.params.id_company, groupProps)
       .then((projects) => {
@@ -118,7 +118,7 @@ module.exports = (errorHandler, project) => {
    *  /companies/1/projects/1
    * @apiUse getProjectByIdExample
    */
-  router.get('/company/:id_company/projects/:id_project', errorHandler((req, res, next) => (
+  router.get('/companies/:id_company/projects/:id_project', errorHandler((req, res, next) => (
     project.getProjectById(req.params.id_project)
       .then((projectFound) => {
         res.send(projectFound);

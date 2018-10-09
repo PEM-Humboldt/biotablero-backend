@@ -85,6 +85,11 @@ module.exports = projectPersistence => ({
    * @return {Object} the project found
    */
   getProjectById: async (projectId) => {
+    if (!projectId) {
+      const error = new Error('Mising required parameter');
+      error.code = 400;
+      throw error;
+    }
     const projectFound = await projectPersistence.findProjectById(projectId);
     return {
       ...projectFound,

@@ -301,5 +301,108 @@ define({ "api": [
     ],
     "filename": "src/routes/geofences.js",
     "groupTitle": "geofences"
+  },
+  {
+    "group": "projectStrategies",
+    "type": "post",
+    "url": "/projectStrategies",
+    "title": "createStrategy",
+    "name": "createStrategy",
+    "version": "0.1.0",
+    "description": "<p>Create a new strategy</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Object",
+            "optional": false,
+            "field": "strategy",
+            "description": "<p>strategy to be created</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.id_biome",
+            "description": "<p>biome to associate with the strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "strategy.id_ea",
+            "description": "<p>environmental authority to associate with the strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.id_h_subzone",
+            "description": "<p>'subzona hidrográfica' to associate with the strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.id_strategy",
+            "description": "<p>strategy to associate with</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.area",
+            "description": "<p>area included with this strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.id_project",
+            "description": "<p>project associated with this strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "strategy.id_user",
+            "description": "<p>user that created the strategy</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "strategy.area_status",
+            "description": "<p>???</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Request-Example:",
+          "content": "{\n  \"id_biome\": 178,\n  \"id_ea\": \"CORPOBOYACA\",\n  \"id_h_subzone\": 2403,\n  \"id_strategy\": 10,\n  \"area\": 150,\n  \"id_project\": 11,\n  \"id_user\": 1\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/projectStrategies",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/project_strategies.js",
+    "groupTitle": "projectStrategies",
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"id\": 4,\n  \"id_biome\": 178,\n  \"id_ea\": \"CORPOBOYACA\",\n  \"id_h_subzone\": 2403,\n  \"id_strategy\": 10,\n  \"area\": 150,\n  \"id_project\": 11,\n  \"id_user\": 1\n}",
+          "type": "json"
+        }
+      ]
+    }
   }
 ] });

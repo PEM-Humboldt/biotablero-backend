@@ -8,9 +8,9 @@ const requiredFields = ['id_biome', 'id_ea', 'id_h_subzone', 'id_strategy', 'are
  * does contain all the attributes that will be inserted or updated.
  */
 const onSaving = (model) => {
-  const missing = requiredFields.filter(field => !(field in model.changed));
+  const missing = requiredFields.filter(field => !model.changed[field]);
   if (missing.length > 0) {
-    const error = new Error(`The following properties are missing: ${missing}`);
+    const error = new Error(`The following properties are missing a value: ${missing}`);
     error.code = 400;
     throw error;
   }

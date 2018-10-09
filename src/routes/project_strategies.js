@@ -57,15 +57,30 @@ module.exports = (errorHandler, strategy) => {
    * @apiDescription
    * Create a new strategy associated to the given project
    *
-   * @apiParam {Object} strategy strategy to be created
-   * @apiParam {Number} strategy.id_biome biome to associate with the strategy
-   * @apiParam {String} strategy.id_ea environmental authority to associate with the strategy
-   * @apiParam {Number} strategy.id_h_subzone 'subzona hidrográfica' to associate with the strategy
-   * @apiParam {Number} strategy.id_strategy strategy to associate with
-   * @apiParam {Number} strategy.area area (in ha) included with this strategy
-   * @apiParam {Number} strategy.id_project project associated with this strategy
-   * @apiParam {Number} strategy.id_user user that created the strategy
-   * @apiParam {String} strategy.area_status ???
+   * @apiParam (query) {Number} id_company project's owner id
+   * @apiParam (query) {Number} id_project project id
+   *
+   * @apiParam (body) {Object} strategy strategy to be created
+   * @apiParam (body) {Number} strategy.id_biome biome to associate with the strategy
+   * @apiParam (body) {String} strategy.id_ea environmental authority to associate with the strategy
+   * @apiParam (body) {Number} strategy.id_h_subzone 'subzona hidrográfica' to associate with the
+   *  strategy
+   * @apiParam (body) {Number} strategy.id_strategy strategy to associate with
+   * @apiParam (body) {Number} strategy.area area (in ha) included with this strategy
+   * @apiParam (body) {Number} strategy.id_project project associated with this strategy
+   * @apiParam (body) {Number} strategy.id_user user that created the strategy
+   * @apiParam (body) {String} [strategy.area_status] ???
+   *
+   * @apiSuccess {Object} strategy new strategy
+   * @apiSuccess {Number} strategy.id newly created strategy id
+   * @apiSuccess {Number} strategy.id_biome biome to associate with the strategy
+   * @apiSuccess {String} strategy.id_ea environmental authority to associate with the strategy
+   * @apiSuccess {Number} strategy.id_h_subzone 'subzona hidrográfica' to associate with the
+   *  strategy
+   * @apiSuccess {Number} strategy.id_strategy strategy to associate with
+   * @apiSuccess {Number} strategy.area area (in ha) included with this strategy
+   * @apiSuccess {Number} strategy.id_project project associated with this strategy
+   * @apiSuccess {Number} strategy.id_user user that created the strategy
    *
    * @apiExample {bash} Example usage:
    *  /companies/1/projects/1/strategies
@@ -90,6 +105,17 @@ module.exports = (errorHandler, strategy) => {
    *
    * @apiParam {Number} id_company project's owner id
    * @apiParam {Number} id_project project id
+   *
+   * @apiSuccess {Object[]} strategies list of strategies
+   * @apiSuccess {Number} strategies.id strategy id
+   * @apiSuccess {Number} strategies.id_biome biome associated with the strategy
+   * @apiSuccess {String} strategies.id_ea environmental authority associated with the strategy
+   * @apiSuccess {Number} strategies.id_h_subzone 'subzona hidrográfica' associated with the
+   *  strategy
+   * @apiSuccess {Number} strategies.id_strategy strategy id
+   * @apiSuccess {Number} strategies.area strategy area
+   * @apiSuccess {Number} strategies.id_project project associated with this strategy
+   * @apiSuccess {Number} strategies.id_user user that created the strategy
    *
    * @apiExample {bash} Example usage:
    *  /companies/1/projects/1/strategies

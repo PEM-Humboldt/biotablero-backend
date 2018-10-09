@@ -6,10 +6,10 @@ module.exports = biomePersistence => ({
      *
      * @param {String} envAuthority environmental authority name to filter by
      *
-     * @return {Array} JSON Objects
+     * @return {Object} TopoJson Object with biomes as geometries from a GeometryCollection
      */
   getBiomeByEA: async (envAuthority) => {
     const biomes = await biomePersistence.findBiomeByEA(envAuthority);
-    return topojson.topology({ geomTopoJSON: biomes });
+    return topojson.topology({ ea: biomes });
   },
 });

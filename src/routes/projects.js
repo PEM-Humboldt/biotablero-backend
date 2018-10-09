@@ -57,7 +57,7 @@ module.exports = (errorHandler, project) => {
   const router = new Router();
 
   /**
-   * @apiGroup company/projects
+   * @apiGroup companies/projects
    * @api {get} /companies/:id_company/projects listProjectsByCompany
    * @apiName listProjectsByCompany
    * @apiVersion 0.1.0
@@ -95,7 +95,7 @@ module.exports = (errorHandler, project) => {
   }));
 
   /**
-   * @apiGroup company/projects
+   * @apiGroup companies/projects
    * @api {get} /companies/:id_company/projects/:id_project getProjectById
    * @apiName getProjectById
    * @apiVersion 0.1.0

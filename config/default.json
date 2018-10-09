@@ -12,5 +12,8 @@
   },
   "logs": {
     "dir": "logs"
+  },
+  "geometries": {
+    "tolerance" : 0.01
   }
 }

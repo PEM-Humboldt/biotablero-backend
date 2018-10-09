@@ -1,5 +1,8 @@
+const config = require('config');
+
 module.exports = (bookshelfConn) => {
   const { knex } = bookshelfConn;
+  const geometriesConfig = config.geometries;
 
   return {
     /**
@@ -16,21 +19,22 @@ module.exports = (bookshelfConn) => {
         error.code = 400;
         throw error;
       }
+
       return knex.raw(
-        `SELECT jsonb_build_object(
-          'type', 'Feature',
-          'gid', gid,
-          'geometry', ST_AsGeoJSON(ST_Simplify(geom, 0.0015, true))::jsonb,
-          'properties', to_jsonb(row) - 'gid' - 'geom'
-        ) as json_object
-        FROM (SELECT * FROM geo_ea_biomes) row
-        WHERE id_ea = '${envAuthority}';`,
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(geo_biomes2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
+            FROM geo_ea_biomes as geo_biomes1
+            INNER JOIN (SELECT gid, name_biome FROM geo_ea_biomes) as geo_biomes2 on geo_biomes2.gid = geo_biomes1.gid
+            WHERE geo_biomes1.id_ea='${envAuthority}'
+          ) as f
+        ) as fc`,
       )
-        .then(biomes => ({
-          type: 'FeatureCollection',
-          totalFeatures: biomes.rowCount,
-          features: biomes.rows.map(f => f.json_object),
-        }));
+        .then(biomes => biomes.rows[0].collection);
     },
   };
 };

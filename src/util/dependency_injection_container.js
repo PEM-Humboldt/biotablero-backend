@@ -28,7 +28,9 @@ bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
 bottle.factory('bookshelfConn', () => bookshelfConn);
 bottle.factory('geoEABiome', container => GeoEABiome(container.bookshelfConn));
-bottle.factory('geoCompanyProjects', container => GeoCompanyProjects(container.bookshelfConn));
+bottle.factory('geoCompanyProjects', container => (
+  GeoCompanyProjects(container.bookshelfConn, eventHandlers)
+));
 bottle.factory('selectedStrategies', container => (
   SelectedStrategies(container.bookshelfConn, eventHandlers)
 ));

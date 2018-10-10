@@ -26,6 +26,7 @@ module.exports = (bookshelf, { saving }) => {
    * @param {Object} models set of available objects to relate with
    */
   obj.setRelations = (models) => {
+    /* eslint-disable no-param-reassign */
     models.selectedStrategies.prototype.biome = function biome() {
       return this.belongsTo(models.biomes, 'id_biome', 'id_biome');
     };
@@ -36,5 +37,6 @@ module.exports = (bookshelf, { saving }) => {
       return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
     };
   };
+  /* eslint-enable no-param-reassign */
   return obj;
 };

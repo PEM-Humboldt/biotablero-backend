@@ -1,4 +1,4 @@
-module.exports = (bookshelfConn, { SelectedStrategies }) => ({
+module.exports = (db, { selectedStrategies }) => ({
   /**
    * Create a new project strategy
    *
@@ -6,7 +6,7 @@ module.exports = (bookshelfConn, { SelectedStrategies }) => ({
    *
    * @returns {Object} created object with its id
    */
-  createStrategy: strategy => SelectedStrategies.forge(strategy).save(),
+  createStrategy: strategy => selectedStrategies.forge(strategy).save(),
 
   /**
    * Find all selected strategies with the given user id and project id
@@ -17,9 +17,15 @@ module.exports = (bookshelfConn, { SelectedStrategies }) => ({
    * @returns {Object[]} List of selected strategies
    */
   findByUserAndProject: (userId, projectId) => (
-    SelectedStrategies
+    selectedStrategies
       .where({ id_user: userId, id_project: projectId })
-      .fetchAll()
+      .fetchAll({
+        withRelated: [
+          { biome: qb => qb.column('id_biome', 'name') },
+          'ea',
+          { szh: qb => qb.column('id_subzone', 'name_subzone') },
+        ],
+      })
       .then(results => results.toJSON())
   ),
 });

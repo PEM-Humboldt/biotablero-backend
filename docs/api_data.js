@@ -380,7 +380,7 @@ define({ "api": [
     "title": "getBiomeByEA",
     "name": "getBiomeByEA",
     "version": "0.1.0",
-    "description": "<p>Find all biomes that belong to the given environmental authority</p>",
+    "description": "<p>Find all biomes that belong to the given environmental authority.</p> <p><strong>Some of the response properties are TopoJson / GeoJson standard properties, so they are not described here.</strong></p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -399,45 +399,52 @@ define({ "api": [
         "Success 200": [
           {
             "group": "Success 200",
-            "type": "Object[]",
+            "type": "Object",
             "optional": false,
-            "field": "biome",
-            "description": "<p>biome information</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "biome.gid",
-            "description": "<p>biome id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "biome.name_biome",
-            "description": "<p>biome name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "biome.id_ea",
-            "description": "<p>env authority id</p>"
+            "field": "topo",
+            "description": "<p>TopoJson object</p>"
           },
           {
             "group": "Success 200",
             "type": "Object",
             "optional": false,
-            "field": "biome.geomTopoJSON",
-            "description": "<p>biome geometry in topoJson</p>"
+            "field": "topo.objects.ea",
+            "description": "<p>GeometryCollection with biomes information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "topo.objects.ea.geometries",
+            "description": "<p>biome object</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "topo.objects.ea.geometries.properties",
+            "description": "<p>biome properties besides geometry.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "topo.objects.ea.geometries.properties.id_ea",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "topo.objects.ea.geometries.properties.name_biome",
+            "description": "<p>biome name</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"gid\": 252,\n    \"name_biome\": \"Hidrobioma Magdalena medio y depresión momposina\",\n    \"id_ea\":\"CORPOBOYACA\",\n    \"geomTopoJSON\": {...}\n  }\n]",
+          "content": "{\n  \"type\": \"Topology\",\n  \"objects\": {\n    \"ea\": {\n      \"type\": \"GeometryCollection\",\n      \"geometries\": [\n        {\n          \"type\": \"MultiPolygon\",\n          \"arcs\": [...],\n          \"properties\": {\n            \"id_ea\": \"CORPOBOYACA\",\n            \"name_biome\": \"Hidrobioma Magdalena medio y depresión momposina\"\n          }\n        },\n        {\n          \"type\": \"MultiPolygon\",\n          \"arcs\": [...],\n          \"properties\": {\n            \"id_ea\": \"CORPOBOYACA\",\n            \"name_biome\": \"Orobioma de Paramo Uwa\"\n          }\n        }...\n      ]\n    }\n  },\n  \"arcs\": [...],\n  \"bbox\": [...]\n}",
           "type": "json"
         }
       ]

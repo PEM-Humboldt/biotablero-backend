@@ -97,4 +97,13 @@ module.exports = projectPersistence => ({
       label: prettyLabel(projectFound.name),
     };
   },
+
+  /**
+   * Create a new project
+   *
+   * @param {Object} project object with project data
+   *
+   * @returns {Object} created object with its id
+   */
+  createProject: async project => projectPersistence.createProject(project),
 });

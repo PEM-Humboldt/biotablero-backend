@@ -1,28 +1,42 @@
-const requiredFields = ['id_biome', 'id_ea', 'id_h_subzone', 'id_strategy', 'area', 'id_project',
+const requiredFields = ['id_biome', 'id_ea', 'id_subzone', 'id_strategy', 'area', 'id_project',
   'id_user'];
 
 /**
- * Event: http://bookshelfjs.org/index.html#Model-event-saving
- * Note: There's currently a bug that leads to attrs only containing attributes that were
- * passed as argument to save. You can work around this by accessing model.changed which
- * does contain all the attributes that will be inserted or updated.
+ * Create a model for the selected_strategies table
+ *
+ * @param {Object} bookshelf bookshelf ref to create the model
+ * @param {Object} eventHandlers default event handlers, see util/events to see available ones
  */
-const onSaving = (model) => {
-  const missing = requiredFields.filter(field => !(field in model.changed));
-  if (missing.length > 0) {
-    const error = new Error(`The following properties are missing: ${missing}`);
-    error.code = 400;
-    throw error;
-  }
-};
-
-module.exports = bookshelf => (
-  bookshelf.Model.extend({
+module.exports = (bookshelf, { saving }) => {
+  // const Biomes = biomes(bookshelf);
+  const obj = bookshelf.Model.extend({
     tableName: 'selected_strategies',
     defaults: { register_date: new Date() },
+
     constructor: function constructor(...args) {
       bookshelf.Model.apply(this, args);
-      this.on('saving', onSaving);
+      // See note on http://bookshelfjs.org/index.html#Model-event-saving
+      this.on('saving', model => saving(requiredFields, model.changed));
     },
-  })
-);
+  });
+
+  /**
+   * Associate with required models
+   *
+   * @param {Object} models set of available objects to relate with
+   */
+  obj.setRelations = (models) => {
+    /* eslint-disable no-param-reassign */
+    models.selectedStrategies.prototype.biome = function biome() {
+      return this.belongsTo(models.biomes, 'id_biome', 'id_biome');
+    };
+    models.selectedStrategies.prototype.ea = function biome() {
+      return this.belongsTo(models.environmentalAuthorities, 'id_ea', 'id_ea');
+    };
+    models.selectedStrategies.prototype.szh = function biome() {
+      return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
+    };
+  };
+  /* eslint-enable no-param-reassign */
+  return obj;
+};

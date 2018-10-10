@@ -3,10 +3,7 @@ const Bottlejs = require('bottlejs');
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
-const bookshelfConn = require('../persistence/connection');
-const GeoEABiome = require('../persistence/models/geo_ea_biomes');
-const GeoCompanyProjects = require('../persistence/models/geo_company_projects');
-const SelectedStrategies = require('../persistence/models/selected_strategies');
+const bookshelfModels = require('../persistence/models/setup');
 
 const BiomePersistence = require('../persistence/biome');
 const ProjectPersistence = require('../persistence/project');
@@ -25,20 +22,14 @@ const bottle = new Bottlejs();
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
-bottle.factory('bookshelfConn', () => bookshelfConn);
-bottle.factory('geoEABiome', container => GeoEABiome(container.bookshelfConn));
-bottle.factory('geoCompanyProjects', container => GeoCompanyProjects(container.bookshelfConn));
-bottle.factory('selectedStrategies', container => SelectedStrategies(container.bookshelfConn));
-
-bottle.factory('biomePersistence', container => (
-  BiomePersistence(container.bookshelfConn, { GeoEABiome: container.geoEABiome })
+bottle.factory('biomePersistence', () => (
+  BiomePersistence(bookshelfModels.db, bookshelfModels.models)
 ));
-bottle.factory('projectPersistence', container => (
-  ProjectPersistence(container.bookshelfConn, { GeoCompanyProjects: container.geoCompanyProjects })
+bottle.factory('projectPersistence', () => (
+  ProjectPersistence(bookshelfModels.db, bookshelfModels.models)
 ));
-bottle.factory('projectStrategyPersistence', container => (
-  ProjectStrategyPersistence(container.bookshelfConn,
-    { SelectedStrategies: container.selectedStrategies })
+bottle.factory('projectStrategyPersistence', () => (
+  ProjectStrategyPersistence(bookshelfModels.db, bookshelfModels.models)
 ));
 
 bottle.factory('biomeService', container => BiomeService(container.biomePersistence));

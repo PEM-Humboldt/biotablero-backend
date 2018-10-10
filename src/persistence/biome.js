@@ -1,7 +1,6 @@
 const config = require('config');
 
-module.exports = (bookshelfConn) => {
-  const { knex } = bookshelfConn;
+module.exports = (db) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -20,7 +19,7 @@ module.exports = (bookshelfConn) => {
         throw error;
       }
 
-      return knex.raw(
+      return db.raw(
         `SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features

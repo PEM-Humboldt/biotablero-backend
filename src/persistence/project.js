@@ -41,5 +41,14 @@ module.exports = (bookshelfConn, { GeoCompanyProjects }) => {
           return result.toJSON();
         })
     ),
+
+    /**
+     * Create a new project
+     *
+     * @param {Object} project object with project data
+     *
+     * @returns {Object} created object with its id
+     */
+    createProject: project => GeoCompanyProjects.forge(project).save(),
   };
 };

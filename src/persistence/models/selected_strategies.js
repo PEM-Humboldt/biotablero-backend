@@ -29,6 +29,12 @@ module.exports = (bookshelf, { saving }) => {
     models.selectedStrategies.prototype.biome = function biome() {
       return this.belongsTo(models.biomes, 'id_biome', 'id_biome');
     };
+    models.selectedStrategies.prototype.ea = function biome() {
+      return this.belongsTo(models.environmentalAuthorities, 'id_ea', 'id_ea');
+    };
+    models.selectedStrategies.prototype.szh = function biome() {
+      return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
+    };
   };
   return obj;
 };

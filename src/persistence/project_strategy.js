@@ -16,16 +16,16 @@ module.exports = (db, { selectedStrategies }) => ({
    *
    * @returns {Object[]} List of selected strategies
    */
-  findByUserAndProject: (userId, projectId) => {
-    console.log(selectedStrategies);
-    return selectedStrategies
+  findByUserAndProject: (userId, projectId) => (
+    selectedStrategies
       .where({ id_user: userId, id_project: projectId })
-      .fetch({ withRelated: 'biome' })
-      .then((results) => {
-        console.log(results);
-        console.log('-------------------');
-        console.log(results.related('biome').toJSON());
-        return results.toJSON();
-      });
-  },
+      .fetchAll({
+        withRelated: [
+          { biome: qb => qb.column('id_biome', 'name') },
+          'ea',
+          { szh: qb => qb.column('id_subzone', 'name_subzone') },
+        ],
+      })
+      .then(results => results.toJSON())
+  ),
 });

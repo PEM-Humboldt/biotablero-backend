@@ -8,7 +8,7 @@ const { Router } = require('restify-router');
  *      "gid": 1,
  *      "name": "ALFEREZ-SANMARCOS",
  *      "prj_status": "DAA",
- *      "region": "ZONA OCCIDENTE",
+ *      "id_region": "ZONA OCCIDENTE",
  *      "area_ha": "233.73530000000",
  *      "id_company": 1,
  *      "label": "Alferez Sanmarcos"
@@ -28,7 +28,7 @@ const { Router } = require('restify-router');
  *          "gid": 1,
  *          "name": "ALFEREZ-SANMARCOS",
  *          "prj_status": "DAA",
- *          "region": "ZONA OCCIDENTE",
+ *          "id_region": "ZONA OCCIDENTE",
  *          "area_ha": "233.73530000000",
  *          "id_company": 1,
  *          "label": "Alferez Sanmarcos"
@@ -46,7 +46,7 @@ const { Router } = require('restify-router');
  *    "gid": 1,
  *    "name": "ALFEREZ-SANMARCOS",
  *    "prj_status": "DAA",
- *    "region": "ZONA OCCIDENTE",
+ *    "id_region": "ZONA OCCIDENTE",
  *    "area_ha": "233.73530000000",
  *    "id_company": 1,
  *    "label": "Alferez Sanmarcos"
@@ -58,7 +58,7 @@ const { Router } = require('restify-router');
  * @apiParamExample {json} Request-Example:
  *  {
  *    "id_company": 1,
- *    "region": "ZONA OCCIDENTE",
+ *    "id_region": "ZONA OCCIDENTE",
  *    "name": "test project"
  *  }
  */
@@ -68,7 +68,7 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "id_company": 1,
- *    "region": "ZONA OCCIDENTE",
+ *    "id_region": "ZONA OCCIDENTE",
  *    "name": "test project2",
  *    "gid": 18
  *  }
@@ -92,7 +92,7 @@ module.exports = (errorHandler, project) => {
    * @apiSuccess {Number} project.gid project id
    * @apiSuccess {String} project.name project name
    * @apiSuccess {String} project.prj_status project status
-   * @apiSuccess {String} project.region region in which is the project
+   * @apiSuccess {String} project.id_region region in which is the project
    * @apiSuccess {String} project.area_ha project area
    * @apiSuccess {String} project.id_company company that owns the project
    * @apiSuccess {String} project.label pretty project name
@@ -100,7 +100,7 @@ module.exports = (errorHandler, project) => {
    * @apiExample {curl} Example usage:
    *  /companies/1/projects
    * @apiExample {curl} group_props example:
-   *  /companies/1/projects?group_props=region,prj_status
+   *  /companies/1/projects?group_props=id_region,prj_status
    *
    * @apiUse listProjectsByCompanyExample
    * @apiUse listProjectsByCompanyExample2
@@ -129,7 +129,7 @@ module.exports = (errorHandler, project) => {
    * @apiSuccess {Number} project.gid project id
    * @apiSuccess {String} project.name project name
    * @apiSuccess {String} project.prj_status project status
-   * @apiSuccess {String} project.region region in which is the project
+   * @apiSuccess {String} project.id_region region in which is the project
    * @apiSuccess {String} project.area_ha project area
    * @apiSuccess {String} project.id_company company that owns the project
    * @apiSuccess {String} project.label pretty project name
@@ -163,7 +163,7 @@ module.exports = (errorHandler, project) => {
    * @apiParam (body) {String} [project.details] extra information about the project
    * @apiParam (body) {String} [project.prj_status] project status
    * @apiParam (body) {Number} project.id_company project's owner id
-   * @apiParam (body) {String} project.region project region
+   * @apiParam (body) {String} project.id_region project region
    *
    * @apiSuccess {Object} project new project
    * @apiSuccess {String} project.gid newly created project id
@@ -172,7 +172,7 @@ module.exports = (errorHandler, project) => {
    * @apiSuccess {String} project.details information about the project
    * @apiSuccess {String} project.prj_status project status
    * @apiSuccess {Number} project.id_company project's owner id
-   * @apiSuccess {String} project.region project region
+   * @apiSuccess {String} project.id_region project region
    *
    * @apiExample {bash} Example usage:
    *  /companies/1/projects

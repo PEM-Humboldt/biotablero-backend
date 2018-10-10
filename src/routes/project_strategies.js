@@ -6,7 +6,7 @@ const { Router } = require('restify-router');
  *  {
  *    "id_biome": 178,
  *    "id_ea": "CORPOBOYACA",
- *    "id_h_subzone": 2403,
+ *    "id_subzone": 2403,
  *    "id_strategy": 10,
  *    "area": 150,
  *    "id_project": 11,
@@ -21,7 +21,7 @@ const { Router } = require('restify-router');
  *    "id": 4,
  *    "id_biome": 178,
  *    "id_ea": "CORPOBOYACA",
- *    "id_h_subzone": 2403,
+ *    "id_subzone": 2403,
  *    "id_strategy": 10,
  *    "area": 150,
  *    "id_project": 11,
@@ -37,7 +37,7 @@ const { Router } = require('restify-router');
  *      "id": 4,
  *      "id_biome": 178,
  *      "id_ea": "CORPOBOYACA",
- *      "id_h_subzone": 2403,
+ *      "id_subzone": 2403,
  *      "id_strategy": 10,
  *      "area": 150,
  *      "id_project": 11,
@@ -63,7 +63,7 @@ module.exports = (errorHandler, strategy) => {
    * @apiParam (body) {Object} strategy strategy to be created
    * @apiParam (body) {Number} strategy.id_biome biome to associate with the strategy
    * @apiParam (body) {String} strategy.id_ea environmental authority to associate with the strategy
-   * @apiParam (body) {Number} strategy.id_h_subzone 'subzona hidrográfica' to associate with the
+   * @apiParam (body) {Number} strategy.id_subzone 'subzona hidrográfica' to associate with the
    *  strategy
    * @apiParam (body) {Number} strategy.id_strategy strategy to associate with
    * @apiParam (body) {Number} strategy.area area (in ha) included with this strategy
@@ -75,7 +75,7 @@ module.exports = (errorHandler, strategy) => {
    * @apiSuccess {Number} strategy.id newly created strategy id
    * @apiSuccess {Number} strategy.id_biome biome to associate with the strategy
    * @apiSuccess {String} strategy.id_ea environmental authority to associate with the strategy
-   * @apiSuccess {Number} strategy.id_h_subzone 'subzona hidrográfica' to associate with the
+   * @apiSuccess {Number} strategy.id_subzone 'subzona hidrográfica' to associate with the
    *  strategy
    * @apiSuccess {Number} strategy.id_strategy strategy to associate with
    * @apiSuccess {Number} strategy.area area (in ha) included with this strategy
@@ -110,7 +110,7 @@ module.exports = (errorHandler, strategy) => {
    * @apiSuccess {Number} strategies.id strategy id
    * @apiSuccess {Number} strategies.id_biome biome associated with the strategy
    * @apiSuccess {String} strategies.id_ea environmental authority associated with the strategy
-   * @apiSuccess {Number} strategies.id_h_subzone 'subzona hidrográfica' associated with the
+   * @apiSuccess {Number} strategies.id_subzone 'subzona hidrográfica' associated with the
    *  strategy
    * @apiSuccess {Number} strategies.id_strategy strategy id
    * @apiSuccess {Number} strategies.area strategy area

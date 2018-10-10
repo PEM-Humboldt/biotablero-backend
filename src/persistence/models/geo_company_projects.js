@@ -1,4 +1,4 @@
-const requiredFields = ['name', 'id_company', 'region'];
+const requiredFields = ['name', 'id_company', 'id_region'];
 
 /**
  * Create a model for the geo_company_projects table

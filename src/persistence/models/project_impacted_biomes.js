@@ -1,4 +1,4 @@
-const requiredFields = ['id_project', 'id_ea', 'id_subzone', 'id_biome'];
+const requiredFields = ['id_project', 'id_biome'];
 
 /**
  * Create a model for the project_impacted_biomes table
@@ -12,7 +12,7 @@ module.exports = (bookshelf, { saving }) => (
     idAttribute: 'id',
     defaults: {
       natural_area_ha: 0,
-      seconday_area_ha: 0,
+      secondary_area_ha: 0,
       transformed_area_ha: 0,
       area_impacted_ha: 0,
       area_to_compensate_ha: 0,
@@ -21,7 +21,10 @@ module.exports = (bookshelf, { saving }) => (
     constructor: function constructor(...args) {
       bookshelf.Model.apply(this, args);
       // See note on http://bookshelfjs.org/index.html#Model-event-saving
-      this.on('saving', model => saving(requiredFields, model.changed));
+      this.on('saving', (model) => {
+        saving(requiredFields, model.changed);
+        model.set('is_preloaded', false);
+      });
     },
   })
 );

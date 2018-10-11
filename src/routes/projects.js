@@ -1,6 +1,11 @@
 const { Router } = require('restify-router');
 
 /**
+ * @apiDefine companiesProjects Companies/Projects
+ * Queries and actions directly related with projects
+ */
+
+/**
  * @apiDefine listProjectsByCompanyExample
  * @apiSuccessExample {json} Success-Example:
  *  [
@@ -73,11 +78,67 @@ const { Router } = require('restify-router');
  *    "gid": 18
  *  }
  */
+
+/**
+ * @apiDefine addBiomesProjectExampleUsage
+ * @apiParamExample {json} Request-Example:
+ *  [
+ *    {
+ *      "id_biome": 178,
+ *      "natural_area_ha": 0,
+ *      "secondary_area_ha": 0,
+ *      "transformed_area_ha": 0,
+ *      "area_impacted_ha": 0,
+ *      "area_to_compensate_ha": 0
+ *    },
+ *    {
+ *      "id_ea": "CORPOBOYACA",
+ *      "id_biome": 178,
+ *      "id_subzone": 2403,
+ *      "natural_area_ha": 10,
+ *      "secondary_area_ha": 20,
+ *      "transformed_area_ha": 30,
+ *      "area_impacted_ha": 60,
+ *      "area_to_compensate_ha": 100
+ *    }
+ *  ]
+ */
+
+/**
+ * @apiDefine addBiomesProjectExampleResponse
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "id_biome": 178,
+ *      "natural_area_ha": 0,
+ *      "secondary_area_ha": 0,
+ *      "transformed_area_ha": 0,
+ *      "area_impacted_ha": 0,
+ *      "area_to_compensate_ha": 0,
+ *      "is_preloaded": false,
+ *      "id_project": 1,
+ *      "id": 16
+ *    },
+ *    {
+ *      "id_project": 1,
+ *      "id_ea": "CORPOBOYACA",
+ *      "id_biome": 178,
+ *      "id_subzone": 2403,
+ *      "natural_area_ha": 10,
+ *      "secondary_area_ha": 20,
+ *      "transformed_area_ha": 30,
+ *      "area_impacted_ha": 60,
+ *      "area_to_compensate_ha": 100,
+ *      "is_preloaded": false,
+ *      "id": 17
+ *    }
+ *  ]
+ */
 module.exports = (errorHandler, project) => {
   const router = new Router();
 
   /**
-   * @apiGroup companies/projects
+   * @apiGroup companiesProjects
    * @api {get} /companies/:id_company/projects listProjectsByCompany
    * @apiName listProjectsByCompany
    * @apiVersion 0.1.0
@@ -115,7 +176,7 @@ module.exports = (errorHandler, project) => {
   }));
 
   /**
-   * @apiGroup companies/projects
+   * @apiGroup companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project getProjectById
    * @apiName getProjectById
    * @apiVersion 0.1.0
@@ -147,7 +208,7 @@ module.exports = (errorHandler, project) => {
   )));
 
   /**
-   * @apiGroup companies/projects
+   * @apiGroup companiesProjects
    * @api {get} /companies/:id_company/projects createProject
    * @apiName createProject
    * @apiVersion 0.1.0
@@ -187,6 +248,45 @@ module.exports = (errorHandler, project) => {
       })
   )));
 
+  /**
+   * @apiGroup companiesProjects
+   * @api {post} /companies/:id_company/projects/:id_project/biomes addBiomes
+   * @apiName addBiomes
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Associate a set of biomes with a given project
+   *
+   * @apiParam (query) {Number} id_company project's owner id
+   * @apiParam (query) {Number} id_project project id
+   *
+   * @apiParam (body) {Object[]} biomes array of biomes to associate with the project
+   * @apiParam (body) {Number} biomes.id_biome biome id
+   * @apiParam (body) {Number} [biomes.id_ea] environmental
+   * @apiParam (body) {Number} [biomes.id_subzone] sub-basin id
+   * @apiParam (body) {Number} [biomes.natural_area_ha] natural area affected in this biome
+   * @apiParam (body) {Number} [biomes.secondary_area_ha] secondary area affected in this biome
+   * @apiParam (body) {Number} [biomes.transformed_area_ha] transformed area affected in this biome
+   * @apiParam (body) {Number} [biomes.area_impacted_ha] total area affected in this biome
+   * @apiParam (body) {Number} [biomes.area_to_compensate_ha] area to compensate for this biome
+   *
+   * @apiSuccess {Object[]} biomes array of biomes to associate with the project
+   * @apiSuccess {Number} biomes.id association id
+   * @apiSuccess {Number} biomes.id_biome biome id
+   * @apiSuccess {Number} biomes.id_ea environmental
+   * @apiSuccess {Number} biomes.id_subzone sub-basin id
+   * @apiSuccess {Number} biomes.natural_area_ha natural area affected in this biome
+   * @apiSuccess {Number} biomes.secondary_area_ha secondary area affected in this biome
+   * @apiSuccess {Number} biomes.transformed_area_ha transformed area affected in this biome
+   * @apiSuccess {Number} biomes.area_impacted_ha total area affected in this biome
+   * @apiSuccess {Number} biomes.area_to_compensate_ha area to compensate for this biome
+   * @apiSuccess {Boolean} biomes.is_preloaded indicates if the biome was associated to the project
+   *  through the platform (false) or by other way
+   *
+   * @apiExample {bash} Example usage:
+   *  /companies/1/projects/1/biomes
+   * @apiUse addBiomesProjectExampleUsage
+   * @apiUse addBiomesProjectExampleResponse
+   */
   router.post('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
     project.addBiomes(req.params.id_project, req.body)
       .then((result) => {

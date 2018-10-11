@@ -13,5 +13,12 @@ module.exports = biomePersistence => ({
     return topojson.topology({ ea: biomes });
   },
 
+  /**
+   * Bulk create a set of project impacted biomes
+   *
+   * @param {Object[]} biomes project impacted biomes to create
+   *
+   * @returns {Object[]} created objects with id
+   */
   bulkAddImpacted: async biomes => biomePersistence.bulkCreateProjectImpacted(biomes),
 });

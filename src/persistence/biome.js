@@ -36,6 +36,13 @@ module.exports = (db, models, { projectImpactedBiomes: projectImpactedBiomesColl
         .then(biomes => biomes.rows[0].collection);
     },
 
+    /**
+     * Bulk create a set of project impacted biomes
+     *
+     * @param {Object[]} biomes project impacted biomes to create
+     *
+     * @returns {Object[]} created objects with id
+     */
     bulkCreateProjectImpacted: biomes => projectImpactedBiomesColl.forge(biomes).invokeThen('save'),
   };
 };

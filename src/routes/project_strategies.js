@@ -1,6 +1,11 @@
 const { Router } = require('restify-router');
 
 /**
+ * @apiDefine companiesProjectsStrategies Companies/Projects/Strategies
+ * Queries and actions directly related with projects strategies selected inside a project
+ */
+
+/**
  * @apiDefine createStrategyExampleUsage
  * @apiParamExample {json} Request-Example:
  *  {
@@ -49,7 +54,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companies/projects/strategies
+   * @apiGroup companiesProjectsStrategies
    * @api {post} /companies/:id_company/projects/:id_project/strategies createStrategy
    * @apiName createStrategy
    * @apiVersion 0.1.0
@@ -94,7 +99,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   )));
 
   /**
-   * @apiGroup companies/projects/strategies
+   * @apiGroup companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies listStrategies
    * @apiName listStrategies
    * @apiVersion 0.1.0

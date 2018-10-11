@@ -107,6 +107,14 @@ module.exports = (projectPersistence, biomeService) => ({
    */
   createProject: async project => projectPersistence.createProject(project),
 
+  /**
+   * Associate a set of biomes with a given project
+   *
+   * @param {Number} projectId project id
+   * @param {Object[]} biomes biomes to associate with
+   *
+   * @returns {Object[]} created objects with id
+   */
   addBiomes: async (projectId, biomes) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {

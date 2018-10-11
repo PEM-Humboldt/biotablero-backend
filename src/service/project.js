@@ -50,7 +50,7 @@ const groupProjects = (keys, projects) => {
   return result;
 };
 
-module.exports = projectPersistence => ({
+module.exports = (projectPersistence, biomeService) => ({
   /**
      * Get projects by a given company, optionally, group those pjects by a list of their properties
      *
@@ -106,4 +106,28 @@ module.exports = projectPersistence => ({
    * @returns {Object} created object with its id
    */
   createProject: async project => projectPersistence.createProject(project),
+
+  /**
+   * Associate a set of biomes with a given project
+   *
+   * @param {Number} projectId project id
+   * @param {Object[]} biomes biomes to associate with
+   *
+   * @returns {Object[]} created objects with id
+   */
+  addBiomes: async (projectId, biomes) => {
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Invalid project id');
+      error.code = 400;
+      throw error;
+    }
+
+    return biomeService.bulkAddImpacted(
+      biomes.map(biome => ({
+        ...biome,
+        id_project: pId,
+      })),
+    );
+  },
 });

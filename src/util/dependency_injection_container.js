@@ -23,7 +23,7 @@ bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
 bottle.factory('biomePersistence', () => (
-  BiomePersistence(bookshelfModels.db, bookshelfModels.models)
+  BiomePersistence(bookshelfModels.db, bookshelfModels.models, bookshelfModels.collections)
 ));
 bottle.factory('projectPersistence', () => (
   ProjectPersistence(bookshelfModels.db, bookshelfModels.models)
@@ -33,7 +33,9 @@ bottle.factory('projectStrategyPersistence', () => (
 ));
 
 bottle.factory('biomeService', container => BiomeService(container.biomePersistence));
-bottle.factory('projectService', container => ProjectService(container.projectPersistence));
+bottle.factory('projectService', container => (
+  ProjectService(container.projectPersistence, container.biomeService)
+));
 bottle.factory('projectStrategyService',
   container => ProjectStrategyService(container.projectStrategyPersistence));
 

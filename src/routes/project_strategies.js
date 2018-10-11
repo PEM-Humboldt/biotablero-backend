@@ -1,6 +1,11 @@
 const { Router } = require('restify-router');
 
 /**
+ * @apiDefine companiesProjectsStrategies Companies/Projects/Strategies
+ * Queries and actions directly related with projects strategies selected inside a project
+ */
+
+/**
  * @apiDefine createStrategyExampleUsage
  * @apiParamExample {json} Request-Example:
  *  {
@@ -9,7 +14,6 @@ const { Router } = require('restify-router');
  *    "id_subzone": 2403,
  *    "id_strategy": 10,
  *    "area": 150,
- *    "id_project": 11,
  *    "id_user": 1
  *  }
  */
@@ -46,11 +50,11 @@ const { Router } = require('restify-router');
  *  ]
  */
 
-module.exports = (errorHandler, strategy) => {
+module.exports = (errorHandler, projectStrategyService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companies/projects/strategies
+   * @apiGroup companiesProjectsStrategies
    * @api {post} /companies/:id_company/projects/:id_project/strategies createStrategy
    * @apiName createStrategy
    * @apiVersion 0.1.0
@@ -58,7 +62,7 @@ module.exports = (errorHandler, strategy) => {
    * Create a new strategy associated to the given project
    *
    * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project id
+   * @apiParam (query) {Number} id_project project associated with this strategy
    *
    * @apiParam (body) {Object} strategy strategy to be created
    * @apiParam (body) {Number} strategy.id_biome biome to associate with the strategy
@@ -67,7 +71,6 @@ module.exports = (errorHandler, strategy) => {
    *  strategy
    * @apiParam (body) {Number} strategy.id_strategy strategy to associate with
    * @apiParam (body) {Number} strategy.area area (in ha) included with this strategy
-   * @apiParam (body) {Number} strategy.id_project project associated with this strategy
    * @apiParam (body) {Number} strategy.id_user user that created the strategy
    * @apiParam (body) {String} [strategy.area_status] ???
    *
@@ -88,7 +91,7 @@ module.exports = (errorHandler, strategy) => {
    * @apiUse createStrategyExampleResponse
    */
   router.post('/companies/:id_company/projects/:id_project/strategies', errorHandler((req, res, next) => (
-    strategy.createStrategy(req.body)
+    projectStrategyService.createStrategy(req.params.id_project, req.body)
       .then((result) => {
         res.send(result);
         next();
@@ -96,7 +99,7 @@ module.exports = (errorHandler, strategy) => {
   )));
 
   /**
-   * @apiGroup companies/projects/strategies
+   * @apiGroup companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies listStrategies
    * @apiName listStrategies
    * @apiVersion 0.1.0
@@ -124,7 +127,7 @@ module.exports = (errorHandler, strategy) => {
   router.get('/companies/:id_company/projects/:id_project/strategies', errorHandler((req, res, next) => (
     // TODO: when authorization is available get user id from header
     // TODO: Authentication should verify user is from the given company
-    strategy.listStrategies(1, req.params.id_project)
+    projectStrategyService.listStrategies(1, req.params.id_project)
       .then((result) => {
         res.send(result);
         next();

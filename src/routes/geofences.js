@@ -1,6 +1,11 @@
 const { Router } = require('restify-router');
 
 /**
+ * @apiDefine geofences Geofences
+ * Endpoints related with queries with some defined area as a given environmental authority
+ */
+
+/**
  * @apiDefine getBiomeByEAExample
  * @apiSuccessExample {json} Success-Example:
  *  {

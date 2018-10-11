@@ -1,12 +1,12 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine geofences Geofences
- * Endpoints related with queries with some defined area as a given environmental authority
+ * @apiDefine biomes Biomes
+ * Endpoints related with queries about biomes
  */
 
 /**
- * @apiDefine getBiomeByEAExample
+ * @apiDefine getBiomesByEAExample
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "type": "Topology",
@@ -42,9 +42,9 @@ module.exports = (errorHandler, biome) => {
   const router = new Router();
 
   /**
-   * @apiGroup geofences
-   * @api {get} /geofences/ea/:ea_name getBiomeByEA
-   * @apiName getBiomeByEA
+   * @apiGroup biomes
+   * @api {get} /biomes/ea/:ea_name getBiomesByEA
+   * @apiName getBiomesByEA
    * @apiVersion 0.1.0
    * @apiDescription
    * Find all biomes that belong to the given environmental authority.
@@ -62,10 +62,10 @@ module.exports = (errorHandler, biome) => {
    * @apiSuccess {Object} topo.objects.ea.geometries.properties.name_biome biome name
    *
    * @apiExample {curl} Example usage:
-   *  /geofences/ea/CORPOBOYACA
-   * @apiUse getBiomeByEAExample
+   *  /biomes/ea/CORPOBOYACA
+   * @apiUse getBiomesByEAExample
    */
-  router.get('/geofences/ea/:ea_name', errorHandler((req, res, next) => (
+  router.get('/biomes/ea/:ea_name', errorHandler((req, res, next) => (
     biome.getBiomeByEA(req.params.ea_name)
       .then((biomes) => {
         res.send(biomes);

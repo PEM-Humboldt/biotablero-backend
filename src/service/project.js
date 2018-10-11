@@ -107,12 +107,19 @@ module.exports = (projectPersistence, biomeService) => ({
    */
   createProject: async project => projectPersistence.createProject(project),
 
-  addBiomes: async (projectId, biomes) => (
-    biomeService.bulkAddImpacted(
+  addBiomes: async (projectId, biomes) => {
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Invalid project id');
+      error.code = 400;
+      throw error;
+    }
+
+    return biomeService.bulkAddImpacted(
       biomes.map(biome => ({
         ...biome,
-        id_project: parseInt(projectId, 10),
+        id_project: pId,
       })),
-    )
-  ),
+    );
+  },
 });

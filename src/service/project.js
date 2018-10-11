@@ -50,7 +50,7 @@ const groupProjects = (keys, projects) => {
   return result;
 };
 
-module.exports = projectPersistence => ({
+module.exports = (projectPersistence, biomeService) => ({
   /**
      * Get projects by a given company, optionally, group those pjects by a list of their properties
      *
@@ -106,4 +106,13 @@ module.exports = projectPersistence => ({
    * @returns {Object} created object with its id
    */
   createProject: async project => projectPersistence.createProject(project),
+
+  addBiomes: async (projectId, biomes) => (
+    biomeService.bulkAddImpacted(
+      biomes.map(biome => ({
+        ...biome,
+        id_project: parseInt(projectId, 10),
+      })),
+    )
+  ),
 });

@@ -9,6 +9,10 @@ const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
 const environmentalAuthorities = require('./environmental_authorities');
 const hidroAreas = require('./hidro_areas');
+const projectImpactedBiomes = require('./project_impacted_biomes');
+
+// Collections
+const projectImpactedBiomesCollection = require('./project_impacted_biomes.collection');
 
 const eventHandlers = require('./util/events');
 
@@ -44,13 +48,18 @@ const setupModels = () => {
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
     environmentalAuthorities: environmentalAuthorities(dbConn, eventHandlers),
     hidroAreas: hidroAreas(dbConn, eventHandlers),
+    projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);
   });
+  const collections = {
+    projectImpactedBiomes: projectImpactedBiomesCollection(dbConn, models.projectImpactedBiomes),
+  };
   return {
     db: dbConn.knex,
     models,
+    collections,
   };
 };
 

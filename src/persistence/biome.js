@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db) => {
+module.exports = (db, models, { projectImpactedBiomes: projectImpactedBiomesColl }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -35,5 +35,7 @@ module.exports = (db) => {
       )
         .then(biomes => biomes.rows[0].collection);
     },
+
+    bulkCreateProjectImpacted: biomes => projectImpactedBiomesColl.forge(biomes).invokeThen('save'),
   };
 };

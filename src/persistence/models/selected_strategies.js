@@ -8,7 +8,6 @@ const requiredFields = ['id_biome', 'id_ea', 'id_subzone', 'id_strategy', 'area'
  * @param {Object} eventHandlers default event handlers, see util/events to see available ones
  */
 module.exports = (bookshelf, { saving }) => {
-  // const Biomes = biomes(bookshelf);
   const obj = bookshelf.Model.extend({
     tableName: 'selected_strategies',
     defaults: { register_date: new Date() },

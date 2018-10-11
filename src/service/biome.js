@@ -12,4 +12,6 @@ module.exports = biomePersistence => ({
     const biomes = await biomePersistence.findBiomeByEA(envAuthority);
     return topojson.topology({ ea: biomes });
   },
+
+  bulkAddImpacted: async biomes => biomePersistence.bulkCreateProjectImpacted(biomes),
 });

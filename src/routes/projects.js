@@ -187,5 +187,13 @@ module.exports = (errorHandler, project) => {
       })
   )));
 
+  router.post('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
+    project.addBiomes(req.params.id_project, req.body)
+      .then((result) => {
+        res.send(result);
+        next();
+      })
+  )));
+
   return router;
 };

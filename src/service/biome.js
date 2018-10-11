@@ -21,4 +21,11 @@ module.exports = biomePersistence => ({
    * @returns {Object[]} created objects with id
    */
   bulkAddImpacted: async biomes => biomePersistence.bulkCreateProjectImpacted(biomes),
+
+  /**
+   * Get all biomes
+   *
+   * @returns {Object[]} existing biomes
+   */
+  getAll: async () => biomePersistence.findAll(),
 });

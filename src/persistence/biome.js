@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, models, { projectImpactedBiomes: projectImpactedBiomesColl }) => {
+module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImpactedBiomesColl }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -44,5 +44,15 @@ module.exports = (db, models, { projectImpactedBiomes: projectImpactedBiomesColl
      * @returns {Object[]} created objects with id
      */
     bulkCreateProjectImpacted: biomes => projectImpactedBiomesColl.forge(biomes).invokeThen('save'),
+
+    /**
+     * Find all biomes
+     *
+     * @returns {Object[]} biomes in the database
+     */
+    findAll: () => (
+      biomesMod.fetchAll()
+        .then(biomes => biomes.toJSON())
+    ),
   };
 };

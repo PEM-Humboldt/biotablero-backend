@@ -1,6 +1,10 @@
 const config = require('config');
 
-module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImpactedBiomesColl }) => {
+module.exports = (
+  db,
+  { geoBiomes: geoBiomesMod },
+  { projectImpactedBiomes: projectImpactedBiomesColl },
+) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -51,7 +55,7 @@ module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImp
      * @returns {Object[]} biomes in the database
      */
     findAll: () => (
-      biomesMod.fetchAll()
+      geoBiomesMod.fetchAll()
         .then(biomes => biomes.toJSON())
     ),
   };

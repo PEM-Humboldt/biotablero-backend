@@ -3,7 +3,7 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
-const biomes = require('./biomes');
+const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
@@ -42,7 +42,7 @@ const setupModels = () => {
 
   const dbConn = connect();
   models = {
-    biomes: biomes(dbConn, eventHandlers),
+    geoBiomes: geoBiomes(dbConn, eventHandlers),
     geoCompanyProjects: geoCompanyProjects(dbConn, eventHandlers),
     geoEaBiomes: geoEaBiomes(dbConn, eventHandlers),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),

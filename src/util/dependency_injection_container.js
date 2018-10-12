@@ -13,7 +13,7 @@ const BiomeService = require('../service/biome');
 const ProjectService = require('../service/project');
 const ProjectStrategyService = require('../service/project_strategy');
 
-const GeofencesRoutes = require('../routes/geofences');
+const GeofencesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
 const ProjectStrategiesRoutes = require('../routes/project_strategies');
 

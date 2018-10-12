@@ -134,7 +134,7 @@ const { Router } = require('restify-router');
  *    }
  *  ]
  */
-module.exports = (errorHandler, project) => {
+module.exports = (errorHandler, projectService) => {
   const router = new Router();
 
   /**
@@ -168,7 +168,7 @@ module.exports = (errorHandler, project) => {
    */
   router.get('/companies/:id_company/projects', errorHandler((req, res, next) => {
     const groupProps = (req.params.group_props) ? req.params.group_props.split(',') : null;
-    return project.getProjectsByCompany(req.params.id_company, groupProps)
+    return projectService.getProjectsByCompany(req.params.id_company, groupProps)
       .then((projects) => {
         res.send(projects);
         next();
@@ -200,7 +200,7 @@ module.exports = (errorHandler, project) => {
    * @apiUse getProjectByIdExample
    */
   router.get('/companies/:id_company/projects/:id_project', errorHandler((req, res, next) => (
-    project.getProjectById(req.params.id_project)
+    projectService.getProjectById(req.params.id_project)
       .then((projectFound) => {
         res.send(projectFound);
         next();
@@ -241,7 +241,7 @@ module.exports = (errorHandler, project) => {
    * @apiUse createProjectExampleResponse
    */
   router.post('/companies/:id_company/projects', errorHandler((req, res, next) => (
-    project.createProject(req.body)
+    projectService.createProject(req.body)
       .then((result) => {
         res.send(result);
         next();
@@ -288,7 +288,7 @@ module.exports = (errorHandler, project) => {
    * @apiUse addBiomesProjectExampleResponse
    */
   router.post('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
-    project.addBiomes(req.params.id_project, req.body)
+    projectService.addBiomes(req.params.id_project, req.body)
       .then((result) => {
         res.send(result);
         next();

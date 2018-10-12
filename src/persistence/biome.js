@@ -33,7 +33,7 @@ module.exports = (
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
             FROM geo_ea_biomes as geo_biomes1
             INNER JOIN (SELECT gid, name_biome FROM geo_ea_biomes) as geo_biomes2 on geo_biomes2.gid = geo_biomes1.gid
-            WHERE geo_biomes1.id_ea='${envAuthority}'
+            WHERE geo_biomes1.id_ea = '${envAuthority}'
           ) as f
         ) as fc`,
       )

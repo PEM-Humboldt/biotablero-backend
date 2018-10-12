@@ -1,4 +1,5 @@
 const topojson = require('topojson');
+const groupObjects = require('../util/groupObjects');
 
 module.exports = biomePersistence => ({
   /**
@@ -28,4 +29,9 @@ module.exports = biomePersistence => ({
    * @returns {Object[]} existing biomes
    */
   getAll: async () => biomePersistence.findAll(),
+
+  getImpactedDecisionTree: async (projectId) => {
+    const biomes = await biomePersistence.getProjectImpactedWithSzhEa(projectId);
+    return groupObjects(['biome_name', 'nom_szh', 'ea_name'], biomes);
+  },
 });

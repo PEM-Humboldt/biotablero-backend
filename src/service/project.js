@@ -1,3 +1,5 @@
+const groupObjects = require('../util/groupObjects');
+
 /**
  * Takes a phrase and set each word's first letter in upper case.
  * Also, hyphens are replaced by spaces.
@@ -10,45 +12,6 @@ const prettyLabel = phrase => phrase
   .split(/ |-/)
   .map(word => `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`)
   .join(' ');
-
-/**
- * Given a list of keys and a list of objects, construct an object where each first level key
- * correspond to a different project values on the first element of keys array, the second level
- * with the second key, and so on.
- *
- * @example
- * // returns {
- *  colombia: {
- *    bogota: [{ country: "colombia", city: "bogota" }],
- *    cali: [{ country: "colombia", city: "cali" }]
- *  }
- * }
- * groupProjects(
- *  ['country', 'city'],
- *  [{ country: "colombia", city: "bogota" }, { country: "colombia", city: "cali" }]
- * )
- *
- * @param {String[]} keys array with the object keys to be used to group projects
- * @param {Object[]} projects array of objects to group
- */
-const groupProjects = (keys, projects) => {
-  const result = {};
-  projects.forEach((project) => {
-    // targetObj behaves like a moving reference to some result's section.
-    let targetObj = result;
-    let groupKey;
-    keys.forEach((key, idx) => {
-      groupKey = project[key];
-      if (idx < keys.length - 1) {
-        if (!targetObj[groupKey]) targetObj[groupKey] = {};
-        targetObj = targetObj[groupKey];
-      }
-    });
-    if (!targetObj[groupKey]) targetObj[groupKey] = [];
-    targetObj[groupKey].push(project);
-  });
-  return result;
-};
 
 module.exports = (projectPersistence, biomeService) => ({
   /**
@@ -74,7 +37,7 @@ module.exports = (projectPersistence, biomeService) => ({
       throw new ReferenceError(`Some of ${groupProps} are not project properties`);
     }
 
-    return groupProjects(groupProps, projects);
+    return groupObjects(groupProps, projects);
   },
 
   /**
@@ -85,15 +48,15 @@ module.exports = (projectPersistence, biomeService) => ({
    * @return {Object} the project found
    */
   getProjectById: async (projectId) => {
-    if (!projectId) {
-      const error = new Error('Mising required parameter');
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Missing or invalid project id');
       error.code = 400;
       throw error;
     }
-    const projectFound = await projectPersistence.findProjectById(projectId);
+    const projectFound = await projectPersistence.findProjectById(pId);
     return {
       ...projectFound,
-      geomGeoJSON: JSON.parse(projectFound.geomGeoJSON),
       label: prettyLabel(projectFound.name),
     };
   },
@@ -130,4 +93,15 @@ module.exports = (projectPersistence, biomeService) => ({
       })),
     );
   },
+
+  getDecisionTree: async (projectId) => {
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Invalid project id');
+      error.code = 400;
+      throw error;
+    }
+
+    return biomeService.getImpactedDecisionTree(projectId);
+  }
 });

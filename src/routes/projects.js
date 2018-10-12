@@ -295,5 +295,13 @@ module.exports = (errorHandler, projectService) => {
       })
   )));
 
+  router.get('/companies/:id_company/projects/:id_project/decisionTree', errorHandler((req, res, next) => (
+    projectService.getDecisionTree(req.params.id_project)
+      .then((result) => {
+        res.send(result);
+        next();
+      })
+  )));
+
   return router;
 };

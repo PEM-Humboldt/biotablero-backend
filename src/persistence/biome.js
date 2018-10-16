@@ -59,6 +59,14 @@ module.exports = (
         .then(biomes => biomes.toJSON())
     ),
 
+    /**
+     * Find impacted biomes related with a given project, including sub-basin and environmental
+     *  authority information
+     *
+     * @param {Number} projectId project id to filter by
+     *
+     * @returns {Object[]} Array of impacted biomes info related with the project
+     */
     findProjectImpactedWithSzhEa: projectId => (
       db.raw(
         `SELECT DISTINCT(c.nom_szh, c.id_car) as remove, pib.id, gb.name as biome_name, ea.name as ea_name, ha.id_subzone, c.nom_szh, c.id_car as id_ea
@@ -72,6 +80,13 @@ module.exports = (
         .then(({ rows }) => rows.map(({ remove, ...rest }) => rest))
     ),
 
+    /**
+     * Find impacted biomes related with a given project (no relations, only biomes)
+     *
+     * @param {Number} projectId project id to filter by
+     *
+     * @returns {Object[]} Array of impacted biomes info related with the project
+     */
     findProjectImpacted: projectId => (
       projectImpactedBiomesMod
         .where('id_project', projectId)
@@ -83,6 +98,13 @@ module.exports = (
         .then(results => results.toJSON())
     ),
 
+    /**
+     * Select impacted biomes with their geometry, filtered by a list of ids.
+     *
+     * @param {Number[]} biomeIds array of ids to select biomes
+     *
+     * @returns {Object} GeoJson Object with impacted biomes as features from a FeatureCollection
+     */
     findGeoProjectImpacted: biomeIds => (
       db.raw(
         `SELECT row_to_json(fc) as collection

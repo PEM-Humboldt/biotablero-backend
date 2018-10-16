@@ -94,6 +94,13 @@ module.exports = (projectPersistence, biomeService) => ({
     );
   },
 
+  /**
+   * Get the impacted biomes decision tree for a given project
+   *
+   * @param {Number} projectId project id to search for
+   *
+   * @returns {Object} impacted biomes decision tree
+   */
   getDecisionTree: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
@@ -105,6 +112,13 @@ module.exports = (projectPersistence, biomeService) => ({
     return biomeService.getImpactedDecisionTree(projectId);
   },
 
+  /**
+   * Get impacted biomes info for a given project
+   *
+   * @param {Number} projectId project id to search for
+   *
+   * @returns {Object} impacted biomes information
+   */
   getImpactedBiomes: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {

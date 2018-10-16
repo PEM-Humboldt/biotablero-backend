@@ -134,6 +134,76 @@ const { Router } = require('restify-router');
  *    }
  *  ]
  */
+
+/**
+ * @apiDefine impactedBiomesDecisionTreeExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "Hidrobioma Cauca medio": {
+ *      "Rio Tapias y otros directos al Cauca": {
+ *        "Corporacion Autonoma Regional de Risaralda": [
+ *          {
+ *            "id": 19,
+ *            "biome_name": "Hidrobioma Cauca medio",
+ *            "ea_name": "Corporacion Autonoma Regional de Risaralda",
+ *            "id_subzone": 2616,
+ *            "nom_szh": "Rio Tapias y otros directos al Cauca",
+ *            "id_ea": "CARDER"
+ *          }
+ *        ],
+ *        "Corporacion Autonoma Regional de Caldas": [
+ *          {
+ *            "id": 19,
+ *            "biome_name": "Hidrobioma Cauca medio",
+ *            "ea_name": "Corporacion Autonoma Regional de Caldas",
+ *            "id_subzone": 2616,
+ *            "nom_szh": "Rio Tapias y otros directos al Cauca",
+ *            "id_ea": "CORPOCALDAS"
+ *          }
+ *        ]
+ *      }...
+ *    }
+ *  }
+ */
+
+/**
+ * @apiDefine getImpactedBiomesExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "biomes": [
+ *      {
+ *        "id": 91,
+ *        "id_project": 11,
+ *        "natural_area_ha": null,
+ *        "secondary_area_ha": "2.1978",
+ *        "transformed_area_ha": null,
+ *        "area_impacted_ha": "2.1978",
+ *        "area_to_compensate_ha": "2.1978",
+ *        "id_biome": 18,
+ *        "biome": {
+ *          "id_biome": 18,
+ *          "name": "Helobioma Altoandino cordillera oriental",
+ *          "compensation_factor": "7.00"
+ *        }
+ *      },...
+ *    ],
+ *    "geometry": {
+ *      "type": "FeatureCollection",
+ *      "features": [
+ *        {
+ *          "type": "Feature",
+ *          "properties": {
+ *            "gid": 120,
+ *            "name": "Hidrobioma Nechí-San Lucas",
+ *            "compensation_factor": 5.5,
+ *            "id_biome": 113
+ *          },
+ *          "geometry": {...}
+ *        }...
+ *      ]
+ *    }
+ *  }
+ */
 module.exports = (errorHandler, projectService) => {
   const router = new Router();
 
@@ -250,11 +320,11 @@ module.exports = (errorHandler, projectService) => {
 
   /**
    * @apiGroup companiesProjects
-   * @api {post} /companies/:id_company/projects/:id_project/biomes addBiomes
-   * @apiName addBiomes
+   * @api {post} /companies/:id_company/projects/:id_project/biomes addImpactedBiomes
+   * @apiName addImpactedBiomes
    * @apiVersion 0.1.0
    * @apiDescription
-   * Associate a set of biomes with a given project
+   * Associate a set of biomes as impacted by a given project
    *
    * @apiParam (query) {Number} id_company project's owner id
    * @apiParam (query) {Number} id_project project id
@@ -295,6 +365,32 @@ module.exports = (errorHandler, projectService) => {
       })
   )));
 
+  /**
+   * @apiGroup companiesProjects
+   * @api {get} /companies/:id_company/projects/:id_project/decisionTree impactedBiomesDecisionTree
+   * @apiName impactedBiomesDecisionTree
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the impacted biomes decision tree for a given project
+   *
+   * @apiParam (query) {Number} id_company project's owner id
+   * @apiParam (query) {Number} id_project project id
+   *
+   * @apiSuccess {Object} tree the decision tree
+   * @apiSuccess {Object} tree.biome biome name (starting point on the decision tree)
+   * @apiSuccess {Object} tree.biome.subzone sub-basin name
+   * @apiSuccess {Object[]} tree.biome.subzone.ea environmental authority name
+   * @apiSuccess {Number} tree.biome.subzone.ea.id impacted biome id
+   * @apiSuccess {String} tree.biome.subzone.ea.biome_name biome name
+   * @apiSuccess {String} tree.biome.subzone.ea.id_ea environmental authority id
+   * @apiSuccess {String} tree.biome.subzone.ea.ea_name environmental authority name
+   * @apiSuccess {Number} tree.biome.subzone.ea.id_subzone sub-basin id
+   * @apiSuccess {String} tree.biome.subzone.ea.nom_szh sub-basin name
+   *
+   * @apiExample {bash} Example usage:
+   *  /companies/1/projects/1/decisionTree
+   * @apiUse impactedBiomesDecisionTreeExample
+   */
   router.get('/companies/:id_company/projects/:id_project/decisionTree', errorHandler((req, res, next) => (
     projectService.getDecisionTree(req.params.id_project)
       .then((result) => {
@@ -303,6 +399,36 @@ module.exports = (errorHandler, projectService) => {
       })
   )));
 
+  /**
+   * @apiGroup companiesProjects
+   * @api {get} /companies/:id_company/projects/:id_project/biomes getImpactedBiomes
+   * @apiName getImpactedBiomes
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the impacted biomes for a given project
+   *
+   * @apiParam (query) {Number} id_company project's owner id
+   * @apiParam (query) {Number} id_project project id
+   *
+   * @apiSuccess {Object} result impacted biomes info
+   * @apiSuccess {Object[]} result.biomes information for each biomes
+   * @apiSuccess {Number} result.biomes.id impacted biome id
+   * @apiSuccess {Number} result.biomes.id_project impacted biome associated project
+   * @apiSuccess {Number} result.biomes.natural_area_ha natural area impacted
+   * @apiSuccess {Number} result.biomes.secondary_area_ha secondary area impacted
+   * @apiSuccess {Number} result.biomes.transformed_area_ha transformed area impacted
+   * @apiSuccess {Number} result.biomes.area_impacted_ha total area impacted
+   * @apiSuccess {Number} result.biomes.area_to_compensate_ha total area to compensate
+   * @apiSuccess {Number} result.biomes.id_biome impacted biome id
+   * @apiSuccess {Object} result.biomes.biome impacted biome info
+   * @apiSuccess {String} result.biomes.biome.name impacted biome name
+   * @apiSuccess {String} result.biomes.biome.compensation_factor impacted biome compensation factor
+   * @apiSuccess {Object} result.geometry geoJSON with all biomes as features
+   *
+   * @apiExample {bash} Example usage:
+   *  /companies/1/projects/1/biomes
+   * @apiUse getImpactedBiomesExample
+   */
   router.get('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
     projectService.getImpactedBiomes(req.params.id_project)
       .then((result) => {

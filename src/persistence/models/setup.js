@@ -3,13 +3,15 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
-const biomes = require('./biomes');
+const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
 const environmentalAuthorities = require('./environmental_authorities');
 const hidroAreas = require('./hidro_areas');
 const projectImpactedBiomes = require('./project_impacted_biomes');
+const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
+const strategies = require('./strategies');
 
 // Collections
 const projectImpactedBiomesCollection = require('./project_impacted_biomes.collection');
@@ -42,13 +44,15 @@ const setupModels = () => {
 
   const dbConn = connect();
   models = {
-    biomes: biomes(dbConn, eventHandlers),
+    geoBiomes: geoBiomes(dbConn, eventHandlers),
     geoCompanyProjects: geoCompanyProjects(dbConn, eventHandlers),
     geoEaBiomes: geoEaBiomes(dbConn, eventHandlers),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
     environmentalAuthorities: environmentalAuthorities(dbConn, eventHandlers),
     hidroAreas: hidroAreas(dbConn, eventHandlers),
     projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
+    geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
+    strategies: strategies(dbConn, eventHandlers),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

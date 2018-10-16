@@ -55,11 +55,11 @@ module.exports = (errorHandler, projectStrategyService) => {
 
   /**
    * @apiGroup companiesProjectsStrategies
-   * @api {post} /companies/:id_company/projects/:id_project/strategies createStrategy
-   * @apiName createStrategy
+   * @api {post} /companies/:id_company/projects/:id_project/strategies createProjectStrategy
+   * @apiName createProjectStrategy
    * @apiVersion 0.1.0
    * @apiDescription
-   * Create a new strategy associated to the given project
+   * Create a new strategy as part of the selected strategies of the given project
    *
    * @apiParam (query) {Number} id_company project's owner id
    * @apiParam (query) {Number} id_project project associated with this strategy
@@ -100,11 +100,11 @@ module.exports = (errorHandler, projectStrategyService) => {
 
   /**
    * @apiGroup companiesProjectsStrategies
-   * @api {get} /companies/:id_company/projects/:id_project/strategies listStrategies
-   * @apiName listStrategies
+   * @api {get} /companies/:id_company/projects/:id_project/strategies listProjectStrategies
+   * @apiName listProjectStrategies
    * @apiVersion 0.1.0
    * @apiDescription
-   * List all saved strategies (belonging to the user making the request).
+   * List all saved (selected) strategies associated with the given project
    *
    * @apiParam {Number} id_company project's owner id
    * @apiParam {Number} id_project project id

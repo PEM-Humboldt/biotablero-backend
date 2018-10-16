@@ -1,6 +1,10 @@
 const config = require('config');
 
-module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImpactedBiomesColl }) => {
+module.exports = (
+  db,
+  { geoBiomes: geoBiomesMod },
+  { projectImpactedBiomes: projectImpactedBiomesColl },
+) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -29,7 +33,7 @@ module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImp
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
             FROM geo_ea_biomes as geo_biomes1
             INNER JOIN (SELECT gid, name_biome FROM geo_ea_biomes) as geo_biomes2 on geo_biomes2.gid = geo_biomes1.gid
-            WHERE geo_biomes1.id_ea='${envAuthority}'
+            WHERE geo_biomes1.id_ea = '${envAuthority}'
           ) as f
         ) as fc`,
       )
@@ -51,7 +55,7 @@ module.exports = (db, { biomes: biomesMod }, { projectImpactedBiomes: projectImp
      * @returns {Object[]} biomes in the database
      */
     findAll: () => (
-      biomesMod.fetchAll()
+      geoBiomesMod.fetchAll()
         .then(biomes => biomes.toJSON())
     ),
   };

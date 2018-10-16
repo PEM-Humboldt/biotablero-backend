@@ -103,5 +103,16 @@ module.exports = (projectPersistence, biomeService) => ({
     }
 
     return biomeService.getImpactedDecisionTree(projectId);
-  }
+  },
+
+  getImpactedBiomes: async (projectId) => {
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Invalid project id');
+      error.code = 400;
+      throw error;
+    }
+
+    return biomeService.getImpacted(projectId);
+  },
 });

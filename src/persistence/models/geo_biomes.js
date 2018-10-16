@@ -1,7 +1,6 @@
 module.exports = bookshelf => (
   bookshelf.Model.extend({
-    // Table name will change to geo_biomes (talked about it with Alejandro)
-    tableName: 'biomes',
+    tableName: 'geo_biomes',
     idAttribute: 'id_biome',
   })
 );

@@ -31,7 +31,16 @@ module.exports = biomePersistence => ({
   getAll: async () => biomePersistence.findAll(),
 
   getImpactedDecisionTree: async (projectId) => {
-    const biomes = await biomePersistence.getProjectImpactedWithSzhEa(projectId);
+    const biomes = await biomePersistence.findProjectImpactedWithSzhEa(projectId);
     return groupObjects(['biome_name', 'nom_szh', 'ea_name'], biomes);
+  },
+
+  getImpacted: async (projectId) => {
+    const biomes = await biomePersistence.findProjectImpacted(projectId);
+    const geometry = await biomePersistence.findGeoProjectImpacted(
+      biomes.map(biome => biome.id_biome),
+    );
+
+    return { biomes, geometry };
   },
 });

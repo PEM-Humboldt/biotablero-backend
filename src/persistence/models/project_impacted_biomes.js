@@ -6,8 +6,8 @@ const requiredFields = ['id_project', 'id_biome'];
  * @param {Object} bookshelf bookshelf ref to create the model
  * @param {Object} eventHandlers default event handlers, see util/events to see available ones
  */
-module.exports = (bookshelf, { saving }) => (
-  bookshelf.Model.extend({
+module.exports = (bookshelf, { saving }) => {
+  const obj = bookshelf.Model.extend({
     tableName: 'project_impacted_biomes',
     idAttribute: 'id',
     defaults: {
@@ -26,5 +26,20 @@ module.exports = (bookshelf, { saving }) => (
         model.set('is_preloaded', false);
       });
     },
-  })
-);
+  });
+
+  /**
+   * Associate with required models
+   *
+   * @param {Object} models set of available objects to relate with
+   */
+  obj.setRelations = (models) => {
+    /* eslint-disable no-param-reassign */
+    models.projectImpactedBiomes.prototype.biome = function biomes() {
+      return this.belongsTo(models.geoBiomes, 'id_biome', 'id_biome');
+    };
+  };
+  /* eslint-enable no-param-reassign */
+
+  return obj;
+};

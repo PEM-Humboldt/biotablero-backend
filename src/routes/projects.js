@@ -303,5 +303,13 @@ module.exports = (errorHandler, projectService) => {
       })
   )));
 
+  router.get('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
+    projectService.getImpactedBiomes(req.params.id_project)
+      .then((result) => {
+        res.send(result);
+        next();
+      })
+  )));
+
   return router;
 };

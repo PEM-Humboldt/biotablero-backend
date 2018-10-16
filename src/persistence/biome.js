@@ -2,7 +2,7 @@ const config = require('config');
 
 module.exports = (
   db,
-  { geoBiomes: geoBiomesMod },
+  { geoBiomes: geoBiomesMod, projectImpactedBiomes: projectImpactedBiomesMod },
   { projectImpactedBiomes: projectImpactedBiomesColl },
 ) => {
   const geometriesConfig = config.geometries;
@@ -32,7 +32,7 @@ module.exports = (
               row_to_json(geo_biomes2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
             FROM geo_ea_biomes as geo_biomes1
-            INNER JOIN (SELECT gid, name_biome FROM geo_ea_biomes) as geo_biomes2 on geo_biomes2.gid = geo_biomes1.gid
+            INNER JOIN (SELECT gid, name_biome FROM geo_ea_biomes) as geo_biomes2 ON geo_biomes2.gid = geo_biomes1.gid
             WHERE geo_biomes1.id_ea = '${envAuthority}'
           ) as f
         ) as fc`,
@@ -59,7 +59,7 @@ module.exports = (
         .then(biomes => biomes.toJSON())
     ),
 
-    getProjectImpactedWithSzhEa: projectId => (
+    findProjectImpactedWithSzhEa: projectId => (
       db.raw(
         `SELECT DISTINCT(c.nom_szh, c.id_car) as remove, pib.id, gb.name as biome_name, ea.name as ea_name, ha.id_subzone, c.nom_szh, c.id_car as id_ea
         FROM project_impacted_biomes as pib
@@ -69,11 +69,36 @@ module.exports = (
         LEFT JOIN environmental_authorities as ea ON c.id_car = ea.id_ea
         WHERE pib.id_project = ${projectId}`,
       )
-        .then(({ rows }) => {
-          const response = rows.map(({ remove, ...rest }) => rest);
-          console.log(response)
-          return response;
+        .then(({ rows }) => rows.map(({ remove, ...rest }) => rest))
+    ),
+
+    findProjectImpacted: projectId => (
+      projectImpactedBiomesMod
+        .where('id_project', projectId)
+        .fetchAll({
+          columns: ['id', 'id_project', 'natural_area_ha', 'secondary_area_ha', 'transformed_area_ha',
+            'area_impacted_ha', 'area_to_compensate_ha', 'id_biome'],
+          withRelated: [{ biome: qb => qb.column('id_biome', 'name', 'compensation_factor') }],
         })
+        .then(results => results.toJSON())
+    ),
+
+    findGeoProjectImpacted: biomeIds => (
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(geo_biomes2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance_heavy}))::json as geometry
+            FROM geo_biomes as geo_biomes1
+            INNER JOIN (SELECT gid, name, compensation_factor, id_biome FROM geo_biomes) as geo_biomes2 ON geo_biomes2.gid = geo_biomes1.gid
+            WHERE geo_biomes1.id_biome IN (${biomeIds})
+          ) as f
+        ) as fc`,
+      )
+        .then(biomes => biomes.rows[0].collection)
     ),
   };
 };

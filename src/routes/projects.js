@@ -380,7 +380,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiSuccess {Object} tree.biome biome name (starting point on the decision tree)
    * @apiSuccess {Object} tree.biome.subzone sub-basin name
    * @apiSuccess {Object[]} tree.biome.subzone.ea environmental authority name
-   * @apiSuccess {Number} tree.biome.subzone.ea.id impacted biome id
+   * @apiSuccess {Number} tree.biome.subzone.ea.id_biome impacted biome id
    * @apiSuccess {String} tree.biome.subzone.ea.biome_name biome name
    * @apiSuccess {String} tree.biome.subzone.ea.id_ea environmental authority id
    * @apiSuccess {String} tree.biome.subzone.ea.ea_name environmental authority name

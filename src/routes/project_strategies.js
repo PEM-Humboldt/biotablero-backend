@@ -134,5 +134,31 @@ module.exports = (errorHandler, projectStrategyService) => {
       })
   )));
 
+  /**
+   * @apiGroup companiesProjectsStrategies
+   * @api {get} /companies/:id_company/projects/:id_project/strategies/download
+   *  downloadSelectedStrategies
+   * @apiName downloadSelectedStrategies
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Generate a GeoJson file that includes all selected strategies information for a given project
+   *
+   * @apiParam {Number} id_company project's owner id
+   * @apiParam {Number} id_project project id
+   *
+   * @apiSuccess {File} strategies.geojson GeoJson file with selected strategies as features
+   *
+   * @apiExample {bash} Example usage:
+   *  /companies/1/projects/1/strategies/download
+   */
+  router.get('/companies/:id_company/projects/:id_project/strategies/download', errorHandler((req, res, next) => (
+    projectStrategyService.getSelectedStrategiesGeoJson(req.params.id_project)
+      .then((result) => {
+        res.header('Content-Disposition', 'attachment; filename=strategies.geojson');
+        res.send(result);
+        next();
+      })
+  )));
+
   return router;
 };

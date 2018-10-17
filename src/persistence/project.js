@@ -27,7 +27,7 @@ module.exports = (db, { geoCompanyProjects }) => ({
       .where('gid', projectId)
       .fetch({
         columns: ['gid', 'name', 'prj_status', 'id_region', 'area_ha', 'id_company',
-          db.raw('ST_AsGeoJSON(geom) as "geomGeoJSON"')],
+          db.raw('ST_AsGeoJSON(geom)::json as "geomGeoJSON"')],
       })
       .then((result) => {
         if (result === null) {

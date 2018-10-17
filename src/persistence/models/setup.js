@@ -14,7 +14,7 @@ const geoCompensationStrategies2018 = require('./geo_compensation_strategies_201
 const strategies = require('./strategies');
 
 // Collections
-const projectImpactedBiomesCollection = require('./project_impacted_biomes.collection');
+const modelCollection = require('./model.collection');
 
 const eventHandlers = require('./util/events');
 
@@ -58,7 +58,7 @@ const setupModels = () => {
     if (models[key].setRelations) models[key].setRelations(models);
   });
   const collections = {
-    projectImpactedBiomes: projectImpactedBiomesCollection(dbConn, models.projectImpactedBiomes),
+    projectImpactedBiomes: modelCollection(dbConn, models.projectImpactedBiomes),
   };
   return {
     db: dbConn.knex,

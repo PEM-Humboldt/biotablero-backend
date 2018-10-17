@@ -279,7 +279,7 @@ module.exports = (errorHandler, projectService) => {
 
   /**
    * @apiGroup companiesProjects
-   * @api {get} /companies/:id_company/projects createProject
+   * @api {post} /companies/:id_company/projects createProject
    * @apiName createProject
    * @apiVersion 0.1.0
    * @apiDescription

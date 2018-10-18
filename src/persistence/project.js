@@ -1,4 +1,4 @@
-module.exports = (db, { geoCompanyProjects }) => ({
+module.exports = (db, { geoCompanyProjects, projectImpactedBiomes }) => ({
   /**
    * Select all projects for a given company
    *
@@ -47,4 +47,22 @@ module.exports = (db, { geoCompanyProjects }) => ({
    * @returns {Object} created object with its id
    */
   createProject: project => geoCompanyProjects.forge(project).save(),
+
+  /**
+   * Update the total project area with the total impacted biomes affected area
+   *
+   * @param {Number} projectId project id to update
+   *
+   * @returns {Promise} with the updated project when resolved
+   */
+  updateTotalArea: async (projectId) => {
+    const area = await projectImpactedBiomes.query()
+      .where('id_project', projectId)
+      .sum('area_impacted_ha')
+      .select();
+    return geoCompanyProjects
+      .where('gid', projectId)
+      .fetch()
+      .then(project => project.set('area_ha', area[0].sum).save());
+  },
 });

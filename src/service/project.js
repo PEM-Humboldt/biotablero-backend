@@ -71,7 +71,8 @@ module.exports = (projectPersistence, biomeService) => ({
   createProject: async project => projectPersistence.createProject(project),
 
   /**
-   * Associate a set of biomes with a given project
+   * Associate a set of biomes with a given project. Additionally, the associated project total area
+   *  will be updated
    *
    * @param {Number} projectId project id
    * @param {Object[]} biomes biomes to associate with
@@ -86,12 +87,15 @@ module.exports = (projectPersistence, biomeService) => ({
       throw error;
     }
 
-    return biomeService.bulkAddImpacted(
+    const addedBiomes = await biomeService.bulkAddImpacted(
       biomes.map(biome => ({
         ...biome,
         id_project: pId,
       })),
     );
+
+    projectPersistence.updateTotalArea(projectId);
+    return addedBiomes;
   },
 
   /**

@@ -92,7 +92,7 @@ module.exports = (
         .where('id_project', projectId)
         .fetchAll({
           columns: ['id', 'id_project', 'natural_area_ha', 'secondary_area_ha', 'transformed_area_ha',
-            'area_impacted_ha', 'area_to_compensate_ha', 'id_biome'],
+            'area_impacted_ha', 'area_to_compensate_ha', 'id_biome', 'area_impacted_pct'],
           withRelated: [{ biome: qb => qb.column('id_biome', 'name', 'compensation_factor') }],
         })
         .then(results => results.toJSON())

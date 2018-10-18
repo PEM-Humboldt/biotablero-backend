@@ -420,6 +420,8 @@ module.exports = (errorHandler, projectService) => {
    * @apiSuccess {Number} result.biomes.area_impacted_ha total area impacted
    * @apiSuccess {Number} result.biomes.area_to_compensate_ha total area to compensate
    * @apiSuccess {Number} result.biomes.id_biome impacted biome id
+   * @apiSuccess {Number} result.biomes.area_impacted_pct percentage that this biome area represents
+   *  for the hole project area
    * @apiSuccess {Object} result.biomes.biome impacted biome info
    * @apiSuccess {String} result.biomes.biome.name impacted biome name
    * @apiSuccess {String} result.biomes.biome.compensation_factor impacted biome compensation factor

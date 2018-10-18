@@ -13,6 +13,7 @@ const hidroAreas = require('./hidro_areas');
 const projectImpactedBiomes = require('./project_impacted_biomes');
 const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
 const strategies = require('./strategies');
+const eaBioticUnits = require('./ea_biotic_units');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -47,7 +48,7 @@ const setupModels = () => {
   models = {
     geoBiomes: geoBiomes(dbConn, eventHandlers),
     geoCompanyProjects: geoCompanyProjects(dbConn, eventHandlers),
-    geoEaBiomes: geoEaBiomes(dbConn, eventHandlers),
+    geoEaBiomes: geoEaBiomes(dbConn),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
     environmentalAuthorities: environmentalAuthorities(dbConn, eventHandlers),
     hidroAreas: hidroAreas(dbConn, eventHandlers),
@@ -55,6 +56,7 @@ const setupModels = () => {
     geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
     strategies: strategies(dbConn, eventHandlers),
     compensaciones2017carszhmun: compensaciones2017carszhmun(dbConn),
+    eaBioticUnits: eaBioticUnits(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

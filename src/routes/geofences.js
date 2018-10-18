@@ -20,6 +20,21 @@ const { Router } = require('restify-router');
  *    },...
  *  ]
  */
+
+/**
+ * @apiDefine EAByBioticUnitExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "key": "Altoandino cordillera oriental",
+ *      "area": 626680961.00
+ *    },
+ *    {
+ *      "key": "Altoandino influencia llanera",
+ *      "area": 163012538.00
+ *    },...
+ *  ]
+ */
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -43,6 +58,32 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/geofences/ea/:ea_id/compensationFactor', errorHandler((req, res, next) => (
     eaService.getAreaByCF(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofences
+   * @api {get} /geofences/ea/:ea_id/bioticUnit EAByBioticUnit
+   * @apiName EAByBioticUnit
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by biotic units
+   *
+   * @apiParam {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key biotic unit name
+   * @apiSuccess {Number} result.area total area for the compensation factor associated
+   *
+   * @apiExample {curl} Example usage:
+   *  /geofences/ea/CORPOBOYACA/bioticUnit
+   * @apiUse EAByBioticUnitExample
+   */
+  router.get('/geofences/ea/:ea_id/bioticUnit', errorHandler((req, res, next) => (
+    eaService.getAreaByBioticUnit(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
         next();

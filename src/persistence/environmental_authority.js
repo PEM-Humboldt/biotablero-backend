@@ -1,10 +1,10 @@
-module.exports = (db, { compensaciones2017carszhmun }) => ({
+module.exports = (db, { compensaciones2017carszhmun, eaBioticUnits }) => ({
   /**
-   * Find total area grouped by fc_valor in a given environmental authority
+   * Find total area grouped by compensation factor in a given environmental authority
    *
    * @param {String} envAuthorityId environmental authority id
    *
-   * @returns {Object[]} total areas by fc_valor
+   * @returns {Object[]} total areas by compensation factor
    */
   findAreaByCF: envAuthorityId => (
     compensaciones2017carszhmun.query()
@@ -13,5 +13,21 @@ module.exports = (db, { compensaciones2017carszhmun }) => ({
       .groupBy('fc_valor')
       .orderBy('fc_valor', 'asc')
       .select('fc_valor')
+  ),
+
+  /**
+   * Find total area grouped by biotic unit in a given environmental authority
+   *
+   * @param {String} envAuthorityId environmental authority id
+   *
+   * @returns {Object[]} total areas by biotic unit
+   */
+  findAreaByBioticUnit: envAuthorityId => (
+    eaBioticUnits.query()
+      .where('id_ea', envAuthorityId)
+      .sum('area_ha')
+      .groupBy('name')
+      .orderBy('name', 'asc')
+      .select('name')
   ),
 });

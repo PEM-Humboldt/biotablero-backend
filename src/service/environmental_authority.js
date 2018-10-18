@@ -20,4 +20,13 @@ module.exports = eaPersistence => ({
 
     return Object.keys(groupedAreas).sort().map(fc => ({ key: fc, area: groupedAreas[fc] }));
   },
+
+  /**
+   * Get total area grouped by biotic unit for a given environmental authority
+   *
+   * @param {String} envAuthorityId environmental authority id
+   *
+   * @returns {Object[]} total area for each biotic unit
+   */
+  getAreaByBioticUnit: async envAuthorityId => eaPersistence.findAreaByBioticUnit(envAuthorityId),
 });

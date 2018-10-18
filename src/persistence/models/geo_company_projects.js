@@ -13,7 +13,7 @@ module.exports = (bookshelf, { saving }) => {
     constructor: function constructor(...args) {
       bookshelf.Model.apply(this, args);
       // See note on http://bookshelfjs.org/index.html#Model-event-saving
-      this.on('saving', model => saving(requiredFields, model.changed));
+      this.on('saving', model => saving(requiredFields, model.attributes));
     },
   });
 

@@ -290,7 +290,6 @@ module.exports = (errorHandler, projectService) => {
    *
    * @apiParam (body) {Object} project object to be created
    * @apiParam (body) {String} project.name project name
-   * @apiParam (body) {Number} [project.area_ha] project area
    * @apiParam (body) {String} [project.details] extra information about the project
    * @apiParam (body) {String} [project.prj_status] project status
    * @apiParam (body) {Number} project.id_company project's owner id
@@ -299,9 +298,9 @@ module.exports = (errorHandler, projectService) => {
    * @apiSuccess {Object} project new project
    * @apiSuccess {String} project.gid newly created project id
    * @apiSuccess {String} project.name project name
-   * @apiSuccess {Number} project.area_ha project area
-   * @apiSuccess {String} project.details information about the project
-   * @apiSuccess {String} project.prj_status project status
+   * @apiSuccess {Number} [project.area_ha] project area
+   * @apiSuccess {String} [project.details] information about the project
+   * @apiSuccess {String} [project.prj_status] project status
    * @apiSuccess {Number} project.id_company project's owner id
    * @apiSuccess {String} project.id_region project region
    *
@@ -324,7 +323,8 @@ module.exports = (errorHandler, projectService) => {
    * @apiName addImpactedBiomes
    * @apiVersion 0.1.0
    * @apiDescription
-   * Associate a set of biomes as impacted by a given project
+   * Associate a set of biomes as impacted by a given project. This automatically updates the
+   *  associated project total area
    *
    * @apiParam (query) {Number} id_company project's owner id
    * @apiParam (query) {Number} id_project project id

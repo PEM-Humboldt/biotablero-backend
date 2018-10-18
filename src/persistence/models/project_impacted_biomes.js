@@ -16,6 +16,7 @@ module.exports = (bookshelf, { saving }) => {
       transformed_area_ha: 0,
       area_impacted_ha: 0,
       area_to_compensate_ha: 0,
+      area_impacted_pct: 0,
     },
 
     constructor: function constructor(...args) {

@@ -28,4 +28,22 @@ module.exports = strategyPersistence => ({
   listStrategies: async (userId, projectId) => (
     strategyPersistence.findByUserAndProject(userId, projectId)
   ),
+
+  /**
+   * Get all geometries belonging to selected strategies for a given project
+   *
+   * @param {Number} projectId associated project id
+   *
+   * @returns {Object} GeoJson object with all geometries
+   */
+  getSelectedStrategiesGeoJson: async (projectId) => {
+    const pId = parseInt(projectId, 10);
+    if (!pId) {
+      const error = new Error('Invalid project id');
+      error.code = 400;
+      throw error;
+    }
+
+    return strategyPersistence.findSelectedStrategiesGeoJson(pId);
+  },
 });

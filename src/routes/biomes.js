@@ -65,7 +65,7 @@ module.exports = (errorHandler, biomeService) => {
    * **Some of the response properties are TopoJson / GeoJson standard properties, so they are not
    * described here.**
    *
-   * @apiParam {String} ea_name environmental authority to filter biomes
+   * @apiParam {String} ea_id environmental authority id to filter biomes
    *
    * @apiSuccess {Object} topo TopoJson object
    * @apiSuccess {Object} topo.objects.ea GeometryCollection with biomes information
@@ -78,8 +78,8 @@ module.exports = (errorHandler, biomeService) => {
    *  /biomes/ea/CORPOBOYACA
    * @apiUse getBiomesByEAExample
    */
-  router.get('/biomes/ea/:ea_name', errorHandler((req, res, next) => (
-    biomeService.getBiomeByEA(req.params.ea_name)
+  router.get('/biomes/ea/:ea_id', errorHandler((req, res, next) => (
+    biomeService.getBiomeByEA(req.params.ea_id)
       .then((biomes) => {
         res.send(biomes);
         next();

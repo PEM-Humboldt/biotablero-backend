@@ -3,6 +3,7 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
+const compensaciones2017carszhmun = require('./compensaciones2017carszhmun');
 const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
@@ -53,6 +54,7 @@ const setupModels = () => {
     projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
     geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
     strategies: strategies(dbConn, eventHandlers),
+    compensaciones2017carszhmun: compensaciones2017carszhmun(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

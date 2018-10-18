@@ -29,4 +29,13 @@ module.exports = eaPersistence => ({
    * @returns {Object[]} total area for each biotic unit
    */
   getAreaByBioticUnit: async envAuthorityId => eaPersistence.findAreaByBioticUnit(envAuthorityId),
+
+  /**
+   * Get total area grouped by biome for a given environmental authority
+   *
+   * @param {String} envAuthorityId environmental authority id
+   *
+   * @returns {Object[]} total area for each biome
+   */
+  getAreaByBiome: async envAuthorityId => eaPersistence.findAreaByBiome(envAuthorityId),
 });

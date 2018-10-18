@@ -35,6 +35,21 @@ const { Router } = require('restify-router');
  *    },...
  *  ]
  */
+
+/**
+ * @apiDefine EAByGeneralBiomeExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "key": "Helobioma",
+ *      "area": 24402.0139
+ *    },
+ *    {
+ *      "key": "Hidrobioma",
+ *      "area": 20107.551
+ *    },...
+ *  ]
+ */
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -50,7 +65,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key compensation factor value
-   * @apiSuccess {Number} result.area total area for the compensation factor associated
+   * @apiSuccess {Number} result.area total area for the associated compensation factor
    *
    * @apiExample {curl} Example usage:
    *  /geofences/ea/CORPOBOYACA/compensationFactor
@@ -76,7 +91,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key biotic unit name
-   * @apiSuccess {Number} result.area total area for the compensation factor associated
+   * @apiSuccess {Number} result.area total area for the associated biotic unit
    *
    * @apiExample {curl} Example usage:
    *  /geofences/ea/CORPOBOYACA/bioticUnit
@@ -84,6 +99,32 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/geofences/ea/:ea_id/bioticUnit', errorHandler((req, res, next) => (
     eaService.getAreaByBioticUnit(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofences
+   * @api {get} /geofences/ea/:ea_id/generalBiome EAByGeneralBiome
+   * @apiName EAByGeneralBiome
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by general biome (different from IAvH biomes).
+   *
+   * @apiParam {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key biotic unit name
+   * @apiSuccess {Number} result.area total area for the associated biome
+   *
+   * @apiExample {curl} Example usage:
+   *  /geofences/ea/CORPOBOYACA/generalBiome
+   * @apiUse EAByGeneralBiomeExample
+   */
+  router.get('/geofences/ea/:ea_id/generalBiome', errorHandler((req, res, next) => (
+    eaService.getAreaByBiome(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
         next();

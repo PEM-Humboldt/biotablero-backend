@@ -50,6 +50,21 @@ const { Router } = require('restify-router');
  *    },...
  *  ]
  */
+
+/**
+ * @apiDefine BiomeBySubzoneExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "key": "Río Carare (Minero)",
+ *      "area": 217.5024408345576297
+ *    },
+ *    {
+ *      "key": "Río Chicamocha",
+ *      "area": 1030.6969008182
+ *    },...
+ *  ]
+ */
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -125,6 +140,33 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/geofences/ea/:ea_id/generalBiome', errorHandler((req, res, next) => (
     eaService.getAreaByBiome(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofences
+   * @api {get} /geofences/ea/:ea_id/biome/:name_biome/subzone BiomeBySubzone
+   * @apiName BiomeBySubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate a selected biome total area in the given environmental authority by sub-basins
+   *
+   * @apiParam {String} ea_id environmental authority id
+   * @apiParam {String} name_biome biome name
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key sub-basin name
+   * @apiSuccess {Number} result.area total area for the associated sub-basin
+   *
+   * @apiExample {curl} Example usage:
+   *  /geofences/ea/CORPOBOYACA/biome/Orobioma Subandino Guane-Yariguíes/subzone
+   * @apiUse BiomeBySubzoneExample
+   */
+  router.get('/geofences/ea/:ea_id/biome/:name_biome/subzone', errorHandler((req, res, next) => (
+    eaService.getBiomeAreaBySubzone(req.params.ea_id, req.params.name_biome)
       .then((areas) => {
         res.send(areas);
         next();

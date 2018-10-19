@@ -15,6 +15,28 @@ Copy the [config file](config/default.json) with the name of the environment you
 
 By default **NODE_CONFIG_ENV** is *develop* , so you'll need to create *config/develop.json* and set minimum the "db" parameters.
 
+#### Temporary note
+
+The users administration in the current version is very limited and acts just as a mockup. So, in the config file you'll have to add a new property:
+
+``` json
+"users": [
+  {
+    "username": "admin",
+    "name"
+    "password": "password_admin"
+  },
+  {
+    "username": "test",
+    "password": "password_test"
+  }
+]
+```
+
+The property users is an array of objects, each one has a *username* and *password* properties at least and they will be used to login the users you'll want to enable.
+
+**This property isn't present in the default config file, if you don't provide it in your custom configuration all endpoints related with users will not work**
+
 ### Run
 Run `npm start` to start the server, this will launch nodemon with a delay of 3 seconds, ready to watch your changes.
 

@@ -16,12 +16,14 @@ const ProjectService = require('../service/project');
 const ProjectStrategyService = require('../service/project_strategy');
 const StrategyService = require('../service/strategy');
 const EAService = require('../service/environmental_authority');
+const UserService = require('../service/user');
 
-const GeofencesRoutes = require('../routes/biomes');
+const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
 const ProjectStrategiesRoutes = require('../routes/project_strategies');
 const StrategiesRoutes = require('../routes/strategies');
-const geofencesRoutes = require('../routes/geofences');
+const GeofencesRoutes = require('../routes/geofences');
+const UsersRoutes = require('../routes/users');
 
 const bottle = new Bottlejs();
 
@@ -54,13 +56,15 @@ bottle.factory('strategyService',
   container => StrategyService(container.strategyPersistence));
 bottle.factory('eaService',
   container => EAService(container.eaPersistence));
+bottle.factory('userService', () => UserService());
 
 bottle.factory('routes', container => ([
-  GeofencesRoutes(container.errorHandler, container.biomeService),
+  BiomesRoutes(container.errorHandler, container.biomeService),
   ProjectsRoutes(container.errorHandler, container.projectService),
   ProjectStrategiesRoutes(container.errorHandler, container.projectStrategyService),
   StrategiesRoutes(container.errorHandler, container.strategyService),
-  geofencesRoutes(container.errorHandler, container.eaService),
+  GeofencesRoutes(container.errorHandler, container.eaService),
+  UsersRoutes(container.errorHandler, container.userService),
 ]));
 
 

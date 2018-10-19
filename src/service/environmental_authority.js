@@ -38,4 +38,16 @@ module.exports = eaPersistence => ({
    * @returns {Object[]} total area for each biome
    */
   getAreaByBiome: async envAuthorityId => eaPersistence.findAreaByBiome(envAuthorityId),
+
+  /**
+   * Get total area grouped by sub-basin given environmental authority filtered by a biome
+   *
+   * @param {String} envAuthorityId environmental authority id
+   * @param {String} biomeName biome name
+   *
+   * @returns {Object[]} total area for each sub-basin
+   */
+  getBiomeAreaBySubzone: async (envAuthorityId, biomeName) => (
+    eaPersistence.findBiomeAreaBySubzone(envAuthorityId, biomeName)
+  ),
 });

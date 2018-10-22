@@ -54,6 +54,7 @@ module.exports = biomePersistence => ({
    */
   getImpacted: async (projectId) => {
     const biomes = await biomePersistence.findProjectImpacted(projectId);
+    if (!biomes || biomes.length === 0) return {};
     const geometry = await biomePersistence.findGeoProjectImpacted(projectId);
     return { biomes, geometry };
   },

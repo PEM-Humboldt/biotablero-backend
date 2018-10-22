@@ -25,9 +25,7 @@ const { Router } = require('restify-router');
  * @apiDefine listProjectsByCompanyExample2
  * @apiSuccessExample {json} group_props success-Example:
  *  {
- *    "label": "Zona Occidente",
  *    "ZONA OCCIDENTE": {
- *      "label": "Daa",
  *      "DAA": [
  *        {
  *          "gid": 1,
@@ -41,7 +39,7 @@ const { Router } = require('restify-router');
  *      ],
  *      "LICENCIADO": [...]
  *    }...
- *  ]
+ *  }
  */
 
 /**

@@ -32,6 +32,8 @@ module.exports = (projectPersistence, biomeService) => ({
       }));
     }
 
+    if (projects.length <= 0) return {};
+
     const noProjectProp = groupProps.filter(prop => !(prop in projects[0]));
     if (noProjectProp.length !== 0) {
       throw new ReferenceError(`Some of ${groupProps} are not project properties`);

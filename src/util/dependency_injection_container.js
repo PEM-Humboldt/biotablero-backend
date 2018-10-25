@@ -24,6 +24,7 @@ const ProjectStrategiesRoutes = require('../routes/project_strategies');
 const StrategiesRoutes = require('../routes/strategies');
 const GeofencesRoutes = require('../routes/geofences');
 const UsersRoutes = require('../routes/users');
+const EARoutes = require('../routes/environmental_authorities');
 
 const bottle = new Bottlejs();
 
@@ -65,6 +66,7 @@ bottle.factory('routes', container => ([
   StrategiesRoutes(container.errorHandler, container.strategyService),
   GeofencesRoutes(container.errorHandler, container.eaService),
   UsersRoutes(container.errorHandler, container.userService),
+  EARoutes(container.errorHandler, container.eaService),
 ]));
 
 

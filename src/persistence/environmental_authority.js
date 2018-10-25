@@ -1,4 +1,7 @@
-module.exports = (db, { compensaciones2017carszhmun, eaBioticUnits }) => ({
+module.exports = (
+  db,
+  { compensaciones2017carszhmun, eaBioticUnits, environmentalAuthorities },
+) => ({
   /**
    * Find total area grouped by compensation factor in a given environmental authority
    *
@@ -62,5 +65,11 @@ module.exports = (db, { compensaciones2017carszhmun, eaBioticUnits }) => ({
       .groupBy('nom_szh')
       .orderBy('nom_szh', 'asc')
       .select('nom_szh as key')
+  ),
+
+  findAll: () => (
+    environmentalAuthorities
+      .fetchAll({ columns: ['id_ea', 'name'] })
+      .then(ea => ea.toJSON())
   ),
 });

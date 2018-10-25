@@ -50,4 +50,6 @@ module.exports = eaPersistence => ({
   getBiomeAreaBySubzone: async (envAuthorityId, biomeName) => (
     eaPersistence.findBiomeAreaBySubzone(envAuthorityId, biomeName)
   ),
+
+  getAll: async () => eaPersistence.findAll(),
 });

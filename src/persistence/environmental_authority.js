@@ -67,6 +67,9 @@ module.exports = (
       .select('nom_szh as key')
   ),
 
+  /**
+   * Get all environmental authorities id and name
+   */
   findAll: () => (
     environmentalAuthorities
       .fetchAll({ columns: ['id_ea', 'name'] })

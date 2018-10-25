@@ -88,6 +88,7 @@ const { Router } = require('restify-router');
  *      "transformed_area_ha": 0,
  *      "area_impacted_ha": 0,
  *      "area_to_compensate_ha": 0
+ *      "area_impacted_pct": 0
  *    },
  *    {
  *      "id_ea": "CORPOBOYACA",
@@ -98,6 +99,7 @@ const { Router } = require('restify-router');
  *      "transformed_area_ha": 30,
  *      "area_impacted_ha": 60,
  *      "area_to_compensate_ha": 100
+ *      "area_impacted_pct": 0
  *    }
  *  ]
  */
@@ -141,7 +143,7 @@ const { Router } = require('restify-router');
  *      "Rio Tapias y otros directos al Cauca": {
  *        "Corporacion Autonoma Regional de Risaralda": [
  *          {
- *            "id": 19,
+ *            "id_biome": 92,
  *            "biome_name": "Hidrobioma Cauca medio",
  *            "ea_name": "Corporacion Autonoma Regional de Risaralda",
  *            "id_subzone": 2616,
@@ -151,7 +153,7 @@ const { Router } = require('restify-router');
  *        ],
  *        "Corporacion Autonoma Regional de Caldas": [
  *          {
- *            "id": 19,
+ *            "id_biome": 92,
  *            "biome_name": "Hidrobioma Cauca medio",
  *            "ea_name": "Corporacion Autonoma Regional de Caldas",
  *            "id_subzone": 2616,
@@ -336,6 +338,8 @@ module.exports = (errorHandler, projectService) => {
    * @apiParam (body) {Number} [biomes.transformed_area_ha] transformed area affected in this biome
    * @apiParam (body) {Number} [biomes.area_impacted_ha] total area affected in this biome
    * @apiParam (body) {Number} [biomes.area_to_compensate_ha] area to compensate for this biome
+   * @apiParam (body) {Number} [biomes.area_impacted_pct] percentage that represents this biome in
+   *  the total project area
    *
    * @apiSuccess {Object[]} biomes array of biomes to associate with the project
    * @apiSuccess {Number} biomes.id association id
@@ -347,6 +351,8 @@ module.exports = (errorHandler, projectService) => {
    * @apiSuccess {Number} biomes.transformed_area_ha transformed area affected in this biome
    * @apiSuccess {Number} biomes.area_impacted_ha total area affected in this biome
    * @apiSuccess {Number} biomes.area_to_compensate_ha area to compensate for this biome
+   * @apiSuccess {Number} biomes.area_impacted_pct percentage that represents this biome in the
+   *  total project area
    * @apiSuccess {Boolean} biomes.is_preloaded indicates if the biome was associated to the project
    *  through the platform (false) or by other way
    *

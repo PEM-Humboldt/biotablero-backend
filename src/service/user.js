@@ -22,8 +22,8 @@ module.exports = () => {
         error.code = 400;
         throw error;
       }
-      delete user.password;
-      return user;
+      const { password: remove, ...rest } = user;
+      return rest;
     },
   };
 };

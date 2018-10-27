@@ -38,14 +38,26 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id": 4,
- *      "id_biome": 178,
- *      "id_ea": "CORPOBOYACA",
- *      "id_subzone": 2403,
- *      "id_strategy": 10,
- *      "area": 150,
- *      "id_project": 11,
- *      "id_user": 1
+ *      "id": 54,
+ *      "id_biome": 201,
+ *      "id_ea": "CVC",
+ *      "id_subzone": 5311,
+ *      "id_strategy": 1,
+ *      "area": "10.00",
+ *      "id_project": 1,
+ *      "id_user": "1",
+ *      "biome": {
+ *        "id_biome": 201,
+ *        "name": "Orobioma Azonal Subandino Cauca medio"
+ *      },
+ *      "ea": {
+ *        "id_ea": "CVC",
+ *        "name": "Corporacion Autonoma Regional del Valle del Cauca"
+ *      },
+ *      "szh": {
+ *        "id_subzone": 5311,
+ *        "name_subzone": "Dagua - Buenaventura - Bahia Málaga"
+ *      }
  *    }...
  *  ]
  */

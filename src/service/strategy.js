@@ -1,3 +1,5 @@
+const groupObjects = require('../util/groupObjects');
+
 module.exports = strategyPersistence => ({
   /**
    * Get strategies by biome, sub-basin and environmental authority
@@ -18,7 +20,17 @@ module.exports = strategyPersistence => ({
       throw error;
     }
     const geometry = await strategyPersistence.findGeoByBiomeSubzoneEA(bId, sId, envAuthorityId);
-    const strategies = await strategyPersistence.findByBiomeSubzoneEA(bId, sId, envAuthorityId);
+    const listStrategies = await strategyPersistence.findByBiomeSubzoneEA(bId, sId, envAuthorityId);
+    const groupedStrategies = groupObjects(['id_strategy'], listStrategies);
+
+    const strategies = Object.keys(groupedStrategies).map((key) => {
+      const totalArea = groupedStrategies[key].reduce((acc, current) => current.area_ha + acc, 0);
+      return {
+        area_ha: totalArea,
+        id: key,
+        strategy_name: groupedStrategies[key][0].strategy.strategy,
+      };
+    });
 
     return { strategies, geometry };
   },

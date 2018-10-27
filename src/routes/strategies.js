@@ -21,13 +21,9 @@ const { Router } = require('restify-router');
  *  {
  *    "strategies": [
  *      {
- *        "gid": 538112,
- *        "area_ha": 426.15,
- *        "id_strategy": 10,
- *        "strategy": {
- *          "id_strategy": 10,
- *          "strategy": "No sugerido para compensar pérdidas de biodiversidad"
- *        }
+ *        "area_ha": 8546.040000000005,
+ *        "id": "2",
+ *        "strategy_name": "Preservación dentro de áreas declaradas"
  *      }...
  *    ],
  *    "geometry": {
@@ -56,7 +52,8 @@ module.exports = (errorHandler, strategiesService) => {
    * @apiName listStrategiesByBiomeSubzoneEA
    * @apiVersion 0.1.0
    * @apiDescription
-   * List all strategies filtered by biome, sub-basin and environmental authority
+   * List all strategies filtered by biome, sub-basin and environmental authority.
+   *  They are grouped by strategy type (id)
    *
    * **Some of the response properties are GeoJson standard properties, so they are not
    * described here.**
@@ -67,12 +64,9 @@ module.exports = (errorHandler, strategiesService) => {
    *
    * @apiSuccess {Object} object response
    * @apiSuccess {Object[]} object.strategies array of strategies information
-   * @apiSuccess {Number} object.strategies.gid strategy id
-   * @apiSuccess {Number} object.strategies.area_ha area strategy area
-   * @apiSuccess {Number} object.strategies.id_strategy strategy definition id
-   * @apiSuccess {Object} object.strategies.strategy strategy definition object
-   * @apiSuccess {Number} object.strategies.strategy.id_strategy strategy definition id
-   * @apiSuccess {String} object.strategies.strategy.strategy strategy definition name
+   * @apiSuccess {Number} object.strategies.id strategy id
+   * @apiSuccess {Number} object.strategies.area_ha total area for this strategy
+   * @apiSuccess {Number} object.strategies.strategy_name strategy name
    * @apiSuccess {Object} object.geometry geometry geoJson object
    * @apiSuccess {Object[]} object.geometry.features information and geometry for each strategy
    *

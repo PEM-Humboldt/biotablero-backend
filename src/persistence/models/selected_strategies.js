@@ -35,6 +35,9 @@ module.exports = (bookshelf, { saving }) => {
     models.selectedStrategies.prototype.szh = function biome() {
       return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
     };
+    models.selectedStrategies.prototype.strategy = function biome() {
+      return this.belongsTo(models.strategies, 'id_strategy', 'id_strategy');
+    };
   };
   /* eslint-enable no-param-reassign */
   return obj;

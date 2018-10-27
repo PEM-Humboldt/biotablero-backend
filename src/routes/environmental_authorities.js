@@ -7,6 +7,7 @@ const { Router } = require('restify-router');
 
 /**
  * @apiDefine getAllEAExample
+ * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
  *      "id_ea": "CRC",

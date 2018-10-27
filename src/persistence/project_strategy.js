@@ -24,6 +24,7 @@ module.exports = (db, { selectedStrategies }) => ({
           { biome: qb => qb.column('id_biome', 'name') },
           'ea',
           { szh: qb => qb.column('id_subzone', 'name_subzone') },
+          'strategy',
         ],
       })
       .then(results => results.toJSON())

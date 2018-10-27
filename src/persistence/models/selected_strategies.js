@@ -27,13 +27,16 @@ module.exports = (bookshelf, { saving }) => {
   obj.setRelations = (models) => {
     /* eslint-disable no-param-reassign */
     models.selectedStrategies.prototype.biome = function biome() {
-      return this.belongsTo(models.biomes, 'id_biome', 'id_biome');
+      return this.belongsTo(models.geoBiomes, 'id_biome', 'id_biome');
     };
     models.selectedStrategies.prototype.ea = function biome() {
       return this.belongsTo(models.environmentalAuthorities, 'id_ea', 'id_ea');
     };
     models.selectedStrategies.prototype.szh = function biome() {
       return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
+    };
+    models.selectedStrategies.prototype.strategy = function biome() {
+      return this.belongsTo(models.strategies, 'id_strategy', 'id_strategy');
     };
   };
   /* eslint-enable no-param-reassign */

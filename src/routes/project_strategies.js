@@ -38,14 +38,30 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id": 4,
- *      "id_biome": 178,
- *      "id_ea": "CORPOBOYACA",
- *      "id_subzone": 2403,
- *      "id_strategy": 10,
- *      "area": 150,
- *      "id_project": 11,
- *      "id_user": 1
+ *      "id": 54,
+ *      "id_biome": 201,
+ *      "id_ea": "CVC",
+ *      "id_subzone": 5311,
+ *      "id_strategy": 1,
+ *      "area": "10.00",
+ *      "id_project": 1,
+ *      "id_user": "1",
+ *      "biome": {
+ *        "id_biome": 201,
+ *        "name": "Orobioma Azonal Subandino Cauca medio"
+ *      },
+ *      "ea": {
+ *        "id_ea": "CVC",
+ *        "name": "Corporacion Autonoma Regional del Valle del Cauca"
+ *      },
+ *      "szh": {
+ *        "id_subzone": 5311,
+ *        "name_subzone": "Dagua - Buenaventura - Bahia Málaga"
+ *      },
+ *      "strategy": {
+ *        "id_strategy": 1,
+ *        "strategy": "Áreas de interes regional para la posible declaración de áreas protegidas"
+ *      }
  *    }...
  *  ]
  */
@@ -119,6 +135,18 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiSuccess {Number} strategies.area strategy area
    * @apiSuccess {Number} strategies.id_project project associated with this strategy
    * @apiSuccess {Number} strategies.id_user user that created the strategy
+   * @apiSuccess {Number} strategy.biome associated biome object
+   * @apiSuccess {Number} strategy.biome.id_biome biome id
+   * @apiSuccess {Number} strategy.biome.name biome name
+   * @apiSuccess {Number} strategy.ea associated ea object
+   * @apiSuccess {Number} strategy.ea.id_ea ea id
+   * @apiSuccess {Number} strategy.ea.name ea name
+   * @apiSuccess {Number} strategy.szh associated sub-basin object
+   * @apiSuccess {Number} strategy.szh.id_szh sub-basin id
+   * @apiSuccess {Number} strategy.szh.name sub-basin name
+   * @apiSuccess {Number} strategy.strategy associated strategy object
+   * @apiSuccess {Number} strategy.strategy.id_strategy strategy id
+   * @apiSuccess {Number} strategy.strategy.name strategy name
    *
    * @apiExample {bash} Example usage:
    *  /companies/1/projects/1/strategies

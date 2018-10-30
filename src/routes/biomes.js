@@ -16,6 +16,8 @@ const { Router } = require('restify-router');
  *        "properties": {
  *          "gid": 252,
  *          "name_biome": "Hidrobioma Magdalena medio y depresión momposina"
+ *          "id_biome": 41,
+ *          "compensation_factor": 6.5
  *        },
  *        "geometry": {
  *          "type": "MultiPolygon",

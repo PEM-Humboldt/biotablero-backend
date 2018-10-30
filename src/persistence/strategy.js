@@ -35,7 +35,7 @@ module.exports = (
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
             FROM geo_compensation_strategies_2018 as strategies1
             INNER JOIN (
-              SELECT gid, area_ha, area_status, st.strategy
+              SELECT gid, area_ha, area_status, st.strategy, st.id_strategy
               FROM geo_compensation_strategies_2018 as geo_st
               INNER JOIN strategies as st ON st.id_strategy = geo_st.id_strategy
             ) as strategies2 on strategies2.gid = strategies1.gid

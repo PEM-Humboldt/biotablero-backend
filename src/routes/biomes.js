@@ -9,32 +9,20 @@ const { Router } = require('restify-router');
  * @apiDefine getBiomesByEAExample
  * @apiSuccessExample {json} Success-Example:
  *  {
- *    "type": "Topology",
- *    "objects": {
- *      "ea": {
- *        "type": "GeometryCollection",
- *        "geometries": [
- *          {
- *            "type": "MultiPolygon",
- *            "arcs": [...],
- *            "properties": {
- *              "id_ea": "CORPOBOYACA",
- *              "name_biome": "Hidrobioma Magdalena medio y depresión momposina"
- *            }
- *          },
- *          {
- *            "type": "MultiPolygon",
- *            "arcs": [...],
- *            "properties": {
- *              "id_ea": "CORPOBOYACA",
- *              "name_biome": "Orobioma de Paramo Uwa"
- *            }
- *          }...
- *        ]
- *      }
- *    },
- *    "arcs": [...],
- *    "bbox": [...]
+ *    "type": "FeatureCollection",
+ *    "features": [
+ *      {
+ *        "type": "Feature",
+ *        "properties": {
+ *          "gid": 252,
+ *          "name_biome": "Hidrobioma Magdalena medio y depresión momposina"
+ *        },
+ *        "geometry": {
+ *          "type": "MultiPolygon",
+ *          "coordinates": [...]
+ *        }
+ *      },...
+ *    ]
  *  }
  */
 

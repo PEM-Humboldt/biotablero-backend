@@ -36,6 +36,7 @@ const { Router } = require('restify-router');
  *            "area_ha": 426.15,
  *            "area_status": "Transformado",
  *            "strategy": "No sugerido para compensar pérdidas de biodiversidad"
+ *            "id_strategy": 7
  *          },
  *          "geometry": {...}
  *        }...

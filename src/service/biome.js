@@ -1,4 +1,3 @@
-const topojson = require('topojson');
 const groupObjects = require('../util/groupObjects');
 
 module.exports = biomePersistence => ({
@@ -9,10 +8,7 @@ module.exports = biomePersistence => ({
    *
    * @return {Object} TopoJson Object with biomes as geometries from a GeometryCollection
    */
-  getBiomeByEA: async (envAuthority) => {
-    const biomes = await biomePersistence.findBiomeByEA(envAuthority);
-    return topojson.topology({ ea: biomes });
-  },
+  getBiomeByEA: async envAuthority => biomePersistence.findBiomeByEA(envAuthority),
 
   /**
    * Bulk create a set of project impacted biomes

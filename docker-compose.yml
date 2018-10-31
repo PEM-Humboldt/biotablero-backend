@@ -1,7 +1,7 @@
 version: '3'
 services:
   biotablero_backend:
-    image: test:latest
+    image: biotablero:backend:1.0.0
     container_name: biotablero_backend
     environment:
       - NODE_CONFIG_ENV=production

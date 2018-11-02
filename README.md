@@ -8,12 +8,12 @@ These instructions will get you a copy of the project up and running on your loc
 You'll need nodejs v8.11+ and npm v5.6+ to run the project.
 
 ### Install dependencies
-After cloning the project, install its dependencies running `npm i`
+After cloning the project, install its dependencies running: `npm i`
 
 ### Setup
 Copy the [config file](config/default.json) with the name of the environment you're running, this name needs to be the same as the env var **NODE_CONFIG_ENV**.
 
-By default **NODE_CONFIG_ENV** is *develop* , so you'll need to create *config/develop.json* and set minimum the "db" parameters.
+By default **NODE_CONFIG_ENV** is *develop*, so you'll need to create *config/develop.json* and set minimum the "db" parameters.
 
 #### Temporary note
 
@@ -23,7 +23,7 @@ The users administration in the current version is very limited and acts just as
 "users": [
   {
     "username": "admin",
-    "name"
+    "name": "Admin",
     "password": "password_admin"
   },
   {
@@ -41,13 +41,41 @@ The property users is an array of objects, each one has a *username* and *passwo
 Run `npm start` to start the server, this will launch nodemon with a delay of 3 seconds, ready to watch your changes.
 
 ## Deployment
-// TODO
+
+Deployment is made with docker, you'll need Docker v17.05.0+ and docker compose v1.17.1+
+
+### Build image
+
+To build the image run: `docker build -t biotablero-backend:<version> .`
+
+It is recommended to use the [current release](https://github.com/PEM-Humboldt/biotablero-backend/releases) for the image tag version.
+
+### Deploy container
+
+#### Config
+
+After you've built the image, create a copy of the [config](config/develop) file with your configuration values. Remember to match the config file name with the env variable set for the container at run time.
+
+**NOTE**: *If you change the server port in the configuration (4000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
+
+#### Deploy
+
+In the file [docker-compose.yml](docker-compose.yml):
+
+1. Update the image tag to use
+1. Change (if necessary) the NODE_CONFIG_ENV value to match your config file
+1. The host part of **volumes** section must match the location of your config files. And the file name must match the NODE_CONFIG_ENV value.
+1. If you changed the port in the config, change the container side of **ports** section for the value set, and change the host side for the ort in which you want to expose the servide
+
+Then run: `docker-compose up -d`
 
 ## Tests
 There are no tests currently.
 
 ## Documentation
 You can generate the API documentation with `npm run gen_docs`, it will generate them under the */docs* folder
+
+Production version of these docs are available [here](https://pem-humboldt.github.io/biotablero-backend/).
 
 ## Contributing
 

@@ -74,12 +74,12 @@ module.exports = (
      */
     findProjectImpactedWithSzhEa: projectId => (
       db.raw(
-        `SELECT DISTINCT(c.nom_szh, c.id_car) as remove, gb.id_biome, gb.name as biome_name, ea.name as ea_name, ha.id_subzone, c.nom_szh, c.id_car as id_ea
+        `SELECT DISTINCT(st.id_subzone, st.id_ea) as remove, st.id_subzone, st.id_ea, st.id_biome, gb.name as biome_name, ea.name as ea_name, ha.name_subzone as nom_szh
         FROM project_impacted_biomes as pib
         INNER JOIN geo_biomes as gb ON pib.id_biome = gb.id_biome
-        INNER JOIN compensaciones2017carszhmun as c ON c.bioma_iavh = gb.name
-        LEFT JOIN hidro_areas AS ha ON ha.name_subzone = c.nom_szh
-        LEFT JOIN environmental_authorities as ea ON c.id_car = ea.id_ea
+        INNER JOIN geo_compensation_strategies_2018 as st ON pib.id_biome = st.id_biome
+        INNER JOIN hidro_areas AS ha ON st.id_subzone = ha.id_subzone
+        INNER JOIN environmental_authorities as ea ON st.id_ea = ea.id_ea
         WHERE pib.id_project = ${projectId}`,
       )
         .then(({ rows }) => rows.map(({ remove, ...rest }) => rest))

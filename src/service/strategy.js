@@ -19,7 +19,7 @@ module.exports = strategyPersistence => ({
       error.code = 400;
       throw error;
     }
-    const geometry = await strategyPersistence.findGeoByBiomeSubzoneEA(bId, sId, envAuthorityId);
+    let geometry = await strategyPersistence.findGeoByBiomeSubzoneEA(bId, sId, envAuthorityId);
     const listStrategies = await strategyPersistence.findByBiomeSubzoneEA(bId, sId, envAuthorityId);
     const groupedStrategies = groupObjects(['id_strategy'], listStrategies);
 
@@ -31,6 +31,8 @@ module.exports = strategyPersistence => ({
         strategy_name: groupedStrategies[key][0].strategy.strategy,
       };
     });
+
+    geometry = geometry.features === null ? null : geometry;
 
     return { strategies, geometry };
   },

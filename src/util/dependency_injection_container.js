@@ -54,7 +54,7 @@ bottle.factory('projectService', container => (
 bottle.factory('projectStrategyService',
   container => ProjectStrategyService(container.projectStrategyPersistence));
 bottle.factory('strategyService',
-  container => StrategyService(container.strategyPersistence));
+  container => StrategyService(container.strategyPersistence, container.logger));
 bottle.factory('eaService',
   container => EAService(container.eaPersistence));
 bottle.factory('userService', () => UserService());

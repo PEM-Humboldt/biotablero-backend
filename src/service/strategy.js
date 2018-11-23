@@ -1,6 +1,6 @@
 const groupObjects = require('../util/groupObjects');
 
-module.exports = strategyPersistence => ({
+module.exports = (strategyPersistence, logger) => ({
   /**
    * Get strategies by biome, sub-basin and environmental authority
    *
@@ -32,7 +32,10 @@ module.exports = strategyPersistence => ({
       };
     });
 
-    geometry = geometry.features === null ? null : geometry;
+    if (geometry.features === null) {
+      logger.error(`Combination of biome: ${biomeId}, sub-basin: ${subzoneId} and ea: ${envAuthorityId} without strategies`);
+      geometry = null;
+    }
 
     return { strategies, geometry };
   },

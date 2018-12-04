@@ -8,7 +8,11 @@ module.exports = biomePersistence => ({
    *
    * @return {Object} TopoJson Object with biomes as geometries from a GeometryCollection
    */
-  getBiomeByEA: async envAuthority => biomePersistence.findBiomeByEA(envAuthority),
+  getBiomeByEA: async (envAuthority) => {
+    let geometry = await biomePersistence.findBiomeByEA(envAuthority);
+    if (geometry === null || geometry.features === null) geometry = null;
+    return geometry;
+  },
 
   /**
    * Bulk create a set of project impacted biomes

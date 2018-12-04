@@ -1,6 +1,6 @@
 module.exports = bookshelf => (
   bookshelf.Model.extend({
-    tableName: 'compensaciones2017carszhmun',
+    tableName: 'colombia_details',
     idAttribute: 'gid',
   })
 );

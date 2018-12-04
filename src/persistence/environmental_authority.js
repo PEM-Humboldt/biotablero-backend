@@ -1,6 +1,6 @@
 module.exports = (
   db,
-  { compensaciones2017carszhmun, eaBioticUnits, environmentalAuthorities },
+  { colombiaDetails, eaBioticUnits, environmentalAuthorities },
 ) => ({
   /**
    * Find total area grouped by compensation factor in a given environmental authority
@@ -10,8 +10,8 @@ module.exports = (
    * @returns {Object[]} total areas by compensation factor
    */
   findAreaByCF: envAuthorityId => (
-    compensaciones2017carszhmun.query()
-      .where('id_car', envAuthorityId)
+    colombiaDetails.query()
+      .where('idcar', envAuthorityId)
       .sum('area_ha')
       .groupBy('fc_valor')
       .orderBy('fc_valor', 'asc')
@@ -42,8 +42,8 @@ module.exports = (
    * @returns {Object[]} total areas by biome
    */
   findAreaByBiome: envAuthorityId => (
-    compensaciones2017carszhmun.query()
-      .where('id_car', envAuthorityId)
+    colombiaDetails.query()
+      .where('idcar', envAuthorityId)
       .sum('area_ha as area')
       .groupBy('bioma_prel')
       .orderBy('bioma_prel', 'asc')
@@ -59,12 +59,12 @@ module.exports = (
    * @returns {Object[]} total areas by sub-basin
    */
   findBiomeAreaBySubzone: (envAuthorityId, biomeName) => (
-    compensaciones2017carszhmun.query()
-      .where({ id_car: envAuthorityId, bioma_iavh: biomeName })
+    colombiaDetails.query()
+      .where({ idcar: envAuthorityId, bioma_iavh: biomeName })
       .sum('area_ha as area')
-      .groupBy('nom_szh')
-      .orderBy('nom_szh', 'asc')
-      .select('nom_szh as key')
+      .groupBy('nomszh')
+      .orderBy('nomszh', 'asc')
+      .select('nomszh as key')
   ),
 
   /**

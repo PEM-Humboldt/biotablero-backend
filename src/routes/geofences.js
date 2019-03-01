@@ -84,37 +84,54 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup geofences
-   * @api {get} /geofences/basins listBasins
-   * @apiName listBasins
+   * @api {get} /geofences/basinAreas listBasinAreas
+   * @apiName listBasinAreas
    * @apiVersion 0.1.0
    * @apiDescription
-   * List all available basins
+   * List all available basin areas
    *
-   * @apiSuccess {Object[]} basins list of basins
+   * @apiSuccess {Object[]} basin_areas list of basin areas
    * @apiSuccess TODO list other response attributes
    *
    * @apiExample {curl} Example usage:
-   *  /geofences/basins
+   *  /geofences/basinAreas
    * TODO: Add response example
    */
-  router.get('/geofences/basins', errorHandler());
+  router.get('/geofences/basinAreas', errorHandler());
 
   /**
    * @apiGroup geofences
-   * @api {get} /geofences/sub-basins listSub-basins
-   * @apiName listSub-basins
+   * @api {get} /geofences/basinZones listBasinZones
+   * @apiName listBasinZones
    * @apiVersion 0.1.0
    * @apiDescription
-   * List all available sub-basins
+   * List all available basin zones
    *
-   * @apiSuccess {Object[]} sub-basins list of sub-basins
+   * @apiSuccess {Object[]} basin_zones list of basin zones
    * @apiSuccess TODO list other response attributes
    *
    * @apiExample {curl} Example usage:
-   *  /geofences/sub-basins
+   *  /geofences/basinZones
    * TODO: Add response example
    */
-  router.get('/geofences/sub-basins', errorHandler());
+  router.get('/geofences/basinZones', errorHandler());
+
+  /**
+   * @apiGroup geofences
+   * @api {get} /geofences/basinSubZones listBasinSubZones
+   * @apiName listBasinSubZones
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List all available basin sub-zones
+   *
+   * @apiSuccess {Object[]} basin_sub-zones list of basin sub-zones
+   * @apiSuccess TODO list other response attributes
+   *
+   * @apiExample {curl} Example usage:
+   *  /geofences/basinSubZones
+   * TODO: Add response example
+   */
+  router.get('/geofences/basinSubZones', errorHandler());
 
   /**
    * @apiGroup geofences

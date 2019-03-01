@@ -36,7 +36,22 @@ const { Router } = require('restify-router');
  *  ]
  */
 
-module.exports = (errorHandler, eaService, stateService) => {
+/**
+ * @apiDefine getAllMunicipalitiesExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "id_municipality": "560",
+ *      "municipality": "Potosí"
+ *    },
+ *    {
+ *      "id_municipality": "569",
+ *      "municipality": "Puerto Caicedo"
+ *    }...
+ *  ]
+ */
+
+module.exports = (errorHandler, eaService, stateService, municipalityService) => {
   const router = new Router();
 
   /**
@@ -95,14 +110,21 @@ module.exports = (errorHandler, eaService, stateService) => {
    * @apiDescription
    * List all available municipalities
    *
-   * @apiSuccess {Object[]} municipalities list of municipalities
-   * @apiSuccess TODO list other response attributes
+   * @apiSuccess {Object[]} municipality list of municipalities
+   * @apiSuccess {String} municipality.municipality municipality name
+   * @apiSuccess {Number} municipality.id_municipality municipality id
    *
    * @apiExample {curl} Example usage:
    *  /geofences/municipalities
-   * TODO: Add response example
+   * @apiUse getAllMunicipalitiesExample
    */
-  router.get('/geofences/municipalities', errorHandler());
+  router.get('/geofences/municipalities', errorHandler((req, res, next) => (
+    municipalityService.getAll()
+      .then((municipalities) => {
+        res.send(municipalities);
+        next();
+      })
+  )));
 
   /**
    * @apiGroup geofences

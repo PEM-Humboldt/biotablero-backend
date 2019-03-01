@@ -11,6 +11,7 @@ const ProjectStrategyPersistence = require('../persistence/project_strategy');
 const StrategyPersistence = require('../persistence/strategy');
 const EAPersistence = require('../persistence/environmental_authority');
 const StatePersistence = require('../persistence/state');
+const MunicipalityPersistence = require('../persistence/municipality');
 
 const BiomeService = require('../service/biome');
 const ProjectService = require('../service/project');
@@ -19,6 +20,7 @@ const StrategyService = require('../service/strategy');
 const EAService = require('../service/environmental_authority');
 const UserService = require('../service/user');
 const StateService = require('../service/state');
+const MunicipalityService = require('../service/municipality');
 
 const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
@@ -51,6 +53,9 @@ bottle.factory('eaPersistence', () => (
 bottle.factory('statePersistence', () => (
   StatePersistence(bookshelfModels.db, bookshelfModels.models)
 ));
+bottle.factory('municipalityPersistence', () => (
+  MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models)
+));
 
 bottle.factory('biomeService', container => BiomeService(container.biomePersistence));
 bottle.factory('projectService', container => (
@@ -65,13 +70,18 @@ bottle.factory('eaService',
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService',
   container => StateService(container.statePersistence));
+bottle.factory('municipalityService',
+  container => MunicipalityService(container.municipalityPersistence));
 
 bottle.factory('routes', container => ([
   BiomesRoutes(container.errorHandler, container.biomeService),
   ProjectsRoutes(container.errorHandler, container.projectService),
   ProjectStrategiesRoutes(container.errorHandler, container.projectStrategyService),
   StrategiesRoutes(container.errorHandler, container.strategyService),
-  GeofencesRoutes(container.errorHandler, container.eaService, container.stateService),
+  GeofencesRoutes(
+    container.errorHandler, container.eaService, container.stateService,
+    container.municipalityService,
+  ),
   UsersRoutes(container.errorHandler, container.userService),
   EARoutes(container.errorHandler, container.eaService),
 ]));

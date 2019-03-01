@@ -15,6 +15,7 @@ const geoCompensationStrategies2018 = require('./geo_compensation_strategies_201
 const strategies = require('./strategies');
 const eaBioticUnits = require('./ea_biotic_units');
 const geoStates = require('./geo_states');
+const geoMunicipalities = require('./geo_municipalities');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -59,6 +60,7 @@ const setupModels = () => {
     colombiaDetails: colombiaDetails(dbConn),
     eaBioticUnits: eaBioticUnits(dbConn),
     geoStates: geoStates(dbConn),
+    geoMunicipalities: geoMunicipalities(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

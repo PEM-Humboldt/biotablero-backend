@@ -14,6 +14,7 @@ const projectImpactedBiomes = require('./project_impacted_biomes');
 const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
 const strategies = require('./strategies');
 const eaBioticUnits = require('./ea_biotic_units');
+const geoStates = require('./geo_states');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -57,6 +58,7 @@ const setupModels = () => {
     strategies: strategies(dbConn, eventHandlers),
     colombiaDetails: colombiaDetails(dbConn),
     eaBioticUnits: eaBioticUnits(dbConn),
+    geoStates: geoStates(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

@@ -2,8 +2,8 @@ const { Router } = require('restify-router');
 
 /**
  * @apiDefine geofences Geofences
- * Geofences endpoints: Given some kind of geofence, such as environmental authority, get its area
- * divided by some criterion, such as compensation factor, biomes or biotic units
+ * Geofences endpoints: List information about some kind of geofence,
+ * such as environmental authority, states, municipalities, etc.
  */
 
 /**
@@ -20,8 +20,23 @@ const { Router } = require('restify-router');
  *    }...
  *  ]
  */
-// TODO: Inject other services
-module.exports = (errorHandler, eaService) => {
+
+/**
+ * @apiDefine getAllStatesExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "id_state": "44",
+ *      "name": "La Guajira"
+ *    },
+ *    {
+ *      "id_state": "97",
+ *      "name": "Vaupés"
+ *    }...
+ *  ]
+ */
+
+module.exports = (errorHandler, eaService, stateService) => {
   const router = new Router();
 
   /**
@@ -50,20 +65,27 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup geofences
-   * @api {get} /geofences/departments listDepartments
-   * @apiName listDepartments
+   * @api {get} /geofences/states listStates
+   * @apiName listStates
    * @apiVersion 0.1.0
    * @apiDescription
-   * List all available departments
+   * List all available states
    *
-   * @apiSuccess {Object[]} departments list of departments
-   * @apiSuccess TODO list other response attributes
+   * @apiSuccess {Object[]} state list of states
+   * @apiSuccess {String} state.name State name
+   * @apiSuccess {Number} state.id_state State id
    *
    * @apiExample {curl} Example usage:
-   *  /geofences/departments
-   * TODO: Add response example
+   *  /geofences/states
+   * @apiUse getAllStatesExample
    */
-  router.get('/geofences/departments', errorHandler());
+  router.get('/geofences/states', errorHandler((req, res, next) => (
+    stateService.getAll()
+      .then((states) => {
+        res.send(states);
+        next();
+      })
+  )));
 
   /**
    * @apiGroup geofences

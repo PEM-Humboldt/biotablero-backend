@@ -89,7 +89,7 @@ There are no guidelines for contribution currently.
 | docs | generated api doc. |
 | src |  |
 | src.persistence | Database access layer. |
-| src.persistence.models | Map for each database table, filename must match the tale name. |
+| src.persistence.models | Map for each database table, filename must match the table name. |
 | src.persistence.models.util | utilities functions for models, contains event handlers functions for now. |
 | src.persistence.connection.js | Database connection file. |
 | src.persistence.*.js | Other .js files correspond to model accessors. One file for main "object", for example, all queries were projects are created, listed, filter by some criteria, etc. are grouped under *project.js*. This is because we can't control the database design, so the model accessors will be like our entities according to the app logic. Filename must be in singular. |

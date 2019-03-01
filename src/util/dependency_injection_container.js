@@ -29,6 +29,7 @@ const StrategiesRoutes = require('../routes/strategies');
 const GeofencesRoutes = require('../routes/geofences');
 const UsersRoutes = require('../routes/users');
 const EARoutes = require('../routes/environmental_authorities');
+const StateRoutes = require('../routes/states');
 
 const bottle = new Bottlejs();
 
@@ -69,7 +70,7 @@ bottle.factory('eaService',
   container => EAService(container.eaPersistence));
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService',
-  container => StateService(container.statePersistence));
+  container => StateService(container.statePersistence, container.municipalityService));
 bottle.factory('municipalityService',
   container => MunicipalityService(container.municipalityPersistence));
 
@@ -84,6 +85,7 @@ bottle.factory('routes', container => ([
   ),
   UsersRoutes(container.errorHandler, container.userService),
   EARoutes(container.errorHandler, container.eaService),
+  StateRoutes(container.errorHandler, container.stateService),
 ]));
 
 

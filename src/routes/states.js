@@ -6,7 +6,22 @@ const { Router } = require('restify-router');
  */
 
 /**
- * @apiDefine municipalitiesInStateExample
+ * @apiDefine getAllStatesExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "id_state": "44",
+ *      "name": "La Guajira"
+ *    },
+ *    {
+ *      "id_state": "97",
+ *      "name": "Vaupés"
+ *    }...
+ *  ]
+ */
+
+/**
+ * @apiDefine stateByMunicipalitiesExample
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
@@ -25,8 +40,32 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup states
-   * @api {get} /states/:state_id/municipalities MunicipalitiesInState
-   * @apiName MunicipalitiesInState
+   * @api {get} /states listStates
+   * @apiName listStates
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List all available states
+   *
+   * @apiSuccess {Object[]} state list of states
+   * @apiSuccess {String} state.name State name
+   * @apiSuccess {Number} state.id_state State id
+   *
+   * @apiExample {curl} Example usage:
+   *  /states
+   * @apiUse getAllStatesExample
+   */
+  router.get('/states', errorHandler((req, res, next) => (
+    stateService.getAll()
+      .then((states) => {
+        res.send(states);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
+   * @api {get} /states/:state_id/municipalities stateByMunicipalities
+   * @apiName stateByMunicipalities
    * @apiVersion 0.1.0
    * @apiDescription
    * List all municipalities information in the given state
@@ -39,7 +78,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/municipalities
-   * @apiUse municipalitiesInStateExample
+   * @apiUse stateByMunicipalitiesExample
    */
   router.get('/states/:state_id/municipalities', errorHandler((req, res, next) => (
     stateService.getMunicipalities(req.params.state_id)

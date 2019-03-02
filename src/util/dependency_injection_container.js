@@ -12,6 +12,7 @@ const StrategyPersistence = require('../persistence/strategy');
 const EAPersistence = require('../persistence/environmental_authority');
 const StatePersistence = require('../persistence/state');
 const MunicipalityPersistence = require('../persistence/municipality');
+const PAPersistence = require('../persistence/protected_area');
 
 const BiomeService = require('../service/biome');
 const ProjectService = require('../service/project');
@@ -21,6 +22,7 @@ const EAService = require('../service/environmental_authority');
 const UserService = require('../service/user');
 const StateService = require('../service/state');
 const MunicipalityService = require('../service/municipality');
+const PAService = require('../service/protected_area');
 
 const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
@@ -29,7 +31,8 @@ const StrategiesRoutes = require('../routes/strategies');
 const GeofencesRoutes = require('../routes/geofences');
 const UsersRoutes = require('../routes/users');
 const EARoutes = require('../routes/environmental_authorities');
-const StateRoutes = require('../routes/states');
+const StatesRoutes = require('../routes/states');
+const PARoutes = require('../routes/protected_areas');
 
 const bottle = new Bottlejs();
 
@@ -57,6 +60,9 @@ bottle.factory('statePersistence', () => (
 bottle.factory('municipalityPersistence', () => (
   MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models)
 ));
+bottle.factory('paPersistence', () => (
+  PAPersistence(bookshelfModels.db, bookshelfModels.models)
+));
 
 bottle.factory('biomeService', container => BiomeService(container.biomePersistence));
 bottle.factory('projectService', container => (
@@ -73,6 +79,8 @@ bottle.factory('stateService',
   container => StateService(container.statePersistence, container.municipalityService));
 bottle.factory('municipalityService',
   container => MunicipalityService(container.municipalityPersistence));
+bottle.factory('paService',
+  container => PAService(container.paPersistence));
 
 bottle.factory('routes', container => ([
   BiomesRoutes(container.errorHandler, container.biomeService),
@@ -85,7 +93,8 @@ bottle.factory('routes', container => ([
   ),
   UsersRoutes(container.errorHandler, container.userService),
   EARoutes(container.errorHandler, container.eaService),
-  StateRoutes(container.errorHandler, container.stateService),
+  StatesRoutes(container.errorHandler, container.stateService),
+  PARoutes(container.errorHandler, container.paService),
 ]));
 
 

@@ -16,6 +16,7 @@ const strategies = require('./strategies');
 const eaBioticUnits = require('./ea_biotic_units');
 const geoStates = require('./geo_states');
 const geoMunicipalities = require('./geo_municipalities');
+const geoProtectedAreas = require('./geo_protected_areas');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -61,6 +62,7 @@ const setupModels = () => {
     eaBioticUnits: eaBioticUnits(dbConn),
     geoStates: geoStates(dbConn),
     geoMunicipalities: geoMunicipalities(dbConn),
+    geoProtectedAreas: geoProtectedAreas(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

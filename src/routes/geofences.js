@@ -101,23 +101,6 @@ module.exports = (errorHandler, eaService, stateService, municipalityService) =>
 
   /**
    * @apiGroup geofences
-   * @api {get} /geofences/protectedAreas listProtectedAreas
-   * @apiName listProtectedAreas
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * List all available protected areas
-   *
-   * @apiSuccess {Object[]} protectedAreas list of protected areas
-   * @apiSuccess TODO list other response attributes
-   *
-   * @apiExample {curl} Example usage:
-   *  /geofences/protectedAreas
-   * TODO: Add response example
-   */
-  router.get('/geofences/protectedAreas', errorHandler());
-
-  /**
-   * @apiGroup geofences
    * @api {get} /geofences/strategicEcosystems listStrategicEcosystems
    * @apiName listStrategicEcosystems
    * @apiVersion 0.1.0

@@ -20,6 +20,9 @@ const geoProtectedAreas = require('./geo_protected_areas');
 const geoBasinAreas = require('./geo_basin_areas');
 const geoBasinZones = require('./geo_basin_zones');
 const geoBasinSubzones = require('./geo_basin_subzones');
+const geoParamo = require('./geo_paramo');
+const geoTropicalDryForest = require('./geo_tropical_dry_forest');
+const geoWetland = require('./geo_wetlands');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -69,6 +72,9 @@ const setupModels = () => {
     geoBasinAreas: geoBasinAreas(dbConn),
     geoBasinZones: geoBasinZones(dbConn),
     geoBasinSubzones: geoBasinSubzones(dbConn),
+    geoParamo: geoParamo(dbConn),
+    geoTropicalDryForest: geoTropicalDryForest(dbConn),
+    geoWetland: geoWetland(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

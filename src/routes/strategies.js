@@ -17,7 +17,7 @@ const { Router } = require('restify-router');
 
 /**
  * @apiDefine listStrategiesByBiomeEASubzoneExampleResponse
- * @apiSuccessExample {json} Request-Example:
+ * @apiSuccessExample {json} Success-Example:
  *  {
  *    "strategies": [
  *      {

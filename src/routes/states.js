@@ -88,5 +88,78 @@ module.exports = (errorHandler, stateService) => {
       })
   )));
 
+  /**
+   * @apiGroup states
+   * @api {get} /states/:state_id/se StateBySE
+   * @apiName StateBySE
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the state total area by strategic ecosysmtens
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the strategic ecosystem
+   * @apiSuccess {Number} result.area Area of the specified SE in the state
+   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the state area
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se
+   * @apiUse GeofenceBySEExample
+   */
+  router.get('/states/:state_id/se', errorHandler((req, res, next) => (
+    stateService.getAreaBySE(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
+   * @api {get} /states/:state_id/pa StateByPA
+   * @apiName StateByPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the state total area by protected areas
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the protected area
+   * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the state area
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/pa
+   * @apiUse GeofenceByPAExample
+   */
+  router.get('/states/:state_id/pa', errorHandler((req, res, next) => (
+    stateService.getAreaByPA(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
+   * @api {get} /states/:state_id/coverage StateByCoverage
+   * @apiName StateByCoverage
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the state total area by coverage type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/coverage
+   * @apiUse GeofenceByCoverageExample
+   */
+  router.get('/states/:state_id/coverage', errorHandler((req, res, next) => (
+    stateService.getAreaByCoverage(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
   return router;
 };

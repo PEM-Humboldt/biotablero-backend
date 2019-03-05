@@ -60,4 +60,29 @@ module.exports = eaPersistence => ({
    * Get a list with all environmental authorities information
    */
   getAll: async () => eaPersistence.findAll(),
+
+  /**
+   * Get EA total area divided by strategic ecosystem type
+   */
+  getAreaBySE: async envAuthorityId => ([
+    { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
+    { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
+    { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
+  ]),
+
+  /**
+   * Get EA total area divided by protected area type
+   */
+  getAreaByPA: async envAuthorityId => ([
+    { percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
+    { percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
+  ]),
+
+  /**
+   * Get EA total area divided by protected area type
+   */
+  getAreaByCoverage: async envAuthorityId => ([
+    { percentage: 0.4437728527, type: 'Natural' },
+    { percentage: 0.5562271473, type: 'Transformado' },
+  ]),
 });

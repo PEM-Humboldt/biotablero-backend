@@ -79,6 +79,58 @@ const { Router } = require('restify-router');
  *    },...
  *  ]
  */
+
+/**
+ * @apiDefine EABySEExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "area": 284538.960066167,
+ *      "percentage": 0.4318134185,
+ *      "type": "Humedal"
+ *    },
+ *    {
+ *      "area": 166148.838843223,
+ *      "percentage": 0.2521457802,
+ *      "type": "Páramo"
+ *    },
+ *    {
+ *      "area": 208251.798376851,
+ *      "percentage": 0.3160408014,
+ *      "type": "Bosque Seco Tropical"
+ *    }
+ *  ]
+ */
+
+/**
+ * @apiDefine EAByPAExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 0.4437728527,
+ *      "type": "Santuario de Fauna y Flora"
+ *    },
+ *    {
+ *      "percentage": 0.5562271473,
+ *      "type": "Parques Naturales Regionales"
+ *    }...
+ *  ]
+ */
+
+/**
+ * @apiDefine EAByCoverageExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 0.4437728527,
+ *      "type": "Natural"
+ *    },
+ *    {
+ *      "percentage": 0.5562271473,
+ *      "type": "Transformado"
+ *    }
+ *  ]
+ */
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -205,6 +257,79 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/ea/:ea_id/biome/:name_biome/subzone', errorHandler((req, res, next) => (
     eaService.getBiomeAreaBySubzone(req.params.ea_id, req.params.name_biome)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/se EABySE
+   * @apiName EABySE
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by strategic ecosysmtens
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the strategic ecosystem
+   * @apiSuccess {Number} result.area Area of the specified SE in the EA
+   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the EA area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/se
+   * @apiUse EABySEExample
+   */
+  router.get('/ea/:ea_id/se', errorHandler((req, res, next) => (
+    eaService.getAreaBySE(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/pa EAByPA
+   * @apiName EAByPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by protected areas
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the protected area
+   * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the EA area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/pa
+   * @apiUse EAByPAExample
+   */
+  router.get('/ea/:ea_id/pa', errorHandler((req, res, next) => (
+    eaService.getAreaByPA(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/coverage EAByCoverage
+   * @apiName EAByCoverage
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by coverage type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/coverage
+   * @apiUse EAByCoverageExample
+   */
+  router.get('/ea/:ea_id/coverage', errorHandler((req, res, next) => (
+    eaService.getAreaByCoverage(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
         next();

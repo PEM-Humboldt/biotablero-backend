@@ -1,16 +1,11 @@
 module.exports = sePersistence => ({
   /**
-   * Get all paramos
+   * Get all strategic ecosystems
    */
-  getParamos: async () => sePersistence.findAllParamos(),
+  getAll: async () => sePersistence.findAll(),
 
   /**
-   * Get all tropical dry forests
+   * Get all distinct primary ecosystems
    */
-  getDryForests: async () => sePersistence.findAllDryForests(),
-
-  /**
-   * Get all wetlands
-   */
-  getWetlands: async () => sePersistence.findAllWetlands(),
+  getPrimary: async () => sePersistence.findAllPrimary(),
 });

@@ -6,39 +6,35 @@ const { Router } = require('restify-router');
  */
 
 /**
- * @apiDefine getSETypesExample
+ * @apiDefine getSEExample
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "type": "Páramos"
+ *      "id_ecosystem": "203",
+ *      "name": "Páramo",
+ *      "second_class": "test"
  *    },
  *    {
- *      "type": "Humedales"
+ *      "id_ecosystem": "2000",
+ *      "name": "Bosque Seco Tropical",
+ *      "second_class": "Sin información"
+ *    }...
+ *  ]
+ */
+
+/**
+ * @apiDefine getPrimarySEExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "name": "Páramo"
  *    },
  *    {
- *      "type": "Bosques secos"
+ *      "name": "Humedal"
+ *    },
+ *    {
+ *      "name": "Bosque Seco Tropical"
  *    }
- *  ]
- */
-
-/**
- * @apiDefine getParamosExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *  ]
- */
-
-/**
- * @apiDefine getDryForestsExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *  ]
- */
-
-/**
- * @apiDefine getWetlandsExample
- * @apiSuccessExample {json} Success-Example:
- *  [
  *  ]
  */
 
@@ -47,98 +43,46 @@ module.exports = (errorHandler, seService) => {
 
   /**
    * @apiGroup se
-   * @api {get} /se/types listSETypes
-   * @apiName listSETypes
+   * @api {get} /se listSE
+   * @apiName listSE
    * @apiVersion 0.1.0
    * @apiDescription
-   * List available types for strategic ecosystems
+   * List all available strategic ecosystems
    *
-   * @apiSuccess {Object[]} result list of strategic ecosystems types
-   * @apiSuccess {String} result.result strategic ecosystem type
-   *
-   * @apiExample {curl} Example usage:
-   *  /se/types
-   * @apiUse getSETypesExample
-   */
-  router.get('/se/types', errorHandler((req, res, next) => {
-    const types = [
-      { id: 'paramo', type: 'Páramos' },
-      { id: 'wetland', type: 'Humedales' },
-      { id: 'tropical_dry_forest', type: 'Bosques secos' },
-    ];
-    res.send(types);
-    next();
-  }));
-
-  /**
-   * @apiGroup se
-   * @api {get} /se/paramos listParamos
-   * @apiName listParamos
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * List paramos
-   *
-   * @apiSuccess {Object[]} result list of paramos
-   * @apiSuccess {String} result.id_ecosystem strategic ecosystem id
+   * @apiSuccess {Object[]} result list of strategic ecosystems
+   * @apiSuccess {Number} result.id_ecosystem strategic ecosystem id
    * @apiSuccess {String} result.name strategic ecosystem name
    * @apiSuccess {String} result.second_class strategic ecosystem second_class
    *
    * @apiExample {curl} Example usage:
-   *  /se/paramos
-   * @apiUse getParamosExample
+   *  /se
+   * @apiUse getSEExample
    */
-  router.get('/se/paramos', errorHandler((req, res, next) => {
-    seService.getParamos()
-      .then((result) => {
-        res.send(result);
+  router.get('/se', errorHandler((req, res, next) => {
+    seService.getAll()
+      .then((se) => {
+        res.send(se);
         next();
       });
   }));
 
   /**
    * @apiGroup se
-   * @api {get} /se/dryForest listTropicalDryForest
-   * @apiName listTropicalDryForest
+   * @api {get} /se/primary listPrimarySE
+   * @apiName listPrimarySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * List tropical dry forests
+   * List only primary types of strategic ecosystems
    *
-   * @apiSuccess {Object[]} result list of tropical dry forests
-   * @apiSuccess {String} result.id_ecosystem strategic ecosystem id
+   * @apiSuccess {Object[]} result list of strategic ecosystems
    * @apiSuccess {String} result.name strategic ecosystem name
-   * @apiSuccess {String} result.second_class strategic ecosystem second_class
    *
    * @apiExample {curl} Example usage:
-   *  /se/dryForest
-   * @apiUse getDryForestsExample
+   *  /se/primary
+   * @apiUse getPrimarySEExample
    */
-  router.get('/se/dryForest', errorHandler((req, res, next) => {
-    seService.getDryForests()
-      .then((result) => {
-        res.send(result);
-        next();
-      });
-  }));
-
-  /**
-   * @apiGroup se
-   * @api {get} /se/wetlands listWetlands
-   * @apiName listWetlands
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * List wetlands
-   *
-   * @apiSuccess {Object[]} result list of wetlands
-   * @apiSuccess {String} result.id_ecosystem strategic ecosystem id
-   * @apiSuccess {String} result.name strategic ecosystem name
-   * @apiSuccess {String} result.second_class strategic ecosystem second_class
-   *
-   * @apiExample {curl} Example usage:
-   *  /se/wetlands
-   * @apiUse getWetlandsExample
-   */
-  router.get('/se/wetlands', errorHandler((req, res, next) => {
-    seService.getWetlands()
+  router.get('/se/primary', errorHandler((req, res, next) => {
+    seService.getPrimary()
       .then((result) => {
         res.send(result);
         next();

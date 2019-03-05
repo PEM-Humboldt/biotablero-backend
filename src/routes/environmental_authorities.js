@@ -80,57 +80,6 @@ const { Router } = require('restify-router');
  *  ]
  */
 
-/**
- * @apiDefine EABySEExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "area": 284538.960066167,
- *      "percentage": 0.4318134185,
- *      "type": "Humedal"
- *    },
- *    {
- *      "area": 166148.838843223,
- *      "percentage": 0.2521457802,
- *      "type": "Páramo"
- *    },
- *    {
- *      "area": 208251.798376851,
- *      "percentage": 0.3160408014,
- *      "type": "Bosque Seco Tropical"
- *    }
- *  ]
- */
-
-/**
- * @apiDefine EAByPAExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "percentage": 0.4437728527,
- *      "type": "Santuario de Fauna y Flora"
- *    },
- *    {
- *      "percentage": 0.5562271473,
- *      "type": "Parques Naturales Regionales"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine EAByCoverageExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "percentage": 0.4437728527,
- *      "type": "Natural"
- *    },
- *    {
- *      "percentage": 0.5562271473,
- *      "type": "Transformado"
- *    }
- *  ]
- */
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -278,7 +227,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/se
-   * @apiUse EABySEExample
+   * @apiUse GeofenceBySEExample
    */
   router.get('/ea/:ea_id/se', errorHandler((req, res, next) => (
     eaService.getAreaBySE(req.params.ea_id)
@@ -302,7 +251,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/pa
-   * @apiUse EAByPAExample
+   * @apiUse GeofenceByPAExample
    */
   router.get('/ea/:ea_id/pa', errorHandler((req, res, next) => (
     eaService.getAreaByPA(req.params.ea_id)
@@ -326,7 +275,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/coverage
-   * @apiUse EAByCoverageExample
+   * @apiUse GeofenceByCoverageExample
    */
   router.get('/ea/:ea_id/coverage', errorHandler((req, res, next) => (
     eaService.getAreaByCoverage(req.params.ea_id)

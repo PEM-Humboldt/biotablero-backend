@@ -42,6 +42,7 @@ const EARoutes = require('../routes/environmental_authorities');
 const StatesRoutes = require('../routes/states');
 const PARoutes = require('../routes/protected_areas');
 const BasinsRoutes = require('../routes/basins');
+const BasinSubzonesRoutes = require('../routes/basin_subzones');
 const SERoutes = require('../routes/strategic_ecosystems');
 
 const bottle = new Bottlejs();
@@ -122,10 +123,8 @@ bottle.factory('routes', container => ([
   EARoutes(container.errorHandler, container.eaService),
   StatesRoutes(container.errorHandler, container.stateService),
   PARoutes(container.errorHandler, container.paService),
-  BasinsRoutes(
-    container.errorHandler, container.basinAreaService, container.basinZoneService,
-    container.basinSubzoneService,
-  ),
+  BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
+  BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
   SERoutes(container.errorHandler, container.seService),
 ]));
 

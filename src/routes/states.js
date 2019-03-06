@@ -10,11 +10,11 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id_state": "44",
+ *      "id": "44",
  *      "name": "La Guajira"
  *    },
  *    {
- *      "id_state": "97",
+ *      "id": "97",
  *      "name": "Vaupés"
  *    }...
  *  ]
@@ -48,7 +48,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiSuccess {Object[]} state list of states
    * @apiSuccess {String} state.name State name
-   * @apiSuccess {Number} state.id_state State id
+   * @apiSuccess {Number} state.id State id
    *
    * @apiExample {curl} Example usage:
    *  /states

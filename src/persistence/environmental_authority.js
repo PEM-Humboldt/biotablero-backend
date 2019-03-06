@@ -71,8 +71,7 @@ module.exports = (
    * Get all environmental authorities id and name
    */
   findAll: () => (
-    environmentalAuthorities
-      .fetchAll({ columns: ['id_ea', 'name'] })
-      .then(ea => ea.toJSON())
+    environmentalAuthorities.query()
+      .select('id_ea as id', 'name')
   ),
 });

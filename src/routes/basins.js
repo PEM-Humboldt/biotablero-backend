@@ -10,12 +10,12 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id_basin": "3",
- *      "name_basin": "Orinoco"
+ *      "id": "3",
+ *      "name": "Orinoco"
  *    },
  *    {
- *      "id_basin": "4",
- *      "name_basin": "Amazonas"
+ *      "id": "4",
+ *      "name": "Amazonas"
  *    }...
  *  ]
  */
@@ -25,13 +25,13 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id_zone": "55",
- *      "name_zone": "Baudó - Directos Pacifico",
+ *      "id": "55",
+ *      "name": "Baudó - Directos Pacifico",
  *      "id_basin": "5"
  *    },
  *    {
- *      "id_zone": "52",
- *      "name_zone": "Patía",
+ *      "id": "52",
+ *      "name": "Patía",
  *      "id_basin": "5"
  *    }...
  *  ]
@@ -42,13 +42,16 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *   {
- *      "id_subzone": "2626",
- *      "name_subzo": "Directos Bajo Cauca - Cga La Raya entre río Nechí",
+ *      "id": "2626",
+ *      "name": "Directos Bajo Cauca - Cga La Raya entre río Nechí",
+ *      "id_zone": "25",
  *      "id_basin": "2"
+ *
  *    },
  *    {
- *      "id_subzone": "3703",
- *      "name_subzo": "Río Cobugón - Río Cobaría",
+ *      "id": "3703",
+ *      "name": "Río Cobugón - Río Cobaría",
+ *      "id_zone": "37",
  *      "id_basin": "3"
  *    },
  *  ]
@@ -66,8 +69,8 @@ module.exports = (errorHandler, basinAreaService, basinZoneService, basinSubzone
    * List all available basin areas
    *
    * @apiSuccess {Object[]} basin_areas list of basin areas
-   * @apiSuccess {Number} basin_areas.id_basin basin area id
-   * @apiSuccess {String} basin_areas.name_basin basin area name
+   * @apiSuccess {Number} basin_areas.id basin area id
+   * @apiSuccess {String} basin_areas.name basin area name
    *
    * @apiExample {curl} Example usage:
    *  /basinAreas
@@ -90,8 +93,8 @@ module.exports = (errorHandler, basinAreaService, basinZoneService, basinSubzone
    * List all available basin zones
    *
    * @apiSuccess {Object[]} basin_zones list of basin zones
-   * @apiSuccess {Number} basin_zones.id_zone basin zone id
-   * @apiSuccess {String} basin_zones.name_zone basin zone name
+   * @apiSuccess {Number} basin_zones.id basin zone id
+   * @apiSuccess {String} basin_zones.name basin zone name
    * @apiSuccess {Number} basin_zones.id_basin associated basin area id
    *
    * @apiExample {curl} Example usage:
@@ -115,8 +118,8 @@ module.exports = (errorHandler, basinAreaService, basinZoneService, basinSubzone
    * List all available basin sub-zones
    *
    * @apiSuccess {Object[]} basin_sub-zones list of basin sub-zones
-   * @apiSuccess {Number} basin_sub-zones.id_subzone basin subzone id
-   * @apiSuccess {String} basin_sub-zones.name_subzo basin subzone name
+   * @apiSuccess {Number} basin_sub-zones.id basin subzone id
+   * @apiSuccess {String} basin_sub-zones.name basin subzone name
    * @apiSuccess {Number} basin_sub-zones.id_basin associated basin area id
    * @apiSuccess {Number} basin_sub-zones.id_zone associated basin zone id
    *

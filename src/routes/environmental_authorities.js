@@ -10,11 +10,11 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "id_ea": "CRC",
+ *      "id": "CRC",
  *      "name": "Corporacion Autonoma Regional del Cauca"
  *    },
  *    {
- *      "id_ea": "CORPOGUAVIO",
+ *      "id": "CORPOGUAVIO",
  *      "name": "Corporacion Autonoma Regional del Guavio"
  *    }...
  *  ]
@@ -91,7 +91,7 @@ module.exports = (errorHandler, eaService) => {
    * List all available environmental authorities
    *
    * @apiSuccess {Object[]} ea list of environmental authorities
-   * @apiSuccess {Number} ea.id_ea environmental authority id
+   * @apiSuccess {Number} ea.id environmental authority id
    * @apiSuccess {String} ea.name environmental authority name
    *
    * @apiExample {curl} Example usage:

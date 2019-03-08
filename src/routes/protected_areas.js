@@ -10,10 +10,10 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "category": "Reserva Natural de la Sociedad Civil"
+ *      "name": "Reserva Natural de la Sociedad Civil"
  *    },
  *    {
- *      "category": "Distritos Nacionales de Manejo Integrado"
+ *      "name": "Distritos Nacionales de Manejo Integrado"
  *    }...
  *  ]
  */
@@ -64,7 +64,7 @@ module.exports = (errorHandler, paService) => {
    * List all available protected area categories
    *
    * @apiSuccess {Object[]} category list of protected area categories
-   * @apiSuccess {String} category.category category name
+   * @apiSuccess {String} category.name category name
    *
    * @apiExample {curl} Example usage:
    *  /pa/categories

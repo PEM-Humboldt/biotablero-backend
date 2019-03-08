@@ -4,7 +4,7 @@ module.exports = (db, { geoProtectedAreas }) => ({
    */
   findCategories: () => (
     geoProtectedAreas.query()
-      .distinct('category')
+      .distinct('category as name')
       .select()
   ),
 

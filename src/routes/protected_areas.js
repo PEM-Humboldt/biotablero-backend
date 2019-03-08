@@ -37,6 +37,21 @@ const { Router } = require('restify-router');
  *  ]
  */
 
+/**
+ * @apiDefine PAByPAExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 0,
+ *      "type": "Santuario de Fauna y Flora"
+ *    },
+ *    {
+ *      "percentage": 1,
+ *      "type": "Parques Naturales Regionales"
+ *    }...
+ *  ]
+ */
+
 module.exports = (errorHandler, paService) => {
   const router = new Router();
 
@@ -85,6 +100,79 @@ module.exports = (errorHandler, paService) => {
     paService.getByCategory(req.params.category_name)
       .then((result) => {
         res.send(result);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
+   * @api {get} /pa/:category/se PABySE
+   * @apiName PABySE
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the protected area by strategic ecosysmtens
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the strategic ecosystem
+   * @apiSuccess {Number} result.area Area of the specified SE in the protected area
+   * @apiSuccess {Number} result.percentage Percentage of the SE respect to the protected area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/se
+   * @apiUse GeofenceBySEExample
+   */
+  router.get('/pa/:category/se', errorHandler((req, res, next) => (
+    paService.getAreaBySE(req.params.category)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
+   * @api {get} /pa/:category/pa PAByPA
+   * @apiName PAByPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the protected area by protected areas
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the protected area
+   * @apiSuccess {Number} result.percentage Percentage of the specified PA
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/pa
+   * @apiUse PAByPAExample
+   */
+  router.get('/pa/:category/pa', errorHandler((req, res, next) => (
+    paService.getAreaByPA(req.params.category)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
+   * @api {get} /pa/:category/coverage PAByCoverage
+   * @apiName PAByCoverage
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the protected area by coverage type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the PA.
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/coverage
+   * @apiUse GeofenceByCoverageExample
+   */
+  router.get('/pa/:category/coverage', errorHandler((req, res, next) => (
+    paService.getAreaByCoverage(req.params.category)
+      .then((areas) => {
+        res.send(areas);
         next();
       })
   )));

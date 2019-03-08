@@ -79,6 +79,7 @@ const { Router } = require('restify-router');
  *    },...
  *  ]
  */
+
 module.exports = (errorHandler, eaService) => {
   const router = new Router();
 
@@ -205,6 +206,79 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/ea/:ea_id/biome/:name_biome/subzone', errorHandler((req, res, next) => (
     eaService.getBiomeAreaBySubzone(req.params.ea_id, req.params.name_biome)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/se EABySE
+   * @apiName EABySE
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by strategic ecosysmtens
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the strategic ecosystem
+   * @apiSuccess {Number} result.area Area of the specified SE in the EA
+   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the EA area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/se
+   * @apiUse GeofenceBySEExample
+   */
+  router.get('/ea/:ea_id/se', errorHandler((req, res, next) => (
+    eaService.getAreaBySE(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/pa EAByPA
+   * @apiName EAByPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by protected areas
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the protected area
+   * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the EA area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/pa
+   * @apiUse GeofenceByPAExample
+   */
+  router.get('/ea/:ea_id/pa', errorHandler((req, res, next) => (
+    eaService.getAreaByPA(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/coverage EAByCoverage
+   * @apiName EAByCoverage
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Separate the environmental authority total area by coverage type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/coverage
+   * @apiUse GeofenceByCoverageExample
+   */
+  router.get('/ea/:ea_id/coverage', errorHandler((req, res, next) => (
+    eaService.getAreaByCoverage(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
         next();

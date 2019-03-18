@@ -1,11 +1,11 @@
-module.exports = (db, { geoWetlandDetails2002 }) => ({
+module.exports = (db, { geoWetlandDetails }) => ({
   /**
    * Get the area inside the given environmental authority
    *
    * @param {String} eaId environmental authority id
    */
   findAreaByEA: eaId => (
-    geoWetlandDetails2002.query()
+    geoWetlandDetails.query()
       .where('id_ea', eaId)
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -16,7 +16,7 @@ module.exports = (db, { geoWetlandDetails2002 }) => ({
    * @param {String} subzoneId basin subzone id
    */
   findAreaBySubzone: subzoneId => (
-    geoWetlandDetails2002.query()
+    geoWetlandDetails.query()
       .where('id_subzone', subzoneId)
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),

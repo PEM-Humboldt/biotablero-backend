@@ -1,10 +1,10 @@
-module.exports = (db, { geoBasinSubzones, colombiaDetails }) => ({
+module.exports = (db, { geoBasinSubzones }) => ({
   /**
    * Get all basin zones
    */
   findAll: () => (
     geoBasinSubzones.query()
-      .select('id_subzone as id', 'name_subzo as name', 'id_zone', 'id_basin')
+      .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
   ),
 
   /**
@@ -13,8 +13,8 @@ module.exports = (db, { geoBasinSubzones, colombiaDetails }) => ({
    * @param {String} subzoneId subzone id
    */
   getTotalAreaBySubzone: subzoneId => (
-    colombiaDetails.query()
-      .where('id_sz', subzoneId)
-      .sum('area_ha as area')
+    geoBasinSubzones.query()
+      .where('id_subzone', subzoneId)
+      .select('area_ha as area')
   ),
 });

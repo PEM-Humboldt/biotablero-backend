@@ -8,7 +8,7 @@ const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
-const environmentalAuthorities = require('./environmental_authorities');
+const geoEnvironmentalAuthorities = require('./geo_environmental_authorities');
 const hidroAreas = require('./hidro_areas');
 const projectImpactedBiomes = require('./project_impacted_biomes');
 const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
@@ -25,7 +25,7 @@ const geoTropicalDryForest = require('./geo_tropical_dry_forest');
 const geoWetland = require('./geo_wetlands');
 const geoParamoDetails = require('./geo_paramo_details');
 const geoTropicalDryForestDetails = require('./geo_tropical_dry_forest_details');
-const geoWetlandDetails2002 = require('./geo_wetland_details_2002');
+const geoWetlandDetails = require('./geo_wetland_details');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -62,7 +62,7 @@ const setupModels = () => {
     geoCompanyProjects: geoCompanyProjects(dbConn, eventHandlers),
     geoEaBiomes: geoEaBiomes(dbConn),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
-    environmentalAuthorities: environmentalAuthorities(dbConn, eventHandlers),
+    geoEnvironmentalAuthorities: geoEnvironmentalAuthorities(dbConn, eventHandlers),
     hidroAreas: hidroAreas(dbConn, eventHandlers),
     projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
     geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
@@ -80,7 +80,7 @@ const setupModels = () => {
     geoWetland: geoWetland(dbConn),
     geoParamoDetails: geoParamoDetails(dbConn),
     geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
-    geoWetlandDetails2002: geoWetlandDetails2002(dbConn),
+    geoWetlandDetails: geoWetlandDetails(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

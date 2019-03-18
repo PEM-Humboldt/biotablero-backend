@@ -74,4 +74,15 @@ module.exports = (
     environmentalAuthorities.query()
       .select('id_ea as id', 'name')
   ),
+
+  /**
+   * Get the total area for the given environmental authority
+   *
+   * @param {String} envAuthorityId EA id
+   */
+  getTotalAreaByEA: envAuthorityId => (
+    colombiaDetails.query()
+      .where('idcar', envAuthorityId)
+      .sum('area_ha as area')
+  ),
 });

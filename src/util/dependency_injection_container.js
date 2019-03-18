@@ -17,6 +17,9 @@ const BasinAreaPersistence = require('../persistence/basin_area');
 const BasinZonePersistence = require('../persistence/basin_zone');
 const BasinSubzonePersistence = require('../persistence/basin_subzone');
 const SEPersistence = require('../persistence/strategyc_ecosystem');
+const ParamoPersistence = require('../persistence/paramo');
+const TropicalDryForestPersistence = require('../persistence/tropicalDryForest');
+const WetlandPersistence = require('../persistence/wetland');
 
 const BiomeService = require('../service/biome');
 const ProjectService = require('../service/project');
@@ -86,6 +89,15 @@ bottle.factory('basinSubzonePersistence', () => (
 bottle.factory('sePersistence', () => (
   SEPersistence(bookshelfModels.db, bookshelfModels.models)
 ));
+bottle.factory('paramoPersistence', () => (
+  ParamoPersistence(bookshelfModels.db, bookshelfModels.models)
+));
+bottle.factory('tropicalDryForestPersistence', () => (
+  TropicalDryForestPersistence(bookshelfModels.db, bookshelfModels.models)
+));
+bottle.factory('wetlandPersistence', () => (
+  WetlandPersistence(bookshelfModels.db, bookshelfModels.models)
+));
 
 bottle.factory('biomeService', container => BiomeService(container.biomePersistence));
 bottle.factory('projectService', container => (
@@ -96,7 +108,7 @@ bottle.factory('projectStrategyService',
 bottle.factory('strategyService',
   container => StrategyService(container.strategyPersistence, container.logger));
 bottle.factory('eaService',
-  container => EAService(container.eaPersistence));
+  container => EAService(container.eaPersistence, container.seService));
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService',
   container => StateService(container.statePersistence, container.municipalityService));
@@ -111,7 +123,10 @@ bottle.factory('basinZoneService',
 bottle.factory('basinSubzoneService',
   container => BasinSubzoneService(container.basinSubzonePersistence));
 bottle.factory('seService',
-  container => SEService(container.sePersistence));
+  container => SEService(
+    container.sePersistence, container.paramoPersistence, container.tropicalDryForestPersistence,
+    container.wetlandPersistence,
+  ));
 
 bottle.factory('routes', container => ([
   BiomesRoutes(container.errorHandler, container.biomeService),

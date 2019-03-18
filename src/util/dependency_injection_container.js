@@ -121,7 +121,7 @@ bottle.factory('basinAreaService',
 bottle.factory('basinZoneService',
   container => BasinZoneService(container.basinZonePersistence));
 bottle.factory('basinSubzoneService',
-  container => BasinSubzoneService(container.basinSubzonePersistence));
+  container => BasinSubzoneService(container.basinSubzonePersistence, container.seService));
 bottle.factory('seService',
   container => SEService(
     container.sePersistence, container.paramoPersistence, container.tropicalDryForestPersistence,

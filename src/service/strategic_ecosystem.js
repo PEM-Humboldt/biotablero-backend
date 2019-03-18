@@ -12,7 +12,7 @@ module.exports = (
   getPrimary: async () => sePersistence.findAllPrimary(),
 
   /**
-   * Get different ecosystems areas inside the given environmental authority
+   * Get different strategic ecosystems areas inside the given environmental authority
    *
    * @param {String} eaId environmental authority id
    */
@@ -29,6 +29,31 @@ module.exports = (
       type: 'Bosque Seco Tropical',
     });
     const wetlandArea = await wetlandPersistence.findAreaByEA(eaId);
+    result.push({
+      ...wetlandArea[0],
+      type: 'Humedal',
+    });
+    return result;
+  },
+
+  /**
+   * Get different strategic ecosystems areas inside the given basin subzone
+   *
+   * @param {String} subzoneId subzone id
+   */
+  getAreasBySubzone: async (subzoneId) => {
+    const result = [];
+    const paramoArea = await paramoPersistence.findAreaBySubzone(subzoneId);
+    result.push({
+      ...paramoArea[0],
+      type: 'Páramo',
+    });
+    const dryForestArea = await tropicalDryForestPersistence.findAreaBySubzone(subzoneId);
+    result.push({
+      ...dryForestArea[0],
+      type: 'Bosque Seco Tropical',
+    });
+    const wetlandArea = await wetlandPersistence.findAreaBySubzone(subzoneId);
     result.push({
       ...wetlandArea[0],
       type: 'Humedal',

@@ -67,15 +67,18 @@ module.exports = (eaPersistence, seService) => ({
    * @param {String} envAuthorityId environmental authority id
    */
   getAreaBySE: async (envAuthorityId) => {
-    const totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-    console.log('totalArea', totalArea);
-    const seAreas = await seService.getAreasByEA(envAuthorityId);
-    console.log('seAreas', seAreas);
-    return [
-      { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
-      { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
-      { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
-    ];
+    let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    totalArea = totalArea[0].area;
+    const areas = await seService.getAreasByEA(envAuthorityId);
+    areas.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return areas.map(se => ({
+      ...se,
+      percentage: se.area / totalArea,
+    }));
   },
 
   /**

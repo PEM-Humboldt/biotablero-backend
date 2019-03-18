@@ -4,6 +4,6 @@ module.exports = (db, { geoBasinSubzones }) => ({
    */
   findAll: () => (
     geoBasinSubzones.query()
-      .select('id_subzone as id', 'name_subzo as name', 'id_zone', 'id_basin')
+      .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
   ),
 });

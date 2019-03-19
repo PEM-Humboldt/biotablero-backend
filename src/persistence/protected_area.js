@@ -16,4 +16,15 @@ module.exports = (db, { geoProtectedAreas }) => ({
       .where('category', categoryName)
       .select('gid', 'name', 'category', 'organization')
   ),
+
+  /**
+   * Get the total area for the given category
+   *
+   * @param {String} categoryName category
+   */
+  getTotalAreaByCategory: categoryName => (
+    geoProtectedAreas.query()
+      .where('category', categoryName)
+      .select('area_ha as area')
+  ),
 });

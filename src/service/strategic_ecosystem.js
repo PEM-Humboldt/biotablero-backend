@@ -85,4 +85,29 @@ module.exports = (
     });
     return result;
   },
+
+  /**
+   * Get different strategic ecosystems areas inside all the protected areas with the given category
+   *
+   * @param {String} categoryName category
+   */
+  getAreasByPACategory: async (categoryName) => {
+    const result = [];
+    const paramoArea = await paramoPersistence.findAreaByPACategory(categoryName);
+    result.push({
+      ...paramoArea[0],
+      type: 'Páramo',
+    });
+    const dryForestArea = await tropicalDryForestPersistence.findAreaByPACategory(categoryName);
+    result.push({
+      ...dryForestArea[0],
+      type: 'Bosque Seco Tropical',
+    });
+    const wetlandArea = await wetlandPersistence.findAreaByPACategory(categoryName);
+    result.push({
+      ...wetlandArea[0],
+      type: 'Humedal',
+    });
+    return result;
+  },
 });

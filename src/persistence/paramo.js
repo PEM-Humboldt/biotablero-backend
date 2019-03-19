@@ -34,4 +34,17 @@ module.exports = (db, { geoParamoDetails }) => ({
       .where({ id_state: stateId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
+
+  /**
+   * Get the area inside the protected areas with the given category
+   *
+   * @param {String} categoryName category
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findAreaByPACategory: async (categoryName, year = 2012) => (
+    db('geo_paramo_details')
+      .innerJoin('geo_protected_areas', 'geo_paramo_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_protected_areas.category': categoryName, 'geo_paramo_details.year_cover': year })
+      .select(db.raw('coalesce(SUM(geo_paramo_details.area_ha), 0) as area'))
+  ),
 });

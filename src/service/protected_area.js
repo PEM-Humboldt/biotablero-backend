@@ -1,4 +1,4 @@
-module.exports = paPersistence => ({
+module.exports = (paPersistence, seService) => ({
   /**
    * Get the protected areas categories
    */
@@ -11,12 +11,23 @@ module.exports = paPersistence => ({
 
   /**
    * Get protected area divided by strategic ecosystem type
+   *
+   * @param {String} categoryName category to filter by
    */
-  getAreaBySE: async categoryName => ([
-    { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
-    { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
-    { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
-  ]),
+  getAreaBySE: async (categoryName) => {
+    let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    totalArea = totalArea[0].area;
+    const areas = await seService.getAreasByPACategory(categoryName);
+    areas.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return areas.map(se => ({
+      ...se,
+      percentage: se.area / totalArea,
+    }));
+  },
 
   /**
    * Get protected area divided by protected area type

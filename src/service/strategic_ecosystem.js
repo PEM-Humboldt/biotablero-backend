@@ -60,4 +60,29 @@ module.exports = (
     });
     return result;
   },
+
+  /**
+   * Get different strategic ecosystems areas inside the given state
+   *
+   * @param {String} stateId state id
+   */
+  getAreasByState: async (stateId) => {
+    const result = [];
+    const paramoArea = await paramoPersistence.findAreaByState(stateId);
+    result.push({
+      ...paramoArea[0],
+      type: 'Páramo',
+    });
+    const dryForestArea = await tropicalDryForestPersistence.findAreaByState(stateId);
+    result.push({
+      ...dryForestArea[0],
+      type: 'Bosque Seco Tropical',
+    });
+    const wetlandArea = await wetlandPersistence.findAreaByState(stateId);
+    result.push({
+      ...wetlandArea[0],
+      type: 'Humedal',
+    });
+    return result;
+  },
 });

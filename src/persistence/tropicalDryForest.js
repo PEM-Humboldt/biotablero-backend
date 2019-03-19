@@ -20,4 +20,15 @@ module.exports = (db, { geoTropicalDryForestDetails }) => ({
       .where('id_subzone', subzoneId)
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
+
+  /**
+   * Get the area inside the given state
+   *
+   * @param {String} stateId state id
+   */
+  findAreaByState: stateId => (
+    geoTropicalDryForestDetails.query()
+      .where('id_state', stateId)
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
+  ),
 });

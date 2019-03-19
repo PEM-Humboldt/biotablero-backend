@@ -111,7 +111,9 @@ bottle.factory('eaService',
   container => EAService(container.eaPersistence, container.seService));
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService',
-  container => StateService(container.statePersistence, container.municipalityService));
+  container => StateService(
+    container.statePersistence, container.municipalityService, container.seService,
+  ));
 bottle.factory('municipalityService',
   container => MunicipalityService(container.municipalityPersistence));
 bottle.factory('paService',

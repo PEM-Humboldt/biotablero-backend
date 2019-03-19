@@ -52,7 +52,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by strategic ecosysmtens
+   * Separate the basin subzone total area by strategic ecosystems
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem

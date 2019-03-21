@@ -1,4 +1,4 @@
-module.exports = (statePersistence, municipalityService) => ({
+module.exports = (statePersistence, municipalityService, seService) => ({
   /**
    * Get a list with states information
    */
@@ -14,11 +14,20 @@ module.exports = (statePersistence, municipalityService) => ({
   /**
    * Get state total area divided by strategic ecosystem type
    */
-  getAreaBySE: async stateId => ([
-    { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
-    { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
-    { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
-  ]),
+  getAreaBySE: async (stateId) => {
+    let totalArea = await statePersistence.getTotalAreaByState(stateId);
+    totalArea = totalArea[0].area;
+    const areas = await seService.getAreasByState(stateId);
+    areas.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return areas.map(se => ({
+      ...se,
+      percentage: se.area / totalArea,
+    }));
+  },
 
   /**
    * Get state total area divided by protected area type

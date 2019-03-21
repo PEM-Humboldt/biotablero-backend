@@ -1,4 +1,4 @@
-module.exports = eaPersistence => ({
+module.exports = (eaPersistence, seService) => ({
   /**
    * Get total area grouped by compensation factor for a given environmental authority
    *
@@ -63,12 +63,23 @@ module.exports = eaPersistence => ({
 
   /**
    * Get EA total area divided by strategic ecosystem type
+   *
+   * @param {String} envAuthorityId environmental authority id
    */
-  getAreaBySE: async envAuthorityId => ([
-    { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
-    { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
-    { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
-  ]),
+  getAreaBySE: async (envAuthorityId) => {
+    let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    totalArea = totalArea[0].area;
+    const areas = await seService.getAreasByEA(envAuthorityId);
+    areas.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return areas.map(se => ({
+      ...se,
+      percentage: se.area / totalArea,
+    }));
+  },
 
   /**
    * Get EA total area divided by protected area type

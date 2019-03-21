@@ -1,4 +1,4 @@
-module.exports = basinSubzonePersistence => ({
+module.exports = (basinSubzonePersistence, seService) => ({
   /**
    * Get a list with states information
    */
@@ -7,11 +7,20 @@ module.exports = basinSubzonePersistence => ({
   /**
    * Get subzone total area divided by strategic ecosystem type
    */
-  getAreaBySE: async subzoneId => ([
-    { area: 284538.960066167, percentage: 0.4318134185, type: 'Humedal' },
-    { area: 166148.838843223, percentage: 0.2521457802, type: 'Páramo' },
-    { area: 208251.798376851, percentage: 0.3160408014, type: 'Bosque Seco Tropical' },
-  ]),
+  getAreaBySE: async (subzoneId) => {
+    let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    totalArea = totalArea[0].area;
+    const areas = await seService.getAreasBySubzone(subzoneId);
+    areas.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return areas.map(se => ({
+      ...se,
+      percentage: se.area / totalArea,
+    }));
+  },
 
   /**
    * Get subzone total area divided by protected area type

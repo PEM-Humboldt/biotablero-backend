@@ -1,6 +1,6 @@
 module.exports = (
   db,
-  { colombiaDetails, eaBioticUnits, environmentalAuthorities },
+  { colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities },
 ) => ({
   /**
    * Find total area grouped by compensation factor in a given environmental authority
@@ -71,7 +71,18 @@ module.exports = (
    * Get all environmental authorities id and name
    */
   findAll: () => (
-    environmentalAuthorities.query()
+    geoEnvironmentalAuthorities.query()
       .select('id_ea as id', 'name')
+  ),
+
+  /**
+   * Get the total area for the given environmental authority
+   *
+   * @param {String} envAuthorityId EA id
+   */
+  getTotalAreaByEA: envAuthorityId => (
+    geoEnvironmentalAuthorities.query()
+      .where({ id_ea: envAuthorityId })
+      .select('area_ha as area')
   ),
 });

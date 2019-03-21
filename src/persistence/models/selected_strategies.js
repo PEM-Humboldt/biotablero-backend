@@ -33,7 +33,7 @@ module.exports = (bookshelf, { saving }) => {
       return this.belongsTo(models.environmentalAuthorities, 'id_ea', 'id_ea');
     };
     models.selectedStrategies.prototype.szh = function biome() {
-      return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
+      return this.belongsTo(models.geoBasinSubzones, 'id_subzone', 'id_subzone');
     };
     models.selectedStrategies.prototype.strategy = function biome() {
       return this.belongsTo(models.strategies, 'id_strategy', 'id_strategy');

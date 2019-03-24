@@ -38,6 +38,37 @@ const { Router } = require('restify-router');
  *  ]
  */
 
+/**
+ * @apiDefine getSEEAreasExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "national": {
+ *      "area": 123456789,
+ *      "percentage": 0.45,
+ *      "type": "Páramo"
+ *    },
+ *    "coverage": [
+ *      {
+ *        "percentage": 0.25,
+ *        "type": "narutal"
+ *      },
+ *      {
+ *        "percentage": 0.1,
+ *        "type": "transformed"
+ *      }
+ *    ],
+ *    "pa": [
+ *      {
+ *        "percentage": 0.04,
+ *        "category": "Reserva Natural de la Sociedad Civil"
+ *      },
+ *      {
+ *        "percentage": 0.1,
+ *        "category": "Parque Nacional Natural"
+ *      }
+ *    ]
+ *  }
+ */
 module.exports = (errorHandler, seService) => {
   const router = new Router();
 
@@ -83,6 +114,38 @@ module.exports = (errorHandler, seService) => {
    */
   router.get('/se/primary', errorHandler((req, res, next) => {
     seService.getPrimary()
+      .then((result) => {
+        res.send(result);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup se
+   * @api {get} /se/areas/:ecosystem areasByEcosystem
+   * @apiName areasByEcosystem
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the areas of a given ecosystem
+   *
+   * @apiSuccess {Object} result object with the different areas for the given ecosystem
+   * @apiSuccess {Object} result.national natioanl information for the ecosystem
+   * @apiSuccess {Number} result.national.area natioanl area of the ecosystem
+   * @apiSuccess {Number} result.national.percentage percentage of the ecosystem at national level
+   * @apiSuccess {String} result.national.type the inserted ecosystem
+   * @apiSuccess {Object[]} result.coverage coverage information for the ecosystem
+   * @apiSuccess {Number} result.coverage.percentage coverage percentage for the ecosystem
+   * @apiSuccess {String} result.coverage.type coverage type
+   * @apiSuccess {Object[]} result.pa information about protected areas for the ecosystem
+   * @apiSuccess {Number} result.pa.percentage protected area percentage for the ecosystem
+   * @apiSuccess {String} result.pa.type protected area type
+   *
+   * @apiExample {curl} Example usage:
+   *  /se/areas/Páramo
+   * @apiUse getSEEAreasExample
+   */
+  router.get('/se/areas/:ecosystem', errorHandler((req, res, next) => {
+    seService.getAreasByEcosystem(req.params.ecosystem)
       .then((result) => {
         res.send(result);
         next();

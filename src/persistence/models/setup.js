@@ -9,7 +9,6 @@ const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
 const geoEnvironmentalAuthorities = require('./geo_environmental_authorities');
-const hidroAreas = require('./hidro_areas');
 const projectImpactedBiomes = require('./project_impacted_biomes');
 const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
 const strategies = require('./strategies');
@@ -63,7 +62,6 @@ const setupModels = () => {
     geoEaBiomes: geoEaBiomes(dbConn),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
     geoEnvironmentalAuthorities: geoEnvironmentalAuthorities(dbConn, eventHandlers),
-    hidroAreas: hidroAreas(dbConn, eventHandlers),
     projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
     geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
     strategies: strategies(dbConn, eventHandlers),

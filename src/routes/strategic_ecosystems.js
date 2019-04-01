@@ -130,10 +130,11 @@ module.exports = (errorHandler, seService) => {
    * @apiName areasByEcosystem
    * @apiVersion 0.1.0
    * @apiDescription
-   * List the areas of a given ecosystem
+   * List the areas of a given ecosystem (#se:listPrimarySE)
    *
-   * @apiParam (path) {String} ecosystem ecosystem type to get areas information.
-   * Accepted values: Páramo, Humedal, Bosque Seco Tropical (results from listPrimarySE endpoint)
+   * @apiParam (path) {String} ecosystem ecosystem type to get areas information. Accepted values:
+   * Páramo, Humedal, Bosque Seco Tropical (results from
+   * <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
    *
    * @apiSuccess {Object} result object with the different areas for the given ecosystem
    * @apiSuccess {Object} result.national national information for the ecosystem

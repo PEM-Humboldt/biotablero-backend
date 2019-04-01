@@ -128,6 +128,12 @@ module.exports = (
         protectedAreas = await paramoPersistence.findProtectedAreas();
         break;
       }
+      case 'Humedal': {
+        national = await wetlandPersistence.findTotalArea();
+        coverageAreas = await wetlandPersistence.findCoverAreas();
+        protectedAreas = await wetlandPersistence.findProtectedAreas();
+        break;
+      }
       default:
         return {};
     }

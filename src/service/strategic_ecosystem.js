@@ -134,6 +134,12 @@ module.exports = (
         protectedAreas = await wetlandPersistence.findProtectedAreas();
         break;
       }
+      case 'Bosque Seco Tropical': {
+        national = await tropicalDryForestPersistence.findTotalArea();
+        coverageAreas = await tropicalDryForestPersistence.findCoverAreas();
+        protectedAreas = await tropicalDryForestPersistence.findProtectedAreas();
+        break;
+      }
       default:
         return {};
     }

@@ -43,28 +43,32 @@ const { Router } = require('restify-router');
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "national": {
- *      "area": 123456789,
- *      "percentage": 0.45,
+ *      "area": "5186810.392899169149790",
+ *      "percentage": 0.03940417069610631,
  *      "type": "Páramo"
  *    },
  *    "coverage": [
  *      {
- *        "percentage": 0.25,
- *        "type": "narutal"
+ *        "area": "8581.742692436169604",
+ *        "type": null,
+ *        "percentage": 0.001654531791673881
  *      },
  *      {
- *        "percentage": 0.1,
- *        "type": "transformed"
+ *        "area": "4592763.290127411739298",
+ *        "type": "N",
+ *        "percentage": 0.8854696706120165
  *      }
  *    ],
  *    "pa": [
  *      {
- *        "percentage": 0.04,
- *        "category": "Reserva Natural de la Sociedad Civil"
+ *        "area": "305237.610769660272561",
+ *        "type": "Parques Naturales Regionales",
+ *        "percentage": 0.05884880835195666
  *      },
  *      {
- *        "percentage": 0.1,
- *        "category": "Parque Nacional Natural"
+ *        "area": "124855.386721879434100",
+ *        "type": "Distritos Regionales de Manejo Integrado",
+ *        "percentage": 0.02407170828777712
  *      }
  *    ]
  *  }
@@ -128,9 +132,12 @@ module.exports = (errorHandler, seService) => {
    * @apiDescription
    * List the areas of a given ecosystem
    *
+   * @apiParam (path) {String} ecosystem ecosystem type to get areas information.
+   * Accepted values: Páramo, Humedal, Bosque Seco Tropical (results from listPrimarySE endpoint)
+   *
    * @apiSuccess {Object} result object with the different areas for the given ecosystem
-   * @apiSuccess {Object} result.national natioanl information for the ecosystem
-   * @apiSuccess {Number} result.national.area natioanl area of the ecosystem
+   * @apiSuccess {Object} result.national national information for the ecosystem
+   * @apiSuccess {Number} result.national.area national area of the ecosystem
    * @apiSuccess {Number} result.national.percentage percentage of the ecosystem at national level
    * @apiSuccess {String} result.national.type the inserted ecosystem
    * @apiSuccess {Object[]} result.coverage coverage information for the ecosystem

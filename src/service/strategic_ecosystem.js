@@ -116,15 +116,35 @@ module.exports = (
    *
    * @param {String} ecosystem ecosystem type to get information
    */
-  getAreasByEcosystem: async ecosystem => ({
-    national: { area: 123456789, percentage: 0.45, type: ecosystem },
-    coverage: [
-      { percentage: 0.25, type: 'narutal' },
-      { percentage: 0.1, type: 'transformed' },
-    ],
-    pa: [
-      { percentage: 0.04, category: 'Reserva Natural de la Sociedad Civil' },
-      { percentage: 0.1, category: 'Parque Nacional Natural' },
-    ],
-  }),
+  getAreasByEcosystem: async (ecosystem) => {
+    const countryArea = await paramoPersistence.findCountryTotalArea();
+    let national;
+    let coverageAreas;
+    let protectedAreas;
+    switch (ecosystem) {
+      case 'Páramo': {
+        national = await paramoPersistence.findTotalArea();
+        coverageAreas = await paramoPersistence.findCoverAreas();
+        protectedAreas = await paramoPersistence.findProtectedAreas();
+        break;
+      }
+      default:
+        return {};
+    }
+    return {
+      national: {
+        ...national[0],
+        percentage: national[0].area / countryArea[0].area,
+        type: ecosystem,
+      },
+      coverage: coverageAreas.map(area => ({
+        ...area,
+        percentage: area.area / national[0].area,
+      })),
+      pa: protectedAreas.map(area => ({
+        ...area,
+        percentage: area.area / national[0].area,
+      })),
+    };
+  },
 });

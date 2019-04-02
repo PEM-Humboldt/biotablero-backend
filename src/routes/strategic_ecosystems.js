@@ -130,7 +130,7 @@ module.exports = (errorHandler, seService) => {
 
   /**
    * @apiGroup se
-   * @api {get} /se/:ecosystem ecosystemInfo
+   * @api {get} /se/:ecosystem/national ecosystemInfo
    * @apiName ecosystemInfo
    * @apiVersion 0.1.0
    * @apiDescription
@@ -145,10 +145,10 @@ module.exports = (errorHandler, seService) => {
    * @apiSuccess {String} result.type the queried ecosystem
    *
    * @apiExample {curl} Example usage:
-   *  /se/Páramo
+   *  /se/Páramo/national
    * @apiUse ecosystemInfoExample
    */
-  router.get('/se/:ecosystem', errorHandler((req, res, next) => {
+  router.get('/se/:ecosystem/national', errorHandler((req, res, next) => {
     seService.getEcosystemNatInfo(req.params.ecosystem)
       .then((result) => {
         res.send(result);

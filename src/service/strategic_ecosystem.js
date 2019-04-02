@@ -112,7 +112,7 @@ module.exports = (
   },
 
   /**
-   * Get different type areas for the given ecosystem
+   * Get national information for the given ecosystem
    *
    * @param {String} ecosystem ecosystem type to get information
    */
@@ -159,4 +159,25 @@ module.exports = (
       })),
     };
   },
+  getEcosystemNatInfo: async ecosystem => ({ area: 123456789, percentage: 0.45, type: ecosystem }),
+
+  /**
+   * Get coverage information for the given ecosystem
+   *
+   * @param {String} ecosystem ecosystem type to get information
+   */
+  getSEByCoverage: async ecosystem => ([
+    { percentage: 0.25, type: 'narutal' },
+    { percentage: 0.1, type: 'transformed' },
+  ]),
+
+  /**
+   * Get protected areas information for the given ecosystem
+   *
+   * @param {String} ecosystem ecosystem type to get information
+   */
+  getSEByPA: async ecosystem => ([
+    { percentage: 0.04, category: 'Reserva Natural de la Sociedad Civil' },
+    { percentage: 0.1, category: 'Parque Nacional Natural' },
+  ]),
 });

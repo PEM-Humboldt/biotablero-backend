@@ -39,39 +39,43 @@ const { Router } = require('restify-router');
  */
 
 /**
- * @apiDefine getSEEAreasExample
+ * @apiDefine ecosystemInfoExample
  * @apiSuccessExample {json} Success-Example:
  *  {
- *    "national": {
- *      "area": "5186810.392899169149790",
- *      "percentage": 0.03940417069610631,
- *      "type": "Páramo"
- *    },
- *    "coverage": [
- *      {
- *        "area": "8581.742692436169604",
- *        "type": null,
- *        "percentage": 0.001654531791673881
- *      },
- *      {
- *        "area": "4592763.290127411739298",
- *        "type": "N",
- *        "percentage": 0.8854696706120165
- *      }
- *    ],
- *    "pa": [
- *      {
- *        "area": "305237.610769660272561",
- *        "type": "Parques Naturales Regionales",
- *        "percentage": 0.05884880835195666
- *      },
- *      {
- *        "area": "124855.386721879434100",
- *        "type": "Distritos Regionales de Manejo Integrado",
- *        "percentage": 0.02407170828777712
- *      }
- *    ]
+ *    "area": 123456789,
+ *    "percentage": 0.45,
+ *    "type": "Páramo"
  *  }
+ */
+
+/**
+ * @apiDefine seByCoverageExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 0.25,
+ *      "type": "narutal"
+ *    },
+ *    {
+ *      "percentage": 0.1,
+ *      "type": "transformed"
+ *    }
+ *  ],
+ */
+
+/**
+ * @apiDefine seByPAExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 0.04,
+ *      "category": "Reserva Natural de la Sociedad Civil"
+ *    },
+ *    {
+ *      "percentage": 0.1,
+ *      "category": "Parque Nacional Natural"
+ *    }
+ *  ]
  */
 module.exports = (errorHandler, seService) => {
   const router = new Router();
@@ -126,39 +130,86 @@ module.exports = (errorHandler, seService) => {
 
   /**
    * @apiGroup se
-   * @api {get} /se/areas/:ecosystem areasByEcosystem
-   * @apiName areasByEcosystem
+   * @api {get} /se/:ecosystem ecosystemInfo
+   * @apiName ecosystemInfo
    * @apiVersion 0.1.0
    * @apiDescription
-   * List the areas of a given ecosystem (#se:listPrimarySE)
+   * Get the ecosystem national information
    *
-   * @apiParam (path) {String} ecosystem ecosystem type to get areas information. Accepted values:
-   * Páramo, Humedal, Bosque Seco Tropical (results from
-   * <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
+   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
    *
-   * @apiSuccess {Object} result object with the different areas for the given ecosystem
-   * @apiSuccess {Object} result.national national information for the ecosystem
-   * @apiSuccess {Number} result.national.area national area of the ecosystem
-   * @apiSuccess {Number} result.national.percentage percentage of the ecosystem at national level
-   * @apiSuccess {String} result.national.type the inserted ecosystem
-   * @apiSuccess {Object[]} result.coverage coverage information for the ecosystem
-   * @apiSuccess {Number} result.coverage.percentage coverage percentage for the ecosystem
-   * @apiSuccess {String} result.coverage.type coverage type
-   * @apiSuccess {Object[]} result.pa information about protected areas for the ecosystem
-   * @apiSuccess {Number} result.pa.percentage protected area percentage for the ecosystem
-   * @apiSuccess {String} result.pa.type protected area type
+   * @apiSuccess {Object} result object with the given ecosystem national information
+   * @apiSuccess {Number} result.area national area of the ecosystem
+   * @apiSuccess {Number} result.percentage percentage of the ecosystem at national level
+   * @apiSuccess {String} result.type the queried ecosystem
    *
    * @apiExample {curl} Example usage:
-   *  /se/areas/Páramo
-   * @apiUse getSEEAreasExample
+   *  /se/Páramo
+   * @apiUse ecosystemInfoExample
    */
-  router.get('/se/areas/:ecosystem', errorHandler((req, res, next) => {
-    seService.getAreasByEcosystem(req.params.ecosystem)
+  router.get('/se/:ecosystem', errorHandler((req, res, next) => {
+    seService.getEcosystemNatInfo(req.params.ecosystem)
       .then((result) => {
         res.send(result);
         next();
       });
   }));
 
+  /**
+   * @apiGroup se
+   * @api {get} /se/:ecosystem/coverage seByCoverage
+   * @apiName seByCoverage
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the strategic ecosystem area separated by coverage
+   *
+   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
+   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   *
+   * @apiSuccess {Object[]} result coverage information for the ecosystem
+   * @apiSuccess {Number} result.percentage coverage percentage for the ecosystem
+   * @apiSuccess {Number} result.area area for the given coverage inside the strategic ecosystem
+   * @apiSuccess {String} result.type coverage type
+   *
+   * @apiExample {curl} Example usage:
+   *  /se/Páramo/coverage
+   * @apiUse seByCoverageExample
+   */
+  router.get('/se/:ecosystem/coverage', errorHandler((req, res, next) => {
+    seService.getSEByCoverage(req.params.ecosystem)
+      .then((result) => {
+        res.send(result);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup se
+   * @api {get} /se/:ecosystem/pa seByPA
+   * @apiName seByPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the strategic ecosystem area separated by protected areas
+   *
+   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
+   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   *
+   * @apiSuccess {Object[]} result information about protected areas for the ecosystem
+   * @apiSuccess {Number} result.percentage protected area percentage for the ecosystem
+   * @apiSuccess {Number} result.area area for the protected area inside the strategic ecosystem
+   * @apiSuccess {String} result.type protected area type
+   *
+   * @apiExample {curl} Example usage:
+   *  /se/Páramo/pa
+   * @apiUse seByPAExample
+   */
+  router.get('/se/:ecosystem/pa', errorHandler((req, res, next) => {
+    seService.getSEByPA(req.params.ecosystem)
+      .then((result) => {
+        res.send(result);
+        next();
+      });
+  }));
   return router;
 };

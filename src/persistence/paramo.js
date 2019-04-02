@@ -88,7 +88,7 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities }) => ({
   /**
    * Find the total area for the country
    */
-  // TODO: Find an alternative to get this area (can't call eaService because of double dependency)
+  // TODO: Find an alternative to get this area (can't call eaService because of circle dependency)
   findCountryTotalArea: async () => (
     geoEnvironmentalAuthorities.query()
       .sum('area_ha as area')

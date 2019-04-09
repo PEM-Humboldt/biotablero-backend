@@ -285,5 +285,33 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/layers/national EANationalLayer
+   * @apiName EANationalLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the national layer divided by environmental authority
+   *
+   * **The response is a GeoJson object, only the first level will be described here**
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type The geometry type
+   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
+   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/layers/national
+   * @apiUse GeofenceNationalLayerExample
+   */
+  router.get('/ea/layers/national', errorHandler((req, res, next) => (
+    eaService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

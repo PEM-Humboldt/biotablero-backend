@@ -119,5 +119,33 @@ module.exports = (errorHandler, basinSubzoneService) => {
       })
   )));
 
+  /**
+   * @apiGroup basinSubzones
+   * @api {get} /basinSubzones/layers/national BasinSubzoneNationalLayer
+   * @apiName BasinSubzoneNationalLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the national layer divided by basin subzones
+   *
+   * **The response is a GeoJson object, only the first level will be described here**
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type The geometry type
+   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
+   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/layers/national
+   * @apiUse GeofenceNationalLayerExample
+   */
+  router.get('/basinSubzones/layers/national', errorHandler((req, res, next) => (
+    basinSubzoneService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

@@ -177,5 +177,33 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup pa
+   * @api {get} /pa/layers/national PANationalLayer
+   * @apiName PANationalLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the national layer divided by protected areas
+   *
+   * **The response is a GeoJson object, only the first level will be described here**
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type The geometry type
+   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
+   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/layers/national
+   * @apiUse GeofenceNationalLayerExample
+   */
+  router.get('/pa/layers/national', errorHandler((req, res, next) => (
+    paService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

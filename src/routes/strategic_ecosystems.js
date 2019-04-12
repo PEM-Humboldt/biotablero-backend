@@ -211,5 +211,34 @@ module.exports = (errorHandler, seService) => {
         next();
       });
   }));
+
+  /**
+   * @apiGroup se
+   * @api {get} /se/layers/national SENationalLayer
+   * @apiName SENationalLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the national layer divided by strategic ecosystems
+   *
+   * **The response is a GeoJson object, only the first level will be described here**
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type The geometry type
+   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
+   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /se/layers/national
+   * @apiUse GeofenceNationalLayerExample
+   */
+  router.get('/se/layers/national', errorHandler((req, res, next) => (
+    seService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

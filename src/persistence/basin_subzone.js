@@ -1,20 +1,49 @@
-module.exports = (db, { geoBasinSubzones }) => ({
-  /**
-   * Get all basin zones
-   */
-  findAll: () => (
-    geoBasinSubzones.query()
-      .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
-  ),
+const config = require('config');
 
-  /**
-   * Get the total area for the given subzone
-   *
-   * @param {String} subzoneId subzone id
-   */
-  getTotalAreaBySubzone: subzoneId => (
-    geoBasinSubzones.query()
-      .where('id_subzone', subzoneId)
-      .select('area_ha as area')
-  ),
-});
+module.exports = (db, { geoBasinSubzones }) => {
+  const geometriesConfig = config.geometries;
+
+  return {
+    /**
+     * Get all basin zones
+     */
+    findAll: () => (
+      geoBasinSubzones.query()
+        .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
+    ),
+
+    /**
+     * Get the total area for the given subzone
+     *
+     * @param {String} subzoneId subzone id
+     */
+    getTotalAreaBySubzone: subzoneId => (
+      geoBasinSubzones.query()
+        .where('id_subzone', subzoneId)
+        .select('area_ha as area')
+    ),
+
+    /**
+     * Get GeoJson layer with basin subzones at national level
+     */
+    findNationalLayer: () => (
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(sz2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance_heavy}))::json as geometry
+            FROM geo_basin_subzones as sz1
+            INNER JOIN (
+              SELECT gid, id_basin, id_zone, id_subzone, name_subzone, area_ha
+              FROM geo_basin_subzones
+            ) as sz2 ON sz1.gid = sz2.gid
+          ) as f
+        ) as fc`,
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
+  };
+};

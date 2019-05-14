@@ -25,6 +25,6 @@ module.exports = (db, { geoProtectedAreas }) => ({
   getTotalAreaByCategory: categoryName => (
     geoProtectedAreas.query()
       .where('category', categoryName)
-      .select('area_ha as area')
+      .sum('area_ha as area')
   ),
 });

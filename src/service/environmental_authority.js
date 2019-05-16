@@ -82,6 +82,22 @@ module.exports = (eaPersistence, seService) => ({
   },
 
   /**
+   * Get information about an strategic ecosystem in an environmental authority. Includes:
+   * - percentage of the given strategic ecosystem respect the national area
+   *
+   * @param {String} envAuthorityId environmental authority id
+   * @param {String} seType strategic ecosystem type
+   */
+  getSEDetails: async (envAuthorityId, seType) => {
+    // create another function if this one gets too many unnecessary information
+    const seNationalArea = await seService.getEcosystemNatInfo(seType);
+    const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
+    return {
+      national_percentage: seArea.area / seNationalArea.area,
+    };
+  },
+
+  /**
    * Get EA total area divided by protected area type
    */
   getAreaByPA: async envAuthorityId => ([

@@ -37,6 +37,31 @@ module.exports = (
   },
 
   /**
+   * Calculates the area for the given strategic ecosystem type inside the environmental authority
+   *
+   * @param {String} eaId environmental authority id
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEAreaInEA: async (eaId, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const area = await paramoPersistence.findAreaByEA(eaId);
+        return area[0];
+      }
+      case 'Bosque Seco Tropical': {
+        const area = tropicalDryForestPersistence.findAreaByEA(eaId);
+        return area[0];
+      }
+      case 'Humedal': {
+        const area = wetlandPersistence.findAreaByEA(eaId);
+        return area[0];
+      }
+      default:
+        return null;
+    }
+  },
+
+  /**
    * Get different strategic ecosystems areas inside the given basin subzone
    *
    * @param {String} subzoneId subzone id

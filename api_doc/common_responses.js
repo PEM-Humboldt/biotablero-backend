@@ -21,6 +21,14 @@
  */
 
 /**
+ * @apiDefine SEInsideGeofenceDetailExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "national_percentage": 0.1523
+ *  }
+ */
+
+/**
  * @apiDefine GeofenceByPAExample
  * @apiSuccessExample {json} Success-Example:
  *  [

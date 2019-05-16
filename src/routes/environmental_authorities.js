@@ -218,7 +218,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiName EABySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the environmental authority total area by strategic ecosysmtens
+   * Separate the environmental authority total area by strategic ecosystems
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -233,6 +233,34 @@ module.exports = (errorHandler, eaService) => {
     eaService.getAreaBySE(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
+   * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
+   * @apiName EABySE
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific environmental authority, get more details
+   * about that area, for the moment s just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} ea_id environmental authority id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside environmental
+   *  authority percentage with respect to the national area
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/se/Humedal
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/ea/:ea_id/se/:se_type', errorHandler((req, res, next) => (
+    eaService.getSEDetails(req.params.ea_id, req.params.se_type)
+      .then((details) => {
+        res.send(details);
         next();
       })
   )));

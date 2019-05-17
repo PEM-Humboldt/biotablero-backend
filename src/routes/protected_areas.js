@@ -131,6 +131,34 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup pa
+   * @api {get} /pa/:category/se/:se_type SEDetailInPA
+   * @apiName SEDetailInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific protected area, get more details
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} pa_id protected area id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside protected area
+   *  percentage with respect to the national area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/se/Páramo
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/pa/:category/se/:se_type', errorHandler((req, res, next) => (
+    paService.getSEDetails(req.params.category, req.params.se_type)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
    * @api {get} /pa/:category/pa PAByPA
    * @apiName PAByPA
    * @apiVersion 0.1.0

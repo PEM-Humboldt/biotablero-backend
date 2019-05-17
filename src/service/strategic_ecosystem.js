@@ -187,6 +187,31 @@ module.exports = (
   },
 
   /**
+   * Calculates the area for the given strategic ecosystem type inside the protected area category
+   *
+   * @param {String} categoryName protected area category
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEAreaInPACategory: async (categoryName, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const area = await paramoPersistence.findAreaByPACategory(categoryName);
+        return area[0];
+      }
+      case 'Bosque Seco Tropical': {
+        const area = await tropicalDryForestPersistence.findAreaByPACategory(categoryName);
+        return area[0];
+      }
+      case 'Humedal': {
+        const area = await wetlandPersistence.findAreaByPACategory(categoryName);
+        return area[0];
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get national information for the given ecosystem
    *
    * @param {String} ecosystem ecosystem type to get information

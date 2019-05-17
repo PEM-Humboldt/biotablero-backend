@@ -30,6 +30,22 @@ module.exports = (paPersistence, seService) => ({
   },
 
   /**
+   * Get information about an strategic ecosystem in a protected area. Includes:
+   * - percentage of the given strategic ecosystem respect the national area
+   *
+   * @param {String} categoryName protected area category
+   * @param {String} seType strategic ecosystem type
+   */
+  getSEDetails: async (categoryName, seType) => {
+    // create another function if this one gets too much unnecessary information
+    const seNationalArea = await seService.getEcosystemNatInfo(seType);
+    const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
+    return {
+      national_percentage: seArea.area / seNationalArea.area,
+    };
+  },
+
+  /**
    * Get protected area divided by protected area type
    */
   getAreaByPA: async categoryName => ([

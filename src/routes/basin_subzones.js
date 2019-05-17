@@ -73,6 +73,34 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup basins
+   * @api {get} /basinSubzones/:subzone_id/se/:se_type SEDetailInSubzone
+   * @apiName SEDetailInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific basin subzone, get more details
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} state_id state id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside basin subzone
+   *  percentage with respect to the national area
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/1/se/Páramo
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/basinSubzones/:subzone_id/se/:se_type', errorHandler((req, res, next) => (
+    basinSubzoneService.getSEDetails(req.params.subzone_id, req.params.se_type)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup basins
    * @api {get} /basinSubzones/:subzone_id/pa SubzoneByPA
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0

@@ -23,6 +23,22 @@ module.exports = (basinSubzonePersistence, seService) => ({
   },
 
   /**
+   * Get information about an strategic ecosystem in a basin subzone. Includes:
+   * - percentage of the given strategic ecosystem respect the national area
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {String} seType strategic ecosystem type
+   */
+  getSEDetails: async (subzoneId, seType) => {
+    // create another function if this one gets too much unnecessary information
+    const seNationalArea = await seService.getEcosystemNatInfo(seType);
+    const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
+    return {
+      national_percentage: seArea.area / seNationalArea.area,
+    };
+  },
+
+  /**
    * Get subzone total area divided by protected area type
    */
   getAreaByPA: async subzoneId => ([

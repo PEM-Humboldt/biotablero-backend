@@ -87,6 +87,31 @@ module.exports = (
   },
 
   /**
+   * Calculates the area for the given strategic ecosystem type inside the given basin subzone
+   *
+   * @param {String} subzoneId subzone id
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEAreaInSubzone: async (subzoneId, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const area = await paramoPersistence.findAreaBySubzone(subzoneId);
+        return area[0];
+      }
+      case 'Bosque Seco Tropical': {
+        const area = await tropicalDryForestPersistence.findAreaBySubzone(subzoneId);
+        return area[0];
+      }
+      case 'Humedal': {
+        const area = await wetlandPersistence.findAreaBySubzone(subzoneId);
+        return area[0];
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get different strategic ecosystems areas inside the given state
    *
    * @param {String} stateId state id
@@ -112,7 +137,7 @@ module.exports = (
   },
 
   /**
-   * Calculates the area for the given strategic ecosystem type inside the state
+   * Calculates the area for the given strategic ecosystem type inside the given state
    *
    * @param {String} stateId state id
    * @param {seType} seType strategic ecosystem type

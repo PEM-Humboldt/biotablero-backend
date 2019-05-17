@@ -125,10 +125,9 @@ module.exports = (errorHandler, stateService) => {
    * @apiParam {String} state_id state id
    * @apiParam {String} se_type strategic ecosystem type
    *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the strategic ecosystem
-   * @apiSuccess {Number} result.area Area of the specified SE in the state
-   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the state area
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
+   * percentage with respect to the national area
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo

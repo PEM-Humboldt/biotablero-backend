@@ -89,7 +89,7 @@ module.exports = (eaPersistence, seService) => ({
    * @param {String} seType strategic ecosystem type
    */
   getSEDetails: async (envAuthorityId, seType) => {
-    // create another function if this one gets too many unnecessary information
+    // create another function if this one gets too much unnecessary information
     const seNationalArea = await seService.getEcosystemNatInfo(seType);
     const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
     return {

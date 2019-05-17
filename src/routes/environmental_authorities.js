@@ -240,11 +240,11 @@ module.exports = (errorHandler, eaService) => {
   /**
    * @apiGroup ea
    * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
-   * @apiName EABySE
+   * @apiName SEDetailInEA
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific environmental authority, get more details
-   * about that area, for the moment s just the national percentage of that strategic ecosystem
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
    * @apiParam {String} ea_id environmental authority id
    * @apiParam {String} se_type strategic ecosystem type
@@ -254,7 +254,7 @@ module.exports = (errorHandler, eaService) => {
    *  authority percentage with respect to the national area
    *
    * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se/Humedal
+   *  /ea/CORPOBOYACA/se/Páramo
    * @apiUse SEInsideGeofenceDetailExample
    */
   router.get('/ea/:ea_id/se/:se_type', errorHandler((req, res, next) => (

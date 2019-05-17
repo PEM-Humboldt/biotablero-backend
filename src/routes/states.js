@@ -115,6 +115,35 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup states
+   * @api {get} /states/:state_id/se/:se_type SEDetailInState
+   * @apiName SEDetailInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific state, get more details
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} state_id state id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the strategic ecosystem
+   * @apiSuccess {Number} result.area Area of the specified SE in the state
+   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the state area
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/Páramo
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/states/:state_id/se/:se_type', errorHandler((req, res, next) => (
+    stateService.getSEDetails(req.params.state_id, req.params.se_type)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
    * @api {get} /states/:state_id/pa StateByPA
    * @apiName StateByPA
    * @apiVersion 0.1.0

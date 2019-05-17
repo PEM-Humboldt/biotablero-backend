@@ -49,15 +49,15 @@ module.exports = (
         return area[0];
       }
       case 'Bosque Seco Tropical': {
-        const area = tropicalDryForestPersistence.findAreaByEA(eaId);
+        const area = await tropicalDryForestPersistence.findAreaByEA(eaId);
         return area[0];
       }
       case 'Humedal': {
-        const area = wetlandPersistence.findAreaByEA(eaId);
+        const area = await wetlandPersistence.findAreaByEA(eaId);
         return area[0];
       }
       default:
-        return null;
+        return {};
     }
   },
 
@@ -109,6 +109,31 @@ module.exports = (
       type: 'Humedal',
     });
     return result;
+  },
+
+  /**
+   * Calculates the area for the given strategic ecosystem type inside the state
+   *
+   * @param {String} stateId state id
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEAreaInState: async (stateId, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const area = await paramoPersistence.findAreaByState(stateId);
+        return area[0];
+      }
+      case 'Bosque Seco Tropical': {
+        const area = await tropicalDryForestPersistence.findAreaByState(stateId);
+        return area[0];
+      }
+      case 'Humedal': {
+        const area = await wetlandPersistence.findAreaByState(stateId);
+        return area[0];
+      }
+      default:
+        return {};
+    }
   },
 
   /**

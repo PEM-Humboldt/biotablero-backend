@@ -152,6 +152,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the state area
+   * @apiSuccess {Number} result.area Area of the specified protected area in the state
    *
    * @apiExample {curl} Example usage:
    *  /states/44/pa
@@ -176,6 +177,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the state.
+   * @apiSuccess {Number} result.area Area of the specified coverage in the state
    *
    * @apiExample {curl} Example usage:
    *  /states/44/coverage

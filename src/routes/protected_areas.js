@@ -168,6 +168,7 @@ module.exports = (errorHandler, paService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA
+   * @apiSuccess {Number} result.area Area of the specified protected area in the protected area
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/pa
@@ -192,6 +193,7 @@ module.exports = (errorHandler, paService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the PA.
+   * @apiSuccess {Number} result.area Area of the specified coverage in the protected area
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/coverage

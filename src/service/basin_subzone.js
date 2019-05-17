@@ -42,16 +42,16 @@ module.exports = (basinSubzonePersistence, seService) => ({
    * Get subzone total area divided by protected area type
    */
   getAreaByPA: async subzoneId => ([
-    { percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
-    { percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
+    { area: 100, percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
+    { area: 110, percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
   ]),
 
   /**
    * Get subzone total area divided by protected area type
    */
   getAreaByCoverage: async subzoneId => ([
-    { percentage: 0.4437728527, type: 'Natural' },
-    { percentage: 0.5562271473, type: 'Transformado' },
+    { area: 100, percentage: 0.4437728527, type: 'Natural' },
+    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
   ]),
 
   /**

@@ -110,6 +110,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the subzone.
+   * @apiSuccess {Number} result.area Area of the specified protected area in the subzone
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/pa
@@ -134,6 +135,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the coverage respect to the subzone.
+   * @apiSuccess {Number} result.area Area of the coverage area in the subzone
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/coverage

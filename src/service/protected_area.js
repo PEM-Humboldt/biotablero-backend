@@ -49,16 +49,16 @@ module.exports = (paPersistence, seService) => ({
    * Get protected area divided by protected area type
    */
   getAreaByPA: async categoryName => ([
-    { percentage: 0, type: 'Santuario de Fauna y Flora' },
-    { percentage: 1, type: 'Parques Naturales Regionales' },
+    { area: 0, percentage: 0, type: 'Santuario de Fauna y Flora' },
+    { area: 210, percentage: 1, type: 'Parques Naturales Regionales' },
   ]),
 
   /**
    * Get protected area divided by protected area type
    */
   getAreaByCoverage: async categoryName => ([
-    { percentage: 0.4437728527, type: 'Natural' },
-    { percentage: 0.5562271473, type: 'Transformado' },
+    { area: 100, percentage: 0.4437728527, type: 'Natural' },
+    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
   ]),
 
   /**

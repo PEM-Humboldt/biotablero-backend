@@ -276,6 +276,8 @@ module.exports = (errorHandler, eaService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the EA area.
+   * @apiSuccess {Number} result.area Area of the specified protected area in the environmental
+   *  authority
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/pa
@@ -300,6 +302,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
+   * @apiSuccess {Number} result.area Area of the specified coverage in the environmental authority
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/coverage

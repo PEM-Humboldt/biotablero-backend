@@ -82,19 +82,35 @@ module.exports = (eaPersistence, seService) => ({
   },
 
   /**
+   * Get information about an strategic ecosystem in an environmental authority. Includes:
+   * - percentage of the given strategic ecosystem respect the national area
+   *
+   * @param {String} envAuthorityId environmental authority id
+   * @param {String} seType strategic ecosystem type
+   */
+  getSEDetails: async (envAuthorityId, seType) => {
+    // create another function if this one gets too much unnecessary information
+    const seNationalArea = await seService.getEcosystemNatInfo(seType);
+    const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
+    return {
+      national_percentage: seArea.area / seNationalArea.area,
+    };
+  },
+
+  /**
    * Get EA total area divided by protected area type
    */
   getAreaByPA: async envAuthorityId => ([
-    { percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
-    { percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
+    { area: 100, percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
+    { area: 110, percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
   ]),
 
   /**
    * Get EA total area divided by protected area type
    */
   getAreaByCoverage: async envAuthorityId => ([
-    { percentage: 0.4437728527, type: 'Natural' },
-    { percentage: 0.5562271473, type: 'Transformado' },
+    { area: 100, percentage: 0.4437728527, type: 'Natural' },
+    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
   ]),
 
   /**

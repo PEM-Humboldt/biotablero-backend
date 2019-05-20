@@ -115,6 +115,34 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup states
+   * @api {get} /states/:state_id/se/:se_type SEDetailInState
+   * @apiName SEDetailInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific state, get more details
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} state_id state id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
+   * percentage with respect to the national area
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/Páramo
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/states/:state_id/se/:se_type', errorHandler((req, res, next) => (
+    stateService.getSEDetails(req.params.state_id, req.params.se_type)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
    * @api {get} /states/:state_id/pa StateByPA
    * @apiName StateByPA
    * @apiVersion 0.1.0
@@ -124,6 +152,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the state area
+   * @apiSuccess {Number} result.area Area of the specified protected area in the state
    *
    * @apiExample {curl} Example usage:
    *  /states/44/pa
@@ -148,6 +177,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the state.
+   * @apiSuccess {Number} result.area Area of the specified coverage in the state
    *
    * @apiExample {curl} Example usage:
    *  /states/44/coverage

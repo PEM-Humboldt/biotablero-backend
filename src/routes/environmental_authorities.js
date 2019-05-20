@@ -218,7 +218,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiName EABySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the environmental authority total area by strategic ecosysmtens
+   * Separate the environmental authority total area by strategic ecosystems
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -239,6 +239,34 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup ea
+   * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
+   * @apiName SEDetailInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific environmental authority, get more details
+   * about that area, for the moment is just the national percentage of that strategic ecosystem
+   *
+   * @apiParam {String} ea_id environmental authority id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.national_percentage strategic ecosystem inside environmental
+   *  authority percentage with respect to the national area
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/se/Páramo
+   * @apiUse SEInsideGeofenceDetailExample
+   */
+  router.get('/ea/:ea_id/se/:se_type', errorHandler((req, res, next) => (
+    eaService.getSEDetails(req.params.ea_id, req.params.se_type)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
    * @api {get} /ea/:ea_id/pa EAByPA
    * @apiName EAByPA
    * @apiVersion 0.1.0
@@ -248,6 +276,8 @@ module.exports = (errorHandler, eaService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the EA area.
+   * @apiSuccess {Number} result.area Area of the specified protected area in the environmental
+   *  authority
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/pa
@@ -272,6 +302,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
    * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
+   * @apiSuccess {Number} result.area Area of the specified coverage in the environmental authority
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/coverage

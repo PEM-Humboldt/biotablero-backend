@@ -46,6 +46,21 @@ module.exports = (paPersistence, seService) => ({
   },
 
   /**
+   * Get coverage areas in an strategic ecosystem in a protected area
+   *
+   * @param {String} categoryName protected area category
+   * @param {String} seType strategic ecosystem type
+   */
+  getCoverageInSE: async (categoryName, seType) => {
+    const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
+    const coverAreas = await seService.getSECoverageInPACategory(categoryName, seType);
+    return coverAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
+  },
+
+  /**
    * Get protected area divided by protected area type
    */
   getAreaByPA: async categoryName => ([

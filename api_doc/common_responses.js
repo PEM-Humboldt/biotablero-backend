@@ -49,11 +49,13 @@
  *  [
  *    {
  *      "percentage": 0.4437728527,
- *      "type": "Natural"
+ *      "area": "1493.945506792712753",
+ *      "type": "N"
  *    },
  *    {
  *      "percentage": 0.5562271473,
- *      "type": "Transformado"
+ *      "area": "158.998859058673413",
+ *      "type": "T"
  *    }
  *  ]
  */

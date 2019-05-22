@@ -88,6 +88,32 @@ module.exports = (
   },
 
   /**
+   * Calculates the area for every coverage type in the given strategic ecosystem type inside the
+   * protected area category
+   *
+   * @param {String} categoryName protected area category
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSECoverageInPACategory: async (categoryName, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const areas = await paramoPersistence.findCoverAreasInPACategory(categoryName);
+        return areas;
+      }
+      case 'Bosque Seco Tropical': {
+        const areas = await tropicalDryForestPersistence.findCoverAreasInPACategory(categoryName);
+        return areas;
+      }
+      case 'Humedal': {
+        const areas = await wetlandPersistence.findCoverAreasInPACategory(categoryName);
+        return areas;
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get different strategic ecosystems areas inside the given basin subzone
    *
    * @param {String} subzoneId subzone id

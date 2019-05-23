@@ -115,6 +115,20 @@ module.exports = (db, { geoWetlandDetails }) => ({
   ),
 
   /**
+   * Find areas grouped by cover type inside the given basin subzone
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInSubzone: async (subzoneId, year = 2012) => (
+    geoWetlandDetails.query()
+      .where({ id_subzone: subzoneId, year_cover: year })
+      .sum('area_ha as area')
+      .groupBy('area_type')
+      .select('area_type as type')
+  ),
+
+  /**
    * Find areas grouped by protected area category
    *
    * @param {Number} year optional year to filter data, 2012 by default

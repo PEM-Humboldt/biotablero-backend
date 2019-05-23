@@ -100,6 +100,21 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities }) => ({
       .select(db.raw('coalesce(SUM(geo_paramo_details.area_ha), 0) as area'), 'geo_paramo_details.area_type as type')
   ),
 
+
+  /**
+   * Find areas grouped by cover type inside the given state
+   *
+   * @param {String} stateId state id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInState: async (stateId, year = 2012) => (
+    geoParamoDetails.query()
+      .where({ id_state: stateId, year_cover: year })
+      .sum('area_ha as area')
+      .groupBy('area_type')
+      .select('area_type as type')
+  ),
+
   /**
    * Find areas grouped by protected area category
    *

@@ -46,6 +46,21 @@ module.exports = (statePersistence, municipalityService, seService) => ({
   },
 
   /**
+   * Get coverage areas in an strategic ecosystem in a state
+   *
+   * @param {String} stateId state id
+   * @param {String} seType strategic ecosystem type
+   */
+  getCoverageInSE: async (stateId, seType) => {
+    const seArea = await seService.getSEAreaInState(stateId, seType);
+    const coverAreas = await seService.getSECoverageInState(stateId, seType);
+    return coverAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
+  },
+
+  /**
    * Get state total area divided by protected area type
    */
   getAreaByPA: async stateId => ([

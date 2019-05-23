@@ -16,6 +16,9 @@ module.exports = (paPersistence, seService) => ({
    */
   getAreaBySE: async (categoryName) => {
     let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    if (totalArea.length === 0) {
+      throw new Error('protected area category doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasByPACategory(categoryName);
     areas.unshift({
@@ -43,6 +46,21 @@ module.exports = (paPersistence, seService) => ({
     return {
       national_percentage: seArea.area / seNationalArea.area,
     };
+  },
+
+  /**
+   * Get coverage areas in an strategic ecosystem in a protected area
+   *
+   * @param {String} categoryName protected area category
+   * @param {String} seType strategic ecosystem type
+   */
+  getCoverageInSE: async (categoryName, seType) => {
+    const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
+    const coverAreas = await seService.getSECoverageInPACategory(categoryName, seType);
+    return coverAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
   },
 
   /**

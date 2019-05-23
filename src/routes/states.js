@@ -143,6 +143,35 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup states
+   * @api {get} /states/:state_id/se/:se_type/coverage SECoverageInState
+   * @apiName SECoverageInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific state, get the coverage
+   * distribution in that area
+   *
+   * @apiParam {String} state_id state id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
+   * @apiSuccess {Number} result.area Area of the specified coverage
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/Páramo/coverage
+   * @apiUse GeofenceByCoverageExample
+   */
+  router.get('/states/:state_id/se/:se_type/coverage', errorHandler((req, res, next) => (
+    stateService.getCoverageInSE(req.params.state_id, req.params.se_type)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
    * @api {get} /states/:state_id/pa StateByPA
    * @apiName StateByPA
    * @apiVersion 0.1.0

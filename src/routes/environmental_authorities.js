@@ -267,6 +267,35 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup ea
+   * @api {get} /ea/:ea_id/se/:se_type/coverage SECoverageInEA
+   * @apiName SECoverageInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific environmental authority, get the coverage
+   * distribution in that area
+   *
+   * @apiParam {String} ea_id environmental authority id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
+   * @apiSuccess {Number} result.area Area of the specified coverage
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/se/Páramo/coverage
+   * @apiUse GeofenceByCoverageExample
+   */
+  router.get('/ea/:ea_id/se/:se_type/coverage', errorHandler((req, res, next) => (
+    eaService.getCoverageInSE(req.params.ea_id, req.params.se_type)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
    * @api {get} /ea/:ea_id/pa EAByPA
    * @apiName EAByPA
    * @apiVersion 0.1.0

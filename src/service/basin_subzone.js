@@ -9,6 +9,9 @@ module.exports = (basinSubzonePersistence, seService) => ({
    */
   getAreaBySE: async (subzoneId) => {
     let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    if (totalArea.length === 0) {
+      throw new Error('basin subzone doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasBySubzone(subzoneId);
     areas.unshift({
@@ -36,6 +39,21 @@ module.exports = (basinSubzonePersistence, seService) => ({
     return {
       national_percentage: seArea.area / seNationalArea.area,
     };
+  },
+
+  /**
+   * Get coverage areas in an strategic ecosystem in a basin subzone
+   *
+   * @param {String} subzoneId subzone id
+   * @param {String} seType strategic ecosystem type
+   */
+  getCoverageInSE: async (subzoneId, seType) => {
+    const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
+    const coverAreas = await seService.getSECoverageInSubzone(subzoneId, seType);
+    return coverAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
   },
 
   /**

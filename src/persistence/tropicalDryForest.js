@@ -73,6 +73,62 @@ module.exports = (db, { geoTropicalDryForestDetails }) => ({
   ),
 
   /**
+   * Find areas grouped by cover type inside the given environmental authority
+   *
+   * @param {String} eaId environmental authority id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInEA: async (eaId, year = 2012) => (
+    geoTropicalDryForestDetails.query()
+      .where({ id_ea: eaId, year_cover: year })
+      .sum('area_ha as area')
+      .groupBy('area_type')
+      .select('area_type as type')
+  ),
+
+  /**
+   * Find areas grouped by cover type inside the given protected area category
+   *
+   * @param {String} categoryName protected area category
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInPACategory: async (categoryName, year = 2012) => (
+    db('geo_tropical_dry_forest_details')
+      .innerJoin('geo_protected_areas', 'geo_tropical_dry_forest_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_protected_areas.category': categoryName, 'geo_tropical_dry_forest_details.year_cover': year })
+      .groupBy('geo_tropical_dry_forest_details.area_type')
+      .select(db.raw('coalesce(SUM(geo_tropical_dry_forest_details.area_ha), 0) as area'), 'geo_tropical_dry_forest_details.area_type as type')
+  ),
+
+  /**
+   * Find areas grouped by cover type inside the given state
+   *
+   * @param {String} stateId state id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInState: async (stateId, year = 2012) => (
+    geoTropicalDryForestDetails.query()
+      .where({ id_state: stateId, year_cover: year })
+      .sum('area_ha as area')
+      .groupBy('area_type')
+      .select('area_type as type')
+  ),
+
+  /**
+   * Find areas grouped by cover type inside the given basin subzone
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findCoverAreasInSubzone: async (subzoneId, year = 2012) => (
+    geoTropicalDryForestDetails.query()
+      .where({ id_subzone: subzoneId, year_cover: year })
+      .sum('area_ha as area')
+      .groupBy('area_type')
+      .select('area_type as type')
+  ),
+
+  /**
    * Find areas grouped by protected area category
    *
    * @param {Number} year optional year to filter data, 2012 by default

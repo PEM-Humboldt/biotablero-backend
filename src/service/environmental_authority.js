@@ -68,6 +68,9 @@ module.exports = (eaPersistence, seService) => ({
    */
   getAreaBySE: async (envAuthorityId) => {
     let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    if (totalArea.length === 0) {
+      throw new Error('environmental authority doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasByEA(envAuthorityId);
     areas.unshift({

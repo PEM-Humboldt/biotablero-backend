@@ -16,6 +16,9 @@ module.exports = (statePersistence, municipalityService, seService) => ({
    */
   getAreaBySE: async (stateId) => {
     let totalArea = await statePersistence.getTotalAreaByState(stateId);
+    if (totalArea.length === 0) {
+      throw new Error('state doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasByState(stateId);
     areas.unshift({

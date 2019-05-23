@@ -16,6 +16,9 @@ module.exports = (paPersistence, seService) => ({
    */
   getAreaBySE: async (categoryName) => {
     let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    if (totalArea.length === 0) {
+      throw new Error('protected area category doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasByPACategory(categoryName);
     areas.unshift({

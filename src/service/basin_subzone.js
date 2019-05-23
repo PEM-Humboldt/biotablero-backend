@@ -9,6 +9,9 @@ module.exports = (basinSubzonePersistence, seService) => ({
    */
   getAreaBySE: async (subzoneId) => {
     let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    if (totalArea.length === 0) {
+      throw new Error('basin subzone doesn\'t exists');
+    }
     totalArea = totalArea[0].area;
     const areas = await seService.getAreasBySubzone(subzoneId);
     areas.unshift({

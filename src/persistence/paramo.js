@@ -87,6 +87,20 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities }) => ({
   ),
 
   /**
+   * Find areas grouped by protected area category inside the given environmental authority
+   *
+   * @param {String} eaId environmental authority id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findPAInEA: async (eaId, year = 2012) => (
+    db('geo_paramo_details')
+      .innerJoin('geo_protected_areas', 'geo_paramo_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_paramo_details.id_ea': eaId, 'geo_paramo_details.year_cover': year })
+      .groupBy('geo_protected_areas.category')
+      .select(db.raw('coalesce(SUM(geo_paramo_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+  ),
+
+  /**
    * Find areas grouped by cover type inside the given protected area category
    *
    * @param {String} categoryName protected area category

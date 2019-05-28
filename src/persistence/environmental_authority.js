@@ -2,7 +2,10 @@ const config = require('config');
 
 module.exports = (
   db,
-  { colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities },
+  {
+    colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities,
+    colombiaCoverages,
+  },
 ) => {
   const geometriesConfig = config.geometries;
 
@@ -85,10 +88,24 @@ module.exports = (
      *
      * @param {String} envAuthorityId EA id
      */
-    getTotalAreaByEA: envAuthorityId => (
-      geoEnvironmentalAuthorities.query()
-        .where({ id_ea: envAuthorityId })
-        .select('area_ha as area')
+    getTotalAreaByEA: (envAuthorityId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_ea: envAuthorityId, year_cover: year })
+        .sum('area_ha as area')
+    ),
+
+    /**
+     * Get the protected area distribution inside the given environmental authority
+     *
+     * @param {String} envAuthorityId environmental authority id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByPA: async (envAuthorityId, year = 2012) => (
+      db('colombia_coverages')
+        .innerJoin('geo_protected_areas', 'colombia_coverages.id_protected_area', 'geo_protected_areas.gid')
+        .where({ 'colombia_coverages.id_ea': envAuthorityId, 'colombia_coverages.year_cover': year })
+        .groupBy('geo_protected_areas.category')
+        .select(db.raw('coalesce(SUM(colombia_coverages.area_ha), 0) as area'), 'geo_protected_areas.category as type')
     ),
 
     /**

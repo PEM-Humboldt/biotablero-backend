@@ -4,6 +4,7 @@ const config = require('config');
 
 // Models
 const colombiaDetails = require('./colombia_details');
+const colombiaCoverages = require('./colombia_coverages');
 const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
@@ -79,6 +80,7 @@ const setupModels = () => {
     geoParamoDetails: geoParamoDetails(dbConn),
     geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
     geoWetlandDetails: geoWetlandDetails(dbConn),
+    colombiaCoverages: colombiaCoverages(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

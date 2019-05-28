@@ -123,8 +123,8 @@ module.exports = (eaPersistence, seService) => ({
    */
   getPAInSE: async (envAuthorityId, seType) => {
     const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
-    const coverAreas = await seService.getSEPAInEA(envAuthorityId, seType);
-    return coverAreas.map(area => ({
+    const paAreas = await seService.getSEPAInEA(envAuthorityId, seType);
+    return paAreas.map(area => ({
       ...area,
       percentage: area.area / seArea.area,
     }));

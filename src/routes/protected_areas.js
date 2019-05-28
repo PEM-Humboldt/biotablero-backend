@@ -52,6 +52,18 @@ const { Router } = require('restify-router');
  *  ]
  */
 
+/**
+ * @apiDefine SEPAInPAExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "percentage": 1,
+ *      "area": "305237.610769660272561",
+ *      "type": Parques Naturales Regionales
+ *    }
+ *  ]
+ */
+
 module.exports = (errorHandler, paService) => {
   const router = new Router();
 
@@ -159,7 +171,7 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup pa
-   * @api {get} /pa/:category/se/:se_type SECoverageInPA
+   * @api {get} /pa/:category/se/:se_type/coverage SECoverageInPA
    * @apiName SECoverageInPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -180,6 +192,35 @@ module.exports = (errorHandler, paService) => {
    */
   router.get('/pa/:category/se/:se_type/coverage', errorHandler((req, res, next) => (
     paService.getCoverageInSE(req.params.category, req.params.se_type)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
+   * @api {get} /pa/:category/se/:se_type/pa SEPAInPA
+   * @apiName SEPAInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific protected area, get the protected area
+   * categories distribution in that area
+   *
+   * @apiParam {String} category protected area category
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
+   * @apiSuccess {Number} result.area Area of the specified coverage
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/se/Páramo/pa
+   * @apiUse SEPAInPAExample
+   */
+  router.get('/pa/:category/se/:se_type/pa', errorHandler((req, res, next) => (
+    paService.getPAInSE(req.params.category, req.params.se_type)
       .then((areas) => {
         res.send(areas);
         next();

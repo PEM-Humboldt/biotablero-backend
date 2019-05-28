@@ -83,7 +83,7 @@ module.exports = (
         return areas;
       }
       default:
-        return {};
+        return [];
     }
   },
 
@@ -109,7 +109,7 @@ module.exports = (
         return areas;
       }
       default:
-        return {};
+        return [];
     }
   },
 
@@ -337,7 +337,33 @@ module.exports = (
         return areas;
       }
       default:
-        return {};
+        return [];
+    }
+  },
+
+  /**
+   * Calculates the area for every protected area category in the given strategic ecosystem type
+   * inside the protected area category
+   *
+   * @param {String} categoryName protected area category
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEPAInPACategory: async (categoryName, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const areas = await paramoPersistence.findPAInPA(categoryName);
+        return areas;
+      }
+      case 'Bosque Seco Tropical': {
+        const areas = await tropicalDryForestPersistence.findPAInPA(categoryName);
+        return areas;
+      }
+      case 'Humedal': {
+        const areas = await wetlandPersistence.findPAInPA(categoryName);
+        return areas;
+      }
+      default:
+        return [];
     }
   },
 

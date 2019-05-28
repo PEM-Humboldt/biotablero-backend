@@ -189,7 +189,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/pa
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse GeofenceByPAExample
    */
   router.get('/states/:state_id/se/:se_type/pa', errorHandler((req, res, next) => (
     stateService.getPAInSE(req.params.state_id, req.params.se_type)

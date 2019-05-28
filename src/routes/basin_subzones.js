@@ -130,6 +130,35 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup basins
+   * @api {get} /basinSubzones/:subzone_id/se/:se_type/pa SEPAInSubzone
+   * @apiName SEPAInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Given an strategic ecosystem type inside an specific basin subzone, get the protected area
+   * categories distribution in that area
+   *
+   * @apiParam {String} subzone_is basin subzone id
+   * @apiParam {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.type Specifies the coverage type
+   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
+   * @apiSuccess {Number} result.area Area of the specified coverage
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/1/se/Páramo/pa
+   * @apiUse GeofenceByPAExample
+   */
+  router.get('/basinSubzones/:subzone_id/se/:se_type/pa', errorHandler((req, res, next) => (
+    basinSubzoneService.getPAInSE(req.params.subzone_id, req.params.se_type)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup basins
    * @api {get} /basinSubzones/:subzone_id/pa SubzoneByPA
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0

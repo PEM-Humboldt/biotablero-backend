@@ -171,6 +171,20 @@ module.exports = (db, { geoWetlandDetails }) => ({
   ),
 
   /**
+   * Find areas grouped by protected area category inside the given subzone
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
+  findPAInSubzone: async (subzoneId, year = 2012) => (
+    db('geo_wetland_details')
+      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_wetland_details.id_subzone': subzoneId, 'geo_wetland_details.year_cover': year })
+      .groupBy('geo_protected_areas.category')
+      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+  ),
+
+  /**
    * Find areas grouped by protected area category
    *
    * @param {Number} year optional year to filter data, 2012 by default

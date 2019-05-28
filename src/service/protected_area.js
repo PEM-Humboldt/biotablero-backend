@@ -49,7 +49,7 @@ module.exports = (paPersistence, seService) => ({
   },
 
   /**
-   * Get coverage areas in an strategic ecosystem in a protected area
+   * Get coverage areas in an strategic ecosystem in a protected area category
    *
    * @param {String} categoryName protected area category
    * @param {String} seType strategic ecosystem type
@@ -58,6 +58,21 @@ module.exports = (paPersistence, seService) => ({
     const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
     const coverAreas = await seService.getSECoverageInPACategory(categoryName, seType);
     return coverAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
+  },
+
+  /**
+   * Get protected area distribution in an strategic ecosystem in a protected area category
+   *
+   * @param {String} categoryName protected area category
+   * @param {String} seType strategic ecosystem type
+   */
+  getPAInSE: async (categoryName, seType) => {
+    const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
+    const paAreas = await seService.getSEPAInPACategory(categoryName, seType);
+    return paAreas.map(area => ({
       ...area,
       percentage: area.area / seArea.area,
     }));

@@ -57,6 +57,21 @@ module.exports = (basinSubzonePersistence, seService) => ({
   },
 
   /**
+   * Get protected area distribution in an strategic ecosystem in a basin subzone
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {String} seType strategic ecosystem type
+   */
+  getPAInSE: async (subzoneId, seType) => {
+    const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
+    const paAreas = await seService.getSEPAInSubzone(subzoneId, seType);
+    return paAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
+  },
+
+  /**
    * Get subzone total area divided by protected area type
    */
   getAreaByPA: async subzoneId => ([

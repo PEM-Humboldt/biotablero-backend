@@ -73,11 +73,36 @@ module.exports = (basinSubzonePersistence, seService) => ({
 
   /**
    * Get subzone total area divided by protected area type
+   *
+   * @param {String} subzoneId basin subzone id
    */
-  getAreaByPA: async subzoneId => ([
-    { area: 100, percentage: 0.4437728527, type: 'Santuario de Fauna y Flora' },
-    { area: 110, percentage: 0.5562271473, type: 'Parques Naturales Regionales' },
-  ]),
+  getAreaByPA: async (subzoneId) => {
+    let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    if (totalArea[0].area === null) {
+      throw new Error('basin subzone doesn\'t exists');
+    }
+    totalArea = totalArea[0].area;
+    const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
+    let nonProtected = totalArea;
+    const result = areas.map((se) => {
+      nonProtected -= parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / totalArea,
+      };
+    });
+    result.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    result.push({
+      area: nonProtected,
+      percentage: nonProtected / totalArea,
+      type: 'No Protegida',
+    });
+    return result;
+  },
 
   /**
    * Get subzone total area divided by protected area type

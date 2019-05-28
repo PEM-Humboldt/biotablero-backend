@@ -132,10 +132,12 @@ module.exports = (eaPersistence, seService) => ({
 
   /**
    * Get EA total area divided by protected area type
+   *
+   * @param {String} enAuthorityId environmental authority id
    */
   getAreaByPA: async (envAuthorityId) => {
     let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-    if (totalArea.length === 0) {
+    if (totalArea[0].area === null) {
       throw new Error('environmental authority doesn\'t exists');
     }
     totalArea = totalArea[0].area;

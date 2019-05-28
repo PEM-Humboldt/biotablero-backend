@@ -87,6 +87,7 @@ module.exports = (
      * Get the total area for the given environmental authority
      *
      * @param {String} envAuthorityId EA id
+     * @param {Number} year optional year to filter data, 2012 by default
      */
     getTotalAreaByEA: (envAuthorityId, year = 2012) => (
       colombiaCoverages.query()

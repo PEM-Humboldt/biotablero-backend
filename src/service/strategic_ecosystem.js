@@ -266,6 +266,32 @@ module.exports = (
   },
 
   /**
+   * Calculates the area for every protected area category in the given strategic ecosystem type
+   * inside the State
+   *
+   * @param {String} stateId state id
+   * @param {seType} seType strategic ecosystem type
+   */
+  getSEPAInState: async (stateId, seType) => {
+    switch (seType) {
+      case 'Páramo': {
+        const areas = await paramoPersistence.findPAInState(stateId);
+        return areas;
+      }
+      case 'Bosque Seco Tropical': {
+        const areas = await tropicalDryForestPersistence.findPAInState(stateId);
+        return areas;
+      }
+      case 'Humedal': {
+        const areas = await wetlandPersistence.findPAInState(stateId);
+        return areas;
+      }
+      default:
+        return [];
+    }
+  },
+
+  /**
    * Get different strategic ecosystems areas inside all the protected areas with the given category
    *
    * @param {String} categoryName category

@@ -89,7 +89,10 @@ module.exports = (paPersistence, seService) => ({
       throw new Error('protected area category doesn\'t exists');
     }
     totalArea = totalArea[0].area;
-    const areas = [totalArea];
+    const areas = [{
+      area: parseFloat(totalArea),
+      type: categoryName,
+    }];
     let nonProtected = totalArea;
     const result = areas.map((se) => {
       nonProtected -= parseFloat(se.area);

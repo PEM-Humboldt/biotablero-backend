@@ -80,11 +80,36 @@ module.exports = (paPersistence, seService) => ({
 
   /**
    * Get protected area divided by protected area type
+   *
+   * @param {String} categoryName protected area category
    */
-  getAreaByPA: async categoryName => ([
-    { area: 0, percentage: 0, type: 'Santuario de Fauna y Flora' },
-    { area: 210, percentage: 1, type: 'Parques Naturales Regionales' },
-  ]),
+  getAreaByPA: async (categoryName) => {
+    let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    if (totalArea[0].area === null) {
+      throw new Error('protected area category doesn\'t exists');
+    }
+    totalArea = totalArea[0].area;
+    const areas = [totalArea];
+    let nonProtected = totalArea;
+    const result = areas.map((se) => {
+      nonProtected -= parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / totalArea,
+      };
+    });
+    result.unshift({
+      area: totalArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    result.push({
+      area: nonProtected,
+      percentage: nonProtected / totalArea,
+      type: 'No Protegida',
+    });
+    return result;
+  },
 
   /**
    * Get protected area divided by protected area type

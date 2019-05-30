@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones }) => {
+module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -16,11 +16,26 @@ module.exports = (db, { geoBasinSubzones }) => {
      * Get the total area for the given subzone
      *
      * @param {String} subzoneId subzone id
+     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaBySubzone: subzoneId => (
-      geoBasinSubzones.query()
-        .where('id_subzone', subzoneId)
-        .select('area_ha as area')
+    getTotalAreaBySubzone: (subzoneId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_subzone: subzoneId, year_cover: year })
+        .sum('area_ha as area')
+    ),
+
+    /**
+     * Get the protected area distribution inside the given basin subzone
+     *
+     * @param {String} subzoneId subzone id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByPA: async (subzoneId, year = 2012) => (
+      db('colombia_coverages')
+        .innerJoin('geo_protected_areas', 'colombia_coverages.id_protected_area', 'geo_protected_areas.gid')
+        .where({ 'colombia_coverages.id_subzone': subzoneId, 'colombia_coverages.year_cover': year })
+        .groupBy('geo_protected_areas.category')
+        .select(db.raw('coalesce(SUM(colombia_coverages.area_ha), 0) as area'), 'geo_protected_areas.category as type')
     ),
 
     /**

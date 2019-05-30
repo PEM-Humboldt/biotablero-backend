@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoStates }) => {
+module.exports = (db, { geoStates, colombiaCoverages }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -16,11 +16,26 @@ module.exports = (db, { geoStates }) => {
      * Get the total area for the given state
      *
      * @param {String} stateId state id
+     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaByState: stateId => (
-      geoStates.query()
-        .where('id_state', stateId)
-        .select('area_ha as area')
+    getTotalAreaByState: (stateId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_state: stateId, year_cover: year })
+        .sum('area_ha as area')
+    ),
+
+    /**
+     * Get the protected area distribution inside the given state
+     *
+     * @param {String} stateId state id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByPA: async (stateId, year = 2012) => (
+      db('colombia_coverages')
+        .innerJoin('geo_protected_areas', 'colombia_coverages.id_protected_area', 'geo_protected_areas.gid')
+        .where({ 'colombia_coverages.id_state': stateId, 'colombia_coverages.year_cover': year })
+        .groupBy('geo_protected_areas.category')
+        .select(db.raw('coalesce(SUM(colombia_coverages.area_ha), 0) as area'), 'geo_protected_areas.category as type')
     ),
 
     /**

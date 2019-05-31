@@ -15,21 +15,26 @@ module.exports = (statePersistence, municipalityService, seService) => ({
    * Get state total area divided by strategic ecosystem type
    */
   getAreaBySE: async (stateId) => {
-    let totalArea = await statePersistence.getTotalAreaByState(stateId);
-    if (totalArea.length === 0) {
+    let stateArea = await statePersistence.getTotalAreaByState(stateId);
+    if (stateArea.length === 0) {
       throw new Error('state doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    stateArea = stateArea[0].area;
     const areas = await seService.getAreasByState(stateId);
-    areas.unshift({
-      area: totalArea,
-      percentage: 1,
+    let totalSE = 0;
+    const result = areas.map((se) => {
+      totalSE += parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / stateArea,
+      };
+    });
+    result.unshift({
+      area: totalSE,
+      percentage: totalSE / stateArea,
       type: 'Total',
     });
-    return areas.map(se => ({
-      ...se,
-      percentage: se.area / totalArea,
-    }));
+    return result;
   },
 
   /**
@@ -96,28 +101,30 @@ module.exports = (statePersistence, municipalityService, seService) => ({
    * @param {Number} stateId state id
    */
   getAreaByPA: async (stateId) => {
-    let totalArea = await statePersistence.getTotalAreaByState(stateId);
-    if (totalArea[0].area === null) {
+    let stateArea = await statePersistence.getTotalAreaByState(stateId);
+    if (stateArea[0].area === null) {
       throw new Error('state doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    stateArea = stateArea[0].area;
     const areas = await statePersistence.findAreaByPA(stateId);
-    let nonProtected = totalArea;
+    let nonProtected = stateArea;
+    let totalProtected = 0;
     const result = areas.map((se) => {
       nonProtected -= parseFloat(se.area);
+      totalProtected += parseFloat(se.area);
       return {
         ...se,
-        percentage: se.area / totalArea,
+        percentage: se.area / stateArea,
       };
     });
     result.unshift({
-      area: totalArea,
-      percentage: 1,
+      area: totalProtected,
+      percentage: totalProtected / stateArea,
       type: 'Total',
     });
     result.push({
       area: nonProtected,
-      percentage: nonProtected / totalArea,
+      percentage: nonProtected / stateArea,
       type: 'No Protegida',
     });
     return result;
@@ -126,10 +133,14 @@ module.exports = (statePersistence, municipalityService, seService) => ({
   /**
    * Get state total area divided by protected area type
    */
-  getAreaByCoverage: async stateId => ([
-    { area: 100, percentage: 0.4437728527, type: 'Natural' },
-    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-  ]),
+  getAreaByCoverage: async (stateId) => {
+    const stateArea = await statePersistence.getTotalAreaByState(stateId);
+    return [
+      { area: stateArea[0].area, percentage: 1, type: 'Total' },
+      { area: 100, percentage: 0.4437728527, type: 'Natural' },
+      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
+    ];
+  },
 
   /**
    * Get the national layer divided by states

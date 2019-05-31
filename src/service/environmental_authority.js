@@ -67,21 +67,26 @@ module.exports = (eaPersistence, seService) => ({
    * @param {String} envAuthorityId environmental authority id
    */
   getAreaBySE: async (envAuthorityId) => {
-    let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-    if (totalArea.length === 0) {
+    let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    if (eaArea.length === 0) {
       throw new Error('environmental authority doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    eaArea = eaArea[0].area;
     const areas = await seService.getAreasByEA(envAuthorityId);
-    areas.unshift({
-      area: totalArea,
-      percentage: 1,
+    let totalSE = 0;
+    const result = areas.map((se) => {
+      totalSE += parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / eaArea,
+      };
+    });
+    result.unshift({
+      area: totalSE,
+      percentage: totalSE / eaArea,
       type: 'Total',
     });
-    return areas.map(se => ({
-      ...se,
-      percentage: se.area / totalArea,
-    }));
+    return result;
   },
 
   /**
@@ -148,28 +153,30 @@ module.exports = (eaPersistence, seService) => ({
    * @param {String} enAuthorityId environmental authority id
    */
   getAreaByPA: async (envAuthorityId) => {
-    let totalArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-    if (totalArea[0].area === null) {
+    let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    if (eaArea[0].area === null) {
       throw new Error('environmental authority doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    eaArea = eaArea[0].area;
     const areas = await eaPersistence.findAreaByPA(envAuthorityId);
-    let nonProtected = totalArea;
+    let nonProtected = eaArea;
+    let totalProtected = 0;
     const result = areas.map((se) => {
       nonProtected -= parseFloat(se.area);
+      totalProtected += parseFloat(se.area);
       return {
         ...se,
-        percentage: se.area / totalArea,
+        percentage: se.area / eaArea,
       };
     });
     result.unshift({
-      area: totalArea,
-      percentage: 1,
+      area: totalProtected,
+      percentage: totalProtected / eaArea,
       type: 'Total',
     });
     result.push({
       area: nonProtected,
-      percentage: nonProtected / totalArea,
+      percentage: nonProtected / eaArea,
       type: 'No Protegida',
     });
     return result;
@@ -178,10 +185,14 @@ module.exports = (eaPersistence, seService) => ({
   /**
    * Get EA total area divided by coverage type
    */
-  getAreaByCoverage: async envAuthorityId => ([
-    { area: 100, percentage: 0.4437728527, type: 'Natural' },
-    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-  ]),
+  getAreaByCoverage: async (envAuthorityId) => {
+    const eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    return [
+      { area: eaArea[0].area, percentage: 1, type: 'Total' },
+      { area: 100, percentage: 0.4437728527, type: 'Natural' },
+      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
+    ];
+  },
 
   /**
    * Get the national layer divided by environmental authority

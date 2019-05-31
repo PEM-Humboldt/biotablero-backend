@@ -1,6 +1,6 @@
 module.exports = bookshelf => (
   bookshelf.Model.extend({
-    tableName: 'geo_wetland_details',
+    tableName: 'colombia_wetlands_details',
     idAttribute: 'gid',
   })
 );

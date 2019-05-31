@@ -15,21 +15,26 @@ module.exports = (paPersistence, seService) => ({
    * @param {String} categoryName category to filter by
    */
   getAreaBySE: async (categoryName) => {
-    let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
-    if (totalArea.length === 0) {
+    let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    if (categoryArea.length === 0) {
       throw new Error('protected area category doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    categoryArea = categoryArea[0].area;
     const areas = await seService.getAreasByPACategory(categoryName);
-    areas.unshift({
-      area: totalArea,
-      percentage: 1,
+    let totalSE = 0;
+    const result = areas.map((se) => {
+      totalSE += parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / categoryArea,
+      };
+    });
+    result.unshift({
+      area: totalSE,
+      percentage: totalSE / categoryArea,
       type: 'Total',
     });
-    return areas.map(se => ({
-      ...se,
-      percentage: se.area / totalArea,
-    }));
+    return result;
   },
 
   /**
@@ -96,31 +101,33 @@ module.exports = (paPersistence, seService) => ({
    * @param {String} categoryName protected area category
    */
   getAreaByPA: async (categoryName) => {
-    let totalArea = await paPersistence.getTotalAreaByCategory(categoryName);
-    if (totalArea[0].area === null) {
+    let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    if (categoryArea[0].area === null) {
       throw new Error('protected area category doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    categoryArea = categoryArea[0].area;
     const areas = [{
-      area: parseFloat(totalArea),
+      area: parseFloat(categoryArea),
       type: categoryName,
     }];
-    let nonProtected = totalArea;
+    let nonProtected = categoryArea;
+    let totalProtected = 0;
     const result = areas.map((se) => {
       nonProtected -= parseFloat(se.area);
+      totalProtected += parseFloat(se.area);
       return {
         ...se,
-        percentage: se.area / totalArea,
+        percentage: se.area / categoryArea,
       };
     });
     result.unshift({
-      area: totalArea,
-      percentage: 1,
+      area: totalProtected,
+      percentage: totalProtected / categoryArea,
       type: 'Total',
     });
     result.push({
       area: nonProtected,
-      percentage: nonProtected / totalArea,
+      percentage: nonProtected / categoryArea,
       type: 'No Protegida',
     });
     return result;
@@ -129,10 +136,14 @@ module.exports = (paPersistence, seService) => ({
   /**
    * Get protected area divided by protected area type
    */
-  getAreaByCoverage: async categoryName => ([
-    { area: 100, percentage: 0.4437728527, type: 'Natural' },
-    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-  ]),
+  getAreaByCoverage: async (categoryName) => {
+    const categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
+    return [
+      { area: categoryArea[0].area, percentage: 1, type: 'Total' },
+      { area: 100, percentage: 0.4437728527, type: 'Natural' },
+      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
+    ];
+  },
 
   /**
    * Get the national layer divided by protected area

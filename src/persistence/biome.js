@@ -15,34 +15,28 @@ module.exports = (
      *
      * @returns {Object} GeoJson Object with biomes as features from a FeatureCollection
      */
-    findBiomeByEA: (envAuthority) => {
-      // Rudimentary verification since we are using a raw query
-      if (envAuthority.split(' ').join('') !== envAuthority) {
-        const error = new Error(`'${envAuthority}' is an invalid environmental authority`);
-        error.code = 400;
-        throw error;
-      }
-
-      return db.raw(
+    findBiomeByEA: envAuthority => (
+      db.raw(
         `SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
               row_to_json(geo_biomes2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_ea_biomes as geo_biomes1
             INNER JOIN (
               SELECT geb.gid, geb.name_biome, geb.id_biome, gb.compensation_factor
               FROM geo_ea_biomes as geb
               INNER JOIN geo_biomes as gb ON gb.id_biome = geb.id_biome
             ) as geo_biomes2 ON geo_biomes2.gid = geo_biomes1.gid
-            WHERE geo_biomes1.id_ea = '${envAuthority}'
+            WHERE geo_biomes1.id_ea = ?
           ) as f
         ) as fc`,
+        [geometriesConfig.tolerance, envAuthority],
       )
-        .then(biomes => biomes.rows[0].collection);
-    },
+        .then(biomes => biomes.rows[0].collection)
+    ),
 
     /**
      * Bulk create a set of project impacted biomes
@@ -80,7 +74,8 @@ module.exports = (
         INNER JOIN geo_compensation_strategies_2018 as st ON gb.id_main_biome = st.id_biome
         INNER JOIN geo_basin_subzones AS gbs ON st.id_subzone = gbs.id_subzone
         INNER JOIN geo_environmental_authorities as gea ON st.id_ea = gea.id_ea
-        WHERE pib.id_project = ${projectId}`,
+        WHERE pib.id_project = ?`,
+        projectId,
       )
         .then(({ rows }) => rows.map(({ remove, ...rest }) => rest))
     ),
@@ -118,16 +113,17 @@ module.exports = (
           FROM(
             SELECT 'Feature' as type,
               row_to_json(geo_biomes2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance_heavy}))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM (
               SELECT gb.gid, gb.name, gb.compensation_factor, gb.id_biome, pib.area_impacted_pct
               FROM geo_biomes as gb
               INNER JOIN project_impacted_biomes as pib ON gb.id_biome = pib.id_biome
-              WHERE pib.id_project=${projectId}
+              WHERE pib.id_project=?
             ) as geo_biomes2
             INNER JOIN geo_biomes as geo_biomes1 ON geo_biomes2.gid = geo_biomes1.gid
           ) as f
         ) as fc`,
+        [geometriesConfig.tolerance_heavy, projectId],
       )
         .then(biomes => biomes.rows[0].collection)
     ),

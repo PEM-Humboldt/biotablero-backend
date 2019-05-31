@@ -49,7 +49,7 @@ module.exports = (db, { geoStates, colombiaCoverages }) => {
           FROM(
             SELECT 'Feature' as type,
               row_to_json(s2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_states as s1
             INNER JOIN (
               SELECT gid, id_country, id_state, name, area_ha
@@ -57,6 +57,7 @@ module.exports = (db, { geoStates, colombiaCoverages }) => {
             ) as s2 ON s1.gid = s2.gid
           ) as f
         ) as fc`,
+        geometriesConfig.tolerance,
       )
         .then(layers => layers.rows[0].collection)
     ),

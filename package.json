@@ -4,7 +4,7 @@
   "description": "Backend for 'Biotablero' project",
   "main": "src/app.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --watch config --delay 3",
+    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --watch config",
     "start-prod": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "./node_modules/eslint/bin/eslint.js src",

@@ -72,10 +72,22 @@ module.exports = (statePersistence, municipalityService, seService) => ({
   getPAInSE: async (stateId, seType) => {
     const seArea = await seService.getSEAreaInState(stateId, seType);
     const paAreas = await seService.getSEPAInState(stateId, seType);
-    return paAreas.map(area => ({
-      ...area,
-      percentage: area.area / seArea.area,
-    }));
+    let nonProtected = seArea.area;
+    const result = paAreas.map((area) => {
+      nonProtected -= parseFloat(area.area);
+      return {
+        ...area,
+        percentage: area.area / seArea.area,
+      };
+    });
+    if (result.length !== 0) {
+      result.push({
+        area: nonProtected,
+        percentage: nonProtected / seArea.area,
+        type: 'No Protegida',
+      });
+    }
+    return result;
   },
 
   /**

@@ -8,21 +8,26 @@ module.exports = (basinSubzonePersistence, seService) => ({
    * Get subzone total area divided by strategic ecosystem type
    */
   getAreaBySE: async (subzoneId) => {
-    let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-    if (totalArea.length === 0) {
+    let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    if (subzoneArea.length === 0) {
       throw new Error('basin subzone doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    subzoneArea = subzoneArea[0].area;
     const areas = await seService.getAreasBySubzone(subzoneId);
-    areas.unshift({
-      area: totalArea,
-      percentage: 1,
+    let totalSE = 0;
+    const result = areas.map((se) => {
+      totalSE += parseFloat(se.area);
+      return {
+        ...se,
+        percentage: se.area / subzoneArea,
+      };
+    });
+    result.unshift({
+      area: totalSE,
+      percentage: totalSE / subzoneArea,
       type: 'Total',
     });
-    return areas.map(se => ({
-      ...se,
-      percentage: se.area / totalArea,
-    }));
+    return result;
   },
 
   /**
@@ -89,28 +94,30 @@ module.exports = (basinSubzonePersistence, seService) => ({
    * @param {String} subzoneId basin subzone id
    */
   getAreaByPA: async (subzoneId) => {
-    let totalArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-    if (totalArea[0].area === null) {
+    let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    if (subzoneArea[0].area === null) {
       throw new Error('basin subzone doesn\'t exists');
     }
-    totalArea = totalArea[0].area;
+    subzoneArea = subzoneArea[0].area;
     const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
-    let nonProtected = totalArea;
+    let nonProtected = subzoneArea;
+    let totalProtected = 0;
     const result = areas.map((se) => {
       nonProtected -= parseFloat(se.area);
+      totalProtected += parseFloat(se.area);
       return {
         ...se,
-        percentage: se.area / totalArea,
+        percentage: se.area / subzoneArea,
       };
     });
     result.unshift({
-      area: totalArea,
-      percentage: 1,
+      area: totalProtected,
+      percentage: totalProtected / subzoneArea,
       type: 'Total',
     });
     result.push({
       area: nonProtected,
-      percentage: nonProtected / totalArea,
+      percentage: nonProtected / subzoneArea,
       type: 'No Protegida',
     });
     return result;
@@ -119,10 +126,14 @@ module.exports = (basinSubzonePersistence, seService) => ({
   /**
    * Get subzone total area divided by protected area type
    */
-  getAreaByCoverage: async subzoneId => ([
-    { area: 100, percentage: 0.4437728527, type: 'Natural' },
-    { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-  ]),
+  getAreaByCoverage: async (subzoneId) => {
+    const subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
+    return [
+      { area: subzoneArea[0].area, percentage: 1, type: 'Total' },
+      { area: 100, percentage: 0.4437728527, type: 'Natural' },
+      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
+    ];
+  },
 
   /**
    * Get the national layer divided by basin subzones

@@ -1,4 +1,4 @@
-module.exports = (db, { geoWetlandDetails }) => ({
+module.exports = (db, { colombiaWetlandsDetails }) => ({
   /**
    * Get the area inside the given environmental authority
    *
@@ -6,7 +6,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByEA: (eaId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_ea: eaId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -18,7 +18,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaBySubzone: (subzoneId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_subzone: subzoneId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -30,7 +30,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByState: (stateId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_state: stateId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -42,10 +42,10 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByPACategory: (categoryName, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_wetland_details.year_cover': year })
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'))
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'))
   ),
 
   /**
@@ -54,7 +54,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findTotalArea: async (year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where('year_cover', year)
       .sum('area_ha as area')
   ),
@@ -65,7 +65,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreas: async (year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where('year_cover', year)
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -79,7 +79,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInEA: async (eaId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_ea: eaId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -93,11 +93,11 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInEA: async (eaId, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_wetland_details.id_ea': eaId, 'geo_wetland_details.year_cover': year })
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'colombia_wetlands_details.id_ea': eaId, 'colombia_wetlands_details.year_cover': year })
       .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
   ),
 
   /**
@@ -107,11 +107,11 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInPACategory: async (categoryName, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_wetland_details.year_cover': year })
-      .groupBy('geo_wetland_details.area_type')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_wetland_details.area_type as type')
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
+      .groupBy('colombia_wetlands_details.area_type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'colombia_wetlands_details.area_type as type')
   ),
 
   /**
@@ -121,11 +121,11 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInPA: async (categoryName, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_wetland_details.year_cover': year })
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
       .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
   ),
 
   /**
@@ -135,7 +135,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInState: async (stateId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_state: stateId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -149,11 +149,11 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInState: async (stateId, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_wetland_details.id_state': stateId, 'geo_wetland_details.year_cover': year })
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'colombia_wetlands_details.id_state': stateId, 'colombia_wetlands_details.year_cover': year })
       .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
   ),
 
   /**
@@ -163,7 +163,7 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInSubzone: async (subzoneId, year = 2012) => (
-    geoWetlandDetails.query()
+    colombiaWetlandsDetails.query()
       .where({ id_subzone: subzoneId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -177,11 +177,11 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInSubzone: async (subzoneId, year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_wetland_details.id_subzone': subzoneId, 'geo_wetland_details.year_cover': year })
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'colombia_wetlands_details.id_subzone': subzoneId, 'colombia_wetlands_details.year_cover': year })
       .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
   ),
 
   /**
@@ -190,10 +190,10 @@ module.exports = (db, { geoWetlandDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findProtectedAreas: async (year = 2012) => (
-    db('geo_wetland_details')
-      .innerJoin('geo_protected_areas', 'geo_wetland_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_wetland_details.year_cover': year })
+    db('colombia_wetlands_details')
+      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
+      .where({ 'colombia_wetlands_details.year_cover': year })
       .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_wetland_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
   ),
 });

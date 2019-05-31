@@ -120,7 +120,7 @@ module.exports = (
           FROM(
             SELECT 'Feature' as type,
               row_to_json(ea2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ${geometriesConfig.tolerance}))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_environmental_authorities as ea1
             INNER JOIN (
               SELECT gid, id_ea, name, area_ha
@@ -128,6 +128,7 @@ module.exports = (
             ) as ea2 ON ea1.gid = ea2.gid
           ) as f
         ) as fc`,
+        geometriesConfig.tolerance,
       )
         .then(layers => layers.rows[0].collection)
     ),

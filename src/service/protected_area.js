@@ -72,10 +72,22 @@ module.exports = (paPersistence, seService) => ({
   getPAInSE: async (categoryName, seType) => {
     const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
     const paAreas = await seService.getSEPAInPACategory(categoryName, seType);
-    return paAreas.map(area => ({
-      ...area,
-      percentage: area.area / seArea.area,
-    }));
+    let nonProtected = seArea.area;
+    const result = paAreas.map((area) => {
+      nonProtected -= parseFloat(area.area);
+      return {
+        ...area,
+        percentage: area.area / seArea.area,
+      };
+    });
+    if (result.length !== 0) {
+      result.push({
+        area: nonProtected,
+        percentage: nonProtected / seArea.area,
+        type: 'No Protegida',
+      });
+    }
+    return result;
   },
 
   /**

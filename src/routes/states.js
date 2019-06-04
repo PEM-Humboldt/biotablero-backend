@@ -95,9 +95,8 @@ module.exports = (errorHandler, stateService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Separate the state total area by strategic ecosystems. <br/>
-   * The result is the list of strategic ecosystems with area and percentage inside the basin
-   * subzone and an extra element with the total area inside strategic ecosystems on the basin
-   * subzone.
+   * The result is the list of strategic ecosystems with area and percentage inside the state and an
+   * extra element with the total area inside strategic ecosystems on the state.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -215,7 +214,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiDescription
    * Separate the state total area by protected areas. <br/>
    * The result is the list of protected area types with area and percentage inside the state and
-   * two extra elements: the total protected area inside the state and the non protected area
+   * two extra elements: the total protected area inside the state and the non protected area.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area

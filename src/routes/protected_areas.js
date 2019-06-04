@@ -122,7 +122,10 @@ module.exports = (errorHandler, paService) => {
    * @apiName PABySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by strategic ecosysmtens
+   * Separate the protected area by strategic ecosystems. <br/>
+   * The result is the list of strategic ecosystems with area and percentage inside the protected
+   * area category and an extra element with the total area inside strategic ecosystems on the
+   * protected area category.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -176,7 +179,9 @@ module.exports = (errorHandler, paService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific protected area, get the coverage
-   * distribution in that area
+   * distribution in that area. <br/>
+   * The result is the list of cover types with area and percentage inside the specified strategic
+   * ecosystem in the protected area category.
    *
    * @apiParam {String} category protected area category
    * @apiParam {String} se_type strategic ecosystem type
@@ -205,7 +210,10 @@ module.exports = (errorHandler, paService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific protected area, get the protected area
-   * categories distribution in that area
+   * categories distribution in that area. <br/>
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the protected area category and two extra elements: the total protected
+   * area inside the specified area and the non protected area.
    *
    * @apiParam {String} category protected area category
    * @apiParam {String} se_type strategic ecosystem type
@@ -233,7 +241,10 @@ module.exports = (errorHandler, paService) => {
    * @apiName PAByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by protected areas
+   * Separate the protected area by protected areas. <br/>
+   * The result is the list of protected area types with area and percentage inside the protected
+   * area category and two extra elements: the total protected area inside the protected area
+   * category and the non protected area
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -258,7 +269,9 @@ module.exports = (errorHandler, paService) => {
    * @apiName PAByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by coverage type
+   * Separate the protected area by coverage type. <br/>
+   * The result is the list of cover types with area and percentage inside the protected area
+   * category and an extra element with the total state area.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type

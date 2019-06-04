@@ -151,6 +151,9 @@ module.exports = (eaPersistence, seService) => ({
    * Get EA total area divided by protected area type
    *
    * @param {String} enAuthorityId environmental authority id
+   *
+   * @returns {Object[]} list of protected areas + 2 elements: total protected area (and percentage)
+   * and non protected area (and percentage)
    */
   getAreaByPA: async (envAuthorityId) => {
     let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
@@ -184,14 +187,29 @@ module.exports = (eaPersistence, seService) => ({
 
   /**
    * Get EA total area divided by coverage type
+   *
+   * @param {String} enAuthorityId environmental authority id
+   *
+   * @returns {Object[]} list of protected areas + 2 elements: total protected area (and percentage)
+   * and non protected area (and percentage)
    */
   getAreaByCoverage: async (envAuthorityId) => {
-    const eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-    return [
-      { area: eaArea[0].area, percentage: 1, type: 'Total' },
-      { area: 100, percentage: 0.4437728527, type: 'Natural' },
-      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-    ];
+    let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
+    if (eaArea[0].area === null) {
+      throw new Error('environmental authority doesn\'t exists');
+    }
+    eaArea = eaArea[0].area;
+    const areas = await eaPersistence.findAreaByCoverage(envAuthorityId);
+    const result = areas.map(cover => ({
+      ...cover,
+      percentage: cover.area / eaArea,
+    }));
+    result.unshift({
+      area: eaArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return result;
   },
 
   /**

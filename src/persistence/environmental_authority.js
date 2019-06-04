@@ -110,6 +110,19 @@ module.exports = (
     ),
 
     /**
+     * Get the coverage area distribution inside the given environmental authority
+     *
+     * @param {String} envAuthorityId environmental authority id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByCoverage: async (envAuthorityId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_ea: envAuthorityId, year_cover: year })
+        .groupBy('area_type')
+        .sum('area_ha as area')
+    ),
+
+    /**
      * Get GeoJson layer with environmental authorities at national level
      */
     findNationalLayer: () => (

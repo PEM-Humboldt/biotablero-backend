@@ -99,6 +99,9 @@ module.exports = (statePersistence, municipalityService, seService) => ({
    * Get state total area divided by protected area type
    *
    * @param {Number} stateId state id
+   *
+   * @returns {Object[]} list of protected areas + 2 elements: total protected area (and percentage)
+   * and non protected area (and percentage)
    */
   getAreaByPA: async (stateId) => {
     let stateArea = await statePersistence.getTotalAreaByState(stateId);
@@ -132,14 +135,28 @@ module.exports = (statePersistence, municipalityService, seService) => ({
 
   /**
    * Get state total area divided by protected area type
+   *
+   * @param {String} stateId state id
+   *
+   * @returns {Object[]} list of protected areas + 1 element: total area in the state
    */
   getAreaByCoverage: async (stateId) => {
-    const stateArea = await statePersistence.getTotalAreaByState(stateId);
-    return [
-      { area: stateArea[0].area, percentage: 1, type: 'Total' },
-      { area: 100, percentage: 0.4437728527, type: 'Natural' },
-      { area: 110, percentage: 0.5562271473, type: 'Transformado' },
-    ];
+    let stateArea = await statePersistence.getTotalAreaByState(stateId);
+    if (stateArea[0].area === null) {
+      throw new Error('state doesn\'t exists');
+    }
+    stateArea = stateArea[0].area;
+    const areas = await statePersistence.findAreaByCoverage(stateId);
+    const result = areas.map(cover => ({
+      ...cover,
+      percentage: cover.area / stateArea,
+    }));
+    result.unshift({
+      area: stateArea,
+      percentage: 1,
+      type: 'Total',
+    });
+    return result;
   },
 
   /**

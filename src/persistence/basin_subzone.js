@@ -49,7 +49,9 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
         .where({ id_subzone: subzoneId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')
+        .select('area_type as type')
     ),
+
     /**
      * Get GeoJson layer with basin subzones at national level
      */

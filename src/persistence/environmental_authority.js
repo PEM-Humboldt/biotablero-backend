@@ -120,6 +120,7 @@ module.exports = (
         .where({ id_ea: envAuthorityId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')
+        .select('area_type as type')
     ),
 
     /**

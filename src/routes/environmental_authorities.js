@@ -219,8 +219,9 @@ module.exports = (errorHandler, eaService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Separate the environmental authority total area by strategic ecosystems. <br/>
-   * The result is the list of strategic ecosystems with area and percentage inside the geofence and
-   * an extra element with the total area inside strategic ecosystems on the geofence.
+   * The result is the list of strategic ecosystems with area and percentage inside the
+   * environmental authority and an extra element with the total area inside strategic ecosystems on
+   * the environmental authority.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -276,7 +277,7 @@ module.exports = (errorHandler, eaService) => {
    * Given an strategic ecosystem type inside an specific environmental authority, get the coverage
    * distribution in that area. <br/>
    * The result is the list of cover types with area and percentage inside the specified strategic
-   * ecosystem in the geofence.
+   * ecosystem in the environmental authority.
    *
    * @apiParam {String} ea_id environmental authority id
    * @apiParam {String} se_type strategic ecosystem type
@@ -307,8 +308,8 @@ module.exports = (errorHandler, eaService) => {
    * Given an strategic ecosystem type inside an specific environmental authority, get the
    * distribution of protected area categories in that area. <br/>
    * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the geofence and two extra elements: the total protected area inside the
-   * specified area and the non protected area.
+   * strategic ecosystem in the environmental authority and two extra elements: the total protected
+   * area inside the specified area and the non protected area.
    *
    * @apiParam {String} ea_id environmental authority id
    * @apiParam {String} se_type strategic ecosystem type
@@ -337,8 +338,9 @@ module.exports = (errorHandler, eaService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Separate the environmental authority total area by protected areas. <br/>
-   * The result is the list of protected area types with area and percentage inside the geofence and
-   * two extra elements: the total protected area inside the geofence and the non protected area
+   * The result is the list of protected area types with area and percentage inside the
+   * environmental authority and two extra elements: the total protected area inside the
+   * environmental authority and the non protected area
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -365,8 +367,8 @@ module.exports = (errorHandler, eaService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Separate the environmental authority total area by coverage type. <br/>
-   * The result is the list of cover types with area and percentage inside the geofence and an extra
-   * element with the total geofence area
+   * The result is the list of cover types with area and percentage inside the environmental
+   * authority and an extra element with the total environmental authority area.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type

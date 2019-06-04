@@ -52,7 +52,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by strategic ecosystems
+   * Separate the basin subzone total area by strategic ecosystems. <br/>
+   * The result is the list of strategic ecosystems with area and percentage inside the basin
+   * subzone and an extra element with the total area inside strategic ecosystems on the basin
+   * subzone.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -106,7 +109,9 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific basin subzone, get the coverage
-   * distribution in that area
+   * distribution in that area. <br/>
+   * The result is the list of cover types with area and percentage inside the specified strategic
+   * ecosystem in the basin subzone.
    *
    * @apiParam {String} subzone_is basin subzone id
    * @apiParam {String} se_type strategic ecosystem type
@@ -135,7 +140,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific basin subzone, get the protected area
-   * categories distribution in that area
+   * categories distribution in that area. <br/>
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the basin subzone and two extra elements: the total protected area
+   * inside the specified area and the non protected area.
    *
    * @apiParam {String} subzone_is basin subzone id
    * @apiParam {String} se_type strategic ecosystem type
@@ -163,7 +171,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by protected areas
+   * Separate the basin subzone total area by protected areas. <br/>
+   * The result is the list of protected area types with area and percentage inside the basin
+   * subzone and two extra elements: the total protected area inside the basin subzone and the non
+   * protected area
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -188,7 +199,9 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by coverage type
+   * Separate the basin subzone total area by coverage type. <br/>
+   * The result is the list of cover types with area and percentage inside the basin subzone and an
+   * extra element with the total basin subzone area.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type

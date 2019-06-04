@@ -190,8 +190,8 @@ module.exports = (eaPersistence, seService) => ({
    *
    * @param {String} enAuthorityId environmental authority id
    *
-   * @returns {Object[]} list of protected areas + 2 elements: total protected area (and percentage)
-   * and non protected area (and percentage)
+   * @returns {Object[]} list of protected areas + 1 element: total area in the environmental
+   * authority
    */
   getAreaByCoverage: async (envAuthorityId) => {
     let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);

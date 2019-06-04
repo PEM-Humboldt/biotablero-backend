@@ -39,6 +39,18 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
     ),
 
     /**
+     * Get the coverage area distribution inside the given basin subzone
+     *
+     * @param {String} subzoneId basin subzone id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByCoverage: async (subzoneId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_subzone: subzoneId, year_cover: year })
+        .groupBy('area_type')
+        .sum('area_ha as area')
+    ),
+    /**
      * Get GeoJson layer with basin subzones at national level
      */
     findNationalLayer: () => (

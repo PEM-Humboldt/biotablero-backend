@@ -39,6 +39,20 @@ module.exports = (db, { geoStates, colombiaCoverages }) => {
     ),
 
     /**
+     * Get the coverage area distribution inside the given state
+     *
+     * @param {String} stateId state id
+     * @param {Number} year optional year to filter data, 2012 by default
+     */
+    findAreaByCoverage: async (stateId, year = 2012) => (
+      colombiaCoverages.query()
+        .where({ id_state: stateId, year_cover: year })
+        .groupBy('area_type')
+        .sum('area_ha as area')
+        .select('area_type as type')
+    ),
+
+    /**
      * Get GeoJson layer with states at national level
      */
     findNationalLayer: () => (

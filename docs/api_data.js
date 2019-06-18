@@ -1,5 +1,657 @@
 define({ "api": [
   {
+    "group": "basinSubzones",
+    "type": "get",
+    "url": "/basinSubzones/layers/national",
+    "title": "BasinSubzoneNationalLayer",
+    "name": "BasinSubzoneNationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by basin subzones</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.totalFeatures",
+            "description": "<p>number of features in this geometry</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (id, type, properties, etc)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.crs",
+            "description": "<p>Coordinate Reference Systems specification</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   type: 'FeatureCollection',\n   totalFeatures: 1,\n   features: [\n     type: 'Feature',\n     id: 'jurisdicciones_low.1',\n     geometry: {\n       type: 'MultiPolygon',\n       coordinates: [\n         [\n           [\n             [-79.2778, 16.1152],\n             [-79.2778, 16.0708],\n             [-79.1453, 16.0708]\n           ]\n         ]\n       ]\n     }\n     geometry_name: 'the_geom',\n     properties: {\n       AREA: 180336000000,\n       IDCAR: 'CORALINA'\n     }\n   ]\n   crs: {\n     type: 'name',\n     properties: {\n       name: 'urn:ogc:def:crs:EPSG::4326'\n     }\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/layers/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "basinSubzones"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/se/:se_type/coverage",
+    "title": "SECoverageInSubzone",
+    "name": "SECoverageInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the basin subzone.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "subzone_is",
+            "description": "<p>basin subzone id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/se/Páramo/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/se/:se_type",
+    "title": "SEDetailInSubzone",
+    "name": "SEDetailInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.national_percentage",
+            "description": "<p>strategic ecosystem inside basin subzone percentage with respect to the national area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"national_percentage\": 0.1523\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/se/Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/se/:se_type/pa",
+    "title": "SEPAInSubzone",
+    "name": "SEPAInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the basin subzone and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "subzone_is",
+            "description": "<p>basin subzone id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/se/Páramo/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/coverage",
+    "title": "SubzoneByCoverage",
+    "name": "SubzoneByCoverage",
+    "version": "0.1.0",
+    "description": "<p>Separate the basin subzone total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the basin subzone and an extra element with the total basin subzone area.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the coverage respect to the subzone.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the coverage area in the subzone</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/pa",
+    "title": "SubzoneByPA",
+    "name": "SubzoneByPA",
+    "version": "0.1.0",
+    "description": "<p>Separate the basin subzone total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the basin subzone and two extra elements: the total protected area inside the basin subzone and the non protected area</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the protected area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified PA respect to the subzone.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified protected area in the subzone</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/se",
+    "title": "SubzoneBySE",
+    "name": "SubzoneBySE",
+    "version": "0.1.0",
+    "description": "<p>Separate the basin subzone total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the basin subzone and an extra element with the total area inside strategic ecosystems on the basin subzone.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified SE in the subzone</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified SE respect to the subzone.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/1/se",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinAreas",
+    "title": "listBasinAreas",
+    "name": "listBasinAreas",
+    "version": "0.1.0",
+    "description": "<p>List all available basin areas</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "basin_areas",
+            "description": "<p>list of basin areas</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_areas.id",
+            "description": "<p>basin area id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "basin_areas.name",
+            "description": "<p>basin area name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"3\",\n    \"name\": \"Orinoco\"\n  },\n  {\n    \"id\": \"4\",\n    \"name\": \"Amazonas\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinAreas",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basins.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinSubzones",
+    "title": "listBasinSubzones",
+    "name": "listBasinSubzones",
+    "version": "0.1.0",
+    "description": "<p>List all available basin sub-zones</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "basin_sub-zones",
+            "description": "<p>list of basin sub-zones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_subzone",
+            "description": "<p>basin subzone id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "basin_sub-zones.name_subzo",
+            "description": "<p>basin subzone name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_basin",
+            "description": "<p>associated basin area id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_zone",
+            "description": "<p>associated basin zone id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n {\n    \"id_subzone\": \"2626\",\n    \"name_subzo\": \"Directos Bajo Cauca - Cga La Raya entre río Nechí\",\n    \"id_basin\": \"2\"\n  },\n  {\n    \"id_subzone\": \"3703\",\n    \"name_subzo\": \"Río Cobugón - Río Cobaría\",\n    \"id_basin\": \"3\"\n  },\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
+    "group": "basins",
+    "type": "get",
+    "url": "/basinZones",
+    "title": "listBasinZones",
+    "name": "listBasinZones",
+    "version": "0.1.0",
+    "description": "<p>List all available basin zones</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "basin_zones",
+            "description": "<p>list of basin zones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_zones.id",
+            "description": "<p>basin zone id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "basin_zones.name",
+            "description": "<p>basin zone name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_zones.id_basin",
+            "description": "<p>associated basin area id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"55\",\n    \"name\": \"Baudó - Directos Pacifico\",\n    \"id_basin\": \"5\"\n  },\n  {\n    \"id\": \"52\",\n    \"name\": \"Patía\",\n    \"id_basin\": \"5\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinZones",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basins.js",
+    "groupTitle": "Basins",
+    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+  },
+  {
     "group": "biomes",
     "type": "get",
     "url": "/biomes",
@@ -1473,60 +2125,7 @@ define({ "api": [
   {
     "group": "ea",
     "type": "get",
-    "url": "/ea",
-    "title": "listEA",
-    "name": "listEA",
-    "version": "0.1.0",
-    "description": "<p>List all available environmental authorities</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "ea",
-            "description": "<p>list of environmental authorities</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "ea.id_ea",
-            "description": "<p>environmental authority id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "ea.name",
-            "description": "<p>environmental authority name</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"id_ea\": \"CRC\",\n    \"name\": \"Corporacion Autonoma Regional del Cauca\"\n  },\n  {\n    \"id_ea\": \"CORPOGUAVIO\",\n    \"name\": \"Corporacion Autonoma Regional del Guavio\"\n  }...\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/ea",
-        "type": "curl"
-      }
-    ],
-    "filename": "src/routes/environmental_authorities.js",
-    "groupTitle": "Environmental Authorities",
-    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
-  },
-  {
-    "group": "geofences",
-    "type": "get",
-    "url": "/geofences/ea/:ea_id/biome/:name_biome/subzone",
+    "url": "/ea/:ea_id/biome/:name_biome/subzone",
     "title": "BiomeBySubzone",
     "name": "BiomeBySubzone",
     "version": "0.1.0",
@@ -1588,18 +2187,18 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "/geofences/ea/CORPOBOYACA/biome/Orobioma Subandino Guane-Yariguíes/subzone",
+        "content": "/ea/CORPOBOYACA/biome/Orobioma Subandino Guane-Yariguíes/subzone",
         "type": "curl"
       }
     ],
-    "filename": "src/routes/geofences.js",
-    "groupTitle": "Geofences",
-    "groupDescription": "<p>Geofences endpoints: Given some kind of geofence, such as environmental authority, get its area divided by some criterion, such as compensation factor, biomes or biotic units</p>"
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
   },
   {
-    "group": "geofences",
+    "group": "ea",
     "type": "get",
-    "url": "/geofences/ea/:ea_id/bioticUnit",
+    "url": "/ea/:ea_id/bioticUnit",
     "title": "EAByBioticUnit",
     "name": "EAByBioticUnit",
     "version": "0.1.0",
@@ -1654,18 +2253,18 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "/geofences/ea/CORPOBOYACA/bioticUnit",
+        "content": "/ea/CORPOBOYACA/bioticUnit",
         "type": "curl"
       }
     ],
-    "filename": "src/routes/geofences.js",
-    "groupTitle": "Geofences",
-    "groupDescription": "<p>Geofences endpoints: Given some kind of geofence, such as environmental authority, get its area divided by some criterion, such as compensation factor, biomes or biotic units</p>"
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
   },
   {
-    "group": "geofences",
+    "group": "ea",
     "type": "get",
-    "url": "/geofences/ea/:ea_id/compensationFactor",
+    "url": "/ea/:ea_id/compensationFactor",
     "title": "EAByCompensationFactor",
     "name": "EAByCompensationFactor",
     "version": "0.1.0",
@@ -1720,18 +2319,78 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "/geofences/ea/CORPOBOYACA/compensationFactor",
+        "content": "/ea/CORPOBOYACA/compensationFactor",
         "type": "curl"
       }
     ],
-    "filename": "src/routes/geofences.js",
-    "groupTitle": "Geofences",
-    "groupDescription": "<p>Geofences endpoints: Given some kind of geofence, such as environmental authority, get its area divided by some criterion, such as compensation factor, biomes or biotic units</p>"
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
   },
   {
-    "group": "geofences",
+    "group": "ea",
     "type": "get",
-    "url": "/geofences/ea/:ea_id/generalBiome",
+    "url": "/ea/:ea_id/coverage",
+    "title": "EAByCoverage",
+    "name": "EAByCoverage",
+    "version": "0.1.0",
+    "description": "<p>Separate the environmental authority total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the environmental authority and an extra element with the total environmental authority area.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage respect to the EA.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage in the environmental authority</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/generalBiome",
     "title": "EAByGeneralBiome",
     "name": "EAByGeneralBiome",
     "version": "0.1.0",
@@ -1786,13 +2445,2102 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "/geofences/ea/CORPOBOYACA/generalBiome",
+        "content": "/ea/CORPOBOYACA/generalBiome",
         "type": "curl"
       }
     ],
-    "filename": "src/routes/geofences.js",
-    "groupTitle": "Geofences",
-    "groupDescription": "<p>Geofences endpoints: Given some kind of geofence, such as environmental authority, get its area divided by some criterion, such as compensation factor, biomes or biotic units</p>"
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/pa",
+    "title": "EAByPA",
+    "name": "EAByPA",
+    "version": "0.1.0",
+    "description": "<p>Separate the environmental authority total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the environmental authority and two extra elements: the total protected area inside the environmental authority and the non protected area</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the protected area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified PA respect to the EA area.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified protected area in the environmental authority</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/se",
+    "title": "EABySE",
+    "name": "EABySE",
+    "version": "0.1.0",
+    "description": "<p>Separate the environmental authority total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the environmental authority and an extra element with the total area inside strategic ecosystems on the environmental authority.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified SE in the EA</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified SE respect to the EA area.</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/se",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/layers/national",
+    "title": "EANationalLayer",
+    "name": "EANationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by environmental authority</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.totalFeatures",
+            "description": "<p>number of features in this geometry</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (id, type, properties, etc)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.crs",
+            "description": "<p>Coordinate Reference Systems specification</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   type: 'FeatureCollection',\n   totalFeatures: 1,\n   features: [\n     type: 'Feature',\n     id: 'jurisdicciones_low.1',\n     geometry: {\n       type: 'MultiPolygon',\n       coordinates: [\n         [\n           [\n             [-79.2778, 16.1152],\n             [-79.2778, 16.0708],\n             [-79.1453, 16.0708]\n           ]\n         ]\n       ]\n     }\n     geometry_name: 'the_geom',\n     properties: {\n       AREA: 180336000000,\n       IDCAR: 'CORALINA'\n     }\n   ]\n   crs: {\n     type: 'name',\n     properties: {\n       name: 'urn:ogc:def:crs:EPSG::4326'\n     }\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/layers/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/se/:se_type/coverage",
+    "title": "SECoverageInEA",
+    "name": "SECoverageInEA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the environmental authority.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/se/Páramo/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/se/:se_type",
+    "title": "SEDetailInEA",
+    "name": "SEDetailInEA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.national_percentage",
+            "description": "<p>strategic ecosystem inside environmental authority percentage with respect to the national area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"national_percentage\": 0.1523\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/se/Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/:ea_id/se/:se_type/pa",
+    "title": "SEPAInEA",
+    "name": "SEPAInEA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the distribution of protected area categories in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the environmental authority and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/se/Páramo/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea",
+    "title": "listEA",
+    "name": "listEA",
+    "version": "0.1.0",
+    "description": "<p>List all available environmental authorities</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "ea",
+            "description": "<p>list of environmental authorities</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "ea.id",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "ea.name",
+            "description": "<p>environmental authority name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"CRC\",\n    \"name\": \"Corporacion Autonoma Regional del Cauca\"\n  },\n  {\n    \"id\": \"CORPOGUAVIO\",\n    \"name\": \"Corporacion Autonoma Regional del Guavio\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "municipalities",
+    "type": "get",
+    "url": "/municipalities",
+    "title": "listMunicipalities",
+    "name": "listMunicipalities",
+    "version": "0.1.0",
+    "description": "<p>List all available municipalities</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "municipality",
+            "description": "<p>list of municipalities</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "municipality.municipality",
+            "description": "<p>municipality name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "municipality.id_municipality",
+            "description": "<p>municipality id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id_municipality\": \"560\",\n    \"municipality\": \"Potosí\"\n  },\n  {\n    \"id_municipality\": \"569\",\n    \"municipality\": \"Puerto Caicedo\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/municipalities",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/municipalities.js",
+    "groupTitle": "Municipalities",
+    "groupDescription": "<p>Municipalities endpoints</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/coverage",
+    "title": "PAByCoverage",
+    "name": "PAByCoverage",
+    "version": "0.1.0",
+    "description": "<p>Separate the protected area by coverage type. <br/> The result is the list of cover types with area and percentage inside the protected area category and an extra element with the total state area.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the coverage type respect to the PA.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage in the protected area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/pa",
+    "title": "PAByPA",
+    "name": "PAByPA",
+    "version": "0.1.0",
+    "description": "<p>Separate the protected area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the protected area category and two extra elements: the total protected area inside the protected area category and the non protected area</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the protected area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified PA</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified protected area in the protected area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0,\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 1,\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/se",
+    "title": "PABySE",
+    "name": "PABySE",
+    "version": "0.1.0",
+    "description": "<p>Separate the protected area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the protected area category and an extra element with the total area inside strategic ecosystems on the protected area category.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified SE in the protected area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the SE respect to the protected area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/se",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/layers/national",
+    "title": "PANationalLayer",
+    "name": "PANationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by protected areas</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.totalFeatures",
+            "description": "<p>number of features in this geometry</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (id, type, properties, etc)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.crs",
+            "description": "<p>Coordinate Reference Systems specification</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   type: 'FeatureCollection',\n   totalFeatures: 1,\n   features: [\n     type: 'Feature',\n     id: 'jurisdicciones_low.1',\n     geometry: {\n       type: 'MultiPolygon',\n       coordinates: [\n         [\n           [\n             [-79.2778, 16.1152],\n             [-79.2778, 16.0708],\n             [-79.1453, 16.0708]\n           ]\n         ]\n       ]\n     }\n     geometry_name: 'the_geom',\n     properties: {\n       AREA: 180336000000,\n       IDCAR: 'CORALINA'\n     }\n   ]\n   crs: {\n     type: 'name',\n     properties: {\n       name: 'urn:ogc:def:crs:EPSG::4326'\n     }\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/layers/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/category/:category_name",
+    "title": "ProtectedAreasByCategory",
+    "name": "ProtectedAreasByCategory",
+    "version": "0.1.0",
+    "description": "<p>List all protected areas in a given category</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of protected areas in category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.gid",
+            "description": "<p>protected area id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.name",
+            "description": "<p>protected area name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.category",
+            "description": "<p>protected area category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.organization",
+            "description": "<p>organizarion in charge of the protected area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"gid\": 1,\n    \"name\": \"Montecristo\",\n    \"category\": \"Reserva Natural de la Sociedad Civil\",\n    \"organization\": \"PNN\"\n  },\n  {\n    \"gid\": 12,\n    \"name\": \"La Esperanza\",\n    \"category\": \"Reserva Natural de la Sociedad Civil\",\n    \"organization\": \"PNN\"\n  },\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/category/Reserva Natural de la Sociedad Civil",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/se/:se_type/coverage",
+    "title": "SECoverageInPA",
+    "name": "SECoverageInPA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the protected area category.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/se/Páramo/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/se/:se_type",
+    "title": "SEDetailInPA",
+    "name": "SEDetailInPA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "pa_id",
+            "description": "<p>protected area id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.national_percentage",
+            "description": "<p>strategic ecosystem inside protected area percentage with respect to the national area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"national_percentage\": 0.1523\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/se/Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/:category/se/:se_type/pa",
+    "title": "SEPAInPA",
+    "name": "SEPAInPA",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the protected area category and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 1,\n    \"area\": \"305237.610769660272561\",\n    \"type\": Parques Naturales Regionales\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/se/Páramo/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/categories",
+    "title": "listCategories",
+    "name": "listCategories",
+    "version": "0.1.0",
+    "description": "<p>List all available protected area categories</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "category",
+            "description": "<p>list of protected area categories</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "category.name",
+            "description": "<p>category name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"name\": \"Reserva Natural de la Sociedad Civil\"\n  },\n  {\n    \"name\": \"Distritos Nacionales de Manejo Integrado\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se/layers/national",
+    "title": "SENationalLayer",
+    "name": "SENationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by strategic ecosystems</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.totalFeatures",
+            "description": "<p>number of features in this geometry</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (id, type, properties, etc)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.crs",
+            "description": "<p>Coordinate Reference Systems specification</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   type: 'FeatureCollection',\n   totalFeatures: 1,\n   features: [\n     type: 'Feature',\n     id: 'jurisdicciones_low.1',\n     geometry: {\n       type: 'MultiPolygon',\n       coordinates: [\n         [\n           [\n             [-79.2778, 16.1152],\n             [-79.2778, 16.0708],\n             [-79.1453, 16.0708]\n           ]\n         ]\n       ]\n     }\n     geometry_name: 'the_geom',\n     properties: {\n       AREA: 180336000000,\n       IDCAR: 'CORALINA'\n     }\n   ]\n   crs: {\n     type: 'name',\n     properties: {\n       name: 'urn:ogc:def:crs:EPSG::4326'\n     }\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se/layers/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se/:ecosystem/national",
+    "title": "ecosystemInfo",
+    "name": "ecosystemInfo",
+    "version": "0.1.0",
+    "description": "<p>Get the ecosystem national information</p>",
+    "parameter": {
+      "fields": {
+        "path": [
+          {
+            "group": "path",
+            "type": "String",
+            "optional": false,
+            "field": "ecosystem",
+            "description": "<p>ecosystem type to get. Accepted values: Páramo, Humedal, Bosque Seco Tropical (results from <a href=\"#api-se-listPrimarySE\">listPrimarySE</a> endpoint)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>object with the given ecosystem national information</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>national area of the ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>percentage of the ecosystem at national level</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>the queried ecosystem</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"area\": 123456789,\n  \"percentage\": 0.45,\n  \"type\": \"Páramo\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se/Páramo/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se/primary",
+    "title": "listPrimarySE",
+    "name": "listPrimarySE",
+    "version": "0.1.0",
+    "description": "<p>List only primary types of strategic ecosystems</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of strategic ecosystems</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.name",
+            "description": "<p>strategic ecosystem name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"name\": \"Páramo\"\n  },\n  {\n    \"name\": \"Humedal\"\n  },\n  {\n    \"name\": \"Bosque Seco Tropical\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se/primary",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se",
+    "title": "listSE",
+    "name": "listSE",
+    "version": "0.1.0",
+    "description": "<p>List all available strategic ecosystems</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of strategic ecosystems</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.id_ecosystem",
+            "description": "<p>strategic ecosystem id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.name",
+            "description": "<p>strategic ecosystem name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.second_class",
+            "description": "<p>strategic ecosystem second_class</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id_ecosystem\": \"203\",\n    \"name\": \"Páramo\",\n    \"second_class\": \"test\"\n  },\n  {\n    \"id_ecosystem\": \"2000\",\n    \"name\": \"Bosque Seco Tropical\",\n    \"second_class\": \"Sin información\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se/:ecosystem/coverage",
+    "title": "seByCoverage",
+    "name": "seByCoverage",
+    "version": "0.1.0",
+    "description": "<p>Get the strategic ecosystem area separated by coverage</p>",
+    "parameter": {
+      "fields": {
+        "path": [
+          {
+            "group": "path",
+            "type": "String",
+            "optional": false,
+            "field": "ecosystem",
+            "description": "<p>ecosystem type to get. Accepted values: Páramo, Humedal, Bosque Seco Tropical (results from <a href=\"#api-se-listPrimarySE\">listPrimarySE</a> endpoint)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>coverage information for the ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>coverage percentage for the ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>area for the given coverage inside the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>coverage type</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.25,\n    \"type\": \"narutal\"\n  },\n  {\n    \"percentage\": 0.1,\n    \"type\": \"transformed\"\n  }\n],",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se/Páramo/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "se",
+    "type": "get",
+    "url": "/se/:ecosystem/pa",
+    "title": "seByPA",
+    "name": "seByPA",
+    "version": "0.1.0",
+    "description": "<p>Get the strategic ecosystem area separated by protected areas</p>",
+    "parameter": {
+      "fields": {
+        "path": [
+          {
+            "group": "path",
+            "type": "String",
+            "optional": false,
+            "field": "ecosystem",
+            "description": "<p>ecosystem type to get. Accepted values: Páramo, Humedal, Bosque Seco Tropical (results from <a href=\"#api-se-listPrimarySE\">listPrimarySE</a> endpoint)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>information about protected areas for the ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>protected area percentage for the ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>area for the protected area inside the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>protected area type</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.04,\n    \"category\": \"Reserva Natural de la Sociedad Civil\"\n  },\n  {\n    \"percentage\": 0.1,\n    \"category\": \"Parque Nacional Natural\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/se/Páramo/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/strategic_ecosystems.js",
+    "groupTitle": "Strategic Ecosystems",
+    "groupDescription": "<p>Strategic Ecosystems endpoints</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/se/:se_type/coverage",
+    "title": "SECoverageInState",
+    "name": "SECoverageInState",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific state, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the state.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/se/Páramo/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/se/:se_type",
+    "title": "SEDetailInState",
+    "name": "SEDetailInState",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific state, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.national_percentage",
+            "description": "<p>strategic ecosystem inside state percentage with respect to the national area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"national_percentage\": 0.1523\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/se/Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/se/:se_type/pa",
+    "title": "SEPAInState",
+    "name": "SEPAInState",
+    "version": "0.1.0",
+    "description": "<p>Given an strategic ecosystem type inside an specific state, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the state and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "se_type",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified coverage</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/se/Páramo/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/coverage",
+    "title": "StateByCoverage",
+    "name": "StateByCoverage",
+    "version": "0.1.0",
+    "description": "<p>Separate the state total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the state and an extra element with the total state area.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the coverage type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the coverage type respect to the state.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified coverage in the state</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/coverage",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/pa",
+    "title": "StateByPA",
+    "name": "StateByPA",
+    "version": "0.1.0",
+    "description": "<p>Separate the state total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the state and two extra elements: the total protected area inside the state and the non protected area.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the protected area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified PA respect to the state area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified protected area in the state</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/pa",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/se",
+    "title": "StateBySE",
+    "name": "StateBySE",
+    "version": "0.1.0",
+    "description": "<p>Separate the state total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the state and an extra element with the total area inside strategic ecosystems on the state.</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>Specifies the strategic ecosystem</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area of the specified SE in the state</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>Percentage of the specified SE respect to the state area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/se",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/layers/national",
+    "title": "StatesNationalLayer",
+    "name": "StatesNationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by states</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.totalFeatures",
+            "description": "<p>number of features in this geometry</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (id, type, properties, etc)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.crs",
+            "description": "<p>Coordinate Reference Systems specification</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   type: 'FeatureCollection',\n   totalFeatures: 1,\n   features: [\n     type: 'Feature',\n     id: 'jurisdicciones_low.1',\n     geometry: {\n       type: 'MultiPolygon',\n       coordinates: [\n         [\n           [\n             [-79.2778, 16.1152],\n             [-79.2778, 16.0708],\n             [-79.1453, 16.0708]\n           ]\n         ]\n       ]\n     }\n     geometry_name: 'the_geom',\n     properties: {\n       AREA: 180336000000,\n       IDCAR: 'CORALINA'\n     }\n   ]\n   crs: {\n     type: 'name',\n     properties: {\n       name: 'urn:ogc:def:crs:EPSG::4326'\n     }\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/layers/national",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states",
+    "title": "listStates",
+    "name": "listStates",
+    "version": "0.1.0",
+    "description": "<p>List all available states</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "state",
+            "description": "<p>list of states</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "state.name",
+            "description": "<p>State name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "state.id",
+            "description": "<p>State id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"44\",\n    \"name\": \"La Guajira\"\n  },\n  {\n    \"id\": \"97\",\n    \"name\": \"Vaupés\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/:state_id/municipalities",
+    "title": "stateByMunicipalities",
+    "name": "stateByMunicipalities",
+    "version": "0.1.0",
+    "description": "<p>List all municipalities information in the given state</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.municipality",
+            "description": "<p>municipality name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.id_municipality",
+            "description": "<p>municipality id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id_municipality\": \"90\",\n    \"municipality\": \"Dibulla\"\n  },\n  {\n    \"id_municipality\": \"560\",\n    \"municipality\": \"Manaure\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/44/municipalities",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
   },
   {
     "group": "strategies",
@@ -1892,7 +4640,7 @@ define({ "api": [
       },
       "examples": [
         {
-          "title": "Request-Example:",
+          "title": "Success-Example:",
           "content": "{\n  \"strategies\": [\n    {\n      \"area_ha\": 8546.040000000005,\n      \"id\": \"2\",\n      \"strategy_name\": \"Preservación dentro de áreas declaradas\"\n    }...\n  ],\n  \"geometry\": {\n    \"type\": \"FeatureCollection\",\n    \"features\": [\n      {\n        \"type\": \"Feature\",\n        \"properties\": {\n          \"gid\": 538112,\n          \"area_ha\": 426.15,\n          \"area_status\": \"Transformado\",\n          \"strategy\": \"No sugerido para compensar pérdidas de biodiversidad\"\n          \"id_strategy\": 7\n        },\n        \"geometry\": {...}\n      }...\n    ]\n  }\n}",
           "type": "json"
         }

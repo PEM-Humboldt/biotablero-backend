@@ -1,5 +1,5 @@
 module.exports = bookshelf => (
   bookshelf.Model.extend({
-    tableName: 'colombia_coverages',
+    tableName: 'colombia_coverage_details',
   })
 );

@@ -4,7 +4,7 @@ module.exports = (
   db,
   {
     colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities,
-    colombiaCoverages,
+    colombiaCoverageDetails,
   },
 ) => {
   const geometriesConfig = config.geometries;
@@ -90,7 +90,7 @@ module.exports = (
      * @param {Number} year optional year to filter data, 2012 by default
      */
     getTotalAreaByEA: (envAuthorityId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_ea: envAuthorityId, year_cover: year })
         .sum('area_ha as area')
     ),
@@ -116,7 +116,7 @@ module.exports = (
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (envAuthorityId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_ea: envAuthorityId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')

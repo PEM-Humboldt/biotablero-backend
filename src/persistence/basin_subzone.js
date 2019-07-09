@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
+module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -19,7 +19,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     getTotalAreaBySubzone: (subzoneId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_subzone: subzoneId, year_cover: year })
         .sum('area_ha as area')
     ),
@@ -45,7 +45,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverages }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (subzoneId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_subzone: subzoneId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')

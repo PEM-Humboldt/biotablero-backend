@@ -1,4 +1,4 @@
-module.exports = (db, { colombiaWetlandsDetails }) => ({
+module.exports = (db, { colombiaWetlandDetails }) => ({
   /**
    * Get the area inside the given environmental authority
    *
@@ -6,7 +6,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByEA: (eaId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_ea: eaId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -18,7 +18,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaBySubzone: (subzoneId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_subzone: subzoneId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -30,7 +30,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByState: (stateId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_state: stateId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
   ),
@@ -54,7 +54,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findTotalArea: async (year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where('year_cover', year)
       .sum('area_ha as area')
   ),
@@ -65,7 +65,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreas: async (year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where('year_cover', year)
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -79,7 +79,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInEA: async (eaId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_ea: eaId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -135,7 +135,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInState: async (stateId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_state: stateId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -163,7 +163,7 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findCoverAreasInSubzone: async (subzoneId, year = 2012) => (
-    colombiaWetlandsDetails.query()
+    colombiaWetlandDetails.query()
       .where({ id_subzone: subzoneId, year_cover: year })
       .sum('area_ha as area')
       .groupBy('area_type')
@@ -177,11 +177,11 @@ module.exports = (db, { colombiaWetlandsDetails }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInSubzone: async (subzoneId, year = 2012) => (
-    db('colombia_wetlands_details')
-      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'colombia_wetlands_details.id_subzone': subzoneId, 'colombia_wetlands_details.year_cover': year })
-      .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+    db('colombia_wetland_details as cwd')
+      .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+      .where({ 'cwd.id_subzone': subzoneId, 'cwd.year_cover': year })
+      .groupBy('gbpa.label', 'gbpa.binary_protected')
+      .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
   ),
 
   /**

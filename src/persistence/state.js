@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoStates, colombiaCoverages }) => {
+module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -19,7 +19,7 @@ module.exports = (db, { geoStates, colombiaCoverages }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     getTotalAreaByState: (stateId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_state: stateId, year_cover: year })
         .sum('area_ha as area')
     ),
@@ -45,7 +45,7 @@ module.exports = (db, { geoStates, colombiaCoverages }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (stateId, year = 2012) => (
-      colombiaCoverages.query()
+      colombiaCoverageDetails.query()
         .where({ id_state: stateId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')

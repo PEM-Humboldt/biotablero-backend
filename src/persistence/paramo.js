@@ -177,11 +177,11 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities }) => ({
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findPAInSubzone: async (subzoneId, year = 2012) => (
-    db('geo_paramo_details')
-      .innerJoin('geo_protected_areas', 'geo_paramo_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_paramo_details.id_subzone': subzoneId, 'geo_paramo_details.year_cover': year })
-      .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_paramo_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+    db('geo_paramo_details as gpd')
+      .innerJoin('global_binary_protected_areas as gbpa', 'gpd.binary_protected', 'gbpa.binary_protected')
+      .where({ 'gpd.id_subzone': subzoneId, 'gpd.year_cover': year })
+      .groupBy('gbpa.label', 'gbpa.binary_protected')
+      .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
   ),
 
   /**

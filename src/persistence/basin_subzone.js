@@ -31,11 +31,11 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByPA: async (subzoneId, year = 2012) => (
-      db('colombia_coverages')
-        .innerJoin('geo_protected_areas', 'colombia_coverages.id_protected_area', 'geo_protected_areas.gid')
-        .where({ 'colombia_coverages.id_subzone': subzoneId, 'colombia_coverages.year_cover': year })
-        .groupBy('geo_protected_areas.category')
-        .select(db.raw('coalesce(SUM(colombia_coverages.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+      db('colombia_coverage_details as cc')
+        .innerJoin('global_binary_protected_areas as gbpa', 'cc.binary_protected', 'gbpa.binary_protected')
+        .where({ 'cc.id_subzone': subzoneId, 'cc.year_cover': year })
+        .groupBy('gbpa.label', 'gbpa.binary_protected')
+        .select(db.raw('coalesce(SUM(cc.area_ha), 0) as area'), 'gbpa.label as type')
     ),
 
     /**

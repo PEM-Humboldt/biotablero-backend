@@ -25,7 +25,7 @@ const geoTropicalDryForest = require('./geo_tropical_dry_forest');
 const geoWetland = require('./geo_wetlands');
 const geoParamoDetails = require('./geo_paramo_details');
 const geoTropicalDryForestDetails = require('./geo_tropical_dry_forest_details');
-const colombiaWetlandsDetails = require('./colombia_wetlands_details');
+const colombiaWetlandDetails = require('./colombia_wetland_details');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -79,7 +79,7 @@ const setupModels = () => {
     geoWetland: geoWetland(dbConn),
     geoParamoDetails: geoParamoDetails(dbConn),
     geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
-    colombiaWetlandsDetails: colombiaWetlandsDetails(dbConn),
+    colombiaWetlandDetails: colombiaWetlandDetails(dbConn),
     colombiaCoverageDetails: colombiaCoverageDetails(dbConn),
   };
   Object.keys(models).forEach((key) => {

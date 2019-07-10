@@ -70,21 +70,11 @@ module.exports = (basinSubzonePersistence, seService) => ({
   getPAInSE: async (subzoneId, seType) => {
     const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
     const paAreas = await seService.getSEPAInSubzone(subzoneId, seType);
-    let nonProtected = seArea.area;
-    const result = paAreas.map((area) => {
-      nonProtected -= parseFloat(area.area);
-      return {
-        ...area,
-        percentage: area.area / seArea.area,
-      };
-    });
-    if (result.length !== 0) {
-      result.push({
-        area: nonProtected,
-        percentage: nonProtected / seArea.area,
-        type: 'No Protegida',
-      });
-    }
+
+    const result = paAreas.map(area => ({
+      ...area,
+      percentage: parseFloat(area.area) / parseFloat(seArea.area),
+    }));
     return result;
   },
 
@@ -103,10 +93,8 @@ module.exports = (basinSubzonePersistence, seService) => ({
     }
     subzoneArea = subzoneArea[0].area;
     const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
-    let nonProtected = subzoneArea;
     let totalProtected = 0;
     const result = areas.map((se) => {
-      nonProtected -= parseFloat(se.area);
       totalProtected += parseFloat(se.area);
       return {
         ...se,
@@ -117,11 +105,6 @@ module.exports = (basinSubzonePersistence, seService) => ({
       area: totalProtected,
       percentage: totalProtected / subzoneArea,
       type: 'Total',
-    });
-    result.push({
-      area: nonProtected,
-      percentage: nonProtected / subzoneArea,
-      type: 'No Protegida',
     });
     return result;
   },

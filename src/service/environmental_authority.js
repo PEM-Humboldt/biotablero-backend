@@ -129,21 +129,10 @@ module.exports = (eaPersistence, seService) => ({
   getPAInSE: async (envAuthorityId, seType) => {
     const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
     const paAreas = await seService.getSEPAInEA(envAuthorityId, seType);
-    let nonProtected = seArea.area;
-    const result = paAreas.map((area) => {
-      nonProtected -= parseFloat(area.area);
-      return {
-        ...area,
-        percentage: area.area / seArea.area,
-      };
-    });
-    if (result.length !== 0) {
-      result.push({
-        area: nonProtected,
-        percentage: nonProtected / seArea.area,
-        type: 'No Protegida',
-      });
-    }
+    const result = paAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
     return result;
   },
 
@@ -162,10 +151,8 @@ module.exports = (eaPersistence, seService) => ({
     }
     eaArea = eaArea[0].area;
     const areas = await eaPersistence.findAreaByPA(envAuthorityId);
-    let nonProtected = eaArea;
     let totalProtected = 0;
     const result = areas.map((se) => {
-      nonProtected -= parseFloat(se.area);
       totalProtected += parseFloat(se.area);
       return {
         ...se,
@@ -176,11 +163,6 @@ module.exports = (eaPersistence, seService) => ({
       area: totalProtected,
       percentage: totalProtected / eaArea,
       type: 'Total',
-    });
-    result.push({
-      area: nonProtected,
-      percentage: nonProtected / eaArea,
-      type: 'No Protegida',
     });
     return result;
   },

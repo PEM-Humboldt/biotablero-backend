@@ -92,32 +92,6 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup pa
-   * @api {get} /pa/category/:category_name ProtectedAreasByCategory
-   * @apiName ProtectedAreasByCategory
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * List all protected areas in a given category
-   *
-   * @apiSuccess {Object[]} result list of protected areas in category
-   * @apiSuccess {String} result.gid protected area id
-   * @apiSuccess {String} result.name protected area name
-   * @apiSuccess {String} result.category protected area category
-   * @apiSuccess {String} result.organization organizarion in charge of the protected area
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/category/Reserva Natural de la Sociedad Civil
-   * @apiUse paByCategoryExample
-   */
-  router.get('/pa/category/:category_name', errorHandler((req, res, next) => (
-    paService.getByCategory(req.params.category_name)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup pa
    * @api {get} /pa/:category/se PABySE
    * @apiName PABySE
    * @apiVersion 0.1.0

@@ -16,7 +16,6 @@ const strategies = require('./strategies');
 const eaBioticUnits = require('./ea_biotic_units');
 const geoStates = require('./geo_states');
 const geoMunicipalities = require('./geo_municipalities');
-const geoProtectedAreas = require('./geo_protected_areas');
 const geoBasinAreas = require('./geo_basin_areas');
 const geoBasinZones = require('./geo_basin_zones');
 const geoBasinSubzones = require('./geo_basin_subzones');
@@ -26,6 +25,7 @@ const geoWetland = require('./geo_wetlands');
 const geoParamoDetails = require('./geo_paramo_details');
 const geoTropicalDryForestDetails = require('./geo_tropical_dry_forest_details');
 const colombiaWetlandDetails = require('./colombia_wetland_details');
+const globalBinaryProtectedAreas = require('./global_binary_protected_areas');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -70,7 +70,6 @@ const setupModels = () => {
     eaBioticUnits: eaBioticUnits(dbConn),
     geoStates: geoStates(dbConn),
     geoMunicipalities: geoMunicipalities(dbConn),
-    geoProtectedAreas: geoProtectedAreas(dbConn),
     geoBasinAreas: geoBasinAreas(dbConn),
     geoBasinZones: geoBasinZones(dbConn),
     geoBasinSubzones: geoBasinSubzones(dbConn),
@@ -81,6 +80,7 @@ const setupModels = () => {
     geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
     colombiaWetlandDetails: colombiaWetlandDetails(dbConn),
     colombiaCoverageDetails: colombiaCoverageDetails(dbConn),
+    globalBinaryProtectedAreas: globalBinaryProtectedAreas(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

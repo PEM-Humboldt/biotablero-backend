@@ -5,11 +5,6 @@ module.exports = (paPersistence, seService) => ({
   getCategories: async () => paPersistence.findCategories(),
 
   /**
-   * Get the protected areas in a given category
-   */
-  getByCategory: async categoryName => paPersistence.findByCategory(categoryName),
-
-  /**
    * Get protected area divided by strategic ecosystem type
    *
    * @param {String} categoryName category to filter by
@@ -77,21 +72,10 @@ module.exports = (paPersistence, seService) => ({
   getPAInSE: async (categoryName, seType) => {
     const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
     const paAreas = await seService.getSEPAInPACategory(categoryName, seType);
-    let nonProtected = seArea.area;
-    const result = paAreas.map((area) => {
-      nonProtected -= parseFloat(area.area);
-      return {
-        ...area,
-        percentage: area.area / seArea.area,
-      };
-    });
-    if (result.length !== 0) {
-      result.push({
-        area: nonProtected,
-        percentage: nonProtected / seArea.area,
-        type: 'No Protegida',
-      });
-    }
+    const result = paAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
     return result;
   },
 
@@ -109,29 +93,19 @@ module.exports = (paPersistence, seService) => ({
       throw new Error('protected area category doesn\'t exists');
     }
     categoryArea = categoryArea[0].area;
-    const areas = [{
-      area: parseFloat(categoryArea),
-      type: categoryName,
-    }];
-    let nonProtected = categoryArea;
+    const areas = await paPersistence.findAreaByPA(categoryName);
     let totalProtected = 0;
-    const result = areas.map((se) => {
-      nonProtected -= parseFloat(se.area);
-      totalProtected += parseFloat(se.area);
+    const result = areas.map((pa) => {
+      totalProtected += parseFloat(pa.area);
       return {
-        ...se,
-        percentage: se.area / categoryArea,
+        ...pa,
+        percentage: pa.area / categoryArea,
       };
     });
     result.unshift({
       area: totalProtected,
       percentage: totalProtected / categoryArea,
       type: 'Total',
-    });
-    result.push({
-      area: nonProtected,
-      percentage: nonProtected / categoryArea,
-      type: 'No Protegida',
     });
     return result;
   },

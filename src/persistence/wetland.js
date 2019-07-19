@@ -200,10 +200,10 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findProtectedAreas: async (year = 2012) => (
-    db('colombia_wetlands_details')
-      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'colombia_wetlands_details.year_cover': year })
-      .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
+    db('colombia_wetland_details as cwd')
+      .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+      .where({ 'cwd.year_cover': year })
+      .groupBy('gbpa.label', 'gbpa.binary_protected')
+      .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
   ),
 });

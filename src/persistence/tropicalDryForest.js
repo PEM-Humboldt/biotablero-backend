@@ -1,4 +1,4 @@
-module.exports = (db, { geoTropicalDryForestDetails }) => ({
+module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas }) => ({
   /**
    * Get the area inside the given environmental authority
    *
@@ -41,12 +41,16 @@ module.exports = (db, { geoTropicalDryForestDetails }) => ({
    * @param {String} categoryName category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findAreaByPACategory: (categoryName, year = 2012) => (
-    db('geo_tropical_dry_forest_details')
-      .innerJoin('geo_protected_areas', 'geo_tropical_dry_forest_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_tropical_dry_forest_details.year_cover': year })
-      .select(db.raw('coalesce(SUM(geo_tropical_dry_forest_details.area_ha), 0) as area'))
-  ),
+  findAreaByPACategory: async (categoryName, year = 2012) => {
+    let bitMask = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('binary_protected as mask');
+    bitMask = bitMask[0].mask;
+    return geoTropicalDryForestDetails.query()
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
+      .where('year_cover', year)
+      .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]));
+  },
 
   /**
    * Find total area
@@ -106,13 +110,17 @@ module.exports = (db, { geoTropicalDryForestDetails }) => ({
    * @param {String} categoryName protected area category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findCoverAreasInPACategory: async (categoryName, year = 2012) => (
-    db('geo_tropical_dry_forest_details')
-      .innerJoin('geo_protected_areas', 'geo_tropical_dry_forest_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_tropical_dry_forest_details.year_cover': year })
-      .groupBy('geo_tropical_dry_forest_details.area_type')
-      .select(db.raw('coalesce(SUM(geo_tropical_dry_forest_details.area_ha), 0) as area'), 'geo_tropical_dry_forest_details.area_type as type')
-  ),
+  findCoverAreasInPACategory: async (categoryName, year = 2012) => {
+    let bitMask = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('binary_protected as mask');
+    bitMask = bitMask[0].mask;
+    return geoTropicalDryForestDetails.query()
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
+      .where('year_cover', year)
+      .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+      .groupBy('area_type');
+  },
 
   /**
    * Find areas grouped by protected area category inside the given protected area category
@@ -120,13 +128,18 @@ module.exports = (db, { geoTropicalDryForestDetails }) => ({
    * @param {String} categoryName protected area category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findPAInPA: async (categoryName, year = 2012) => (
-    db('geo_tropical_dry_forest_details')
-      .innerJoin('geo_protected_areas', 'geo_tropical_dry_forest_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'geo_tropical_dry_forest_details.year_cover': year })
-      .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(geo_tropical_dry_forest_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
-  ),
+  findPAInPA: async (categoryName, year = 2012) => {
+    let bitMask = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('binary_protected as mask');
+    bitMask = bitMask[0].mask;
+    return db('geo_tropical_dry_forest_details as gtdfd')
+      .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+      .where('gtdfd.year_cover', year)
+      .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
+      .groupBy('gbpa.label', 'gbpa.binary_protected');
+  },
 
   /**
    * Find areas grouped by cover type inside the given state

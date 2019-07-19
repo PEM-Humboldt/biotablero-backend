@@ -1,4 +1,4 @@
-module.exports = (db, { colombiaWetlandDetails }) => ({
+module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) => ({
   /**
    * Get the area inside the given environmental authority
    *
@@ -41,12 +41,15 @@ module.exports = (db, { colombiaWetlandDetails }) => ({
    * @param {String} categoryName category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findAreaByPACategory: (categoryName, year = 2012) => (
-    db('colombia_wetlands_details')
-      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
-      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'))
-  ),
+  findAreaByPACategory: async (categoryName, year = 2012) => {
+    const paColumn = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('category_short as column');
+    return colombiaWetlandDetails.query()
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
+      .where('year_cover', year)
+      .andWhere(paColumn[0].column, '>', 0);
+  },
 
   /**
    * Find total area
@@ -106,13 +109,16 @@ module.exports = (db, { colombiaWetlandDetails }) => ({
    * @param {String} categoryName protected area category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findCoverAreasInPACategory: async (categoryName, year = 2012) => (
-    db('colombia_wetlands_details')
-      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
-      .groupBy('colombia_wetlands_details.area_type')
-      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'colombia_wetlands_details.area_type as type')
-  ),
+  findCoverAreasInPACategory: async (categoryName, year = 2012) => {
+    const paColumn = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('category_short as column');
+    return colombiaWetlandDetails.query()
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'),  'area_type as type')
+      .where('year_cover', year)
+      .andWhere(paColumn[0].column, '>', 0)
+      .groupBy('area_type');
+  },
 
   /**
    * Find areas grouped by protected area category inside the given protected area category
@@ -120,13 +126,17 @@ module.exports = (db, { colombiaWetlandDetails }) => ({
    * @param {String} categoryName protected area category
    * @param {Number} year optional year to filter data, 2012 by default
    */
-  findPAInPA: async (categoryName, year = 2012) => (
-    db('colombia_wetlands_details')
-      .innerJoin('geo_protected_areas', 'colombia_wetlands_details.id_protected_area', 'geo_protected_areas.gid')
-      .where({ 'geo_protected_areas.category': categoryName, 'colombia_wetlands_details.year_cover': year })
-      .groupBy('geo_protected_areas.category')
-      .select(db.raw('coalesce(SUM(colombia_wetlands_details.area_ha), 0) as area'), 'geo_protected_areas.category as type')
-  ),
+  findPAInPA: async (categoryName, year = 2012) => {
+    const paColumn = await globalBinaryProtectedAreas.query()
+      .where({ label: categoryName })
+      .select('category_short as column');
+    return db('colombia_wetland_details as gtdfd')
+      .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+      .where('gtdfd.year_cover', year)
+      .andWhere(paColumn[0].column, '>', 0)
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
+      .groupBy('gbpa.label', 'gbpa.binary_protected');
+  },
 
   /**
    * Find areas grouped by cover type inside the given state

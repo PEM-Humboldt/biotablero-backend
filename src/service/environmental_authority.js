@@ -152,11 +152,13 @@ module.exports = (eaPersistence, seService) => ({
     eaArea = eaArea[0].area;
     const areas = await eaPersistence.findAreaByPA(envAuthorityId);
     let totalProtected = 0;
-    const result = areas.map((se) => {
-      totalProtected += parseFloat(se.area);
+    const result = areas.map((pa) => {
+      if (pa.type !== 'No protegido') {
+        totalProtected += parseFloat(pa.area);
+      }
       return {
-        ...se,
-        percentage: se.area / eaArea,
+        ...pa,
+        percentage: pa.area / eaArea,
       };
     });
     result.unshift({

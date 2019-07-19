@@ -77,21 +77,10 @@ module.exports = (statePersistence, municipalityService, seService) => ({
   getPAInSE: async (stateId, seType) => {
     const seArea = await seService.getSEAreaInState(stateId, seType);
     const paAreas = await seService.getSEPAInState(stateId, seType);
-    let nonProtected = seArea.area;
-    const result = paAreas.map((area) => {
-      nonProtected -= parseFloat(area.area);
-      return {
-        ...area,
-        percentage: area.area / seArea.area,
-      };
-    });
-    if (result.length !== 0) {
-      result.push({
-        area: nonProtected,
-        percentage: nonProtected / seArea.area,
-        type: 'No Protegida',
-      });
-    }
+    const result = paAreas.map(area => ({
+      ...area,
+      percentage: area.area / seArea.area,
+    }));
     return result;
   },
 
@@ -110,25 +99,20 @@ module.exports = (statePersistence, municipalityService, seService) => ({
     }
     stateArea = stateArea[0].area;
     const areas = await statePersistence.findAreaByPA(stateId);
-    let nonProtected = stateArea;
     let totalProtected = 0;
-    const result = areas.map((se) => {
-      nonProtected -= parseFloat(se.area);
-      totalProtected += parseFloat(se.area);
+    const result = areas.map((pa) => {
+      if (pa.type !== 'No protegido') {
+        totalProtected += parseFloat(pa.area);
+      }
       return {
-        ...se,
-        percentage: se.area / stateArea,
+        ...pa,
+        percentage: pa.area / stateArea,
       };
     });
     result.unshift({
       area: totalProtected,
       percentage: totalProtected / stateArea,
       type: 'Total',
-    });
-    result.push({
-      area: nonProtected,
-      percentage: nonProtected / stateArea,
-      type: 'No Protegida',
     });
     return result;
   },

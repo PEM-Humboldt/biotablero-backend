@@ -94,11 +94,13 @@ module.exports = (basinSubzonePersistence, seService) => ({
     subzoneArea = subzoneArea[0].area;
     const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
     let totalProtected = 0;
-    const result = areas.map((se) => {
-      totalProtected += parseFloat(se.area);
+    const result = areas.map((pa) => {
+      if (pa.type !== 'No protegido') {
+        totalProtected += parseFloat(pa.area);
+      }
       return {
-        ...se,
-        percentage: se.area / subzoneArea,
+        ...pa,
+        percentage: pa.area / subzoneArea,
       };
     });
     result.unshift({

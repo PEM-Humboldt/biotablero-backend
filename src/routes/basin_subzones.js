@@ -21,7 +21,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   const router = new Router();
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones listBasinSubzones
    * @apiName listBasinSubzones
    * @apiVersion 0.1.0
@@ -47,7 +47,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se SubzoneBySE
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0
@@ -75,7 +75,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se/:se_type SEDetailInSubzone
    * @apiName SEDetailInSubzone
    * @apiVersion 0.1.0
@@ -103,7 +103,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se/:se_type/coverage SECoverageInSubzone
    * @apiName SECoverageInSubzone
    * @apiVersion 0.1.0
@@ -134,7 +134,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se/:se_type/pa SEPAInSubzone
    * @apiName SEPAInSubzone
    * @apiVersion 0.1.0
@@ -166,7 +166,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/pa SubzoneByPA
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0
@@ -194,7 +194,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/coverage SubzoneByCoverage
    * @apiName SubzoneByCoverage
    * @apiVersion 0.1.0

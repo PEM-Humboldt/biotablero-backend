@@ -4,16 +4,28 @@ const config = require('config');
 
 // Models
 const colombiaDetails = require('./colombia_details');
+const colombiaCoverageDetails = require('./colombia_coverage_details');
 const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
 const selectedStrategies = require('./selected_strategies');
-const environmentalAuthorities = require('./environmental_authorities');
-const hidroAreas = require('./hidro_areas');
+const geoEnvironmentalAuthorities = require('./geo_environmental_authorities');
 const projectImpactedBiomes = require('./project_impacted_biomes');
 const geoCompensationStrategies2018 = require('./geo_compensation_strategies_2018');
 const strategies = require('./strategies');
 const eaBioticUnits = require('./ea_biotic_units');
+const geoStates = require('./geo_states');
+const geoMunicipalities = require('./geo_municipalities');
+const geoBasinAreas = require('./geo_basin_areas');
+const geoBasinZones = require('./geo_basin_zones');
+const geoBasinSubzones = require('./geo_basin_subzones');
+const geoParamo = require('./geo_paramo');
+const geoTropicalDryForest = require('./geo_tropical_dry_forest');
+const geoWetland = require('./geo_wetlands');
+const geoParamoDetails = require('./geo_paramo_details');
+const geoTropicalDryForestDetails = require('./geo_tropical_dry_forest_details');
+const colombiaWetlandDetails = require('./colombia_wetland_details');
+const globalBinaryProtectedAreas = require('./global_binary_protected_areas');
 
 // Collections
 const modelCollection = require('./model.collection');
@@ -50,13 +62,25 @@ const setupModels = () => {
     geoCompanyProjects: geoCompanyProjects(dbConn, eventHandlers),
     geoEaBiomes: geoEaBiomes(dbConn),
     selectedStrategies: selectedStrategies(dbConn, eventHandlers),
-    environmentalAuthorities: environmentalAuthorities(dbConn, eventHandlers),
-    hidroAreas: hidroAreas(dbConn, eventHandlers),
+    geoEnvironmentalAuthorities: geoEnvironmentalAuthorities(dbConn, eventHandlers),
     projectImpactedBiomes: projectImpactedBiomes(dbConn, eventHandlers),
     geoCompensationStrategies2018: geoCompensationStrategies2018(dbConn, eventHandlers),
     strategies: strategies(dbConn, eventHandlers),
     colombiaDetails: colombiaDetails(dbConn),
     eaBioticUnits: eaBioticUnits(dbConn),
+    geoStates: geoStates(dbConn),
+    geoMunicipalities: geoMunicipalities(dbConn),
+    geoBasinAreas: geoBasinAreas(dbConn),
+    geoBasinZones: geoBasinZones(dbConn),
+    geoBasinSubzones: geoBasinSubzones(dbConn),
+    geoParamo: geoParamo(dbConn),
+    geoTropicalDryForest: geoTropicalDryForest(dbConn),
+    geoWetland: geoWetland(dbConn),
+    geoParamoDetails: geoParamoDetails(dbConn),
+    geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
+    colombiaWetlandDetails: colombiaWetlandDetails(dbConn),
+    colombiaCoverageDetails: colombiaCoverageDetails(dbConn),
+    globalBinaryProtectedAreas: globalBinaryProtectedAreas(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

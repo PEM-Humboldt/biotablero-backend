@@ -30,10 +30,10 @@ module.exports = (bookshelf, { saving }) => {
       return this.belongsTo(models.geoBiomes, 'id_biome', 'id_biome');
     };
     models.selectedStrategies.prototype.ea = function biome() {
-      return this.belongsTo(models.environmentalAuthorities, 'id_ea', 'id_ea');
+      return this.belongsTo(models.geoEnvironmentalAuthorities, 'id_ea', 'id_ea');
     };
     models.selectedStrategies.prototype.szh = function biome() {
-      return this.belongsTo(models.hidroAreas, 'id_subzone', 'id_subzone');
+      return this.belongsTo(models.geoBasinSubzones, 'id_subzone', 'id_subzone');
     };
     models.selectedStrategies.prototype.strategy = function biome() {
       return this.belongsTo(models.strategies, 'id_strategy', 'id_strategy');

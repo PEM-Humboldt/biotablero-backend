@@ -74,6 +74,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -88,6 +89,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -121,7 +123,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where('year_cover', year)
       .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
       .groupBy('area_type')
-      .orderBy('binary_protected', 'desc');
+      .orderBy('type');
   },
 
   /**
@@ -156,6 +158,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -185,6 +188,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**

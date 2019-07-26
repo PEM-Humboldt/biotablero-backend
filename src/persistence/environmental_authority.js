@@ -122,6 +122,7 @@ module.exports = (
         .groupBy('area_type')
         .sum('area_ha as area')
         .select('area_type as type')
+        .orderBy('type')
     ),
 
     /**

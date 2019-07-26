@@ -73,6 +73,7 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -87,6 +88,7 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -118,7 +120,8 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
       .where('year_cover', year)
       .andWhere(paColumn[0].column, '>', 0)
-      .groupBy('area_type');
+      .groupBy('area_type')
+      .orderBy('type');
   },
 
   /**
@@ -152,6 +155,7 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -181,6 +185,7 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**

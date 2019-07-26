@@ -41,7 +41,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => ({
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
       .where('year_cover', year)
       .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
-      .groupBy('area_type');
+      .groupBy('area_type')
+      .orderBy('type');
   },
 
   /**

@@ -1,5 +1,6 @@
-module.exports = (db,
-  { geoParamoDetails, geoEnvironmentalAuthorities, globalBinaryProtectedAreas }
+module.exports = (
+  db,
+  { geoParamoDetails, geoEnvironmentalAuthorities, globalBinaryProtectedAreas },
 ) => ({
   /**
    * Get the area inside the given environmental authority
@@ -76,6 +77,7 @@ module.exports = (db,
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -90,6 +92,7 @@ module.exports = (db,
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -104,6 +107,7 @@ module.exports = (db,
       .where({ 'gpd.id_ea': eaId, 'gpd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -121,7 +125,8 @@ module.exports = (db,
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
       .where('year_cover', year)
       .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
-      .groupBy('area_type');
+      .groupBy('area_type')
+      .orderBy('type');
   },
 
   /**
@@ -140,7 +145,8 @@ module.exports = (db,
       .where('gpd.year_cover', year)
       .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
-      .groupBy('gbpa.label', 'gbpa.binary_protected');
+      .groupBy('gbpa.label', 'gbpa.binary_protected')
+      .orderBy('gbpa.binary_protected', 'desc');
   },
 
   /**
@@ -155,6 +161,7 @@ module.exports = (db,
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -169,6 +176,7 @@ module.exports = (db,
       .where({ 'gpd.id_state': stateId, 'gpd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -183,6 +191,7 @@ module.exports = (db,
       .sum('area_ha as area')
       .groupBy('area_type')
       .select('area_type as type')
+      .orderBy('type')
   ),
 
   /**
@@ -197,6 +206,7 @@ module.exports = (db,
       .where({ 'gpd.id_subzone': subzoneId, 'gpd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -210,6 +220,7 @@ module.exports = (db,
       .where({ 'gpd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**

@@ -102,6 +102,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where({ 'gtdfd.id_ea': eaId, 'gtdfd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -119,7 +120,8 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
       .where('year_cover', year)
       .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
-      .groupBy('area_type');
+      .groupBy('area_type')
+      .orderBy('binary_protected', 'desc');
   },
 
   /**
@@ -138,7 +140,8 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where('gtdfd.year_cover', year)
       .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
-      .groupBy('gbpa.label', 'gbpa.binary_protected');
+      .groupBy('gbpa.label', 'gbpa.binary_protected')
+      .orderBy('gbpa.binary_protected', 'desc');
   },
 
   /**
@@ -167,6 +170,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where({ 'gtdfd.id_state': stateId, 'gtdfd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -195,6 +199,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where({ 'gtdfd.id_subzone': subzoneId, 'gtdfd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 
   /**
@@ -208,5 +213,6 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
       .where({ 'gtdfd.year_cover': year })
       .groupBy('gbpa.label', 'gbpa.binary_protected')
       .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
+      .orderBy('gbpa.binary_protected', 'desc')
   ),
 });

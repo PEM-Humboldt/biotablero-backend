@@ -36,7 +36,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
         .where({ 'ccd.id_state': stateId, 'ccd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .orderBy('gbpa.binary_protected', 'desc')
-        .select(db.raw('coalesce(SUM(ccd.area_ha), 0) as area'), 'gbpa.label as type')
+        .select(db.raw('coalesce(SUM(ccd.area_ha), 0) as area'), 'gbpa.label as type', 'gbpa.binary_protected as bp')
     ),
 
     /**

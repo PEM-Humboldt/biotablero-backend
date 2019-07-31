@@ -153,11 +153,12 @@ module.exports = (eaPersistence, seService) => ({
     const areas = await eaPersistence.findAreaByPA(envAuthorityId);
     let totalProtected = 0;
     const result = areas.map((pa) => {
-      if (pa.type !== 'No protegido') {
+      if (pa.bp !== '000000000000000') {
         totalProtected += parseFloat(pa.area);
       }
       return {
-        ...pa,
+        area: pa.area,
+        type: pa.type,
         percentage: pa.area / eaArea,
       };
     });

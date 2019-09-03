@@ -4,11 +4,11 @@
   "description": "Backend for 'Biotablero' project",
   "main": "src/app.js",
   "scripts": {
-    "start": "./node_modules/nodemon/bin/nodemon.js --watch src --watch config",
+    "start": "npx nodemon --watch src --watch config",
     "start-prod": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "./node_modules/eslint/bin/eslint.js src",
-    "gen_docs": "./node_modules/apidoc/bin/apidoc -i api_doc/ -i src/ -o docs/"
+    "lint": "npx eslint src",
+    "gen_docs": "npx apidoc -i api_doc/ -i src/ -o docs/"
   },
   "license": "MIT",
   "dependencies": {

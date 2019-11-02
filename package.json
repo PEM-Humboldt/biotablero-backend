@@ -15,7 +15,7 @@
     "bookshelf": "0.13.3",
     "bottlejs": "1.7.1",
     "config": "2.0.1",
-    "knex": "0.14.6",
+    "knex": "0.19.5",
     "pg": "7.4.3",
     "restify": "7.2.1",
     "restify-cors-middleware": "1.1.1",

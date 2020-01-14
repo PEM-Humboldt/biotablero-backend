@@ -22,5 +22,5 @@ jobs:
     - name: gen docs
       run: |
         npm run gen_docs
-        git diff
+        git diff --exit-code --quiet
       

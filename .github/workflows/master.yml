@@ -19,7 +19,8 @@ jobs:
         npm run lint
       env:
         CI: true
-    - name: git status
+    - name: gen docs
       run: |
+        npm run gen_docs
         git status
       

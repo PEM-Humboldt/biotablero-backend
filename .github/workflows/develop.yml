@@ -1,4 +1,4 @@
-name: First CI test
+name: CI for features
 
 on:
   pull_request:

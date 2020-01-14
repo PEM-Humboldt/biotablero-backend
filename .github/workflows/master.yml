@@ -1,4 +1,4 @@
-name: First CI test
+name: CI for releases
 
 on:
   push
@@ -19,3 +19,7 @@ jobs:
         npm run lint
       env:
         CI: true
+    - name: git status
+      run: |
+        git status
+      

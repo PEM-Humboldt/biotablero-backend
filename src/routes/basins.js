@@ -37,7 +37,7 @@ const { Router } = require('restify-router');
  *  ]
  */
 
-module.exports = (errorHandler, basinAreaService, basinZoneService, basinSubzoneService) => {
+module.exports = (errorHandler, basinAreaService, basinZoneService) => {
   const router = new Router();
 
   /**

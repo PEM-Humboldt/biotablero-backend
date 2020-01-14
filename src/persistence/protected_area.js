@@ -23,7 +23,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => ({
     return db('colombia_coverage_details')
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))
       .where('year_cover', year)
-      .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+      .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]));
   },
 
   /**

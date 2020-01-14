@@ -22,5 +22,5 @@ jobs:
     - name: gen docs
       run: |
         npm run gen_docs
-        git status
+        git diff
       

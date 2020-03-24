@@ -2,6 +2,6 @@
 
 ### Resultado:
 
-### Funcionalidad asociada en el front:
+### Funcionalidad asociada en el Frontend:
 
 ## Consideraciones:

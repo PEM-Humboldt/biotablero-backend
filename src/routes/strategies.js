@@ -59,9 +59,9 @@ module.exports = (errorHandler, strategiesService) => {
    * **Some of the response properties are GeoJson standard properties, so they are not
    * described here.**
    *
-   * @apiParam (body) {Number} id_biome biome id
-   * @apiParam (body) {Number} id_subzone sub-basin id
-   * @apiParam (body) {String} id_ea environmental authority id
+   * @apiParam (Body params) {Number} id_biome biome id
+   * @apiParam (Body params) {Number} id_subzone sub-basin id
+   * @apiParam (Body params) {String} id_ea environmental authority id
    *
    * @apiSuccess {Object} object response
    * @apiSuccess {Object[]} object.strategies array of strategies information

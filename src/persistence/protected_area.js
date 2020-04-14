@@ -19,6 +19,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => ({
     let bitMask = await globalBinaryProtectedAreas.query()
       .where({ label: categoryName })
       .select('binary_protected as mask');
+    if (!bitMask || bitMask.length < 1) return null;
     bitMask = bitMask[0].mask;
     return db('colombia_coverage_details')
       .select(db.raw('coalesce(SUM(area_ha), 0) as area'))

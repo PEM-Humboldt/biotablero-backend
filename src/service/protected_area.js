@@ -89,7 +89,7 @@ module.exports = (paPersistence, seService) => ({
    */
   getAreaByPA: async (categoryName) => {
     let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
-    if (categoryArea[0].area === null) {
+    if (!categoryArea || categoryArea[0].area === null) {
       throw new Error('protected area category doesn\'t exists');
     }
     categoryArea = categoryArea[0].area;

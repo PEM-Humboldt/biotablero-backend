@@ -70,7 +70,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiDescription
    * List all municipalities information in the given state
    *
-   * @apiParam {Number} state_id state id
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.municipality municipality name
@@ -94,9 +94,12 @@ module.exports = (errorHandler, stateService) => {
    * @apiName StateBySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by strategic ecosystems. <br/>
+   * Separate the state total area by strategic ecosystems.
+   *
    * The result is the list of strategic ecosystems with area and percentage inside the state and an
    * extra element with the total area inside strategic ecosystems on the state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -124,8 +127,8 @@ module.exports = (errorHandler, stateService) => {
    * Given an strategic ecosystem type inside an specific state, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
@@ -150,12 +153,13 @@ module.exports = (errorHandler, stateService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific state, get the coverage
-   * distribution in that area. <br/>
+   * distribution in that area.
+   *
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the state.
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -181,13 +185,14 @@ module.exports = (errorHandler, stateService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific state, get the protected area
-   * categories distribution in that area. <br/>
-   * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the state and two extra elements: the total protected area
-   * inside the specified area and the non protected area.
+   * categories distribution in that area.
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the state and one extra element with the total protected area
+   * inside the specified state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -212,9 +217,12 @@ module.exports = (errorHandler, stateService) => {
    * @apiName StateByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by protected areas. <br/>
+   * Separate the state total area by protected areas.
+   *
    * The result is the list of protected area types with area and percentage inside the state and
-   * two extra elements: the total protected area inside the state and the non protected area.
+   * one extra element with the total protected area inside the state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -239,9 +247,12 @@ module.exports = (errorHandler, stateService) => {
    * @apiName StateByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by coverage type. <br/>
+   * Separate the state total area by coverage type.
+   *
    * The result is the list of cover types with area and percentage inside the state and an extra
    * element with the total state area.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -268,13 +279,11 @@ module.exports = (errorHandler, stateService) => {
    * @apiDescription
    * Get the national layer divided by states
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /states/layers/national

@@ -66,7 +66,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * subzone and an extra element with the total area inside strategic ecosystems on the basin
    * subzone.
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -94,7 +94,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * Given an strategic ecosystem type inside an specific basin subzone, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
@@ -125,7 +125,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the basin subzone.
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
@@ -157,7 +157,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * The result is the list of protected area types with area and percentage inside the specified
    * strategic ecosystem in the basin subzone and one extra object for non protected area info.
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
@@ -189,7 +189,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * subzone and two extra elements: the total protected area inside the basin subzone and the non
    * protected area
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area type
@@ -219,7 +219,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * The result is the list of cover types with area and percentage inside the basin subzone and an
    * extra element with the total basin subzone area.
    *
-   * @apiParam (Path params) {String} subzone_id basin subzone id
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type

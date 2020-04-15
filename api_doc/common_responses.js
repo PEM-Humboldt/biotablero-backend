@@ -1,4 +1,12 @@
 /**
+ * @apiDefine GeofenceDetailsExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "total_area": 319877.03
+ *  }
+ */
+
+/**
  * @apiDefine GeofenceBySEExample
  * @apiSuccessExample {json} Success-Example:
  *  [

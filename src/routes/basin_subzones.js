@@ -56,6 +56,31 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup basinSubzones
+   * @api {get} /basinSubzones/:subzone_id SubzoneDetails
+   * @apiName SubzoneDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific subzone. For now, only the total area is returned.
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified subzone
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3502
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/basinSubzones/:subzone_id', errorHandler((req, res, next) => (
+    basinSubzoneService.getTotalArea(req.params.subzone_id)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se SubzoneBySE
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0

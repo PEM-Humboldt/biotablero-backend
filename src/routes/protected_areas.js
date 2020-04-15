@@ -176,7 +176,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/pa/:category/se/:se_type/coverage', errorHandler((req, res, next) => (
     paService.getCoverageInSE(req.params.category, req.params.se_type)

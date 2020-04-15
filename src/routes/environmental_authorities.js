@@ -293,7 +293,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/ea/:ea_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     eaService.getCoverageInSE(req.params.ea_id, req.params.se_type)

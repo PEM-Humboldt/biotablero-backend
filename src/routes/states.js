@@ -168,7 +168,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/states/:state_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     stateService.getCoverageInSE(req.params.state_id, req.params.se_type)

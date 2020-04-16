@@ -64,6 +64,31 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup states
+   * @api {get} /states/:category StateDetails
+   * @apiName StateDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific state. For now, only the total area is returned.
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified state
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/1
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/states/:state_id', errorHandler((req, res, next) => (
+    stateService.getTotalArea(req.params.state_id)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup states
    * @api {get} /states/:state_id/municipalities stateByMunicipalities
    * @apiName stateByMunicipalities
    * @apiVersion 0.1.0
@@ -168,7 +193,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/states/:state_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     stateService.getCoverageInSE(req.params.state_id, req.params.se_type)

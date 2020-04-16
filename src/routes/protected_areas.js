@@ -97,6 +97,31 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup pa
+   * @api {get} /pa/:category PACategoryDetails
+   * @apiName PACategoryDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific protected area category. For now, only the total area is returned
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified category
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/pa/:category', errorHandler((req, res, next) => (
+    paService.getTotalArea(req.params.category)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
    * @api {get} /pa/:category/se PABySE
    * @apiName PABySE
    * @apiVersion 0.1.0
@@ -176,7 +201,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/pa/:category/se/:se_type/coverage', errorHandler((req, res, next) => (
     paService.getCoverageInSE(req.params.category, req.params.se_type)

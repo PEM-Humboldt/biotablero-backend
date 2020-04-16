@@ -85,8 +85,8 @@ module.exports = (paPersistence, seService) => {
      *
      * @param {String} categoryName protected area category
      *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and percentage)
-     * and non protected area (and percentage)
+     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
+     * percentage) and non protected area (and percentage)
      */
     getAreaByPA: async (categoryName) => {
       let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);

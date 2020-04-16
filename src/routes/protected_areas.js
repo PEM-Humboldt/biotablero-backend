@@ -103,7 +103,7 @@ module.exports = (errorHandler, paService) => {
    * @apiDescription
    * Get details about an specific protected area category. For now, only the total area is returned
    *
-   * @apiParam (Path params) {Number} category protected area category
+   * @apiParam (Path params) {String} category protected area category
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {Number} result.total_area Area for the specified category

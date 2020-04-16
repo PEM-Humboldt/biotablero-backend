@@ -52,17 +52,14 @@ module.exports = (errorHandler, biomeService) => {
    * @apiDescription
    * Find all biomes that belong to the given environmental authority.
    *
-   * **Some of the response properties are TopoJson / GeoJson standard properties, so they are not
-   * described here.**
-   *
    * @apiParam {String} ea_id environmental authority id to filter biomes
    *
-   * @apiSuccess {Object} topo TopoJson object
-   * @apiSuccess {Object} topo.objects.ea GeometryCollection with biomes information
-   * @apiSuccess {Object[]} topo.objects.ea.geometries biome object
-   * @apiSuccess {Object} topo.objects.ea.geometries.properties biome properties besides geometry.
-   * @apiSuccess {Object} topo.objects.ea.geometries.properties.id_ea environmental authority id
-   * @apiSuccess {Object} topo.objects.ea.geometries.properties.name_biome biome name
+   * @apiSuccess (geojson) {Object} result GeoJSONJ object
+   * @apiSuccess (geojson) {Object} result.features.properties Specific properties for each feature
+   * @apiSuccess (geojson) {Number} result.features.properties.gid feature id
+   * @apiSuccess (geojson) {String} result.features.properties.name_biome biome name
+   * @apiSuccess (geojson) {Number} result.features.properties.id_biome biome id
+   * @apiSuccess (geojson) {Number} result.features.properties.compensation_factor biome CF
    *
    * @apiExample {curl} Example usage:
    *  /biomes/ea/CORPOBOYACA

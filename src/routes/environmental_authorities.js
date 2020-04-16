@@ -109,13 +109,38 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup ea
+   * @api {get} /ea/:ea_id EADetails
+   * @apiName EADetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific environmental authority. For now, only the total area is returned
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified environmental authority
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/AMVA
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/ea/:ea_id', errorHandler((req, res, next) => (
+    eaService.getTotalArea(req.params.ea_id)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup ea
    * @api {get} /ea/:ea_id/compensationFactor EAByCompensationFactor
    * @apiName EAByCompensationFactor
    * @apiVersion 0.1.0
    * @apiDescription
    * Separate the environmental authority total area by compensation factor
    *
-   * @apiParam {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key compensation factor value
@@ -141,7 +166,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiDescription
    * Separate the environmental authority total area by biotic units
    *
-   * @apiParam {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key biotic unit name
@@ -167,10 +192,10 @@ module.exports = (errorHandler, eaService) => {
    * @apiDescription
    * Separate the environmental authority total area by general biome (different from IAvH biomes).
    *
-   * @apiParam {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.key biotic unit name
+   * @apiSuccess {String} result.key general biome name
    * @apiSuccess {Number} result.area total area for the associated biome
    *
    * @apiExample {curl} Example usage:
@@ -193,8 +218,8 @@ module.exports = (errorHandler, eaService) => {
    * @apiDescription
    * Separate a selected biome total area in the given environmental authority by sub-basins
    *
-   * @apiParam {String} ea_id environmental authority id
-   * @apiParam {String} name_biome biome name
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} name_biome biome name
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key sub-basin name
@@ -218,10 +243,13 @@ module.exports = (errorHandler, eaService) => {
    * @apiName EABySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the environmental authority total area by strategic ecosystems. <br/>
+   * Separate the environmental authority total area by strategic ecosystems.
+   *
    * The result is the list of strategic ecosystems with area and percentage inside the
    * environmental authority and an extra element with the total area inside strategic ecosystems on
    * the environmental authority.
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -249,8 +277,8 @@ module.exports = (errorHandler, eaService) => {
    * Given an strategic ecosystem type inside an specific environmental authority, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam {String} ea_id environmental authority id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage strategic ecosystem inside environmental
@@ -275,12 +303,13 @@ module.exports = (errorHandler, eaService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific environmental authority, get the coverage
-   * distribution in that area. <br/>
+   * distribution in that area.
+   *
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the environmental authority.
    *
-   * @apiParam {String} ea_id environmental authority id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -289,7 +318,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/ea/:ea_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     eaService.getCoverageInSE(req.params.ea_id, req.params.se_type)
@@ -306,13 +335,14 @@ module.exports = (errorHandler, eaService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific environmental authority, get the
-   * distribution of protected area categories in that area. <br/>
+   * distribution of protected area categories in that area.
+   *
    * The result is the list of protected area types with area and percentage inside the specified
    * strategic ecosystem in the environmental authority and two extra elements: the total protected
    * area inside the specified area and the non protected area.
    *
-   * @apiParam {String} ea_id environmental authority id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -337,10 +367,13 @@ module.exports = (errorHandler, eaService) => {
    * @apiName EAByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the environmental authority total area by protected areas. <br/>
+   * Separate the environmental authority total area by protected areas.
+   *
    * The result is the list of protected area types with area and percentage inside the
    * environmental authority and two extra elements: the total protected area inside the
    * environmental authority and the non protected area
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -366,9 +399,12 @@ module.exports = (errorHandler, eaService) => {
    * @apiName EAByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the environmental authority total area by coverage type. <br/>
+   * Separate the environmental authority total area by coverage type.
+   *
    * The result is the list of cover types with area and percentage inside the environmental
    * authority and an extra element with the total environmental authority area.
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -395,13 +431,11 @@ module.exports = (errorHandler, eaService) => {
    * @apiDescription
    * Get the national layer divided by environmental authority
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /ea/layers/national

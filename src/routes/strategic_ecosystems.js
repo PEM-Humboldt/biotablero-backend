@@ -136,8 +136,9 @@ module.exports = (errorHandler, seService) => {
    * @apiDescription
    * Get the ecosystem national information
    *
-   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
-   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   * @apiParam (Path params) {String} ecosystem ecosystem type to get. Accepted values: Páramo,
+   * Humedal, Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a>
+   * endpoint)
    *
    * @apiSuccess {Object} result object with the given ecosystem national information
    * @apiSuccess {Number} result.area national area of the ecosystem
@@ -164,8 +165,9 @@ module.exports = (errorHandler, seService) => {
    * @apiDescription
    * Get the strategic ecosystem area separated by coverage
    *
-   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
-   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   * @apiParam (Path params) {String} ecosystem ecosystem type to get. Accepted values: Páramo,
+   * Humedal, Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a>
+   * endpoint)
    *
    * @apiSuccess {Object[]} result coverage information for the ecosystem
    * @apiSuccess {Number} result.percentage coverage percentage for the ecosystem
@@ -192,8 +194,9 @@ module.exports = (errorHandler, seService) => {
    * @apiDescription
    * Get the strategic ecosystem area separated by protected areas
    *
-   * @apiParam (path) {String} ecosystem ecosystem type to get. Accepted values: Páramo, Humedal,
-   * Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a> endpoint)
+   * @apiParam (Path params) {String} ecosystem ecosystem type to get. Accepted values: Páramo,
+   * Humedal, Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a>
+   * endpoint)
    *
    * @apiSuccess {Object[]} result information about protected areas for the ecosystem
    * @apiSuccess {Number} result.percentage protected area percentage for the ecosystem
@@ -220,13 +223,11 @@ module.exports = (errorHandler, seService) => {
    * @apiDescription
    * Get the national layer divided by strategic ecosystems
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /se/layers/national

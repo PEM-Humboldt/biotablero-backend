@@ -2,7 +2,7 @@ const { Router } = require('restify-router');
 
 /**
  * @apiDefine pa Protected Areas
- * Endpoint with queries about protected areas
+ * Endpoints with queries about protected areas
  */
 
 /**
@@ -41,6 +41,11 @@ const { Router } = require('restify-router');
  * @apiDefine PAByPAExample
  * @apiSuccessExample {json} Success-Example:
  *  [
+ *    {
+ *      "area": 108607,
+ *      "percentage": 1,
+ *      "type": "Total"
+ *    },
  *    {
  *      "percentage": 0,
  *      "type": "Santuario de Fauna y Flora"
@@ -92,14 +97,42 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup pa
+   * @api {get} /pa/:category PACategoryDetails
+   * @apiName PACategoryDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific protected area category. For now, only the total area is returned
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified category
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/pa/:category', errorHandler((req, res, next) => (
+    paService.getTotalArea(req.params.category)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup pa
    * @api {get} /pa/:category/se PABySE
    * @apiName PABySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by strategic ecosystems. <br/>
+   * Separate the protected area by strategic ecosystems.
+   *
    * The result is the list of strategic ecosystems with area and percentage inside the protected
-   * area category and an extra element with the total area inside strategic ecosystems on the
+   * area category and one extra element with the total area inside strategic ecosystems on the
    * protected area category.
+   *
+   * @apiParam (Path params) {String} category protected area category
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -127,8 +160,8 @@ module.exports = (errorHandler, paService) => {
    * Given an strategic ecosystem type inside an specific protected area, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam {String} pa_id protected area id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage strategic ecosystem inside protected area
@@ -153,12 +186,13 @@ module.exports = (errorHandler, paService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific protected area, get the coverage
-   * distribution in that area. <br/>
+   * distribution in that area.
+   *
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the protected area category.
    *
-   * @apiParam {String} category protected area category
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -167,7 +201,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/pa/:category/se/:se_type/coverage', errorHandler((req, res, next) => (
     paService.getCoverageInSE(req.params.category, req.params.se_type)
@@ -184,13 +218,13 @@ module.exports = (errorHandler, paService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific protected area, get the protected area
-   * categories distribution in that area. <br/>
-   * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the protected area category and two extra elements: the total protected
-   * area inside the specified area and the non protected area.
+   * categories distribution in that area.
    *
-   * @apiParam {String} category protected area category
-   * @apiParam {String} se_type strategic ecosystem type
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the protected area category.
+   *
+   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -215,10 +249,13 @@ module.exports = (errorHandler, paService) => {
    * @apiName PAByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by protected areas. <br/>
+   * Separate the protected area by protected areas.
+   *
    * The result is the list of protected area types with area and percentage inside the protected
-   * area category and two extra elements: the total protected area inside the protected area
-   * category and the non protected area
+   * area category and one extra elementwith the total protected area inside the protected area
+   * category.
+   *
+   * @apiParam (Path params) {String} category protected area category
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -243,9 +280,12 @@ module.exports = (errorHandler, paService) => {
    * @apiName PAByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the protected area by coverage type. <br/>
-   * The result is the list of cover types with area and percentage inside the protected area
-   * category and an extra element with the total state area.
+   * Separate the protected area by coverage type.
+   *
+   * The result is a list of objects (cover types) with area and percentage inside the protected
+   * area category and one extra object with the total area of the protected area.
+   *
+   * @apiParam (Path params) {String} category protected area category
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -272,13 +312,11 @@ module.exports = (errorHandler, paService) => {
    * @apiDescription
    * Get the national layer divided by protected areas
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /pa/layers/national

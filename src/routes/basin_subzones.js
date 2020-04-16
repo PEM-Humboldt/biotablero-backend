@@ -4,16 +4,24 @@ const { Router } = require('restify-router');
  * @apiDefine getAllBasinSubzonesExample
  * @apiSuccessExample {json} Success-Example:
  *  [
- *   {
- *      "id_subzone": "2626",
- *      "name_subzo": "Directos Bajo Cauca - Cga La Raya entre río Nechí",
+ *    {
+ *      "id": "2626",
+ *      "name": "Directos Bajo Cauca - Cga La Raya entre río Nechí",
+ *      "id_zone": "25",
  *      "id_basin": "2"
  *    },
  *    {
- *      "id_subzone": "3703",
- *      "name_subzo": "Río Cobugón - Río Cobaría",
- *      "id_basin": "3"
+ *      "id": "2120",
+ *      "name": "Río Bogotá",
+ *      "id_zone": "21",
+ *      "id_basin": "2"
  *    },
+ *    {
+ *      "id": "3201",
+ *      "name": "Río Guayabero",
+ *      "id_zone": "32",
+ *      "id_basin": "3"
+ *    }...
  *  ]
  */
 
@@ -48,14 +56,42 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup basinSubzones
+   * @api {get} /basinSubzones/:subzone_id SubzoneDetails
+   * @apiName SubzoneDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific subzone. For now, only the total area is returned.
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified subzone
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3502
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/basinSubzones/:subzone_id', errorHandler((req, res, next) => (
+    basinSubzoneService.getTotalArea(req.params.subzone_id)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup basinSubzones
    * @api {get} /basinSubzones/:subzone_id/se SubzoneBySE
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by strategic ecosystems. <br/>
+   * Separate the basin subzone total area by strategic ecosystems.
+   *
    * The result is the list of strategic ecosystems with area and percentage inside the basin
    * subzone and an extra element with the total area inside strategic ecosystems on the basin
    * subzone.
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -83,12 +119,12 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * Given an strategic ecosystem type inside an specific basin subzone, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
-   * @apiSuccess {String} result.national_percentage strategic ecosystem inside basin subzone
-   *  percentage with respect to the national area
+   * @apiSuccess {String} result.national_percentage percentage of the strategic ecosystem inside
+   * basin subzone respect to the national area
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se/Páramo
@@ -109,12 +145,13 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific basin subzone, get the coverage
-   * distribution in that area. <br/>
+   * distribution in that area.
+   *
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the basin subzone.
    *
-   * @apiParam {String} subzone_is basin subzone id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -123,7 +160,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     basinSubzoneService.getCoverageInSE(req.params.subzone_id, req.params.se_type)
@@ -140,13 +177,13 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific basin subzone, get the protected area
-   * categories distribution in that area. <br/>
-   * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the basin subzone and two extra elements: the total protected area
-   * inside the specified area and the non protected area.
+   * categories distribution in that area.
    *
-   * @apiParam {String} subzone_is basin subzone id
-   * @apiParam {String} se_type strategic ecosystem type
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the basin subzone and one extra object for non protected area info.
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -171,13 +208,16 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by protected areas. <br/>
+   * Separate the basin subzone total area by protected area types.
+   *
    * The result is the list of protected area types with area and percentage inside the basin
    * subzone and two extra elements: the total protected area inside the basin subzone and the non
    * protected area
    *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
    * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the protected area
+   * @apiSuccess {String} result.type Specifies the protected area type
    * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the subzone.
    * @apiSuccess {Number} result.area Area of the specified protected area in the subzone
    *
@@ -199,9 +239,12 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName SubzoneByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the basin subzone total area by coverage type. <br/>
+   * Separate the basin subzone total area by coverage type.
+   *
    * The result is the list of cover types with area and percentage inside the basin subzone and an
    * extra element with the total basin subzone area.
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -228,13 +271,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiDescription
    * Get the national layer divided by basin subzones
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/layers/national

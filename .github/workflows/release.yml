@@ -1,9 +1,9 @@
-name: CI for features
+name: CI for releases
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
+      - release/*
 
 jobs:
   checks:
@@ -15,9 +15,13 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 8.12.0
-    - name: Run linter
+    - name: linter
       run: |
         npm ci
         npm run lint
       env:
         CI: true
+    - name: verify docs up to date
+      run: |
+        npm run gen_docs
+        git diff --exit-code --quiet

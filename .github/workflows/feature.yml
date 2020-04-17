@@ -21,3 +21,6 @@ jobs:
         npm run lint
       env:
         CI: true
+    - name: verify docs were not updated
+      run: |
+        git diff develop HEAD --exit-code --quiet -- docs

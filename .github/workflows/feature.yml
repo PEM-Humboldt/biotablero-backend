@@ -6,7 +6,7 @@ on:
       - feature/*
 
 jobs:
-  lint:
+  dev:
     runs-on: ubuntu-latest
 
     steps:

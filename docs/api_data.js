@@ -6,40 +6,40 @@ define({ "api": [
     "title": "BasinSubzoneNationalLayer",
     "name": "BasinSubzoneNationalLayer",
     "version": "0.1.0",
-    "description": "<p>Get the national layer divided by basin subzones</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "description": "<p>Get the national layer divided by basin subzones</p>",
     "success": {
       "fields": {
-        "Success 200": [
+        "Success 200: GeoJson object": [
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result",
             "description": ""
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "String",
             "optional": false,
             "field": "result.type",
             "description": "<p>The geometry type</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Number",
             "optional": false,
             "field": "result.totalFeatures",
             "description": "<p>number of features in this geometry</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result.features",
-            "description": "<p>features information (id, type, properties, etc)</p>"
+            "description": "<p>features information (id, type, etc)</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
             "field": "result.crs",
@@ -66,25 +66,25 @@ define({ "api": [
     "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/se/:se_type/coverage",
     "title": "SECoverageInSubzone",
     "name": "SECoverageInSubzone",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the basin subzone.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the coverage distribution in that area.</p> <p>The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the basin subzone.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
-            "field": "subzone_is",
+            "field": "subzone_id",
             "description": "<p>basin subzone id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -142,11 +142,10 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/se/:se_type",
     "title": "SEDetailInSubzone",
@@ -155,16 +154,16 @@ define({ "api": [
     "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
-            "field": "state_id",
-            "description": "<p>state id</p>"
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -188,7 +187,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "result.national_percentage",
-            "description": "<p>strategic ecosystem inside basin subzone percentage with respect to the national area</p>"
+            "description": "<p>percentage of the strategic ecosystem inside basin subzone respect to the national area</p>"
           }
         ]
       },
@@ -208,29 +207,28 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/se/:se_type/pa",
     "title": "SEPAInSubzone",
     "name": "SEPAInSubzone",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the basin subzone and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific basin subzone, get the protected area categories distribution in that area.</p> <p>The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the basin subzone and one extra object for non protected area info.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
-            "field": "subzone_is",
+            "field": "subzone_id",
             "description": "<p>basin subzone id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -275,7 +273,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -288,17 +286,29 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/coverage",
     "title": "SubzoneByCoverage",
     "name": "SubzoneByCoverage",
     "version": "0.1.0",
-    "description": "<p>Separate the basin subzone total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the basin subzone and an extra element with the total basin subzone area.</p>",
+    "description": "<p>Separate the basin subzone total area by coverage type.</p> <p>The result is the list of cover types with area and percentage inside the basin subzone and an extra element with the total basin subzone area.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -335,7 +345,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "content": "[\n  {\n    \"area\": \"319877.0000000\",\n    \"percentage\": 1,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -348,17 +358,29 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/pa",
     "title": "SubzoneByPA",
     "name": "SubzoneByPA",
     "version": "0.1.0",
-    "description": "<p>Separate the basin subzone total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the basin subzone and two extra elements: the total protected area inside the basin subzone and the non protected area</p>",
+    "description": "<p>Separate the basin subzone total area by protected area types.</p> <p>The result is the list of protected area types with area and percentage inside the basin subzone and two extra elements: the total protected area inside the basin subzone and the non protected area</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -374,7 +396,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "result.type",
-            "description": "<p>Specifies the protected area</p>"
+            "description": "<p>Specifies the protected area type</p>"
           },
           {
             "group": "Success 200",
@@ -395,7 +417,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -408,17 +430,29 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
   },
   {
-    "group": "basins",
+    "group": "basinSubzones",
     "type": "get",
     "url": "/basinSubzones/:subzone_id/se",
     "title": "SubzoneBySE",
     "name": "SubzoneBySE",
     "version": "0.1.0",
-    "description": "<p>Separate the basin subzone total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the basin subzone and an extra element with the total area inside strategic ecosystems on the basin subzone.</p>",
+    "description": "<p>Separate the basin subzone total area by strategic ecosystems.</p> <p>The result is the list of strategic ecosystems with area and percentage inside the basin subzone and an extra element with the total area inside strategic ecosystems on the basin subzone.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -455,7 +489,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "content": "[\n   {\n    \"area\": 134079.17569578788,\n    \"percentage\": 0.4191585381124241,\n    \"type\": \"Total\"\n  },\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -468,8 +502,131 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basin_subzones.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
+    "groupTitle": "basinSubzones"
+  },
+  {
+    "group": "basinSubzones",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id",
+    "title": "SubzoneDetails",
+    "name": "SubzoneDetails",
+    "version": "0.1.0",
+    "description": "<p>Get details about an specific subzone. For now, only the total area is returned.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.total_area",
+            "description": "<p>Area for the specified subzone</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"total_area\": 319877.03\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/3502",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "basinSubzones"
+  },
+  {
+    "group": "basinSubzones",
+    "type": "get",
+    "url": "/basinSubzones",
+    "title": "listBasinSubzones",
+    "name": "listBasinSubzones",
+    "version": "0.1.0",
+    "description": "<p>List all available basin sub-zones</p>",
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "basin_sub-zones",
+            "description": "<p>list of basin sub-zones</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_subzone",
+            "description": "<p>basin subzone id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "basin_sub-zones.name_subzo",
+            "description": "<p>basin subzone name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_basin",
+            "description": "<p>associated basin area id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "basin_sub-zones.id_zone",
+            "description": "<p>associated basin zone id</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"2626\",\n    \"name\": \"Directos Bajo Cauca - Cga La Raya entre río Nechí\",\n    \"id_zone\": \"25\",\n    \"id_basin\": \"2\"\n  },\n  {\n    \"id\": \"2120\",\n    \"name\": \"Río Bogotá\",\n    \"id_zone\": \"21\",\n    \"id_basin\": \"2\"\n  },\n  {\n    \"id\": \"3201\",\n    \"name\": \"Río Guayabero\",\n    \"id_zone\": \"32\",\n    \"id_basin\": \"3\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/basin_subzones.js",
+    "groupTitle": "basinSubzones"
   },
   {
     "group": "basins",
@@ -521,73 +678,6 @@ define({ "api": [
       }
     ],
     "filename": "src/routes/basins.js",
-    "groupTitle": "Basins",
-    "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
-  },
-  {
-    "group": "basins",
-    "type": "get",
-    "url": "/basinSubzones",
-    "title": "listBasinSubzones",
-    "name": "listBasinSubzones",
-    "version": "0.1.0",
-    "description": "<p>List all available basin sub-zones</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "basin_sub-zones",
-            "description": "<p>list of basin sub-zones</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "basin_sub-zones.id_subzone",
-            "description": "<p>basin subzone id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "basin_sub-zones.name_subzo",
-            "description": "<p>basin subzone name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "basin_sub-zones.id_basin",
-            "description": "<p>associated basin area id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "basin_sub-zones.id_zone",
-            "description": "<p>associated basin zone id</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n {\n    \"id_subzone\": \"2626\",\n    \"name_subzo\": \"Directos Bajo Cauca - Cga La Raya entre río Nechí\",\n    \"id_basin\": \"2\"\n  },\n  {\n    \"id_subzone\": \"3703\",\n    \"name_subzo\": \"Río Cobugón - Río Cobaría\",\n    \"id_basin\": \"3\"\n  },\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/basinSubzones",
-        "type": "curl"
-      }
-    ],
-    "filename": "src/routes/basin_subzones.js",
     "groupTitle": "Basins",
     "groupDescription": "<p>Endpoints related with basins (areas, zones and subzones)</p>"
   },
@@ -732,7 +822,7 @@ define({ "api": [
     "title": "getBiomesByEA",
     "name": "getBiomesByEA",
     "version": "0.1.0",
-    "description": "<p>Find all biomes that belong to the given environmental authority.</p> <p><strong>Some of the response properties are TopoJson / GeoJson standard properties, so they are not described here.</strong></p>",
+    "description": "<p>Find all biomes that belong to the given environmental authority.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -748,48 +838,48 @@ define({ "api": [
     },
     "success": {
       "fields": {
-        "Success 200": [
+        "Success 200: GeoJson object": [
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
-            "field": "topo",
-            "description": "<p>TopoJson object</p>"
+            "field": "result",
+            "description": "<p>GeoJSONJ object</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
-            "field": "topo.objects.ea",
-            "description": "<p>GeometryCollection with biomes information</p>"
+            "field": "result.features.properties",
+            "description": "<p>Specific properties for each feature</p>"
           },
           {
-            "group": "Success 200",
-            "type": "Object[]",
+            "group": "geojson",
+            "type": "Number",
             "optional": false,
-            "field": "topo.objects.ea.geometries",
-            "description": "<p>biome object</p>"
+            "field": "result.features.properties.gid",
+            "description": "<p>feature id</p>"
           },
           {
-            "group": "Success 200",
-            "type": "Object",
+            "group": "geojson",
+            "type": "String",
             "optional": false,
-            "field": "topo.objects.ea.geometries.properties",
-            "description": "<p>biome properties besides geometry.</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "topo.objects.ea.geometries.properties.id_ea",
-            "description": "<p>environmental authority id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Object",
-            "optional": false,
-            "field": "topo.objects.ea.geometries.properties.name_biome",
+            "field": "result.features.properties.name_biome",
             "description": "<p>biome name</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Number",
+            "optional": false,
+            "field": "result.features.properties.id_biome",
+            "description": "<p>biome id</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Number",
+            "optional": false,
+            "field": "result.features.properties.compensation_factor",
+            "description": "<p>biome CF</p>"
           }
         ]
       },
@@ -822,74 +912,74 @@ define({ "api": [
     "description": "<p>Create a new strategy as part of the selected strategies of the given project</p>",
     "parameter": {
       "fields": {
-        "query": [
+        "Path params": [
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
             "description": "<p>project associated with this strategy</p>"
           }
         ],
-        "body": [
+        "Body Params": [
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Object",
             "optional": false,
             "field": "strategy",
             "description": "<p>strategy to be created</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "strategy.id_biome",
             "description": "<p>biome to associate with the strategy</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": false,
             "field": "strategy.id_ea",
             "description": "<p>environmental authority to associate with the strategy</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "strategy.id_subzone",
             "description": "<p>'subzona hidrográfica' to associate with the strategy</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "strategy.id_strategy",
             "description": "<p>strategy to associate with</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "strategy.area",
             "description": "<p>area (in ha) included with this strategy</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "strategy.id_user",
             "description": "<p>user that created the strategy</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": true,
             "field": "strategy.area_status",
@@ -1002,16 +1092,16 @@ define({ "api": [
     "description": "<p>Generate a GeoJson file that includes all selected strategies information for a given project</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
@@ -1022,9 +1112,9 @@ define({ "api": [
     },
     "success": {
       "fields": {
-        "Success 200": [
+        "Success 200: GeoJson object": [
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "File",
             "optional": false,
             "field": "strategies.geojson",
@@ -1054,16 +1144,16 @@ define({ "api": [
     "description": "<p>List all saved (selected) strategies associated with the given project</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
@@ -1253,88 +1343,88 @@ define({ "api": [
     "description": "<p>Associate a set of biomes as impacted by a given project. This automatically updates the associated project total area</p>",
     "parameter": {
       "fields": {
-        "query": [
+        "Path params": [
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
             "description": "<p>project id</p>"
           }
         ],
-        "body": [
+        "Body Params": [
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Object[]",
             "optional": false,
             "field": "biomes",
             "description": "<p>array of biomes to associate with the project</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "biomes.id_biome",
             "description": "<p>biome id</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.id_ea",
             "description": "<p>environmental</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.id_subzone",
             "description": "<p>sub-basin id</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.natural_area_ha",
             "description": "<p>natural area affected in this biome</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.secondary_area_ha",
             "description": "<p>secondary area affected in this biome</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.transformed_area_ha",
             "description": "<p>transformed area affected in this biome</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.area_impacted_ha",
             "description": "<p>total area affected in this biome</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.area_to_compensate_ha",
             "description": "<p>area to compensate for this biome</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": true,
             "field": "biomes.area_impacted_pct",
@@ -1468,60 +1558,53 @@ define({ "api": [
     "description": "<p>Create a project</p>",
     "parameter": {
       "fields": {
-        "query": [
+        "Path params": [
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
-          },
-          {
-            "group": "query",
-            "type": "Number",
-            "optional": false,
-            "field": "id_project",
-            "description": "<p>project id</p>"
           }
         ],
-        "body": [
+        "Body Params": [
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Object",
             "optional": false,
             "field": "project",
             "description": "<p>object to be created</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": false,
             "field": "project.name",
             "description": "<p>project name</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": true,
             "field": "project.details",
             "description": "<p>extra information about the project</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": true,
             "field": "project.prj_status",
             "description": "<p>project status</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "Number",
             "optional": false,
             "field": "project.id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "body",
+            "group": "Body Params",
             "type": "String",
             "optional": false,
             "field": "project.id_region",
@@ -1627,16 +1710,16 @@ define({ "api": [
     "description": "<p>Get the impacted biomes for a given project</p>",
     "parameter": {
       "fields": {
-        "query": [
+        "Path params": [
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
@@ -1784,16 +1867,16 @@ define({ "api": [
     "description": "<p>Find a project by its id</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
@@ -1892,16 +1975,16 @@ define({ "api": [
     "description": "<p>Get the impacted biomes decision tree for a given project</p>",
     "parameter": {
       "fields": {
-        "query": [
+        "Path params": [
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>project's owner id</p>"
           },
           {
-            "group": "query",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_project",
@@ -2014,16 +2097,18 @@ define({ "api": [
     "description": "<p>Find all projects that belongs to a given company. If group_props is passed, results will be grouped by the first prop, then by the second, so on.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "id_company",
             "description": "<p>company id to get projects</p>"
-          },
+          }
+        ],
+        "Query params": [
           {
-            "group": "Parameter",
+            "group": "Query params",
             "type": "String[]",
             "optional": true,
             "field": "group_props",
@@ -2132,16 +2217,16 @@ define({ "api": [
     "description": "<p>Separate a selected biome total area in the given environmental authority by sub-basins</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
             "description": "<p>environmental authority id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "name_biome",
@@ -2205,9 +2290,9 @@ define({ "api": [
     "description": "<p>Separate the environmental authority total area by biotic units</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
@@ -2271,9 +2356,9 @@ define({ "api": [
     "description": "<p>Separate the environmental authority total area by compensation factor</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
@@ -2334,7 +2419,20 @@ define({ "api": [
     "title": "EAByCoverage",
     "name": "EAByCoverage",
     "version": "0.1.0",
-    "description": "<p>Separate the environmental authority total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the environmental authority and an extra element with the total environmental authority area.</p>",
+    "description": "<p>Separate the environmental authority total area by coverage type.</p> <p>The result is the list of cover types with area and percentage inside the environmental authority and an extra element with the total environmental authority area.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -2371,7 +2469,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "content": "[\n  {\n    \"area\": \"319877.0000000\",\n    \"percentage\": 1,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -2397,9 +2495,9 @@ define({ "api": [
     "description": "<p>Separate the environmental authority total area by general biome (different from IAvH biomes).</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
@@ -2423,7 +2521,7 @@ define({ "api": [
             "type": "String",
             "optional": false,
             "field": "result.key",
-            "description": "<p>biotic unit name</p>"
+            "description": "<p>general biome name</p>"
           },
           {
             "group": "Success 200",
@@ -2460,7 +2558,20 @@ define({ "api": [
     "title": "EAByPA",
     "name": "EAByPA",
     "version": "0.1.0",
-    "description": "<p>Separate the environmental authority total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the environmental authority and two extra elements: the total protected area inside the environmental authority and the non protected area</p>",
+    "description": "<p>Separate the environmental authority total area by protected areas.</p> <p>The result is the list of protected area types with area and percentage inside the environmental authority and two extra elements: the total protected area inside the environmental authority and the non protected area</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -2497,7 +2608,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -2520,7 +2631,20 @@ define({ "api": [
     "title": "EABySE",
     "name": "EABySE",
     "version": "0.1.0",
-    "description": "<p>Separate the environmental authority total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the environmental authority and an extra element with the total area inside strategic ecosystems on the environmental authority.</p>",
+    "description": "<p>Separate the environmental authority total area by strategic ecosystems.</p> <p>The result is the list of strategic ecosystems with area and percentage inside the environmental authority and an extra element with the total area inside strategic ecosystems on the environmental authority.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -2557,7 +2681,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "content": "[\n   {\n    \"area\": 134079.17569578788,\n    \"percentage\": 0.4191585381124241,\n    \"type\": \"Total\"\n  },\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -2576,11 +2700,24 @@ define({ "api": [
   {
     "group": "ea",
     "type": "get",
-    "url": "/ea/layers/national",
-    "title": "EANationalLayer",
-    "name": "EANationalLayer",
+    "url": "/ea/:ea_id",
+    "title": "EADetails",
+    "name": "EADetails",
     "version": "0.1.0",
-    "description": "<p>Get the national layer divided by environmental authority</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "description": "<p>Get details about an specific environmental authority. For now, only the total area is returned</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -2593,27 +2730,73 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.total_area",
+            "description": "<p>Area for the specified environmental authority</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"total_area\": 319877.03\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/AMVA",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/environmental_authorities.js",
+    "groupTitle": "Environmental Authorities",
+    "groupDescription": "<p>Endpoints related with queries about environmental authorities</p>"
+  },
+  {
+    "group": "ea",
+    "type": "get",
+    "url": "/ea/layers/national",
+    "title": "EANationalLayer",
+    "name": "EANationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by environmental authority</p>",
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
             "type": "String",
             "optional": false,
             "field": "result.type",
             "description": "<p>The geometry type</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Number",
             "optional": false,
             "field": "result.totalFeatures",
             "description": "<p>number of features in this geometry</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result.features",
-            "description": "<p>features information (id, type, properties, etc)</p>"
+            "description": "<p>features information (id, type, etc)</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
             "field": "result.crs",
@@ -2647,19 +2830,19 @@ define({ "api": [
     "title": "SECoverageInEA",
     "name": "SECoverageInEA",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the environmental authority.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the coverage distribution in that area.</p> <p>The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the environmental authority.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
             "description": "<p>environmental authority id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -2730,16 +2913,16 @@ define({ "api": [
     "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
             "description": "<p>environmental authority id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -2793,19 +2976,19 @@ define({ "api": [
     "title": "SEPAInEA",
     "name": "SEPAInEA",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the distribution of protected area categories in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the environmental authority and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific environmental authority, get the distribution of protected area categories in that area.</p> <p>The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the environmental authority and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ea_id",
             "description": "<p>environmental authority id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -2850,7 +3033,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -2979,7 +3162,20 @@ define({ "api": [
     "title": "PAByCoverage",
     "name": "PAByCoverage",
     "version": "0.1.0",
-    "description": "<p>Separate the protected area by coverage type. <br/> The result is the list of cover types with area and percentage inside the protected area category and an extra element with the total state area.</p>",
+    "description": "<p>Separate the protected area by coverage type.</p> <p>The result is a list of objects (cover types) with area and percentage inside the protected area category and one extra object with the total area of the protected area.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -3016,7 +3212,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "content": "[\n  {\n    \"area\": \"319877.0000000\",\n    \"percentage\": 1,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -3030,7 +3226,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3039,7 +3235,20 @@ define({ "api": [
     "title": "PAByPA",
     "name": "PAByPA",
     "version": "0.1.0",
-    "description": "<p>Separate the protected area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the protected area category and two extra elements: the total protected area inside the protected area category and the non protected area</p>",
+    "description": "<p>Separate the protected area by protected areas.</p> <p>The result is the list of protected area types with area and percentage inside the protected area category and one extra elementwith the total protected area inside the protected area category.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -3076,7 +3285,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0,\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 1,\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 108607,\n    \"percentage\": 1,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0,\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 1,\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
           "type": "json"
         }
       ]
@@ -3090,7 +3299,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3099,7 +3308,20 @@ define({ "api": [
     "title": "PABySE",
     "name": "PABySE",
     "version": "0.1.0",
-    "description": "<p>Separate the protected area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the protected area category and an extra element with the total area inside strategic ecosystems on the protected area category.</p>",
+    "description": "<p>Separate the protected area by strategic ecosystems.</p> <p>The result is the list of strategic ecosystems with area and percentage inside the protected area category and one extra element with the total area inside strategic ecosystems on the protected area category.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -3136,7 +3358,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "content": "[\n   {\n    \"area\": 134079.17569578788,\n    \"percentage\": 0.4191585381124241,\n    \"type\": \"Total\"\n  },\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -3150,16 +3372,29 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
     "type": "get",
-    "url": "/pa/layers/national",
-    "title": "PANationalLayer",
-    "name": "PANationalLayer",
+    "url": "/pa/:category",
+    "title": "PACategoryDetails",
+    "name": "PACategoryDetails",
     "version": "0.1.0",
-    "description": "<p>Get the national layer divided by protected areas</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "description": "<p>Get details about an specific protected area category. For now, only the total area is returned</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -3172,27 +3407,73 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.total_area",
+            "description": "<p>Area for the specified category</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"total_area\": 319877.03\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/protected_areas.js",
+    "groupTitle": "Protected Areas",
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
+  },
+  {
+    "group": "pa",
+    "type": "get",
+    "url": "/pa/layers/national",
+    "title": "PANationalLayer",
+    "name": "PANationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by protected areas</p>",
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
             "type": "String",
             "optional": false,
             "field": "result.type",
             "description": "<p>The geometry type</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Number",
             "optional": false,
             "field": "result.totalFeatures",
             "description": "<p>number of features in this geometry</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result.features",
-            "description": "<p>features information (id, type, properties, etc)</p>"
+            "description": "<p>features information (id, type, etc)</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
             "field": "result.crs",
@@ -3217,74 +3498,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
-  },
-  {
-    "group": "pa",
-    "type": "get",
-    "url": "/pa/category/:category_name",
-    "title": "ProtectedAreasByCategory",
-    "name": "ProtectedAreasByCategory",
-    "version": "0.1.0",
-    "description": "<p>List all protected areas in a given category</p>",
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": "<p>list of protected areas in category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.gid",
-            "description": "<p>protected area id</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.name",
-            "description": "<p>protected area name</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.category",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.organization",
-            "description": "<p>organizarion in charge of the protected area</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"gid\": 1,\n    \"name\": \"Montecristo\",\n    \"category\": \"Reserva Natural de la Sociedad Civil\",\n    \"organization\": \"PNN\"\n  },\n  {\n    \"gid\": 12,\n    \"name\": \"La Esperanza\",\n    \"category\": \"Reserva Natural de la Sociedad Civil\",\n    \"organization\": \"PNN\"\n  },\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/pa/category/Reserva Natural de la Sociedad Civil",
-        "type": "curl"
-      }
-    ],
-    "filename": "src/routes/protected_areas.js",
-    "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3293,19 +3507,19 @@ define({ "api": [
     "title": "SECoverageInPA",
     "name": "SECoverageInPA",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the protected area category.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the coverage distribution in that area.</p> <p>The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the protected area category.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "category",
             "description": "<p>protected area category</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -3364,7 +3578,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3376,16 +3590,16 @@ define({ "api": [
     "description": "<p>Given an strategic ecosystem type inside an specific protected area, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
-            "field": "pa_id",
-            "description": "<p>protected area id</p>"
+            "field": "category",
+            "description": "<p>protected area category</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -3430,7 +3644,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3439,19 +3653,19 @@ define({ "api": [
     "title": "SEPAInPA",
     "name": "SEPAInPA",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the protected area category and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific protected area, get the protected area categories distribution in that area.</p> <p>The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the protected area category.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "category",
             "description": "<p>protected area category</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -3510,7 +3724,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "pa",
@@ -3556,7 +3770,7 @@ define({ "api": [
     ],
     "filename": "src/routes/protected_areas.js",
     "groupTitle": "Protected Areas",
-    "groupDescription": "<p>Endpoint with queries about protected areas</p>"
+    "groupDescription": "<p>Endpoints with queries about protected areas</p>"
   },
   {
     "group": "se",
@@ -3565,40 +3779,40 @@ define({ "api": [
     "title": "SENationalLayer",
     "name": "SENationalLayer",
     "version": "0.1.0",
-    "description": "<p>Get the national layer divided by strategic ecosystems</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "description": "<p>Get the national layer divided by strategic ecosystems</p>",
     "success": {
       "fields": {
-        "Success 200": [
+        "Success 200: GeoJson object": [
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result",
             "description": ""
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "String",
             "optional": false,
             "field": "result.type",
             "description": "<p>The geometry type</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Number",
             "optional": false,
             "field": "result.totalFeatures",
             "description": "<p>number of features in this geometry</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result.features",
-            "description": "<p>features information (id, type, properties, etc)</p>"
+            "description": "<p>features information (id, type, etc)</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
             "field": "result.crs",
@@ -3635,9 +3849,9 @@ define({ "api": [
     "description": "<p>Get the ecosystem national information</p>",
     "parameter": {
       "fields": {
-        "path": [
+        "Path params": [
           {
-            "group": "path",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ecosystem",
@@ -3814,9 +4028,9 @@ define({ "api": [
     "description": "<p>Get the strategic ecosystem area separated by coverage</p>",
     "parameter": {
       "fields": {
-        "path": [
+        "Path params": [
           {
-            "group": "path",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ecosystem",
@@ -3887,9 +4101,9 @@ define({ "api": [
     "description": "<p>Get the strategic ecosystem area separated by protected areas</p>",
     "parameter": {
       "fields": {
-        "path": [
+        "Path params": [
           {
-            "group": "path",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "ecosystem",
@@ -3957,19 +4171,19 @@ define({ "api": [
     "title": "SECoverageInState",
     "name": "SECoverageInState",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific state, get the coverage distribution in that area. <br/> The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the state.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific state, get the coverage distribution in that area.</p> <p>The result is the list of cover types with area and percentage inside the specified strategic ecosystem in the state.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
             "field": "state_id",
             "description": "<p>state id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -4040,16 +4254,16 @@ define({ "api": [
     "description": "<p>Given an strategic ecosystem type inside an specific state, get more details about that area, for the moment is just the national percentage of that strategic ecosystem</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
             "field": "state_id",
             "description": "<p>state id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -4103,19 +4317,19 @@ define({ "api": [
     "title": "SEPAInState",
     "name": "SEPAInState",
     "version": "0.1.0",
-    "description": "<p>Given an strategic ecosystem type inside an specific state, get the protected area categories distribution in that area. <br/> The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the state and two extra elements: the total protected area inside the specified area and the non protected area.</p>",
+    "description": "<p>Given an strategic ecosystem type inside an specific state, get the protected area categories distribution in that area.</p> <p>The result is the list of protected area types with area and percentage inside the specified strategic ecosystem in the state and one extra element with the total protected area inside the specified state.</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
-            "type": "String",
+            "group": "Path params",
+            "type": "Number",
             "optional": false,
             "field": "state_id",
             "description": "<p>state id</p>"
           },
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "String",
             "optional": false,
             "field": "se_type",
@@ -4160,7 +4374,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -4183,7 +4397,20 @@ define({ "api": [
     "title": "StateByCoverage",
     "name": "StateByCoverage",
     "version": "0.1.0",
-    "description": "<p>Separate the state total area by coverage type. <br/> The result is the list of cover types with area and percentage inside the state and an extra element with the total state area.</p>",
+    "description": "<p>Separate the state total area by coverage type.</p> <p>The result is the list of cover types with area and percentage inside the state and an extra element with the total state area.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -4220,7 +4447,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
+          "content": "[\n  {\n    \"area\": \"319877.0000000\",\n    \"percentage\": 1,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"N\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"T\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -4243,7 +4470,20 @@ define({ "api": [
     "title": "StateByPA",
     "name": "StateByPA",
     "version": "0.1.0",
-    "description": "<p>Separate the state total area by protected areas. <br/> The result is the list of protected area types with area and percentage inside the state and two extra elements: the total protected area inside the state and the non protected area.</p>",
+    "description": "<p>Separate the state total area by protected areas.</p> <p>The result is the list of protected area types with area and percentage inside the state and one extra element with the total protected area inside the state.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -4280,7 +4520,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  }...\n]",
+          "content": "[\n  {\n    \"area\": 68695,\n    \"percentage\": 0.11579025436941971,\n    \"type\": \"Total\"\n  },\n  {\n    \"percentage\": 0.4437728527,\n    \"area\": \"1493.945506792712753\",\n    \"type\": \"Santuario de Fauna y Flora\"\n  },\n  {\n    \"percentage\": 0.5562271473,\n    \"area\": \"158.998859058673413\",\n    \"type\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"area\": \"241.9864414835\",\n    \"type\": \"No Protegida\",\n    \"percentage\": 0.33981634981401826\n  }...\n]",
           "type": "json"
         }
       ]
@@ -4303,7 +4543,20 @@ define({ "api": [
     "title": "StateBySE",
     "name": "StateBySE",
     "version": "0.1.0",
-    "description": "<p>Separate the state total area by strategic ecosystems. <br/> The result is the list of strategic ecosystems with area and percentage inside the state and an extra element with the total area inside strategic ecosystems on the state.</p>",
+    "description": "<p>Separate the state total area by strategic ecosystems.</p> <p>The result is the list of strategic ecosystems with area and percentage inside the state and an extra element with the total area inside strategic ecosystems on the state.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -4340,7 +4593,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
+          "content": "[\n   {\n    \"area\": 134079.17569578788,\n    \"percentage\": 0.4191585381124241,\n    \"type\": \"Total\"\n  },\n  {\n    \"area\": 284538.960066167,\n    \"percentage\": 0.4318134185,\n    \"type\": \"Humedal\"\n  },\n  {\n    \"area\": 166148.838843223,\n    \"percentage\": 0.2521457802,\n    \"type\": \"Páramo\"\n  },\n  {\n    \"area\": 208251.798376851,\n    \"percentage\": 0.3160408014,\n    \"type\": \"Bosque Seco Tropical\"\n  }\n]",
           "type": "json"
         }
       ]
@@ -4359,11 +4612,24 @@ define({ "api": [
   {
     "group": "states",
     "type": "get",
-    "url": "/states/layers/national",
-    "title": "StatesNationalLayer",
-    "name": "StatesNationalLayer",
+    "url": "/states/:category",
+    "title": "StateDetails",
+    "name": "StateDetails",
     "version": "0.1.0",
-    "description": "<p>Get the national layer divided by states</p> <p><strong>The response is a GeoJson object, only the first level will be described here</strong></p>",
+    "description": "<p>Get details about an specific state. For now, only the total area is returned.</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
     "success": {
       "fields": {
         "Success 200": [
@@ -4376,27 +4642,73 @@ define({ "api": [
           },
           {
             "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.total_area",
+            "description": "<p>Area for the specified state</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"total_area\": 319877.03\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/1",
+        "type": "curl"
+      }
+    ],
+    "filename": "src/routes/states.js",
+    "groupTitle": "States",
+    "groupDescription": "<p>Endpoints related with queries about states</p>"
+  },
+  {
+    "group": "states",
+    "type": "get",
+    "url": "/states/layers/national",
+    "title": "StatesNationalLayer",
+    "name": "StatesNationalLayer",
+    "version": "0.1.0",
+    "description": "<p>Get the national layer divided by states</p>",
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
             "type": "String",
             "optional": false,
             "field": "result.type",
             "description": "<p>The geometry type</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Number",
             "optional": false,
             "field": "result.totalFeatures",
             "description": "<p>number of features in this geometry</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object[]",
             "optional": false,
             "field": "result.features",
-            "description": "<p>features information (id, type, properties, etc)</p>"
+            "description": "<p>features information (id, type, etc)</p>"
           },
           {
-            "group": "Success 200",
+            "group": "geojson",
             "type": "Object",
             "optional": false,
             "field": "result.crs",
@@ -4486,9 +4798,9 @@ define({ "api": [
     "description": "<p>List all municipalities information in the given state</p>",
     "parameter": {
       "fields": {
-        "Parameter": [
+        "Path params": [
           {
-            "group": "Parameter",
+            "group": "Path params",
             "type": "Number",
             "optional": false,
             "field": "state_id",
@@ -4552,23 +4864,23 @@ define({ "api": [
     "description": "<p>List all strategies filtered by biome, sub-basin and environmental authority. They are grouped by strategy type (id)</p> <p><strong>Some of the response properties are GeoJson standard properties, so they are not described here.</strong></p>",
     "parameter": {
       "fields": {
-        "body": [
+        "Body params": [
           {
-            "group": "body",
+            "group": "Body params",
             "type": "Number",
             "optional": false,
             "field": "id_biome",
             "description": "<p>biome id</p>"
           },
           {
-            "group": "body",
+            "group": "Body params",
             "type": "Number",
             "optional": false,
             "field": "id_subzone",
             "description": "<p>sub-basin id</p>"
           },
           {
-            "group": "body",
+            "group": "Body params",
             "type": "String",
             "optional": false,
             "field": "id_ea",

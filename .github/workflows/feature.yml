@@ -1,12 +1,12 @@
-name: CI for releases
+name: CI for features
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      - feature/*
 
 jobs:
-  checks:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,14 +15,9 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 8.12.0
-    - name: linter
+    - name: Run linter
       run: |
         npm ci
         npm run lint
       env:
         CI: true
-    - name: verify docs up to date
-      run: |
-        npm run gen_docs
-        git diff --exit-code --quiet
-      

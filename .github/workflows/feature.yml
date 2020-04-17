@@ -23,4 +23,6 @@ jobs:
         CI: true
     - name: verify docs were not updated
       run: |
+        git checkout develop
+        git checkout -
         git diff develop HEAD --exit-code --quiet -- docs

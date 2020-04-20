@@ -1,12 +1,12 @@
 name: CI for releases
 
 on:
-  pull_request:
+  push:
     branches:
-      - master
+      - release/*
 
 jobs:
-  checks:
+  release:
     runs-on: ubuntu-latest
 
     steps:
@@ -24,5 +24,4 @@ jobs:
     - name: verify docs up to date
       run: |
         npm run gen_docs
-        git diff --exit-code --quiet
-      
+        git diff --exit-code --quiet ':(exclude)docs/api_project.js' ':(exclude)docs/api_project.json'

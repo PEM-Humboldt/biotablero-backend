@@ -1,12 +1,12 @@
 name: CI for features
 
 on:
-  pull_request:
+  push:
     branches:
-      - develop
+      - feature/*
 
 jobs:
-  checks:
+  dev:
     runs-on: ubuntu-latest
 
     steps:
@@ -21,3 +21,8 @@ jobs:
         npm run lint
       env:
         CI: true
+    - name: verify docs were not updated
+      run: |
+        git checkout develop
+        git checkout -
+        git diff develop HEAD --exit-code --quiet -- docs

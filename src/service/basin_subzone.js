@@ -128,11 +128,6 @@ module.exports = (basinSubzonePersistence, seService) => {
         ...cover,
         percentage: cover.area / subzoneArea,
       }));
-      result.unshift({
-        area: subzoneArea,
-        percentage: 1,
-        type: 'Total',
-      });
       return result;
     },
 

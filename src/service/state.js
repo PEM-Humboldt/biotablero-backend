@@ -134,11 +134,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
         ...cover,
         percentage: cover.area / stateArea,
       }));
-      result.unshift({
-        area: stateArea,
-        percentage: 1,
-        type: 'Total',
-      });
       return result;
     },
 

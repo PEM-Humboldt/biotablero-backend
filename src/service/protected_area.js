@@ -126,11 +126,6 @@ module.exports = (paPersistence, seService) => {
         ...cover,
         percentage: cover.area / categoryArea,
       }));
-      result.unshift({
-        area: categoryArea,
-        percentage: 1,
-        type: 'Total',
-      });
       return result;
     },
 

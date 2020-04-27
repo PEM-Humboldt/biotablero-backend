@@ -187,11 +187,6 @@ module.exports = (eaPersistence, seService) => {
         ...cover,
         percentage: cover.area / eaArea,
       }));
-      result.unshift({
-        area: eaArea,
-        percentage: 1,
-        type: 'Total',
-      });
       return result;
     },
 

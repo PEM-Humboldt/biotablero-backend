@@ -73,11 +73,6 @@
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {
- *      "area": "319877.0000000",
- *      "percentage": 1,
- *      "type": "Total"
- *    },
- *    {
  *      "percentage": 0.4437728527,
  *      "area": "1493.945506792712753",
  *      "type": "N"

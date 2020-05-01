@@ -1,31 +1,11 @@
 const { Router } = require('restify-router');
 
-/**
- * @apiDefine municipalities Municipalities
- * Municipalities endpoints
- */
-
-/**
- * @apiDefine getAllMunicipalitiesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id_municipality": "560",
- *      "municipality": "Potosí"
- *    },
- *    {
- *      "id_municipality": "569",
- *      "municipality": "Puerto Caicedo"
- *    }...
- *  ]
- */
-
 module.exports = (errorHandler, municipalityService) => {
   const router = new Router();
 
   /**
-   * @apiGroup municipalities
-   * @api {get} /municipalities listMunicipalities
+   * @apiGroup geofence_states
+   * @api {get} /municipalities listAllMunicipalities
    * @apiName listMunicipalities
    * @apiVersion 0.1.0
    * @apiDescription

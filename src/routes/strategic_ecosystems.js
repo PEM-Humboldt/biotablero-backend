@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine se Strategic Ecosystems
+ * @apiDefine se Strategic Ecosystems (outdated)
  * Strategic Ecosystems endpoints
  */
 

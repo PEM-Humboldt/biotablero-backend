@@ -1,79 +1,10 @@
 const { Router } = require('restify-router');
 
-/**
- * @apiDefine pa Protected Areas
- * Endpoints with queries about protected areas
- */
-
-/**
- * @apiDefine PACategoriesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "name": "Reserva Natural de la Sociedad Civil"
- *    },
- *    {
- *      "name": "Distritos Nacionales de Manejo Integrado"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine paByCategoryExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "gid": 1,
- *      "name": "Montecristo",
- *      "category": "Reserva Natural de la Sociedad Civil",
- *      "organization": "PNN"
- *    },
- *    {
- *      "gid": 12,
- *      "name": "La Esperanza",
- *      "category": "Reserva Natural de la Sociedad Civil",
- *      "organization": "PNN"
- *    },
- *  ]
- */
-
-/**
- * @apiDefine PAByPAExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "area": 108607,
- *      "percentage": 1,
- *      "type": "Total"
- *    },
- *    {
- *      "percentage": 0,
- *      "type": "Santuario de Fauna y Flora"
- *    },
- *    {
- *      "percentage": 1,
- *      "type": "Parques Naturales Regionales"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine SEPAInPAExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "percentage": 1,
- *      "area": "305237.610769660272561",
- *      "type": Parques Naturales Regionales
- *    }
- *  ]
- */
-
 module.exports = (errorHandler, paService) => {
   const router = new Router();
 
   /**
-   * @apiGroup pa
+   * @apiGroup geofence_pa
    * @api {get} /pa/categories listCategories
    * @apiName listCategories
    * @apiVersion 0.1.0
@@ -96,8 +27,8 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
-   * @api {get} /pa/:category PACategoryDetails
+   * @apiGroup geofence_pa
+   * @api {get} /pa/:category CategoryDetails
    * @apiName PACategoryDetails
    * @apiVersion 0.1.0
    * @apiDescription
@@ -121,8 +52,8 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
-   * @api {get} /pa/:category/se PABySE
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /pa/:category/se SEInPA
    * @apiName PABySE
    * @apiVersion 0.1.0
    * @apiDescription
@@ -141,7 +72,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/se
-   * @apiUse GeofenceBySEExample
+   * @apiUse SEInGeofenceExample
    */
   router.get('/pa/:category/se', errorHandler((req, res, next) => (
     paService.getAreaBySE(req.params.category)
@@ -152,7 +83,7 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
+   * @apiGroup s_strategic_ecosystems
    * @api {get} /pa/:category/se/:se_type SEDetailInPA
    * @apiName SEDetailInPA
    * @apiVersion 0.1.0
@@ -169,7 +100,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/se/Páramo
-   * @apiUse SEInsideGeofenceDetailExample
+   * @apiUse SEInGeofenceDetailExample
    */
   router.get('/pa/:category/se/:se_type', errorHandler((req, res, next) => (
     paService.getSEDetails(req.params.category, req.params.se_type)
@@ -180,7 +111,7 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
+   * @apiGroup s_coverages
    * @api {get} /pa/:category/se/:se_type/coverage SECoverageInPA
    * @apiName SECoverageInPA
    * @apiVersion 0.1.0
@@ -212,7 +143,7 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
+   * @apiGroup s_protected_areas
    * @api {get} /pa/:category/se/:se_type/pa SEPAInPA
    * @apiName SEPAInPA
    * @apiVersion 0.1.0
@@ -244,7 +175,7 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
+   * @apiGroup s_protected_areas
    * @api {get} /pa/:category/pa PAByPA
    * @apiName PAByPA
    * @apiVersion 0.1.0
@@ -264,7 +195,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/pa
-   * @apiUse PAByPAExample
+   * @apiUse PAInPAExample
    */
   router.get('/pa/:category/pa', errorHandler((req, res, next) => (
     paService.getAreaByPA(req.params.category)
@@ -275,8 +206,8 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
-   * @api {get} /pa/:category/coverage PAByCoverage
+   * @apiGroup s_coverages
+   * @api {get} /pa/:category/coverage CoverageInPA
    * @apiName PAByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
@@ -294,7 +225,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse CoverageInGeofenceExample
    */
   router.get('/pa/:category/coverage', errorHandler((req, res, next) => (
     paService.getAreaByCoverage(req.params.category)
@@ -305,8 +236,8 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup pa
-   * @api {get} /pa/layers/national PANationalLayer
+   * @apiGroup geofence_pa
+   * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer
    * @apiVersion 0.1.0
    * @apiDescription

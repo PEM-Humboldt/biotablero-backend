@@ -1,35 +1,10 @@
 const { Router } = require('restify-router');
 
-/**
- * @apiDefine getAllBasinSubzonesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id": "2626",
- *      "name": "Directos Bajo Cauca - Cga La Raya entre río Nechí",
- *      "id_zone": "25",
- *      "id_basin": "2"
- *    },
- *    {
- *      "id": "2120",
- *      "name": "Río Bogotá",
- *      "id_zone": "21",
- *      "id_basin": "2"
- *    },
- *    {
- *      "id": "3201",
- *      "name": "Río Guayabero",
- *      "id_zone": "32",
- *      "id_basin": "3"
- *    }...
- *  ]
- */
-
 module.exports = (errorHandler, basinSubzoneService) => {
   const router = new Router();
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup geofence_bs
    * @api {get} /basinSubzones listBasinSubzones
    * @apiName listBasinSubzones
    * @apiVersion 0.1.0
@@ -55,7 +30,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup geofence_bs
    * @api {get} /basinSubzones/:subzone_id SubzoneDetails
    * @apiName SubzoneDetails
    * @apiVersion 0.1.0
@@ -80,8 +55,8 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
-   * @api {get} /basinSubzones/:subzone_id/se SubzoneBySE
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /basinSubzones/:subzone_id/se SEInSubzone
    * @apiName SubzoneBySE
    * @apiVersion 0.1.0
    * @apiDescription
@@ -100,7 +75,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se
-   * @apiUse GeofenceBySEExample
+   * @apiUse SEInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/se', errorHandler((req, res, next) => (
     basinSubzoneService.getAreaBySE(req.params.subzone_id)
@@ -111,7 +86,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup s_strategic_ecosystems
    * @api {get} /basinSubzones/:subzone_id/se/:se_type SEDetailInSubzone
    * @apiName SEDetailInSubzone
    * @apiVersion 0.1.0
@@ -128,7 +103,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se/Páramo
-   * @apiUse SEInsideGeofenceDetailExample
+   * @apiUse SEInGeofenceDetailExample
    */
   router.get('/basinSubzones/:subzone_id/se/:se_type', errorHandler((req, res, next) => (
     basinSubzoneService.getSEDetails(req.params.subzone_id, req.params.se_type)
@@ -139,7 +114,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup s_coverages
    * @api {get} /basinSubzones/:subzone_id/se/:se_type/coverage SECoverageInSubzone
    * @apiName SECoverageInSubzone
    * @apiVersion 0.1.0
@@ -171,7 +146,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup s_protected_areas
    * @api {get} /basinSubzones/:subzone_id/se/:se_type/pa SEPAInSubzone
    * @apiName SEPAInSubzone
    * @apiVersion 0.1.0
@@ -192,7 +167,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se/Páramo/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/se/:se_type/pa', errorHandler((req, res, next) => (
     basinSubzoneService.getPAInSE(req.params.subzone_id, req.params.se_type)
@@ -203,7 +178,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
+   * @apiGroup s_protected_areas
    * @api {get} /basinSubzones/:subzone_id/pa SubzoneByPA
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0
@@ -223,7 +198,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/pa', errorHandler((req, res, next) => (
     basinSubzoneService.getAreaByPA(req.params.subzone_id)
@@ -234,8 +209,8 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
-   * @api {get} /basinSubzones/:subzone_id/coverage SubzoneByCoverage
+   * @apiGroup s_coverages
+   * @api {get} /basinSubzones/:subzone_id/coverage CoverageInSubzone
    * @apiName SubzoneByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
@@ -253,7 +228,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse CoverageInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/coverage', errorHandler((req, res, next) => (
     basinSubzoneService.getAreaByCoverage(req.params.subzone_id)
@@ -264,8 +239,8 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup basinSubzones
-   * @api {get} /basinSubzones/layers/national BasinSubzoneNationalLayer
+   * @apiGroup geofence_bs
+   * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer
    * @apiVersion 0.1.0
    * @apiDescription

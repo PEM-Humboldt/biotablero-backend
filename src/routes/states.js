@@ -208,7 +208,7 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_protected_areas
-   * @api {get} /states/:state_id/pa StateByPA
+   * @api {get} /states/:state_id/pa PAInState
    * @apiName StateByPA
    * @apiVersion 0.1.0
    * @apiDescription

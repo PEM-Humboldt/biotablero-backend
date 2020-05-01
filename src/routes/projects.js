@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine companiesProjects Companies/Projects
+ * @apiDefine comp_companiesProjects Compensation > Companies/Projects
  * Queries and actions directly related with projects
  */
 
@@ -208,7 +208,7 @@ module.exports = (errorHandler, projectService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects listProjectsByCompany
    * @apiName listProjectsByCompany
    * @apiVersion 0.1.0
@@ -246,7 +246,7 @@ module.exports = (errorHandler, projectService) => {
   }));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project getProjectById
    * @apiName getProjectById
    * @apiVersion 0.1.0
@@ -278,7 +278,7 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects createProject
    * @apiName createProject
    * @apiVersion 0.1.0
@@ -317,7 +317,7 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects/:id_project/biomes addImpactedBiomes
    * @apiName addImpactedBiomes
    * @apiVersion 0.1.0
@@ -372,7 +372,7 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/decisionTree impactedBiomesDecisionTree
    * @apiName impactedBiomesDecisionTree
    * @apiVersion 0.1.0
@@ -406,7 +406,7 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/biomes getImpactedBiomes
    * @apiName getImpactedBiomes
    * @apiVersion 0.1.0

@@ -283,7 +283,7 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_protected_areas
-   * @api {get} /ea/:ea_id/pa EAByPA
+   * @api {get} /ea/:ea_id/pa PAInEA
    * @apiName EAByPA
    * @apiVersion 0.1.0
    * @apiDescription

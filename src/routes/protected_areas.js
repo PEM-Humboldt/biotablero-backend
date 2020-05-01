@@ -176,7 +176,7 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_protected_areas
-   * @api {get} /pa/:category/pa PAByPA
+   * @api {get} /pa/:category/pa PAInPA
    * @apiName PAByPA
    * @apiVersion 0.1.0
    * @apiDescription

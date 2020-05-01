@@ -179,7 +179,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_protected_areas
-   * @api {get} /basinSubzones/:subzone_id/pa SubzoneByPA
+   * @api {get} /basinSubzones/:subzone_id/pa PaInSubzone
    * @apiName SubzoneByPA
    * @apiVersion 0.1.0
    * @apiDescription

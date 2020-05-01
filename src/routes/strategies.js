@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine strategies Strategies
+ * @apiDefine comp_strategies Compensation > Strategies
  * Endpoints related with queries about strategies
  */
 
@@ -48,7 +48,7 @@ module.exports = (errorHandler, strategiesService) => {
   const router = new Router();
 
   /**
-   * @apiGroup strategies
+   * @apiGroup comp_strategies
    * @api {post} /strategies/biomeSubzoneEA listStrategiesByBiomeSubzoneEA
    * @apiName listStrategiesByBiomeSubzoneEA
    * @apiVersion 0.1.0

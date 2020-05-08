@@ -1,69 +1,6 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine se Strategic Ecosystems
- * Strategic Ecosystems endpoints
- */
-
-/**
- * @apiDefine getSEExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id_ecosystem": "203",
- *      "name": "Páramo",
- *      "second_class": "test"
- *    },
- *    {
- *      "id_ecosystem": "2000",
- *      "name": "Bosque Seco Tropical",
- *      "second_class": "Sin información"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine getPrimarySEExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "name": "Páramo"
- *    },
- *    {
- *      "name": "Humedal"
- *    },
- *    {
- *      "name": "Bosque Seco Tropical"
- *    }
- *  ]
- */
-
-/**
- * @apiDefine ecosystemInfoExample
- * @apiSuccessExample {json} Success-Example:
- *  {
- *    "area": 123456789,
- *    "percentage": 0.45,
- *    "type": "Páramo"
- *  }
- */
-
-/**
- * @apiDefine seByCoverageExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "percentage": 0.25,
- *      "type": "narutal"
- *    },
- *    {
- *      "percentage": 0.1,
- *      "type": "transformed"
- *    }
- *  ],
- */
-
-/**
  * @apiDefine seByPAExample
  * @apiSuccessExample {json} Success-Example:
  *  [
@@ -81,8 +18,8 @@ module.exports = (errorHandler, seService) => {
   const router = new Router();
 
   /**
-   * @apiGroup se
-   * @api {get} /se listSE
+   * @apiGroup geofence_se
+   * @api {get} /se listAll
    * @apiName listSE
    * @apiVersion 0.1.0
    * @apiDescription
@@ -95,7 +32,7 @@ module.exports = (errorHandler, seService) => {
    *
    * @apiExample {curl} Example usage:
    *  /se
-   * @apiUse getSEExample
+   * @apiUse listAllExample
    */
   router.get('/se', errorHandler((req, res, next) => {
     seService.getAll()
@@ -106,7 +43,7 @@ module.exports = (errorHandler, seService) => {
   }));
 
   /**
-   * @apiGroup se
+   * @apiGroup geofence_se
    * @api {get} /se/primary listPrimarySE
    * @apiName listPrimarySE
    * @apiVersion 0.1.0
@@ -118,7 +55,7 @@ module.exports = (errorHandler, seService) => {
    *
    * @apiExample {curl} Example usage:
    *  /se/primary
-   * @apiUse getPrimarySEExample
+   * @apiUse listPrimarySEExample
    */
   router.get('/se/primary', errorHandler((req, res, next) => {
     seService.getPrimary()
@@ -129,9 +66,9 @@ module.exports = (errorHandler, seService) => {
   }));
 
   /**
-   * @apiGroup se
-   * @api {get} /se/:ecosystem/national ecosystemInfo
-   * @apiName ecosystemInfo
+   * @apiGroup geofence_se
+   * @api {get} /se/:ecosystem/national SEDetail
+   * @apiName SEDetail
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the ecosystem national information
@@ -147,7 +84,7 @@ module.exports = (errorHandler, seService) => {
    *
    * @apiExample {curl} Example usage:
    *  /se/Páramo/national
-   * @apiUse ecosystemInfoExample
+   * @apiUse SEDetailExample
    */
   router.get('/se/:ecosystem/national', errorHandler((req, res, next) => {
     seService.getEcosystemNatInfo(req.params.ecosystem)
@@ -158,8 +95,8 @@ module.exports = (errorHandler, seService) => {
   }));
 
   /**
-   * @apiGroup se
-   * @api {get} /se/:ecosystem/coverage seByCoverage
+   * @apiGroup s_coverages
+   * @api {get} /se/:ecosystem/coverage CoverageInSE
    * @apiName seByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
@@ -176,7 +113,7 @@ module.exports = (errorHandler, seService) => {
    *
    * @apiExample {curl} Example usage:
    *  /se/Páramo/coverage
-   * @apiUse seByCoverageExample
+   * @apiUse CoverageInGeofenceExample
    */
   router.get('/se/:ecosystem/coverage', errorHandler((req, res, next) => {
     seService.getSEByCoverage(req.params.ecosystem)
@@ -187,8 +124,8 @@ module.exports = (errorHandler, seService) => {
   }));
 
   /**
-   * @apiGroup se
-   * @api {get} /se/:ecosystem/pa seByPA
+   * @apiGroup s_protected_areas
+   * @api {get} /se/:ecosystem/pa PAInSE
    * @apiName seByPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -205,7 +142,7 @@ module.exports = (errorHandler, seService) => {
    *
    * @apiExample {curl} Example usage:
    *  /se/Páramo/pa
-   * @apiUse seByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/se/:ecosystem/pa', errorHandler((req, res, next) => {
     seService.getSEByPA(req.params.ecosystem)
@@ -216,8 +153,8 @@ module.exports = (errorHandler, seService) => {
   }));
 
   /**
-   * @apiGroup se
-   * @api {get} /se/layers/national SENationalLayer
+   * @apiGroup geofence_se
+   * @api {get} /se/layers/national NationalLayer
    * @apiName SENationalLayer
    * @apiVersion 0.1.0
    * @apiDescription

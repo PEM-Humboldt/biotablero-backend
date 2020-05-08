@@ -5,42 +5,12 @@ const { Router } = require('restify-router');
  * Endpoints related with queries about states
  */
 
-/**
- * @apiDefine getAllStatesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id": "44",
- *      "name": "La Guajira"
- *    },
- *    {
- *      "id": "97",
- *      "name": "Vaupés"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine stateByMunicipalitiesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id_municipality": "90",
- *      "municipality": "Dibulla"
- *    },
- *    {
- *      "id_municipality": "560",
- *      "municipality": "Manaure"
- *    }...
- *  ]
- */
-
 module.exports = (errorHandler, stateService) => {
   const router = new Router();
 
   /**
-   * @apiGroup states
-   * @api {get} /states listStates
+   * @apiGroup geofence_states
+   * @api {get} /states listAll
    * @apiName listStates
    * @apiVersion 0.1.0
    * @apiDescription
@@ -63,7 +33,7 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup geofence_states
    * @api {get} /states/:category StateDetails
    * @apiName StateDetails
    * @apiVersion 0.1.0
@@ -88,8 +58,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/municipalities stateByMunicipalities
+   * @apiGroup geofence_states
+   * @api {get} /states/:state_id/municipalities MunicipalitiesInState
    * @apiName stateByMunicipalities
    * @apiVersion 0.1.0
    * @apiDescription
@@ -103,7 +73,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/municipalities
-   * @apiUse stateByMunicipalitiesExample
+   * @apiUse MunicipalitiesInStateExample
    */
   router.get('/states/:state_id/municipalities', errorHandler((req, res, next) => (
     stateService.getMunicipalities(req.params.state_id)
@@ -114,8 +84,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/se StateBySE
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /states/:state_id/se SEInState
    * @apiName StateBySE
    * @apiVersion 0.1.0
    * @apiDescription
@@ -133,7 +103,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se
-   * @apiUse GeofenceBySEExample
+   * @apiUse SEInGeofenceExample
    */
   router.get('/states/:state_id/se', errorHandler((req, res, next) => (
     stateService.getAreaBySE(req.params.state_id)
@@ -144,7 +114,7 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_strategic_ecosystems
    * @api {get} /states/:state_id/se/:se_type SEDetailInState
    * @apiName SEDetailInState
    * @apiVersion 0.1.0
@@ -161,7 +131,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo
-   * @apiUse SEInsideGeofenceDetailExample
+   * @apiUse SEInGeofenceDetailExample
    */
   router.get('/states/:state_id/se/:se_type', errorHandler((req, res, next) => (
     stateService.getSEDetails(req.params.state_id, req.params.se_type)
@@ -172,7 +142,7 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_coverages
    * @api {get} /states/:state_id/se/:se_type/coverage SECoverageInState
    * @apiName SECoverageInState
    * @apiVersion 0.1.0
@@ -204,7 +174,7 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_protected_areas
    * @api {get} /states/:state_id/se/:se_type/pa SEPAInState
    * @apiName SEPAInState
    * @apiVersion 0.1.0
@@ -226,7 +196,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/states/:state_id/se/:se_type/pa', errorHandler((req, res, next) => (
     stateService.getPAInSE(req.params.state_id, req.params.se_type)
@@ -237,8 +207,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/pa StateByPA
+   * @apiGroup s_protected_areas
+   * @api {get} /states/:state_id/pa PAInState
    * @apiName StateByPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -256,7 +226,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/states/:state_id/pa', errorHandler((req, res, next) => (
     stateService.getAreaByPA(req.params.state_id)
@@ -267,8 +237,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/coverage StateByCoverage
+   * @apiGroup s_coverages
+   * @api {get} /states/:state_id/coverage CoverageInState
    * @apiName StateByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
@@ -286,7 +256,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse CoverageInGeofenceExample
    */
   router.get('/states/:state_id/coverage', errorHandler((req, res, next) => (
     stateService.getAreaByCoverage(req.params.state_id)
@@ -297,8 +267,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/layers/national StatesNationalLayer
+   * @apiGroup geofence_states
+   * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer
    * @apiVersion 0.1.0
    * @apiDescription

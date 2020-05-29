@@ -1,47 +1,10 @@
 const { Router } = require('restify-router');
 
-/**
- * @apiDefine basins Basins
- * Endpoints related with basins (areas, zones and subzones)
- */
-
-/**
- * @apiDefine getAllBasinAreasExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id": "3",
- *      "name": "Orinoco"
- *    },
- *    {
- *      "id": "4",
- *      "name": "Amazonas"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine getAllBasinZonesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id": "55",
- *      "name": "Baudó - Directos Pacifico",
- *      "id_basin": "5"
- *    },
- *    {
- *      "id": "52",
- *      "name": "Patía",
- *      "id_basin": "5"
- *    }...
- *  ]
- */
-
 module.exports = (errorHandler, basinAreaService, basinZoneService) => {
   const router = new Router();
 
   /**
-   * @apiGroup basins
+   * @apiGroup geofence_bs
    * @api {get} /basinAreas listBasinAreas
    * @apiName listBasinAreas
    * @apiVersion 0.1.0
@@ -65,7 +28,7 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
   )));
 
   /**
-   * @apiGroup basins
+   * @apiGroup geofence_bs
    * @api {get} /basinZones listBasinZones
    * @apiName listBasinZones
    * @apiVersion 0.1.0

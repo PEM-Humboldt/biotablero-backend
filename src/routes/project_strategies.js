@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine companiesProjectsStrategies Companies/Projects/Strategies
+ * @apiDefine comp_companiesProjectsStrategies Compensation > Companies/Projects/Strategies
  * Queries and actions directly related with projects strategies selected inside a project
  */
 
@@ -70,7 +70,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {post} /companies/:id_company/projects/:id_project/strategies createProjectStrategy
    * @apiName createProjectStrategy
    * @apiVersion 0.1.0
@@ -116,7 +116,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   )));
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies listProjectStrategies
    * @apiName listProjectStrategies
    * @apiVersion 0.1.0
@@ -164,7 +164,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   )));
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies/download
    *  downloadSelectedStrategies
    * @apiName downloadSelectedStrategies

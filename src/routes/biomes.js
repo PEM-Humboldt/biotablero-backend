@@ -6,29 +6,6 @@ const { Router } = require('restify-router');
  */
 
 /**
- * @apiDefine getBiomesByEAExample
- * @apiSuccessExample {json} Success-Example:
- *  {
- *    "type": "FeatureCollection",
- *    "features": [
- *      {
- *        "type": "Feature",
- *        "properties": {
- *          "gid": 252,
- *          "name_biome": "Hidrobioma Magdalena medio y depresión momposina"
- *          "id_biome": 41,
- *          "compensation_factor": 6.5
- *        },
- *        "geometry": {
- *          "type": "MultiPolygon",
- *          "coordinates": [...]
- *        }
- *      },...
- *    ]
- *  }
- */
-
-/**
  * @apiDefine getAllBiomesByEAExample
  * @apiSuccessExample {json} Success-Example:
  *  [
@@ -45,9 +22,9 @@ module.exports = (errorHandler, biomeService) => {
   const router = new Router();
 
   /**
-   * @apiGroup biomes
-   * @api {get} /biomes/ea/:ea_name getBiomesByEA
-   * @apiName getBiomesByEA
+   * @apiGroup geofence_ea
+   * @api {get} /biomes/ea/:ea_name BiomesInEALayer
+   * @apiName BiomesInEALayer
    * @apiVersion 0.1.0
    * @apiDescription
    * Find all biomes that belong to the given environmental authority.
@@ -63,7 +40,7 @@ module.exports = (errorHandler, biomeService) => {
    *
    * @apiExample {curl} Example usage:
    *  /biomes/ea/CORPOBOYACA
-   * @apiUse getBiomesByEAExample
+   * @apiUse BiomesInEALayerExample
    */
   router.get('/biomes/ea/:ea_id', errorHandler((req, res, next) => (
     biomeService.getBiomeByEA(req.params.ea_id)
@@ -75,7 +52,7 @@ module.exports = (errorHandler, biomeService) => {
 
   /**
    * @apiGroup biomes
-   * @api {get} /biomes getAllBiomes
+   * @api {get} /biomes getAll
    * @apiName getAllBiomes
    * @apiVersion 0.1.0
    * @apiDescription

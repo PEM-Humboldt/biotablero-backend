@@ -46,6 +46,7 @@ module.exports = (paPersistence, seService) => {
       const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
       return {
         national_percentage: seArea.area / seNationalArea.area,
+        total_area: seArea.area,
       };
     },
 

@@ -44,6 +44,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
       return {
         national_percentage: seArea.area / seNationalArea.area,
+        total_area: seArea.area,
       };
     },
 

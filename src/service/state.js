@@ -51,6 +51,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       const seArea = await seService.getSEAreaInState(stateId, seType);
       return {
         national_percentage: seArea.area / seNationalArea.area,
+        total_area: seArea.area,
       };
     },
 

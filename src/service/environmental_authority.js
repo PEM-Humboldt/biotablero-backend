@@ -103,6 +103,7 @@ module.exports = (eaPersistence, seService) => {
       const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
       return {
         national_percentage: seArea.area / seNationalArea.area,
+        total_area: seArea.area,
       };
     },
 

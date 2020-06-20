@@ -148,5 +148,19 @@ module.exports = (
       )
         .then(layers => layers.rows[0].collection)
     ),
+
+    /**
+     * Get the geometry for a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: eaId => (
+      geoEnvironmentalAuthorities.query()
+        .select(db.raw('ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry', geometriesConfig.tolerance))
+        .where({ id_ea: eaId })
+        .limit(1)
+        .then(geom => geom[0])
+    ),
   };
 };

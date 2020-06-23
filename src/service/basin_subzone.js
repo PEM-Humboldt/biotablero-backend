@@ -160,7 +160,7 @@ module.exports = (basinSubzonePersistence, seService) => {
      */
     getLayer: async (subzoneId) => {
       const geom = await basinSubzonePersistence.findLayerById(subzoneId);
-      if (geom) return geom.geometry;
+      if (geom && geom.features) return geom;
       return {};
     },
   };

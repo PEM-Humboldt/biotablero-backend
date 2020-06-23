@@ -85,11 +85,25 @@ module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
      * @return {Object} Geojson object with the geometry
      */
     findLayerById: stateId => (
-      geoStates.query()
-        .select(db.raw('ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry', geometriesConfig.tolerance))
-        .where({ id_state: stateId })
-        .limit(1)
-        .then(geom => geom[0])
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(s2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_states as s1
+            INNER JOIN (
+              SELECT gid as id, name as key
+              FROM geo_states
+            ) as s2 ON s1.gid = s2.id
+            WHERE s1.id_state = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, stateId],
+      )
+        .then(layers => layers.rows[0].collection)
     ),
   };
 };

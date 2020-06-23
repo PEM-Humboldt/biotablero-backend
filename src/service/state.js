@@ -166,7 +166,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      */
     getLayer: async (stateId) => {
       const geom = await statePersistence.findLayerById(stateId);
-      if (geom) return geom.geometry;
+      if (geom && geom.features) return geom;
       return {};
     },
   };

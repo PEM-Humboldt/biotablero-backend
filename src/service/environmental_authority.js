@@ -219,7 +219,7 @@ module.exports = (eaPersistence, seService) => {
      */
     getLayer: async (eaId) => {
       const geom = await eaPersistence.findLayerById(eaId);
-      if (geom) return geom.geometry;
+      if (geom && geom.features) return geom;
       return {};
     },
   };

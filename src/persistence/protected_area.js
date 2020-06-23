@@ -83,9 +83,14 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
+              row_to_json(pa2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
-            FROM geo_protected_areas as sz1
-            WHERE category = ?
+            FROM geo_protected_areas as pa1
+            INNER JOIN (
+              SELECT gid as id, name as key
+              FROM geo_protected_areas
+            ) as pa2 on pa2.id = pa1.gid
+            WHERE pa1.category = ?
           ) as f
         ) as fc`,
         [geometriesConfig.tolerance_heavy, categoryName],

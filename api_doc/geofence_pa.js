@@ -24,6 +24,10 @@
  *    "features": [
  *      {
  *        "type": "Feature",
+ *        "properties": {
+ *          "id": 3,
+ *          "key": "Yaigoje Apaporis"
+ *        },
  *        "geometry": {
  *          "type": "Polygon",
  *          "coordinates": [

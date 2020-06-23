@@ -149,6 +149,18 @@ module.exports = (paPersistence, seService) => {
      * Get the national layer divided by protected area
      */
     getNationalLayer: async () => null,
+
+    /**
+     * Get the geometry for a given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (categoryName) => {
+      const geom = await paPersistence.findLayerByCategory(categoryName);
+      if (geom && geom.features) return geom;
+      return {};
+    },
   };
 
   return protectedArea;

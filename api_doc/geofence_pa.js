@@ -15,3 +15,26 @@
  *    }...
  *  ]
  */
+
+/**
+ * @apiDefine PALayerExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "type": "FeatureCollection",
+ *    "features": [
+ *      {
+ *        "type": "Feature",
+ *        "geometry": {
+ *          "type": "Polygon",
+ *          "coordinates": [
+ *            [
+ *              [-71.0454314, -0.01861671],
+ *              ...
+ *            ]
+ *          ]
+ *        }
+ *      },
+ *      ...
+ *    ]
+ *  }
+ */

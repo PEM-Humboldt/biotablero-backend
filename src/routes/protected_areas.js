@@ -261,5 +261,31 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup geofence_pa
+   * @api {get} /pa/layers/:category PALayer
+   * @apiName PALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/layers/Parque Nacional Natural
+   * @apiUse PALayerExample
+   */
+  router.get('/pa/layers/:category', errorHandler((req, res, next) => (
+    paService.getLayer(req.params.category)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

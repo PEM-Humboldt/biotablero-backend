@@ -269,7 +269,7 @@ module.exports = (errorHandler, stateService) => {
   /**
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
-   * @apiName StatesNationalLayer
+   * @apiName StatesNationalLayer2
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the national layer divided by states
@@ -286,6 +286,30 @@ module.exports = (errorHandler, stateService) => {
    */
   router.get('/states/layers/national', errorHandler((req, res, next) => (
     stateService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_states
+   * @api {get} /states/layers/:state_id StateLayer
+   * @apiName StateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific state
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/layers/44
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/layers/:state_id', errorHandler((req, res, next) => (
+    stateService.getLayer(req.params.state_id)
       .then((geometry) => {
         res.send(geometry);
         next();

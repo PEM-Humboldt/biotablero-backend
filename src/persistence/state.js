@@ -77,5 +77,19 @@ module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
       )
         .then(layers => layers.rows[0].collection)
     ),
+
+    /**
+     * Get the geometry for a given state
+     * @param {String} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: stateId => (
+      geoStates.query()
+        .select(db.raw('ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry', geometriesConfig.tolerance))
+        .where({ id_state: stateId })
+        .limit(1)
+        .then(geom => geom[0])
+    ),
   };
 };

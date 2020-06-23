@@ -371,7 +371,7 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup geofence_ea
-   * @api {get} /ea/layers/:ea_id
+   * @api {get} /ea/layers/:ea_id EALayer
    * @apiName EALayer
    * @apiVersion 0.1.0
    * @apiDescription
@@ -379,13 +379,11 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiSuccess (geojson) {Object[]} result
    * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
-   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
-   *  /ea/layers/national
-   * @apiUse GeofenceNationalLayerExample
+   *  /ea/layers/CRQ
+   * @apiUse SpecificLayerExample
    */
   router.get('/ea/layers/:ea_id', errorHandler((req, res, next) => (
     eaService.getLayer(req.params.ea_id)

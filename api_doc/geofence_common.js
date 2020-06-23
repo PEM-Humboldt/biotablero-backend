@@ -43,3 +43,14 @@
  *    }
  * }
  */
+
+/**
+ * @apiDefine SpecificLayerExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "type":"Polygon",
+ *    "coordinates": [[
+ *      [-75.6678114265845,4.70182070670868],[-75.6582659435968,4.69977574259262],...
+ *    ]]
+ *  }
+ */

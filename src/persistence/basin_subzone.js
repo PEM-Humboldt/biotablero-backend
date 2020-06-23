@@ -77,5 +77,19 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
       )
         .then(layers => layers.rows[0].collection)
     ),
+
+    /**
+     * Get the geometry for a given basin subzone
+     * @param {String} stateId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: subzoneId => (
+      geoBasinSubzones.query()
+        .select(db.raw('ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry', geometriesConfig.tolerance))
+        .where({ id_subzone: subzoneId })
+        .limit(1)
+        .then(geom => geom[0])
+    ),
   };
 };

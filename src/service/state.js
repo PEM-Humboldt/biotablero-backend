@@ -157,6 +157,18 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * Get the national layer divided by states
      */
     getNationalLayer: async () => statePersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given state
+     * @param {String} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (stateId) => {
+      const geom = await statePersistence.findLayerById(stateId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
   };
 
   return state;

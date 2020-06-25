@@ -148,5 +148,33 @@ module.exports = (
       )
         .then(layers => layers.rows[0].collection)
     ),
+
+    /**
+     * Get the geometry for a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: eaId => (
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(ea2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_environmental_authorities as ea1
+            INNER JOIN (
+              SELECT gid as id, name as key
+              FROM geo_environmental_authorities
+            ) as ea2 ON ea1.gid = ea2.id
+            WHERE ea1.id_ea = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, eaId],
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
   };
 };

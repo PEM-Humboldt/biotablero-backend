@@ -369,5 +369,29 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup geofence_ea
+   * @api {get} /ea/layers/:ea_id EALayer
+   * @apiName EALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific environmental authority
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/layers/CRQ
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/ea/layers/:ea_id', errorHandler((req, res, next) => (
+    eaService.getLayer(req.params.ea_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

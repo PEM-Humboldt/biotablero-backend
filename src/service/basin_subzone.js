@@ -151,6 +151,18 @@ module.exports = (basinSubzonePersistence, seService) => {
      * Get the national layer divided by basin subzones
      */
     getNationalLayer: async () => basinSubzonePersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given basin subzone
+     * @param {String} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (subzoneId) => {
+      const geom = await basinSubzonePersistence.findLayerById(subzoneId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
   };
 
   return basinSubzone;

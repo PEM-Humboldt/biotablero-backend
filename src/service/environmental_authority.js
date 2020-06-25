@@ -210,6 +210,18 @@ module.exports = (eaPersistence, seService) => {
      * Get the national layer divided by environmental authority
      */
     getNationalLayer: async () => eaPersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (eaId) => {
+      const geom = await eaPersistence.findLayerById(eaId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
   };
   return envAuth;
 };

@@ -264,5 +264,29 @@ module.exports = (errorHandler, basinSubzoneService) => {
       })
   )));
 
+  /**
+   * @apiGroup geofence_bs
+   * @api {get} /basinSubzones/layers/:subzone_id SubzoneLayer
+   * @apiName SubzoneLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific basin subzone
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/layers/3502
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/basinSubzones/layers/:subzone_id', errorHandler((req, res, next) => (
+    basinSubzoneService.getLayer(req.params.subzone_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

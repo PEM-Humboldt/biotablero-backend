@@ -269,7 +269,7 @@ module.exports = (errorHandler, stateService) => {
   /**
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
-   * @apiName StatesNationalLayer2
+   * @apiName StatesNationalLayer
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the national layer divided by states

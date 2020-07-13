@@ -216,4 +216,17 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
       .orderBy('gbpa.binary_protected', 'desc')
   ),
+
+  /**
+   * TODO: Find the geometry associated inside an environmental authority
+   * @param {String} eaId environmental authority id
+   * @param {Number} year cover  year to bring geometry
+   *
+   * @result {Object} GeoJSON object with the desired geometry
+   */
+  findLayerInEA: async () => {
+    const error = new Error('Layer not available');
+    error.code = 404;
+    throw error;
+  },
 });

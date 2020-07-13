@@ -517,6 +517,28 @@ module.exports = (
   },
 
   /**
+   * Get an strategic ecosystem layer inside an environmental authority
+   * @param {String} eaId environmental authority id
+   *
+   * @return {Object} Geojson object with the geometry
+   */
+  getSELayerInEA: async (eaId, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findLayerInEA(eaId);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findLayerInEA(eaId);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findLayerInEA(eaId);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get the national layer divided by strategic ecosystem
    */
   getNationalLayer: async () => ({

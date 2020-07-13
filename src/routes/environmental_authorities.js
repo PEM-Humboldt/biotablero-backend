@@ -454,5 +454,29 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /ea/:ea_id/se/layers/:se_type SEInEALayer
+   * @apiName SEInEALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside an environmental authority
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/ea/:ea_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    eaService.getSELayer(req.params.ea_id, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

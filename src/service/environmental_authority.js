@@ -256,6 +256,14 @@ module.exports = (eaPersistence, seService) => {
       if (geom && geom.features) return geom;
       return {};
     },
+
+    /**
+     * Request a given strategic ecosystem layer inside an environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (eaId, seType) => seService.getSELayerInEA(eaId, seType),
   };
 
   return envAuth;

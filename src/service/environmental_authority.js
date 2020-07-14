@@ -1,3 +1,10 @@
+const persistenceKeys = {
+  // eslint-disable-next-line quote-props
+  'Dinámicas': 'dinamica',
+  'Estables altas': 'estable_alta',
+  'Estables naturales': 'estable_natural',
+};
+
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
     /**
@@ -207,6 +214,24 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
+     * Get the information about the persistence of human footprint in the given environmental
+     * authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
+    getAreaByHFPersistence: async (eaId) => {
+      let eaArea = await envAuth.getTotalArea(eaId);
+      eaArea = eaArea.total_area;
+      const values = await eaPersistence.findHFPersistenceAreas(eaId);
+      return values.map(value => ({
+        ...value,
+        key: persistenceKeys[value.key] || value.key,
+        percentage: value.area / eaArea,
+      }));
+    },
+
+    /**
      * Get the national layer divided by environmental authority
      */
     getNationalLayer: async () => eaPersistence.findNationalLayer(),
@@ -223,5 +248,6 @@ module.exports = (eaPersistence, seService) => {
       return {};
     },
   };
+
   return envAuth;
 };

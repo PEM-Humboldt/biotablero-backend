@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
+module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -42,7 +42,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
     /**
      * Get the coverage area distribution inside the given state
      *
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (stateId, year = 2012) => (
@@ -52,6 +52,21 @@ module.exports = (db, { geoStates, colombiaCoverageDetails }) => {
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the persistence of human footprint areas in the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async stateId => (
+      geoHFPersistence.query()
+        .where({ id_state: stateId })
+        .groupBy('hf_pers')
+        .sum('area_ha as area')
+        .select('hf_pers as key')
+        .orderBy('key')
     ),
 
     /**

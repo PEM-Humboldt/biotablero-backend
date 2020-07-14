@@ -1,3 +1,5 @@
+const { persistenceKeys } = require('../util/appropriate_keys');
+
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
     /**
@@ -145,6 +147,23 @@ module.exports = (basinSubzonePersistence, seService) => {
         throw new Error('basin subzone doesn\'t exists');
       }
       return { total_area: subzoneArea[0].area };
+    },
+
+    /**
+     * Get the information about the persistence of human footprint in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
+    getAreaByHFPersistence: async (subzoneId) => {
+      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
+      subzoneArea = subzoneArea.total_area;
+      const values = await basinSubzonePersistence.findHFPersistenceAreas(subzoneId);
+      return values.map(value => ({
+        ...value,
+        key: persistenceKeys(value.key),
+        percentage: value.area / subzoneArea,
+      }));
     },
 
     /**

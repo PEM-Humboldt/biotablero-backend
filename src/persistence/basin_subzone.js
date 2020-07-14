@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
+module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersistence }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -42,7 +42,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
     /**
      * Get the coverage area distribution inside the given basin subzone
      *
-     * @param {String} subzoneId basin subzone id
+     * @param {Number} subzoneId basin subzone id
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (subzoneId, year = 2012) => (
@@ -52,6 +52,21 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the persistence of human footprint areas in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async subzoneId => (
+      geoHFPersistence.query()
+        .where({ id_subzone: subzoneId })
+        .groupBy('hf_pers')
+        .sum('area_ha as area')
+        .select('hf_pers as key')
+        .orderBy('key')
     ),
 
     /**

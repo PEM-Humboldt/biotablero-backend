@@ -129,7 +129,7 @@ module.exports = (
      * Find the the persistence of human footprint areas in the given environmental authority
      * @param {String} eaId environmental authority id
      *
-     * @returns {Object[]} Array of persistence values with their respective percentage.
+     * @returns {Object[]} Array of persistence values.
      */
     findHFPersistenceAreas: async eaId => (
       geoHFPersistence.query()

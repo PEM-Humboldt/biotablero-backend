@@ -1,9 +1,4 @@
-const persistenceKeys = {
-  // eslint-disable-next-line quote-props
-  'Dinámicas': 'dinamica',
-  'Estables altas': 'estable_alta',
-  'Estables naturales': 'estable_natural',
-};
+const { persistenceKeys } = require('../util/appropriate_keys');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -226,7 +221,7 @@ module.exports = (eaPersistence, seService) => {
       const values = await eaPersistence.findHFPersistenceAreas(eaId);
       return values.map(value => ({
         ...value,
-        key: persistenceKeys[value.key] || value.key,
+        key: persistenceKeys(value.key),
         percentage: value.area / eaArea,
       }));
     },

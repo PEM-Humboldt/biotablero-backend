@@ -71,6 +71,24 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     },
 
     /**
+     * Find the the persistence of human footprint areas in the given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db('geo_hf_persistence')
+        .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'hf_pers as key')
+        .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+        .groupBy('hf_pers')
+        .orderBy('key');
+    },
+
+    /**
      * Get the geometry for a protected area category
      * @param {String} stateId environmental authority id
      *

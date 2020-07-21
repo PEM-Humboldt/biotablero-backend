@@ -344,6 +344,39 @@ module.exports = (errorHandler, eaService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/persistence PersistenceInEA
+   * @apiName HFPersistenceInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given environmental authority.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the environmental authority for the persistence
+   *  value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the environmental authority.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/persistence', errorHandler((req, res, next) => (
+    eaService.getAreaByHFPersistence(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+
+  /**
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/national NationalLayer
    * @apiName EANationalLayer

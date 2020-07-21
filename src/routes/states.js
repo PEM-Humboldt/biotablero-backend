@@ -267,6 +267,37 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/persistence PersistenceInState
+   * @apiName HFPersistenceInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given state.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the state for the persistence value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/persistence', errorHandler((req, res, next) => (
+    stateService.getAreaByHFPersistence(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer

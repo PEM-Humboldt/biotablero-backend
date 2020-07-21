@@ -239,6 +239,37 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/hf/persistence PersistenceInSubzone
+   * @apiName HFPersistenceInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given basin subzone.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the basin subzone for the persistence value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the basin subzone.
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/1/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/hf/persistence', errorHandler((req, res, next) => (
+    basinSubzoneService.getAreaByHFPersistence(req.params.subzone_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer

@@ -4,7 +4,7 @@ module.exports = (
   db,
   {
     colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities,
-    colombiaCoverageDetails,
+    colombiaCoverageDetails, geoHFPersistence,
   },
 ) => {
   const geometriesConfig = config.geometries;
@@ -123,6 +123,21 @@ module.exports = (
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the persistence of human footprint areas in the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async eaId => (
+      geoHFPersistence.query()
+        .where({ id_ea: eaId })
+        .groupBy('hf_pers')
+        .sum('area_ha as area')
+        .select('hf_pers as key')
+        .orderBy('key')
     ),
 
     /**

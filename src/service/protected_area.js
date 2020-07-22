@@ -153,12 +153,12 @@ module.exports = (paPersistence, seService) => {
      *
      * @returns {Object} One attribute object with the current human footprint value.
      */
-    getHFCurrentValue: async (categoryName) => {
-      const value = await paPersistence.findHFCurrentValue(categoryName);
-      if (value[0].HFCurrent === null) {
+    getCurrentHFValue: async (categoryName) => {
+      const value = await paPersistence.findCurrentHFValue(categoryName);
+      if (value[0].CurrentHFValue === null) {
         throw new Error('protected area category doesn\'t exists');
       }
-      return { value: value[0].HFCurrent };
+      return { value: value[0].CurrentHFValue };
     },
 
     /**

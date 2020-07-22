@@ -68,11 +68,11 @@ module.exports = (
      *
      * @returns {Object} Object of current human footprint value.
      */
-    findHFCurrentValue: async (stateId, year = 2018) => (
+    findCurrentHFValue: async (stateId, year = 2018) => (
       geoHF.query()
         .where({ id_state: stateId, hf_year: year })
         .whereNot({ hf_avg: -9999 })
-        .avg('hf_avg as HFCurrent')
+        .avg('hf_avg as CurrentHFValue')
     ),
 
     /**

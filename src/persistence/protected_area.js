@@ -76,12 +76,12 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      *
      * @returns {Object} Object of current human footprint value.
      */
-    findHFCurrentValue: async (categoryName, year = 2018) => (
+    findCurrentHFValue: async (categoryName, year = 2018) => (
       db('geo_hf as ghf')
         .innerJoin('global_binary_protected_areas as gbpa', 'ghf.binary_protected', 'gbpa.binary_protected')
         .where({ hf_year: year, label: categoryName })
         .whereNot({ hf_avg: -9999 })
-        .avg('hf_avg as HFCurrent')
+        .avg('hf_avg as CurrentHFValue')
     ),
 
     /**

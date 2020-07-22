@@ -161,12 +161,12 @@ module.exports = (statePersistence, municipalityService, seService) => {
      *
      * @returns {Object} One attribute object with the current human footprint value.
      */
-    getHFCurrentValue: async (stateId) => {
-      const value = await statePersistence.findHFCurrentValue(stateId);
-      if (value[0].HFCurrent === null) {
+    getCurrentHFValue: async (stateId) => {
+      const value = await statePersistence.findCurrentHFValue(stateId);
+      if (value[0].CurrentHFValue === null) {
         throw new Error('state doesn\'t exists');
       }
-      return { value: value[0].HFCurrent };
+      return { value: value[0].CurrentHFValue };
     },
 
     /**

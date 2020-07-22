@@ -268,7 +268,7 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /states/:state_id/hf/current CurrentValueInState
+   * @api {get} /states/:state_id/hf/current/value CurrentValueInState
    * @apiName CurrentValueInState
    * @apiVersion 0.1.0
    * @apiDescription
@@ -283,11 +283,11 @@ module.exports = (errorHandler, stateService) => {
    * state
    *
    * @apiExample {curl} Example usage:
-   *  /states/44/hf/current
+   *  /states/44/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/states/:state_id/hf/current', errorHandler((req, res, next) => (
-    stateService.getHFCurrentValue(req.params.state_id)
+  router.get('/states/:state_id/hf/current/value', errorHandler((req, res, next) => (
+    stateService.getCurrentHFValue(req.params.state_id)
       .then((value) => {
         res.send(value);
         next();

@@ -155,12 +155,12 @@ module.exports = (basinSubzonePersistence, seService) => {
      *
      * @returns {Object} One attribute object with the current human footprint value.
      */
-    getHFCurrentValue: async (subzoneId) => {
-      const value = await basinSubzonePersistence.findHFCurrentValue(subzoneId);
-      if (value[0].HFCurrent === null) {
+    getCurrentHFValue: async (subzoneId) => {
+      const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
+      if (value[0].CurrentHFValue === null) {
         throw new Error('basin subzone doesn\'t exists');
       }
-      return { value: value[0].HFCurrent };
+      return { value: value[0].CurrentHFValue };
     },
 
     /**

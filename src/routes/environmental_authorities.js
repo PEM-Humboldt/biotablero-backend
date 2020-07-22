@@ -345,7 +345,7 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /ea/:ea_id/hf/current CurrentValueInEA
+   * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
    * @apiName CurrentValueInEA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -360,11 +360,11 @@ module.exports = (errorHandler, eaService) => {
    * environmental authority
    *
    * @apiExample {curl} Example usage:
-   *  /ea/CRQ/hf/current
+   *  /ea/CRQ/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/current', errorHandler((req, res, next) => (
-    eaService.getHFCurrentValue(req.params.ea_id)
+  router.get('/ea/:ea_id/hf/current/value', errorHandler((req, res, next) => (
+    eaService.getCurrentHFValue(req.params.ea_id)
       .then((value) => {
         res.send(value);
         next();

@@ -240,7 +240,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /basinSubzones/:subzone_id/hf/current CurrentValueInSubzone
+   * @api {get} /basinSubzones/:subzone_id/hf/current/value CurrentValueInSubzone
    * @apiName CurrentValueInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
@@ -255,11 +255,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * basin subzone
    *
    * @apiExample {curl} Example usage:
-   *  /basinSubzones/1/hf/current
+   *  /basinSubzones/2903/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/basinSubzones/:subzone_id/hf/current', errorHandler((req, res, next) => (
-    basinSubzoneService.getHFCurrentValue(req.params.subzone_id)
+  router.get('/basinSubzones/:subzone_id/hf/current/value', errorHandler((req, res, next) => (
+    basinSubzoneService.getCurrentHFValue(req.params.subzone_id)
       .then((value) => {
         res.send(value);
         next();

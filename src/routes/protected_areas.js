@@ -237,7 +237,7 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /pa/:category/hf/current CurrentValueInPA
+   * @api {get} /pa/:category/hf/current/value CurrentValueInPA
    * @apiName CurrentValueInPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -252,11 +252,11 @@ module.exports = (errorHandler, paService) => {
    * protected area
    *
    * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/hf/current
+   *  /pa/Parques Naturales Regionales/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/pa/:category/hf/current', errorHandler((req, res, next) => (
-    paService.getHFCurrentValue(req.params.category)
+  router.get('/pa/:category/hf/current/value', errorHandler((req, res, next) => (
+    paService.getCurrentHFValue(req.params.category)
       .then((value) => {
         res.send(value);
         next();

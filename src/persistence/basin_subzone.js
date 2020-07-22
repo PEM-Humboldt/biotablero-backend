@@ -1,6 +1,14 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersistence }) => {
+module.exports = (
+  db,
+  {
+    geoBasinSubzones,
+    colombiaCoverageDetails,
+    geoHFPersistence,
+    geoHF,
+  },
+) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -52,6 +60,19 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the current value of human footprint in the given basin subzone
+     * @param {String} subzoneId basin subzone id
+     *
+     * @returns {Object} Object of current human footprint value.
+     */
+    findHFCurrentValue: async (subzoneId, year = 2018) => (
+      geoHF.query()
+        .where({ id_subzone: subzoneId, hf_year: year })
+        .whereNot({ hf_avg: -9999 })
+        .avg('hf_avg as HFCurrent')
     ),
 
     /**

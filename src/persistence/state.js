@@ -1,6 +1,14 @@
 const config = require('config');
 
-module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence }) => {
+module.exports = (
+  db,
+  {
+    geoStates,
+    colombiaCoverageDetails,
+    geoHFPersistence,
+    geoHF,
+  },
+) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -52,6 +60,19 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence }) 
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the current value of human footprint in the given state
+     * @param {String} stateId state id
+     *
+     * @returns {Object} Object of current human footprint value.
+     */
+    findHFCurrentValue: async (stateId, year = 2018) => (
+      geoHF.query()
+        .where({ id_state: stateId, hf_year: year })
+        .whereNot({ hf_avg: -9999 })
+        .avg('hf_avg as HFCurrent')
     ),
 
     /**

@@ -237,6 +237,34 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/current HFCurrentInPA
+   * @apiName HFCurrentInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given protected area.
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * protected area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/current
+   * @apiUse HFCurrentInGeofenceExample
+   */
+  router.get('/pa/:category/hf/current', errorHandler((req, res, next) => (
+    paService.getHFCurrentValue(req.params.category)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /pa/:category/hf/persistence PersistenceInPA
    * @apiName HFPersistenceInPA
    * @apiVersion 0.1.0

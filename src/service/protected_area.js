@@ -142,9 +142,23 @@ module.exports = (paPersistence, seService) => {
     getTotalArea: async (categoryName) => {
       const categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
       if (categoryArea[0].area === null) {
-        throw new Error('state doesn\'t exists');
+        throw new Error('protected area category doesn\'t exists');
       }
       return { total_area: categoryArea[0].area };
+    },
+
+    /**
+     * Get the current value of human footprint for the given protected area
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getHFCurrentValue: async (categoryName) => {
+      const value = await paPersistence.findHFCurrentValue(categoryName);
+      if (value[0].HFCurrent === null) {
+        throw new Error('protected area category doesn\'t exists');
+      }
+      return { value: value[0].HFCurrent };
     },
 
     /**

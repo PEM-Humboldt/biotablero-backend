@@ -209,6 +209,20 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
+     * Get the current value of human footprint for the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getHFCurrentValue: async (eaId) => {
+      const value = await eaPersistence.findHFCurrentValue(eaId);
+      if (value[0].HFCurrent === null) {
+        throw new Error('environmental authority doesn\'t exists');
+      }
+      return { value: value[0].HFCurrent };
+    },
+
+    /**
      * Get the information about the persistence of human footprint in the given environmental
      * authority
      * @param {String} eaId environmental authority id

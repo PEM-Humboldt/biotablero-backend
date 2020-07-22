@@ -26,6 +26,7 @@ const geoParamoDetails = require('./geo_paramo_details');
 const geoTropicalDryForestDetails = require('./geo_tropical_dry_forest_details');
 const colombiaWetlandDetails = require('./colombia_wetland_details');
 const globalBinaryProtectedAreas = require('./global_binary_protected_areas');
+const geoHF = require('./geo_hf');
 const geoHFPersistence = require('./geo_hf_persistence');
 
 // Collections
@@ -82,6 +83,7 @@ const setupModels = () => {
     colombiaWetlandDetails: colombiaWetlandDetails(dbConn),
     colombiaCoverageDetails: colombiaCoverageDetails(dbConn),
     globalBinaryProtectedAreas: globalBinaryProtectedAreas(dbConn),
+    geoHF: geoHF(dbConn),
     geoHFPersistence: geoHFPersistence(dbConn),
   };
   Object.keys(models).forEach((key) => {

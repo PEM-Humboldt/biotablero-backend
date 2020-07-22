@@ -345,8 +345,8 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /ea/:ea_id/hf/current HFCurrentInEA
-   * @apiName HFCurrentInEA
+   * @api {get} /ea/:ea_id/hf/current CurrentValueInEA
+   * @apiName CurrentValueInEA
    * @apiVersion 0.1.0
    * @apiDescription
    * Value of the current value of human footprint inside the given environmental authority.
@@ -361,7 +361,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CRQ/hf/current
-   * @apiUse HFCurrentInGeofenceExample
+   * @apiUse CurrentValueInGeofenceExample
    */
   router.get('/ea/:ea_id/hf/current', errorHandler((req, res, next) => (
     eaService.getHFCurrentValue(req.params.ea_id)

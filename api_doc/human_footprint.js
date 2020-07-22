@@ -4,7 +4,7 @@
  */
 
 /**
- * @apiDefine HFCurrentInGeofenceExample
+ * @apiDefine CurrentValueInGeofenceExample
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "value": "43.4878396779154589"

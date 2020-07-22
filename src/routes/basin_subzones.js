@@ -240,8 +240,8 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /basinSubzones/:subzone_id/hf/current HFCurrentInSubzone
-   * @apiName HFCurrentInSubzone
+   * @api {get} /basinSubzones/:subzone_id/hf/current CurrentValueInSubzone
+   * @apiName CurrentValueInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
    * Value of the current value of human footprint inside the given basin subzone.
@@ -256,7 +256,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/hf/current
-   * @apiUse HFCurrentInGeofenceExample
+   * @apiUse CurrentValueInGeofenceExample
    */
   router.get('/basinSubzones/:subzone_id/hf/current', errorHandler((req, res, next) => (
     basinSubzoneService.getHFCurrentValue(req.params.subzone_id)

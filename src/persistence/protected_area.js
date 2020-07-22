@@ -76,13 +76,17 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      *
      * @returns {Object} Object of current human footprint value.
      */
-    findCurrentHFValue: async (categoryName, year = 2018) => (
-      db('geo_hf as ghf')
-        .innerJoin('global_binary_protected_areas as gbpa', 'ghf.binary_protected', 'gbpa.binary_protected')
-        .where({ hf_year: year, label: categoryName })
+    findCurrentHFValue: async (categoryName, year = 2018) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db('geo_hf as ghf')
+        .where({ hf_year: year })
+        .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
         .whereNot({ hf_avg: -9999 })
-        .avg('hf_avg as CurrentHFValue')
-    ),
+        .avg('hf_avg as CurrentHFValue');
+    },
 
     /**
      * Find the the persistence of human footprint areas in the given protected area category

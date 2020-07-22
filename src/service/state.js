@@ -44,7 +44,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * Get information about an strategic ecosystem in an state. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      * @param {String} seType strategic ecosystem type
      */
     getSEDetails: async (stateId, seType) => {

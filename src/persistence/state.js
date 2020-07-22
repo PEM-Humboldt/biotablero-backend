@@ -64,7 +64,7 @@ module.exports = (
 
     /**
      * Find the the current value of human footprint in the given state
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      *
      * @returns {Object} Object of current human footprint value.
      */

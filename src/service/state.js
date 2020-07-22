@@ -157,7 +157,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
 
     /**
      * Get the current value of human footprint for the given state
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      *
      * @returns {Object} One attribute object with the current human footprint value.
      */

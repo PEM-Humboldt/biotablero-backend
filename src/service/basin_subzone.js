@@ -151,7 +151,7 @@ module.exports = (basinSubzonePersistence, seService) => {
 
     /**
      * Get the current value of human footprint for the given basin subzone
-     * @param {String} subzoneId basin subzone id
+     * @param {Number} subzoneId basin subzone id
      *
      * @returns {Object} One attribute object with the current human footprint value.
      */

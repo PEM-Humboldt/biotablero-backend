@@ -64,7 +64,7 @@ module.exports = (
 
     /**
      * Find the the current value of human footprint in the given basin subzone
-     * @param {String} subzoneId basin subzone id
+     * @param {Number} subzoneId basin subzone id
      *
      * @returns {Object} Object of current human footprint value.
      */

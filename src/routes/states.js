@@ -268,6 +268,34 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/value CurrentValueInState
+   * @apiName CurrentValueInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given state.
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * state
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/value', errorHandler((req, res, next) => (
+    stateService.getCurrentHFValue(req.params.state_id)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/persistence PersistenceInState
    * @apiName HFPersistenceInState
    * @apiVersion 0.1.0

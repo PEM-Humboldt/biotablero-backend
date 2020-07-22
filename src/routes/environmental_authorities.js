@@ -37,7 +37,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
-   * @apiSuccess {Object[]} result
+   * @apiSuccess {Object} result
    * @apiSuccess {Number} result.total_area Area for the specified environmental authority
    *
    * @apiExample {curl} Example usage:
@@ -339,6 +339,34 @@ module.exports = (errorHandler, eaService) => {
     eaService.getAreaByCoverage(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
+   * @apiName CurrentValueInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given environmental authority.
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * environmental authority
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/current/value', errorHandler((req, res, next) => (
+    eaService.getCurrentHFValue(req.params.ea_id)
+      .then((value) => {
+        res.send(value);
         next();
       })
   )));

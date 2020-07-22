@@ -3,8 +3,12 @@ const config = require('config');
 module.exports = (
   db,
   {
-    colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities,
-    colombiaCoverageDetails, geoHFPersistence,
+    colombiaDetails,
+    eaBioticUnits,
+    geoEnvironmentalAuthorities,
+    colombiaCoverageDetails,
+    geoHFPersistence,
+    geoHF,
   },
 ) => {
   const geometriesConfig = config.geometries;
@@ -123,6 +127,19 @@ module.exports = (
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the the current value of human footprint in the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object} Object of current human footprint value.
+     */
+    findCurrentHFValue: async (eaId, year = 2018) => (
+      geoHF.query()
+        .where({ id_ea: eaId, hf_year: year })
+        .whereNot({ hf_avg: -9999 })
+        .avg('hf_avg as CurrentHFValue')
     ),
 
     /**

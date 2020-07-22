@@ -150,6 +150,20 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
+     * Get the current value of human footprint for the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (subzoneId) => {
+      const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('basin subzone doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
+    },
+
+    /**
      * Get the information about the persistence of human footprint in the given basin subzone
      * @param {Number} subzoneId basin subzone id
      *

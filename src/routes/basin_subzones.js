@@ -240,6 +240,34 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/hf/current/value CurrentValueInSubzone
+   * @apiName CurrentValueInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given basin subzone.
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id.
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * basin subzone
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/hf/current/value', errorHandler((req, res, next) => (
+    basinSubzoneService.getCurrentHFValue(req.params.subzone_id)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/persistence PersistenceInSubzone
    * @apiName HFPersistenceInSubzone
    * @apiVersion 0.1.0

@@ -44,7 +44,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * Get information about an strategic ecosystem in an state. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
-     * @param {String} stateId environmental authority id
+     * @param {Number} stateId state id
      * @param {String} seType strategic ecosystem type
      */
     getSEDetails: async (stateId, seType) => {
@@ -153,6 +153,20 @@ module.exports = (statePersistence, municipalityService, seService) => {
         throw new Error('state doesn\'t exists');
       }
       return { total_area: stateArea[0].area };
+    },
+
+    /**
+     * Get the current value of human footprint for the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (stateId) => {
+      const value = await statePersistence.findCurrentHFValue(stateId);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('state doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
     },
 
     /**

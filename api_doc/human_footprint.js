@@ -4,6 +4,14 @@
  */
 
 /**
+ * @apiDefine CurrentValueInGeofenceExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "value": "43.4878396779154589"
+ *  }
+ */
+
+/**
  * @apiDefine PersistenceInGeofenceExample
  * @apiSuccessExample {json} Success-Example:
  *  [

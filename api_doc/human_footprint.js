@@ -12,6 +12,33 @@
  */
 
 /**
+ * @apiDefine CategoriesInGeofenceExample
+ * @apiSuccessExample {json} Success-Example:
+ *  [
+ *    {
+ *      "area": 95976.41220808189,
+ *      "key": "alta",
+ *      "percentage": 0.49649477625386373
+ *    },
+ *    {
+ *      "area": 36740.71443489614,
+ *      "key": "baja",
+ *      "percentage": 0.19006308292929489
+ *    },
+ *    {
+ *      "area": 46025.9281542762,
+ *      "key": "media",
+ *      "percentage": 0.23809634445690916
+ *    },
+ *    {
+ *      "area": 14571.602857381069,
+ *       "key": "natural",
+ *      "percentage": 0.07538023701751127
+ *    }
+ *  ]
+ */
+
+/**
  * @apiDefine PersistenceInGeofenceExample
  * @apiSuccessExample {json} Success-Example:
  *  [

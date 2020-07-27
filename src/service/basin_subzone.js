@@ -1,4 +1,4 @@
-const { persistenceKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -147,6 +147,26 @@ module.exports = (basinSubzonePersistence, seService) => {
         throw new Error('basin subzone doesn\'t exists');
       }
       return { total_area: subzoneArea[0].area };
+    },
+
+    /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (subzoneId) => {
+      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
+      subzoneArea = subzoneArea.total_area;
+      const values = await basinSubzonePersistence.findAreaByHFCategory(subzoneId);
+      return values.map(value => ({
+        ...value,
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / subzoneArea,
+      }));
     },
 
     /**

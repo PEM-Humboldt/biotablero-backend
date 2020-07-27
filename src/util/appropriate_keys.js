@@ -7,4 +7,13 @@ module.exports = {
       default: return val;
     }
   },
+  HFCategoriesKeys: (val) => {
+    switch (val) {
+      case 'Natural': return 'natural';
+      case 'Baja': return 'baja';
+      case 'Media': return 'media';
+      case 'Alta': return 'alta';
+      default: return val;
+    }
+  },
 };

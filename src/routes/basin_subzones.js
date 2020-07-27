@@ -240,15 +240,45 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/hf/current/category CategoriesInSubzone
+   * @apiName CategoriesInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given subzone
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the subzone for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the subzone.
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/hf/current/category
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/hf/current/category', errorHandler((req, res, next) => (
+    basinSubzoneService.getAreaByHFCategory(req.params.subzone_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/current/value CurrentValueInSubzone
    * @apiName CurrentValueInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given basin subzone.
+   * Value of the current value of human footprint inside the given basin subzone
    *
    * Values calculated for 2018
    *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id.
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.value current value of human footprint inside the given

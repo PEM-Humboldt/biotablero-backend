@@ -1,4 +1,4 @@
-const { persistenceKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
 
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
@@ -145,6 +145,26 @@ module.exports = (paPersistence, seService) => {
         throw new Error('protected area category doesn\'t exists');
       }
       return { total_area: categoryArea[0].area };
+    },
+
+    /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given protected area
+     *@param {String} categoryName protected area category
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (categoryName) => {
+      let paArea = await protectedArea.getTotalArea(categoryName);
+      paArea = paArea.total_area;
+      const values = await paPersistence.findAreaByHFCategory(categoryName);
+      return values.map(value => ({
+        ...value,
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / paArea,
+      }));
     },
 
     /**

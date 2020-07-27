@@ -345,11 +345,41 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/current/category CategoriesInEA
+   * @apiName CategoriesInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given environmental authority
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the environmental authority for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the environmental authority.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/current/category
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/current/category', errorHandler((req, res, next) => (
+    eaService.getAreaByHFCategory(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
    * @apiName CurrentValueInEA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given environmental authority.
+   * Value of the current value of human footprint inside the given environmental authority
    *
    * Values calculated for 2018
    *

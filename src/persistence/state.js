@@ -63,6 +63,22 @@ module.exports = (
     ),
 
     /**
+     * Find the current area distribution for each human footprint category in the
+     * given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (stateId, year = 2018) => (
+      geoHF.query()
+        .where({ id_state: stateId, hf_year: year })
+        .groupBy('hf_cat')
+        .sum('area_ha as area')
+        .select('hf_cat as key')
+        .orderBy('key')
+    ),
+
+    /**
      * Find the the current value of human footprint in the given state
      * @param {Number} stateId state id
      *

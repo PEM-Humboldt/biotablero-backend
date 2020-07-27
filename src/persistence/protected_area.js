@@ -71,6 +71,27 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     },
 
     /**
+     * Find the current area distribution for each human footprint category in the
+     * given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (categoryName, year = 2018) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db('geo_hf')
+        .select('hf_cat as key')
+        .sum('area_ha as area')
+        .where({ hf_year: year })
+        .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+        .groupBy('hf_cat')
+        .orderBy('key');
+    },
+
+    /**
      * Find the the current value of human footprint in the given protected area category
      * @param {String} categoryName protected area category
      *

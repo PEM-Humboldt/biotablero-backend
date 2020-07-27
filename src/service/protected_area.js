@@ -195,6 +195,15 @@ module.exports = (paPersistence, seService) => {
       if (geom && geom.features) return geom;
       return {};
     },
+
+    /**
+     * Request a given strategic ecosystem layer inside a protected area category
+     * @param {String} categoryName protected area category
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (categoryName, seType) => seService.getSELayerInPA(categoryName, seType),
   };
 
   return protectedArea;

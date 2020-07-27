@@ -251,5 +251,32 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
       )
         .then(layers => layers.rows[0].collection);
     },
+
+    /**
+     * Find the geometry associated inside a protected area category
+     *
+     * @param {String} categoryName protected area category
+     * @param {Number} year optional year to filter data, 2018 by default
+     */
+    findLayerInPA: async (categoryName, year = 2018) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_hf_wetland as ghw
+            WHERE (binary_protected & ?) = ? AND hf_year = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, bitMask, bitMask, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    },
   };
 };

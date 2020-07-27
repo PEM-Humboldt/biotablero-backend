@@ -541,6 +541,29 @@ module.exports = (
   },
 
   /**
+   * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
+   * @param {String} categoryName protected area category
+   * @param {String} ecosystem ecosystem to get the layer for
+   *
+   * @return {Object} Geojson object with the geometry
+   */
+  getSELayerInPA: async (categoryName, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findLayerInPA(categoryName);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findLayerInPA(categoryName);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findLayerInPA(categoryName);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get the national layer divided by strategic ecosystem
    */
   getNationalLayer: async () => ({

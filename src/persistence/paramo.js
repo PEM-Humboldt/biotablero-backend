@@ -252,7 +252,7 @@ module.exports = (
      * Find the geometry associated inside an environmental authority, state or basin subzone
      * @param {String} geofence identifier for the geofence type: ea, states, subzones
      * @param {String | Number} geofenceId geofence id
-     * @param {Number} year cover  year to bring geometry
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @result {Object} GeoJSON object with the desired geometry
      */
@@ -274,6 +274,33 @@ module.exports = (
           ) as f
         ) as fc`,
         [geometriesConfig.tolerance_heavy, columnName[geofence], geofenceId, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    },
+
+    /**
+     * Find the geometry associated inside a protected area category
+     *
+     * @param {String} categoryName protected area category
+     * @param {Number} year optional year to filter data, 2018 by default
+     */
+    findLayerInPA: async (categoryName, year = 2018) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_hf_paramo as ghp
+            WHERE (binary_protected & ?) = ? AND hf_year = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, bitMask, bitMask, year],
       )
         .then(layers => layers.rows[0].collection);
     },

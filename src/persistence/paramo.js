@@ -255,16 +255,16 @@ module.exports = (
      *
      * @result {Object} GeoJSON object with the desired geometry
      */
-    findLayerInEA: async (eaId, year = 2012) => (
+    findLayerInEA: async (eaId, year = 2018) => (
       db.raw(
         `SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(gpd.geom, ?))::json as geometry
-            FROM geo_paramo_details as gpd
-            WHERE id_ea = ? AND gpd.year_cover = ?
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(ghp.geom, ?))::json as geometry
+            FROM geo_hf_paramo as ghp
+            WHERE id_ea = ? AND ghp.hf_year = ?
           ) as f
         ) as fc`,
         [geometriesConfig.tolerance_heavy, eaId, year],

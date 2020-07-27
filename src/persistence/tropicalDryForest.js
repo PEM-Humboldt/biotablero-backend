@@ -232,7 +232,7 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
      *
      * @result {Object} GeoJSON object with the desired geometry
      */
-    findLayerInEA: async (eaId, year = 2012) => (
+    findLayerInEA: async (eaId, year = 2018) => (
       db.raw(
         `SELECT row_to_json(fc) as collection
         FROM (
@@ -240,8 +240,8 @@ module.exports = (db, { geoTropicalDryForestDetails, globalBinaryProtectedAreas 
           FROM(
             SELECT 'Feature' as type,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
-            FROM geo_tropical_dry_forest_details as gtdfd
-            WHERE id_ea = ? AND year_cover = ?
+            FROM geo_hf_tropical_dry_forest as ghtdf
+            WHERE id_ea = ? AND hf_year = ?
           ) as f
         ) as fc`,
         [geometriesConfig.tolerance_heavy, eaId, year],

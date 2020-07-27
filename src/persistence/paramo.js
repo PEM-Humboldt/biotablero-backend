@@ -111,7 +111,7 @@ module.exports = (
         .innerJoin(
           'global_binary_protected_areas as gbpa',
           'gpd.binary_protected',
-          'gbpa.binary_protected'
+          'gbpa.binary_protected',
         )
         .where({ 'gpd.id_ea': eaId, 'gpd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')

@@ -237,7 +237,7 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /pa/:category/hf/current/category CategoriesInPA
+   * @api {get} /pa/:category/hf/current/categories CategoriesInPA
    * @apiName CategoriesInPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -254,10 +254,10 @@ module.exports = (errorHandler, paService) => {
    * the protected area.
    *
    * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/hf/current/category
+   *  /pa/Parques Naturales Regionales/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/pa/:category/hf/current/category', errorHandler((req, res, next) => (
+  router.get('/pa/:category/hf/current/categories', errorHandler((req, res, next) => (
     paService.getAreaByHFCategory(req.params.category)
       .then((areas) => {
         res.send(areas);

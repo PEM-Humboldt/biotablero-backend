@@ -240,7 +240,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /basinSubzones/:subzone_id/hf/current/category CategoriesInSubzone
+   * @api {get} /basinSubzones/:subzone_id/hf/current/categories CategoriesInSubzone
    * @apiName CategoriesInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
@@ -257,10 +257,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * the subzone.
    *
    * @apiExample {curl} Example usage:
-   *  /basinSubzones/2903/hf/current/category
+   *  /basinSubzones/2903/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/basinSubzones/:subzone_id/hf/current/category', errorHandler((req, res, next) => (
+  router.get('/basinSubzones/:subzone_id/hf/current/categories', errorHandler((req, res, next) => (
     basinSubzoneService.getAreaByHFCategory(req.params.subzone_id)
       .then((areas) => {
         res.send(areas);

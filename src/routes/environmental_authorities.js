@@ -345,7 +345,7 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /ea/:ea_id/hf/current/category CategoriesInEA
+   * @api {get} /ea/:ea_id/hf/current/categories CategoriesInEA
    * @apiName CategoriesInEA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -362,10 +362,10 @@ module.exports = (errorHandler, eaService) => {
    * the environmental authority.
    *
    * @apiExample {curl} Example usage:
-   *  /ea/CRQ/hf/current/category
+   *  /ea/CRQ/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/current/category', errorHandler((req, res, next) => (
+  router.get('/ea/:ea_id/hf/current/categories', errorHandler((req, res, next) => (
     eaService.getAreaByHFCategory(req.params.ea_id)
       .then((areas) => {
         res.send(areas);

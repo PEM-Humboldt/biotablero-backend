@@ -268,7 +268,7 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /states/:state_id/hf/current/category CategoriesInState
+   * @api {get} /states/:state_id/hf/current/categories CategoriesInState
    * @apiName CategoriesInState
    * @apiVersion 0.1.0
    * @apiDescription
@@ -285,10 +285,10 @@ module.exports = (errorHandler, stateService) => {
    * the state.
    *
    * @apiExample {curl} Example usage:
-   *  /states/44/hf/current/category
+   *  /states/44/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/states/:state_id/hf/current/category', errorHandler((req, res, next) => (
+  router.get('/states/:state_id/hf/current/categories', errorHandler((req, res, next) => (
     stateService.getAreaByHFCategory(req.params.state_id)
       .then((areas) => {
         res.send(areas);

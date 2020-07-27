@@ -462,6 +462,9 @@ module.exports = (errorHandler, eaService) => {
    * @apiDescription
    * Get the layer for an specific strategic ecosystem inside an environmental authority
    *
+   * @apiParam (Path params) {String} ea_id state id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
    * @apiSuccess (geojson) {Object[]} result
    * @apiSuccess (geojson) {String} result.type The geometry type
    * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification

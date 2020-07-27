@@ -375,5 +375,32 @@ module.exports = (errorHandler, stateService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /states/:state_id/se/layers/:se_type SEInStateLayer
+   * @apiName SEInStateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside an state
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/:state_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    stateService.getSELayer(req.params.state_id, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

@@ -260,10 +260,11 @@ module.exports = (eaPersistence, seService) => {
     /**
      * Request a given strategic ecosystem layer inside an environmental authority
      * @param {String} eaId environmental authority id
+     * @param {String} seType strategic ecosystem type.
      *
      * @return {Object} Geojson object with the geometry
      */
-    getSELayer: async (eaId, seType) => seService.getSELayerInEA(eaId, seType),
+    getSELayer: async (eaId, seType) => seService.getSELayerInGeofence('ea', eaId, seType),
   };
 
   return envAuth;

@@ -187,7 +187,7 @@ module.exports = (basinSubzonePersistence, seService) => {
 
     /**
      * Get the geometry for a given basin subzone
-     * @param {String} subzoneId basin subzone id
+     * @param {Number} subzoneId basin subzone id
      *
      * @return {Object} Geojson object with the geometry
      */
@@ -196,6 +196,17 @@ module.exports = (basinSubzonePersistence, seService) => {
       if (geom && geom.features) return geom;
       return {};
     },
+
+    /**
+     * Request a given strategic ecosystem layer inside a basin subzone.
+     * @param {Number} subzoneId basin subzone id
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (subzoneId, seType) => seService.getSELayerInGeofence(
+      'subzones', subzoneId, seType,
+    ),
   };
 
   return basinSubzone;

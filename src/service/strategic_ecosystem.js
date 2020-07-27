@@ -517,21 +517,23 @@ module.exports = (
   },
 
   /**
-   * Get an strategic ecosystem layer inside an environmental authority
-   * @param {String} eaId environmental authority id
+   * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
+   * @param {String} geofence identifier for the geofence type: ea, states, subzones
+   * @param {String | Number} geofenceId geofence id
+   * @param {String} ecosystem ecosystem to get the layer for
    *
    * @return {Object} Geojson object with the geometry
    */
-  getSELayerInEA: async (eaId, ecosystem) => {
+  getSELayerInGeofence: async (geofence, geofenceId, ecosystem) => {
     switch (ecosystem) {
       case 'Páramo': {
-        return paramoPersistence.findLayerInEA(eaId);
+        return paramoPersistence.findLayerInGeofence(geofence, geofenceId);
       }
       case 'Humedal': {
-        return wetlandPersistence.findLayerInEA(eaId);
+        return wetlandPersistence.findLayerInGeofence(geofence, geofenceId);
       }
       case 'Bosque Seco Tropical': {
-        return tropicalDryForestPersistence.findLayerInEA(eaId);
+        return tropicalDryForestPersistence.findLayerInGeofence(geofence, geofenceId);
       }
       default:
         return {};

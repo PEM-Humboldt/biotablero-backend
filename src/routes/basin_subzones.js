@@ -347,5 +347,32 @@ module.exports = (errorHandler, basinSubzoneService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /basinSubzones/:subzone_id/se/layers/:se_type SEInSubzoneLayer
+   * @apiName SEInSubzoneLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside a basin subzone
+   *
+   * @apiParam (Path params) {Number} subzone_id subzone id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3502/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/basinSubzones/:subzone_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    basinSubzoneService.getSELayer(req.params.subzone_id, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

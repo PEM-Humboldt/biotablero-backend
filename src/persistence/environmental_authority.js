@@ -130,8 +130,26 @@ module.exports = (
     ),
 
     /**
+     * Find the current area distribution for each human footprint category in the
+     * given environmental authority
+     * @param {String} eaId environmental authority id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (eaId, year = 2018) => (
+      geoHF.query()
+        .where({ id_ea: eaId, hf_year: year })
+        .groupBy('hf_cat')
+        .sum('area_ha as area')
+        .select('hf_cat as key')
+        .orderBy('key')
+    ),
+
+    /**
      * Find the the current value of human footprint in the given environmental authority
      * @param {String} eaId environmental authority id
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object} Object of current human footprint value.
      */

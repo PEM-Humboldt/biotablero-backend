@@ -237,15 +237,45 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/current/categories CategoriesInPA
+   * @apiName CategoriesInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given protected area
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the protected area for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the protected area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/pa/:category/hf/current/categories', errorHandler((req, res, next) => (
+    paService.getAreaByHFCategory(req.params.category)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /pa/:category/hf/current/value CurrentValueInPA
    * @apiName CurrentValueInPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given protected area.
+   * Value of the current value of human footprint inside the given protected area
    *
    * Values calculated for 2018
    *
-   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} protected area category
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.value current value of human footprint inside the given

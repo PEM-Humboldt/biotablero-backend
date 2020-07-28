@@ -63,8 +63,26 @@ module.exports = (
     ),
 
     /**
+     * Find the current area distribution for each human footprint category in the
+     * given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (subzoneId, year = 2018) => (
+      geoHF.query()
+        .where({ id_subzone: subzoneId, hf_year: year })
+        .groupBy('hf_cat')
+        .sum('area_ha as area')
+        .select('hf_cat as key')
+        .orderBy('key')
+    ),
+
+    /**
      * Find the the current value of human footprint in the given basin subzone
      * @param {Number} subzoneId basin subzone id
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object} Object of current human footprint value.
      */
@@ -116,7 +134,7 @@ module.exports = (
 
     /**
      * Get the geometry for a given basin subzone
-     * @param {String} stateId environmental authority id
+     * @param {Number} subzoneId basin subzone id
      *
      * @return {Object} Geojson object with the geometry
      */

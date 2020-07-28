@@ -1,4 +1,4 @@
-const { persistenceKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -209,6 +209,25 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (eaId) => {
+      let eaArea = await envAuth.getTotalArea(eaId);
+      eaArea = eaArea.total_area;
+      const values = await eaPersistence.findAreaByHFCategory(eaId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / eaArea,
+      }));
+    },
+
+    /**
      * Get the current value of human footprint for the given environmental authority
      * @param {String} eaId environmental authority id
      *
@@ -234,7 +253,7 @@ module.exports = (eaPersistence, seService) => {
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findHFPersistenceAreas(eaId);
       return values.map(value => ({
-        ...value,
+        area: Number(value.area),
         key: persistenceKeys(value.key),
         percentage: value.area / eaArea,
       }));

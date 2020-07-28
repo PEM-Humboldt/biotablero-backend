@@ -1,4 +1,4 @@
-const { persistenceKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -156,6 +156,25 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (stateId) => {
+      let stateArea = await state.getTotalArea(stateId);
+      stateArea = stateArea.total_area;
+      const values = await statePersistence.findAreaByHFCategory(stateId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / stateArea,
+      }));
+    },
+
+    /**
      * Get the current value of human footprint for the given state
      * @param {Number} stateId state id
      *
@@ -180,7 +199,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       stateArea = stateArea.total_area;
       const values = await statePersistence.findHFPersistenceAreas(stateId);
       return values.map(value => ({
-        ...value,
+        area: Number(value.area),
         key: persistenceKeys(value.key),
         percentage: value.area / stateArea,
       }));

@@ -268,11 +268,41 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/categories CategoriesInState
+   * @apiName CategoriesInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given state
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the state for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/categories', errorHandler((req, res, next) => (
+    stateService.getAreaByHFCategory(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/current/value CurrentValueInState
    * @apiName CurrentValueInState
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given state.
+   * Value of the current value of human footprint inside the given state
    *
    * Values calculated for 2018
    *

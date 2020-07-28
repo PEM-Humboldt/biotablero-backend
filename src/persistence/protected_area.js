@@ -74,6 +74,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * Find the current area distribution for each human footprint category in the
      * given protected area category
      * @param {String} categoryName protected area category
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object[]} Array of areas by human footprint category
      */
@@ -94,6 +95,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     /**
      * Find the the current value of human footprint in the given protected area category
      * @param {String} categoryName protected area category
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object} Object of current human footprint value.
      */

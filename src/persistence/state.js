@@ -66,6 +66,7 @@ module.exports = (
      * Find the current area distribution for each human footprint category in the
      * given state
      * @param {Number} stateId state id
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object[]} Array of areas by human footprint category
      */
@@ -81,6 +82,7 @@ module.exports = (
     /**
      * Find the the current value of human footprint in the given state
      * @param {Number} stateId state id
+     * @param {Number} year optional year to filter data, 2018 by default
      *
      * @returns {Object} Object of current human footprint value.
      */

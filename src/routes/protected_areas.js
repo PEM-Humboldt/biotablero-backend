@@ -376,5 +376,33 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /pa/:category/se/layers/:se_type SEInPALayer
+   * @apiName SEInPALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside a protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/pa/:category/se/layers/:se_type', errorHandler((req, res, next) => (
+    paService.getSELayer(req.params.category, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+
   return router;
 };

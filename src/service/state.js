@@ -212,7 +212,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
 
     /**
      * Get the geometry for a given state
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      *
      * @return {Object} Geojson object with the geometry
      */
@@ -221,6 +221,17 @@ module.exports = (statePersistence, municipalityService, seService) => {
       if (geom && geom.features) return geom;
       return {};
     },
+
+    /**
+     * Request a given strategic ecosystem layer inside an state.
+     * @param {Number} stateId environmental authority id
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (stateId, seType) => seService.getSELayerInGeofence(
+      'states', stateId, seType,
+    ),
   };
 
   return state;

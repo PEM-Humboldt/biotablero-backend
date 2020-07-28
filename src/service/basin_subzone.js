@@ -193,7 +193,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       subzoneArea = subzoneArea.total_area;
       const values = await basinSubzonePersistence.findHFPersistenceAreas(subzoneId);
       return values.map(value => ({
-        ...value,
+        area: Number(value.area),
         key: persistenceKeys(value.key),
         percentage: value.area / subzoneArea,
       }));

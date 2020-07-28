@@ -192,7 +192,7 @@ module.exports = (paPersistence, seService) => {
       paArea = paArea.total_area;
       const values = await paPersistence.findHFPersistenceAreas(categoryName);
       return values.map(value => ({
-        ...value,
+        area: Number(value.area),
         key: persistenceKeys(value.key),
         percentage: value.area / paArea,
       }));

@@ -199,7 +199,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       stateArea = stateArea.total_area;
       const values = await statePersistence.findHFPersistenceAreas(stateId);
       return values.map(value => ({
-        ...value,
+        area: Number(value.area),
         key: persistenceKeys(value.key),
         percentage: value.area / stateArea,
       }));

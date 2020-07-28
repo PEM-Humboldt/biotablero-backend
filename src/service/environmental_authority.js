@@ -221,7 +221,6 @@ module.exports = (eaPersistence, seService) => {
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findAreaByHFCategory(eaId);
       return values.map(value => ({
-        ...value,
         area: Number(value.area),
         key: HFCategoriesKeys(value.key),
         percentage: value.area / eaArea,

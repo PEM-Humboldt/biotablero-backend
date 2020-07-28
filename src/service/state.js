@@ -166,10 +166,8 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getAreaByHFCategory: async (stateId) => {
       let stateArea = await state.getTotalArea(stateId);
       stateArea = stateArea.total_area;
-      console.log('stateArea', stateArea);
       const values = await statePersistence.findAreaByHFCategory(stateId);
       return values.map(value => ({
-        ...value,
         area: Number(value.area),
         key: HFCategoriesKeys(value.key),
         percentage: value.area / stateArea,

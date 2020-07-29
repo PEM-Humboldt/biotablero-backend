@@ -434,7 +434,7 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /states/:state_id/hf/current/categories/layers CategoriesLayerInState
+   * @api {get} /states/:state_id/hf/layers/current/categories CategoriesLayerInState
    * @apiName CategoriesLayerInState
    * @apiVersion 0.1.0
    * @apiDescription
@@ -448,10 +448,10 @@ module.exports = (errorHandler, stateService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /states/44/hf/current/categories/layers
+   *  /states/44/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/states/:state_id/hf/current/categories/layers', errorHandler((req, res, next) => (
+  router.get('/states/:state_id/hf/layers/current/categories', errorHandler((req, res, next) => (
     stateService.getHFCategoriesLayerById(req.params.state_id)
       .then((geometry) => {
         res.send(geometry);

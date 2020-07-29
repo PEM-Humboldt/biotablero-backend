@@ -405,7 +405,7 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /pa/:category/hf/current/categories/layers CategoriesLayerInPA
+   * @api {get} /pa/:category/hf/layers/current/categories CategoriesLayerInPA
    * @apiName CategoriesLayerInPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -420,10 +420,10 @@ module.exports = (errorHandler, paService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/current/categories/layers
+   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/pa/:category/hf/current/categories/layers', errorHandler((req, res, next) => (
+  router.get('/pa/:category/hf/layers/current/categories', errorHandler((req, res, next) => (
     paService.getHFCategoriesLayerById(req.params.category)
       .then((geometry) => {
         res.send(geometry);

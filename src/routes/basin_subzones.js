@@ -406,7 +406,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /basinSubzones/:subzone_id/hf/current/categories/layers CategoriesLayerInSubzone
+   * @api {get} /basinSubzones/:subzone_id/hf/layers/current/categories CategoriesLayerInSubzone
    * @apiName CategoriesLayerInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
@@ -420,10 +420,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /basinSubzones/2903/hf/current/categories/layers
+   *  /basinSubzones/2903/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/basinSubzones/:subzone_id/hf/current/categories/layers', errorHandler((req, res, next) => (
+  router.get('/basinSubzones/:subzone_id/hf/layers/current/categories', errorHandler((req, res, next) => (
     basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id)
       .then((geometry) => {
         res.send(geometry);

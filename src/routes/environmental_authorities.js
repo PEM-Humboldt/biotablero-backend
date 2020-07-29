@@ -513,7 +513,7 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_hf
-   * @api {get} /ea/:ea_id/hf/current/categories/layers CategoriesLayerInEA
+   * @api {get} /ea/:ea_id/hf/layers/current/categories CategoriesLayerInEA
    * @apiName CategoriesLayerInEA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -528,10 +528,10 @@ module.exports = (errorHandler, eaService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /ea/EPA/hf/current/categories/layers
+   *  /ea/EPA/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/current/categories/layers', errorHandler((req, res, next) => (
+  router.get('/ea/:ea_id/hf/layers/current/categories', errorHandler((req, res, next) => (
     eaService.getHFCategoriesLayerById(req.params.ea_id)
       .then((geometry) => {
         res.send(geometry);

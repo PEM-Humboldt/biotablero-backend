@@ -223,6 +223,28 @@ module.exports = (paPersistence, seService) => {
      * @return {Object} Geojson object with the geometry
      */
     getSELayer: async (categoryName, seType) => seService.getSELayerInPA(categoryName, seType),
+
+    /**
+     * Get the current human footprint layer divided by categories in a given
+     * environmental authority
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFCategoriesLayerByPACategory: async (categoryName) => {
+      const geom = await paPersistence.findHFCategoriesLayerByPACategory(categoryName);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: HFCategoriesKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return protectedArea;

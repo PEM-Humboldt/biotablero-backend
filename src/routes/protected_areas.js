@@ -403,6 +403,34 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/layers/current/categories CategoriesLayerInPA
+   * @apiName CategoriesLayerInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the current human footprint layer divided by categories in a given
+   * protected area
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/layers/current/categories
+   * @apiUse CategoriesLayerInGeofenceExample
+   */
+  router.get('/pa/:category/hf/layers/current/categories', errorHandler((req, res, next) => (
+    paService.getHFCategoriesLayerByPACategory(req.params.category)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
 
   return router;
 };

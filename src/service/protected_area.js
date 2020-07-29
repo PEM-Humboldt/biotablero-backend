@@ -231,8 +231,8 @@ module.exports = (paPersistence, seService) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-    getHFCategoriesLayerById: async (categoryName) => {
-      const geom = await paPersistence.findHFCategoriesLayerById(categoryName);
+    getHFCategoriesLayerByPACategory: async (categoryName) => {
+      const geom = await paPersistence.findHFCategoriesLayerByPACategory(categoryName);
       if (geom && geom.features) {
         geom.features = geom.features.map(feature => ({
           ...feature,

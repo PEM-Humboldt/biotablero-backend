@@ -424,7 +424,7 @@ module.exports = (errorHandler, paService) => {
    * @apiUse CategoriesLayerInGeofenceExample
    */
   router.get('/pa/:category/hf/layers/current/categories', errorHandler((req, res, next) => (
-    paService.getHFCategoriesLayerById(req.params.category)
+    paService.getHFCategoriesLayerByPACategory(req.params.category)
       .then((geometry) => {
         res.send(geometry);
         next();

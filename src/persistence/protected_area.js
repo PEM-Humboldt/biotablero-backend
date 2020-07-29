@@ -166,7 +166,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-    findHFCategoriesLayerById: async (categoryName, year = 2018) => {
+    findHFCategoriesLayerByPACategory: async (categoryName, year = 2018) => {
       let bitMask = await globalBinaryProtectedAreas.query()
         .where({ label: categoryName })
         .select('binary_protected as mask');

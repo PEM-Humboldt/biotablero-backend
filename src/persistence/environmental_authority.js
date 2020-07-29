@@ -257,7 +257,7 @@ module.exports = (
             INNER JOIN (
               SELECT 
                 hf_cat AS key,
-                sum(area_ha) AS value
+                sum(area_ha) AS area
               FROM geo_hf
               WHERE id_ea = ?
                 AND hf_year = ?

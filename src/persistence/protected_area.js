@@ -192,7 +192,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
             INNER JOIN (
               SELECT 
                 hf_cat AS key,
-                sum(area_ha) AS value
+                sum(area_ha) AS area
               FROM geo_hf
               WHERE (binary_protected & ?) = ?
                 AND hf_year = ?

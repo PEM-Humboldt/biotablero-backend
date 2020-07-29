@@ -1,3 +1,5 @@
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
     /**
@@ -42,7 +44,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * Get information about an strategic ecosystem in an state. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
-     * @param {String} stateId environmental authority id
+     * @param {Number} stateId state id
      * @param {String} seType strategic ecosystem type
      */
     getSEDetails: async (stateId, seType) => {
@@ -154,9 +156,82 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (stateId) => {
+      let stateArea = await state.getTotalArea(stateId);
+      stateArea = stateArea.total_area;
+      const values = await statePersistence.findAreaByHFCategory(stateId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / stateArea,
+      }));
+    },
+
+    /**
+     * Get the current value of human footprint for the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (stateId) => {
+      const value = await statePersistence.findCurrentHFValue(stateId);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('state doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
+    },
+
+    /**
+     * Get the information about the persistence of human footprint in the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
+    getAreaByHFPersistence: async (stateId) => {
+      let stateArea = await state.getTotalArea(stateId);
+      stateArea = stateArea.total_area;
+      const values = await statePersistence.findHFPersistenceAreas(stateId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: persistenceKeys(value.key),
+        percentage: value.area / stateArea,
+      }));
+    },
+
+    /**
      * Get the national layer divided by states
      */
     getNationalLayer: async () => statePersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given state
+     * @param {Number} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (stateId) => {
+      const geom = await statePersistence.findLayerById(stateId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
+
+    /**
+     * Request a given strategic ecosystem layer inside an state.
+     * @param {Number} stateId environmental authority id
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (stateId, seType) => seService.getSELayerInGeofence(
+      'states', stateId, seType,
+    ),
   };
 
   return state;

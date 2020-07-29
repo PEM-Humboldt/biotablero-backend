@@ -517,6 +517,53 @@ module.exports = (
   },
 
   /**
+   * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
+   * @param {String} geofence identifier for the geofence type: ea, states, subzones
+   * @param {String | Number} geofenceId geofence id
+   * @param {String} ecosystem ecosystem to get the layer for
+   *
+   * @return {Object} Geojson object with the geometry
+   */
+  getSELayerInGeofence: async (geofence, geofenceId, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findLayerInGeofence(geofence, geofenceId);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findLayerInGeofence(geofence, geofenceId);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findLayerInGeofence(geofence, geofenceId);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
+   * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
+   * @param {String} categoryName protected area category
+   * @param {String} ecosystem ecosystem to get the layer for
+   *
+   * @return {Object} Geojson object with the geometry
+   */
+  getSELayerInPA: async (categoryName, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findLayerInPA(categoryName);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findLayerInPA(categoryName);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findLayerInPA(categoryName);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get the national layer divided by strategic ecosystem
    */
   getNationalLayer: async () => ({

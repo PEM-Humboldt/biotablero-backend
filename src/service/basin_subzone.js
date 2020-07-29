@@ -1,3 +1,5 @@
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
     /**
@@ -148,9 +150,82 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (subzoneId) => {
+      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
+      subzoneArea = subzoneArea.total_area;
+      const values = await basinSubzonePersistence.findAreaByHFCategory(subzoneId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / subzoneArea,
+      }));
+    },
+
+    /**
+     * Get the current value of human footprint for the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (subzoneId) => {
+      const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('basin subzone doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
+    },
+
+    /**
+     * Get the information about the persistence of human footprint in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
+    getAreaByHFPersistence: async (subzoneId) => {
+      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
+      subzoneArea = subzoneArea.total_area;
+      const values = await basinSubzonePersistence.findHFPersistenceAreas(subzoneId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: persistenceKeys(value.key),
+        percentage: value.area / subzoneArea,
+      }));
+    },
+
+    /**
      * Get the national layer divided by basin subzones
      */
     getNationalLayer: async () => basinSubzonePersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (subzoneId) => {
+      const geom = await basinSubzonePersistence.findLayerById(subzoneId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
+
+    /**
+     * Request a given strategic ecosystem layer inside a basin subzone.
+     * @param {Number} subzoneId basin subzone id
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (subzoneId, seType) => seService.getSELayerInGeofence(
+      'subzones', subzoneId, seType,
+    ),
   };
 
   return basinSubzone;

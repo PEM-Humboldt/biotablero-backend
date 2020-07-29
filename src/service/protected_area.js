@@ -1,3 +1,5 @@
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
     /**
@@ -133,22 +135,94 @@ module.exports = (paPersistence, seService) => {
     /**
      * Get the total area for the protected area category
      *
-     * @param {Number} categoryName protected area category
+     * @param {String} categoryName protected area category
      *
      * @returns {Object} One attribute object with the total area for the protected area category
      */
     getTotalArea: async (categoryName) => {
       const categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
       if (categoryArea[0].area === null) {
-        throw new Error('state doesn\'t exists');
+        throw new Error('protected area category doesn\'t exists');
       }
       return { total_area: categoryArea[0].area };
+    },
+
+    /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given protected area
+     *@param {String} categoryName protected area category
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (categoryName) => {
+      let paArea = await protectedArea.getTotalArea(categoryName);
+      paArea = paArea.total_area;
+      const values = await paPersistence.findAreaByHFCategory(categoryName);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / paArea,
+      }));
+    },
+
+    /**
+     * Get the current value of human footprint for the given protected area
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (categoryName) => {
+      const value = await paPersistence.findCurrentHFValue(categoryName);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('protected area category doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
+    },
+
+    /**
+      * Get the information about the persistence of human footprint in the given protected area
+      * category
+      * @param {String} categoryName protected area category
+      *
+      * @returns {Object[]} Array of persistence values with their respective percentage.
+      */
+    getAreaByHFPersistence: async (categoryName) => {
+      let paArea = await protectedArea.getTotalArea(categoryName);
+      paArea = paArea.total_area;
+      const values = await paPersistence.findHFPersistenceAreas(categoryName);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: persistenceKeys(value.key),
+        percentage: value.area / paArea,
+      }));
     },
 
     /**
      * Get the national layer divided by protected area
      */
     getNationalLayer: async () => null,
+
+    /**
+     * Get the geometry for a given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (categoryName) => {
+      const geom = await paPersistence.findLayerByCategory(categoryName);
+      if (geom && geom.features) return geom;
+      return {};
+    },
+
+    /**
+     * Request a given strategic ecosystem layer inside a protected area category
+     * @param {String} categoryName protected area category
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (categoryName, seType) => seService.getSELayerInPA(categoryName, seType),
   };
 
   return protectedArea;

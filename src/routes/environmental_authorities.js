@@ -37,7 +37,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
-   * @apiSuccess {Object[]} result
+   * @apiSuccess {Object} result
    * @apiSuccess {Number} result.total_area Area for the specified environmental authority
    *
    * @apiExample {curl} Example usage:
@@ -344,6 +344,97 @@ module.exports = (errorHandler, eaService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/current/categories CategoriesInEA
+   * @apiName CategoriesInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given environmental authority
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the environmental authority for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the environmental authority.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/current/categories', errorHandler((req, res, next) => (
+    eaService.getAreaByHFCategory(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
+   * @apiName CurrentValueInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given environmental authority
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * environmental authority
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/current/value', errorHandler((req, res, next) => (
+    eaService.getCurrentHFValue(req.params.ea_id)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/persistence PersistenceInEA
+   * @apiName HFPersistenceInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given environmental authority.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the environmental authority for the persistence
+   *  value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the environmental authority.
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/persistence', errorHandler((req, res, next) => (
+    eaService.getAreaByHFPersistence(req.params.ea_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+
+  /**
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/national NationalLayer
    * @apiName EANationalLayer
@@ -363,6 +454,57 @@ module.exports = (errorHandler, eaService) => {
    */
   router.get('/ea/layers/national', errorHandler((req, res, next) => (
     eaService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_ea
+   * @api {get} /ea/layers/:ea_id EALayer
+   * @apiName EALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific environmental authority
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/layers/CRQ
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/ea/layers/:ea_id', errorHandler((req, res, next) => (
+    eaService.getLayer(req.params.ea_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /ea/:ea_id/se/layers/:se_type SEInEALayer
+   * @apiName SEInEALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside an environmental authority
+   *
+   * @apiParam (Path params) {String} ea_id state id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/ea/:ea_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    eaService.getSELayer(req.params.ea_id, req.params.se_type)
       .then((geometry) => {
         res.send(geometry);
         next();

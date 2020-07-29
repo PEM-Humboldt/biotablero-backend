@@ -3,8 +3,12 @@ const config = require('config');
 module.exports = (
   db,
   {
-    colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities,
+    colombiaDetails,
+    eaBioticUnits,
+    geoEnvironmentalAuthorities,
     colombiaCoverageDetails,
+    geoHFPersistence,
+    geoHF,
   },
 ) => {
   const geometriesConfig = config.geometries;
@@ -126,6 +130,52 @@ module.exports = (
     ),
 
     /**
+     * Find the current area distribution for each human footprint category in the
+     * given environmental authority
+     * @param {String} eaId environmental authority id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (eaId, year = 2018) => (
+      geoHF.query()
+        .where({ id_ea: eaId, hf_year: year })
+        .groupBy('hf_cat')
+        .sum('area_ha as area')
+        .select('hf_cat as key')
+        .orderBy('key')
+    ),
+
+    /**
+     * Find the the current value of human footprint in the given environmental authority
+     * @param {String} eaId environmental authority id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object} Object of current human footprint value.
+     */
+    findCurrentHFValue: async (eaId, year = 2018) => (
+      geoHF.query()
+        .where({ id_ea: eaId, hf_year: year })
+        .whereNot({ hf_avg: -9999 })
+        .avg('hf_avg as CurrentHFValue')
+    ),
+
+    /**
+     * Find the the persistence of human footprint areas in the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async eaId => (
+      geoHFPersistence.query()
+        .where({ id_ea: eaId })
+        .groupBy('hf_pers')
+        .sum('area_ha as area')
+        .select('hf_pers as key')
+        .orderBy('key')
+    ),
+
+    /**
      * Get GeoJson layer with environmental authorities at national level
      */
     findNationalLayer: () => (
@@ -145,6 +195,34 @@ module.exports = (
           ) as f
         ) as fc`,
         geometriesConfig.tolerance,
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
+
+    /**
+     * Get the geometry for a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: eaId => (
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(ea2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_environmental_authorities as ea1
+            INNER JOIN (
+              SELECT gid as id, name as key
+              FROM geo_environmental_authorities
+            ) as ea2 ON ea1.gid = ea2.id
+            WHERE ea1.id_ea = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, eaId],
       )
         .then(layers => layers.rows[0].collection)
     ),

@@ -43,3 +43,32 @@
  *    }
  * }
  */
+
+/**
+ * @apiDefine SpecificLayerExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "type": "FeatureCollection",
+ *    "features": [
+ *      {
+ *        "type": "Feature",
+ *        "properties": {
+ *          "id": 269,
+ *          "key": "Río Guayuriba"
+ *        },
+ *        "geometry": {
+ *          "type": "Polygon",
+ *          "coordinates": [
+ *            [
+ *              [
+ *                -73.8291702258294,
+ *                4.75750017293779
+ *              ],
+ *              ...
+ *            ]
+ *          ]
+ *        }
+ *      }
+ *    ]
+ *  }
+ */

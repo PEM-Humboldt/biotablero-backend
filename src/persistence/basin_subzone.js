@@ -1,6 +1,14 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
+module.exports = (
+  db,
+  {
+    geoBasinSubzones,
+    colombiaCoverageDetails,
+    geoHFPersistence,
+    geoHF,
+  },
+) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -42,7 +50,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
     /**
      * Get the coverage area distribution inside the given basin subzone
      *
-     * @param {String} subzoneId basin subzone id
+     * @param {Number} subzoneId basin subzone id
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (subzoneId, year = 2012) => (
@@ -52,6 +60,52 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
         .sum('area_ha as area')
         .select('area_type as type')
         .orderBy('type')
+    ),
+
+    /**
+     * Find the current area distribution for each human footprint category in the
+     * given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object[]} Array of areas by human footprint category
+     */
+    findAreaByHFCategory: async (subzoneId, year = 2018) => (
+      geoHF.query()
+        .where({ id_subzone: subzoneId, hf_year: year })
+        .groupBy('hf_cat')
+        .sum('area_ha as area')
+        .select('hf_cat as key')
+        .orderBy('key')
+    ),
+
+    /**
+     * Find the the current value of human footprint in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @returns {Object} Object of current human footprint value.
+     */
+    findCurrentHFValue: async (subzoneId, year = 2018) => (
+      geoHF.query()
+        .where({ id_subzone: subzoneId, hf_year: year })
+        .whereNot({ hf_avg: -9999 })
+        .avg('hf_avg as CurrentHFValue')
+    ),
+
+    /**
+     * Find the the persistence of human footprint areas in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object[]} Array of persistence values.
+     */
+    findHFPersistenceAreas: async subzoneId => (
+      geoHFPersistence.query()
+        .where({ id_subzone: subzoneId })
+        .groupBy('hf_pers')
+        .sum('area_ha as area')
+        .select('hf_pers as key')
+        .orderBy('key')
     ),
 
     /**
@@ -74,6 +128,34 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails }) => {
           ) as f
         ) as fc`,
         geometriesConfig.tolerance_heavy,
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
+
+    /**
+     * Get the geometry for a given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findLayerById: subzoneId => (
+      db.raw(
+        `SELECT row_to_json(fc) as collection
+        FROM (
+          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
+          FROM(
+            SELECT 'Feature' as type,
+              row_to_json(sz2) as properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+            FROM geo_basin_subzones as sz1
+            INNER JOIN (
+              SELECT gid as id, name_subzone as key
+              FROM geo_basin_subzones
+            ) as sz2 ON sz1.gid = sz2.id
+            WHERE sz1.id_subzone = ?
+          ) as f
+        ) as fc`,
+        [geometriesConfig.tolerance_heavy, subzoneId],
       )
         .then(layers => layers.rows[0].collection)
     ),

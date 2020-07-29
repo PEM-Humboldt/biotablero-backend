@@ -1,3 +1,5 @@
+const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
     /**
@@ -207,9 +209,82 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
+     * Get the information the current area distribution for each human footprint category in the
+     * given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of areas by human footprint category with their respective
+     * percentage
+     */
+    getAreaByHFCategory: async (eaId) => {
+      let eaArea = await envAuth.getTotalArea(eaId);
+      eaArea = eaArea.total_area;
+      const values = await eaPersistence.findAreaByHFCategory(eaId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: HFCategoriesKeys(value.key),
+        percentage: value.area / eaArea,
+      }));
+    },
+
+    /**
+     * Get the current value of human footprint for the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object} One attribute object with the current human footprint value.
+     */
+    getCurrentHFValue: async (eaId) => {
+      const value = await eaPersistence.findCurrentHFValue(eaId);
+      if (value[0].CurrentHFValue === null) {
+        throw new Error('environmental authority doesn\'t exists');
+      }
+      return { value: value[0].CurrentHFValue };
+    },
+
+    /**
+     * Get the information about the persistence of human footprint in the given environmental
+     * authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
+    getAreaByHFPersistence: async (eaId) => {
+      let eaArea = await envAuth.getTotalArea(eaId);
+      eaArea = eaArea.total_area;
+      const values = await eaPersistence.findHFPersistenceAreas(eaId);
+      return values.map(value => ({
+        area: Number(value.area),
+        key: persistenceKeys(value.key),
+        percentage: value.area / eaArea,
+      }));
+    },
+
+    /**
      * Get the national layer divided by environmental authority
      */
     getNationalLayer: async () => eaPersistence.findNationalLayer(),
+
+    /**
+     * Get the geometry for a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getLayer: async (eaId) => {
+      const geom = await eaPersistence.findLayerById(eaId);
+      if (geom && geom.features) return geom;
+      return {};
+    },
+
+    /**
+     * Request a given strategic ecosystem layer inside an environmental authority
+     * @param {String} eaId environmental authority id
+     * @param {String} seType strategic ecosystem type.
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSELayer: async (eaId, seType) => seService.getSELayerInGeofence('ea', eaId, seType),
   };
+
   return envAuth;
 };

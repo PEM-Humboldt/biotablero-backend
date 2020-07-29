@@ -267,6 +267,95 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/categories CategoriesInState
+   * @apiName CategoriesInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given state
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the state for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/categories', errorHandler((req, res, next) => (
+    stateService.getAreaByHFCategory(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/value CurrentValueInState
+   * @apiName CurrentValueInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given state
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * state
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/value', errorHandler((req, res, next) => (
+    stateService.getCurrentHFValue(req.params.state_id)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/persistence PersistenceInState
+   * @apiName HFPersistenceInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given state.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the state for the persistence value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/persistence', errorHandler((req, res, next) => (
+    stateService.getAreaByHFPersistence(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer
@@ -286,6 +375,57 @@ module.exports = (errorHandler, stateService) => {
    */
   router.get('/states/layers/national', errorHandler((req, res, next) => (
     stateService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_states
+   * @api {get} /states/layers/:state_id StateLayer
+   * @apiName StateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific state
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/layers/44
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/layers/:state_id', errorHandler((req, res, next) => (
+    stateService.getLayer(req.params.state_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /states/:state_id/se/layers/:se_type SEInStateLayer
+   * @apiName SEInStateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside an state
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/:state_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    stateService.getSELayer(req.params.state_id, req.params.se_type)
       .then((geometry) => {
         res.send(geometry);
         next();

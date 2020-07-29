@@ -236,6 +236,95 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/current/categories CategoriesInPA
+   * @apiName CategoriesInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given protected area
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the protected area for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the protected area.
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/pa/:category/hf/current/categories', errorHandler((req, res, next) => (
+    paService.getAreaByHFCategory(req.params.category)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/current/value CurrentValueInPA
+   * @apiName CurrentValueInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value of the current value of human footprint inside the given protected area
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * protected area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/pa/:category/hf/current/value', errorHandler((req, res, next) => (
+    paService.getCurrentHFValue(req.params.category)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/persistence PersistenceInPA
+   * @apiName HFPersistenceInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given protected area category.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the state for the persistence value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the category.
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/pa/:category/hf/persistence', errorHandler((req, res, next) => (
+    paService.getAreaByHFPersistence(req.params.category)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer
@@ -260,6 +349,60 @@ module.exports = (errorHandler, paService) => {
         next();
       })
   )));
+
+  /**
+   * @apiGroup geofence_pa
+   * @api {get} /pa/layers/:category PALayer
+   * @apiName PALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/layers/Parque Nacional Natural
+   * @apiUse PALayerExample
+   */
+  router.get('/pa/layers/:category', errorHandler((req, res, next) => (
+    paService.getLayer(req.params.category)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /pa/:category/se/layers/:se_type SEInPALayer
+   * @apiName SEInPALayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside a protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/pa/:category/se/layers/:se_type', errorHandler((req, res, next) => (
+    paService.getSELayer(req.params.category, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
 
   return router;
 };

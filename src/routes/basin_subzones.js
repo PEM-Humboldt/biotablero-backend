@@ -404,5 +404,32 @@ module.exports = (errorHandler, basinSubzoneService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/hf/current/categories/layers CategoriesLayerInSubzone
+   * @apiName CategoriesLayerInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the current human footprint layer divided by categories in a given basin subzone
+   *
+   * @apiParam (Path params) {Number} subzone_id subzone id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/hf/current/categories/layers
+   * @apiUse CategoriesLayerInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/hf/current/categories/layers', errorHandler((req, res, next) => (
+    basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

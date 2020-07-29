@@ -134,7 +134,7 @@ module.exports = (
 
     /**
      * Get the geometry for a given state
-     * @param {String} stateId state id
+     * @param {Number} stateId state id
      *
      * @return {Object} Geojson object with the geometry
      */
@@ -156,6 +156,49 @@ module.exports = (
           ) as f
         ) as fc`,
         [geometriesConfig.tolerance_heavy, stateId],
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
+
+    /**
+     * Get the current human footprint layer divided by categories in a given state
+     * @param {Number} stateId state id
+     * @param {Number} year optional year to filter data, 2018 by default
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findHFCategoriesLayerById: (stateId, year = 2018) => (
+      db.raw(
+        `SELECT row_to_json(fc) AS collection
+        FROM (
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          FROM(
+          SELECT 
+            'Feature' AS TYPE,
+            row_to_json(prop) AS properties,
+            ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+          FROM (
+            SELECT 
+              ST_Collect(geom) AS geom,
+              hf_cat AS key
+            FROM geo_hf
+            WHERE id_state = ?
+              AND hf_year = ?
+            GROUP BY key
+            ) AS geo
+            INNER JOIN (
+              SELECT 
+                hf_cat AS key,
+                sum(area_ha) AS value
+              FROM geo_hf
+              WHERE id_state = ?
+                AND hf_year = ?
+              GROUP BY key
+            ) AS prop
+            ON geo.key = prop.key
+          ) as f
+        ) as fc;`,
+        [geometriesConfig.tolerance_heavy, stateId, year, stateId, year],
       )
         .then(layers => layers.rows[0].collection)
     ),

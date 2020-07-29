@@ -224,7 +224,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
 
     /**
      * Request a given strategic ecosystem layer inside an state.
-     * @param {Number} stateId environmental authority id
+     * @param {Number} stateId state id
      * @param {String} seType strategic ecosystem type.
      *
      * @return {Object} Geojson object with the geometry
@@ -232,6 +232,27 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getSELayer: async (stateId, seType) => seService.getSELayerInGeofence(
       'states', stateId, seType,
     ),
+
+    /**
+     * Get the current human footprint layer divided by categories in a given state
+     * @param {Number} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFCategoriesLayerById: async (stateId) => {
+      const geom = await statePersistence.findHFCategoriesLayerById(stateId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: HFCategoriesKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return state;

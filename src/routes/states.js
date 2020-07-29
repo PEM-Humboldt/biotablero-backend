@@ -432,5 +432,32 @@ module.exports = (errorHandler, stateService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/categories/layers CategoriesLayerInState
+   * @apiName CategoriesLayerInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the current human footprint layer divided by categories in a given state
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/categories/layers
+   * @apiUse CategoriesLayerInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/categories/layers', errorHandler((req, res, next) => (
+    stateService.getHFCategoriesLayerById(req.params.state_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

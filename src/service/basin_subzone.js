@@ -226,6 +226,27 @@ module.exports = (basinSubzonePersistence, seService) => {
     getSELayer: async (subzoneId, seType) => seService.getSELayerInGeofence(
       'subzones', subzoneId, seType,
     ),
+
+    /**
+     * Get the current human footprint layer divided by categories in a given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFCategoriesLayerById: async (subzoneId) => {
+      const geom = await basinSubzonePersistence.findHFCategoriesLayerById(subzoneId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: HFCategoriesKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return basinSubzone;

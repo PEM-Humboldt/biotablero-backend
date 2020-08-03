@@ -410,7 +410,7 @@ module.exports = (errorHandler, paService) => {
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the current human footprint layer divided by categories in a given
-   * protected area
+   * protected area category
    *
    * @apiParam (Path params) {String} category protected area category
    *
@@ -431,6 +431,33 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/layers/persistence PersistenceLayerInPA
+   * @apiName PersistenceLayerInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the persistence human footprint layer divided by categories in a given
+   * protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/layers/persistence
+   * @apiUse PersistenceLayerInGeofenceExample
+   */
+  router.get('/pa/:category/hf/layers/persistence', errorHandler((req, res, next) => (
+    paService.getHFPersistenceLayerById(req.params.category)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
 
   return router;
 };

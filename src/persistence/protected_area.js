@@ -212,5 +212,55 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
       )
         .then(layers => layers.rows[0].collection);
     },
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given
+     * protected area
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findHFPersistenceLayerById: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db.raw(
+        `SELECT row_to_json(fc) AS collection
+        FROM (
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          FROM(
+          SELECT 
+            'Feature' AS TYPE,
+            row_to_json(prop) AS properties,
+            ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+          FROM (
+            SELECT 
+              ST_Collect(geom) AS geom,
+              hf_pers AS key
+            FROM geo_hf_persistence
+            WHERE (binary_protected & ?) = ?
+            GROUP BY key
+            ) AS geo
+            INNER JOIN (
+              SELECT 
+                hf_pers AS key,
+                sum(area_ha) AS area
+              FROM geo_hf_persistence
+              WHERE (binary_protected & ?) = ?
+              GROUP BY key
+            ) AS prop
+            ON geo.key = prop.key
+          ) as f
+        ) as fc;`,
+        [geometriesConfig.tolerance_heavy,
+          bitMask,
+          bitMask,
+          bitMask,
+          bitMask,
+        ],
+      )
+        .then(layers => layers.rows[0].collection);
+    },
   };
 };

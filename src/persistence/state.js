@@ -113,10 +113,11 @@ module.exports = (
      */
     findNationalLayer: () => (
       db.raw(
-        `SELECT row_to_json(fc) as collection
+        `
+        SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
-          FROM(
+          FROM (
             SELECT 'Feature' as type,
               row_to_json(s2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
@@ -126,7 +127,8 @@ module.exports = (
               FROM geo_states
             ) as s2 ON s1.gid = s2.gid
           ) as f
-        ) as fc`,
+        ) as fc
+        `,
         geometriesConfig.tolerance,
       )
         .then(layers => layers.rows[0].collection)
@@ -140,10 +142,11 @@ module.exports = (
      */
     findLayerById: stateId => (
       db.raw(
-        `SELECT row_to_json(fc) as collection
+        `
+        SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
-          FROM(
+          FROM (
             SELECT 'Feature' as type,
               row_to_json(s2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
@@ -154,7 +157,8 @@ module.exports = (
             ) as s2 ON s1.gid = s2.id
             WHERE s1.id_state = ?
           ) as f
-        ) as fc`,
+        ) as fc
+        `,
         [geometriesConfig.tolerance_heavy, stateId],
       )
         .then(layers => layers.rows[0].collection)
@@ -169,35 +173,37 @@ module.exports = (
      */
     findHFCategoriesLayerById: (stateId, year = 2018) => (
       db.raw(
-        `SELECT row_to_json(fc) AS collection
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
-          FROM(
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              hf_cat AS key
-            FROM geo_hf
-            WHERE id_state = ?
-              AND hf_year = ?
-            GROUP BY key
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+            FROM (
               SELECT 
-                hf_cat AS key,
-                sum(area_ha) AS area
+                ST_Collect(geom) AS geom,
+                hf_cat AS key
               FROM geo_hf
               WHERE id_state = ?
                 AND hf_year = ?
               GROUP BY key
-            ) AS prop
-            ON geo.key = prop.key
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  hf_cat AS key,
+                  sum(area_ha) AS area
+                FROM geo_hf
+                WHERE id_state = ?
+                  AND hf_year = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
           ) as f
-        ) as fc;`,
+        ) as fc;
+        `,
         [geometriesConfig.tolerance_heavy, stateId, year, stateId, year],
       )
         .then(layers => layers.rows[0].collection)
@@ -212,33 +218,35 @@ module.exports = (
      */
     findHFPersistenceLayerById: stateId => (
       db.raw(
-        `SELECT row_to_json(fc) AS collection
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
-          FROM(
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              hf_pers AS key
-            FROM geo_hf_persistence
-            WHERE id_state = ?
-            GROUP BY key
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+            FROM (
               SELECT 
-                hf_pers AS key,
-                sum(area_ha) AS area
+                ST_Collect(geom) AS geom,
+                hf_pers AS key
               FROM geo_hf_persistence
               WHERE id_state = ?
               GROUP BY key
-            ) AS prop
-            ON geo.key = prop.key
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  hf_pers AS key,
+                  sum(area_ha) AS area
+                FROM geo_hf_persistence
+                WHERE id_state = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
           ) as f
-        ) as fc;`,
+        ) as fc;
+        `,
         [geometriesConfig.tolerance_heavy, stateId, stateId],
       )
         .then(layers => layers.rows[0].collection)

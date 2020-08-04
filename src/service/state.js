@@ -253,6 +253,28 @@ module.exports = (statePersistence, municipalityService, seService) => {
       }
       return {};
     },
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given
+     * state
+     * @param {Number} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFPersistenceLayerById: async (stateId) => {
+      const geom = await statePersistence.findHFPersistenceLayerById(stateId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: persistenceKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return state;

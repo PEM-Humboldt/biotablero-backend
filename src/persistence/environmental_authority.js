@@ -180,10 +180,11 @@ module.exports = (
      */
     findNationalLayer: () => (
       db.raw(
-        `SELECT row_to_json(fc) as collection
+        `
+        SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
-          FROM(
+          FROM (
             SELECT 'Feature' as type,
               row_to_json(ea2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
@@ -193,7 +194,8 @@ module.exports = (
               FROM geo_environmental_authorities
             ) as ea2 ON ea1.gid = ea2.gid
           ) as f
-        ) as fc`,
+        ) as fc
+        `,
         geometriesConfig.tolerance,
       )
         .then(layers => layers.rows[0].collection)
@@ -207,10 +209,11 @@ module.exports = (
      */
     findLayerById: eaId => (
       db.raw(
-        `SELECT row_to_json(fc) as collection
+        `
+        SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
-          FROM(
+          FROM (
             SELECT 'Feature' as type,
               row_to_json(ea2) as properties,
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
@@ -221,7 +224,8 @@ module.exports = (
             ) as ea2 ON ea1.gid = ea2.id
             WHERE ea1.id_ea = ?
           ) as f
-        ) as fc`,
+        ) as fc
+        `,
         [geometriesConfig.tolerance_heavy, eaId],
       )
         .then(layers => layers.rows[0].collection)
@@ -237,36 +241,81 @@ module.exports = (
      */
     findHFCategoriesLayerById: (eaId, year = 2018) => (
       db.raw(
-        `SELECT row_to_json(fc) AS collection
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
-          FROM(
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              hf_cat AS key
-            FROM geo_hf
-            WHERE id_ea = ?
-              AND hf_year = ?
-            GROUP BY key
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+            FROM (
               SELECT 
-                hf_cat AS key,
-                sum(area_ha) AS area
+                ST_Collect(geom) AS geom,
+                hf_cat AS key
               FROM geo_hf
               WHERE id_ea = ?
                 AND hf_year = ?
               GROUP BY key
-            ) AS prop
-            ON geo.key = prop.key
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  hf_cat AS key,
+                  sum(area_ha) AS area
+                FROM geo_hf
+                WHERE id_ea = ?
+                  AND hf_year = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
           ) as f
-        ) as fc;`,
+        ) as fc;
+        `,
         [geometriesConfig.tolerance_heavy, eaId, year, eaId, year],
+      )
+        .then(layers => layers.rows[0].collection)
+    ),
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given
+     * environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findHFPersistenceLayerById: eaId => (
+      db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
+        FROM (
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          FROM (
+            SELECT 
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+            FROM (
+              SELECT 
+                ST_Collect(geom) AS geom,
+                hf_pers AS key
+              FROM geo_hf_persistence
+              WHERE id_ea = ?
+              GROUP BY key
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  hf_pers AS key,
+                  sum(area_ha) AS area
+                FROM geo_hf_persistence
+                WHERE id_ea = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
+          ) as f
+        ) as fc;
+        `,
+        [geometriesConfig.tolerance_heavy, eaId, eaId],
       )
         .then(layers => layers.rows[0].collection)
     ),

@@ -459,5 +459,32 @@ module.exports = (errorHandler, stateService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/layers/persistence PersistenceLayerInState
+   * @apiName PersistenceLayerInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the persistence human footprint layer divided by categories in a given state
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/layers/persistence
+   * @apiUse PersistenceLayerInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/layers/persistence', errorHandler((req, res, next) => (
+    stateService.getHFPersistenceLayerById(req.params.state_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

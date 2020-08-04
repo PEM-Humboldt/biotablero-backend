@@ -247,6 +247,27 @@ module.exports = (basinSubzonePersistence, seService) => {
       }
       return {};
     },
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFPersistenceLayerById: async (subzoneId) => {
+      const geom = await basinSubzonePersistence.findHFPersistenceLayerById(subzoneId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: persistenceKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return basinSubzone;

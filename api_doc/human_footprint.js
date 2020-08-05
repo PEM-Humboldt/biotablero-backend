@@ -59,3 +59,65 @@
  *    }
  *  ]
  */
+
+/**
+* @apiDefine CategoriesLayerInGeofenceExample
+* @apiSuccessExample {json} Success-Example:
+* {
+*      "type": "FeatureCollection",
+*      "features": [
+*          {
+*           "type": "Feature",
+*           "properties": {
+*              "key": "alta",
+*              "area": 4257.699441612134
+*          },
+*          "geometry": {
+*               "type": "GeometryCollection",
+*               "geometries": [
+*                   {
+*                   "type": "Polygon",
+*                   "coordinates": [
+*                       [
+*                           [
+*                               -75.5104086779181,
+*                               10.4307384992824
+*                           ],
+*                       ]
+*                   }
+*               ]
+*           },
+*       ]
+*   }
+*/
+
+/**
+* @apiDefine PersistenceLayerInGeofenceExample
+* @apiSuccessExample {json} Success-Example:
+* {
+*      "type": "FeatureCollection",
+*      "features": [
+*          {
+*           "type": "Feature",
+*           "properties": {
+*              "key": "estable_natural",
+*              "area": 10426.840971699932
+*          },
+*          "geometry": {
+*               "type": "GeometryCollection",
+*               "geometries": [
+*                   {
+*                   "type": "Polygon",
+*                   "coordinates": [
+*                       [
+*                           [
+*                               -75.5104086779181,
+*                               10.4307384992824
+*                           ],
+*                       ]
+*                   }
+*               ]
+*           },
+*       ]
+*   }
+*/

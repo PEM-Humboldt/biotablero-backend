@@ -284,6 +284,50 @@ module.exports = (eaPersistence, seService) => {
      * @return {Object} Geojson object with the geometry
      */
     getSELayer: async (eaId, seType) => seService.getSELayerInGeofence('ea', eaId, seType),
+
+    /**
+     * Get the current human footprint layer divided by categories in a given
+     * environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFCategoriesLayerById: async (eaId) => {
+      const geom = await eaPersistence.findHFCategoriesLayerById(eaId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: HFCategoriesKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given
+     * environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getHFPersistenceLayerById: async (eaId) => {
+      const geom = await eaPersistence.findHFPersistenceLayerById(eaId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map(feature => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: persistenceKeys(feature.properties.key),
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return envAuth;

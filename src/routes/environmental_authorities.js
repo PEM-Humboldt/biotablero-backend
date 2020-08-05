@@ -511,5 +511,61 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/layers/current/categories CategoriesLayerInEA
+   * @apiName CategoriesLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the current human footprint layer divided by categories in a given
+   * environmental authority
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/EPA/hf/layers/current/categories
+   * @apiUse CategoriesLayerInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/layers/current/categories', errorHandler((req, res, next) => (
+    eaService.getHFCategoriesLayerById(req.params.ea_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/layers/persistence PersistenceLayerInEA
+   * @apiName PersistenceLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the persistence human footprint layer divided by categories in a given
+   * environmental authority
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/EPA/hf/layers/persistence
+   * @apiUse PersistenceLayerInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/layers/persistence', errorHandler((req, res, next) => (
+    eaService.getHFPersistenceLayerById(req.params.ea_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
   return router;
 };

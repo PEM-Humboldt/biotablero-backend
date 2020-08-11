@@ -325,6 +325,34 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/timeline TimeLineInPA
+   * @apiName HFTimeLineInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given protected area category.
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/pa/:category/hf/timeline', errorHandler((req, res, next) => (
+    paService.getTotalHFTimeLine(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer

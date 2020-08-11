@@ -147,7 +147,7 @@ module.exports = (
     ),
 
     /**
-     * Find the the current value of human footprint in the given environmental authority
+     * Find the current value of human footprint in the given environmental authority
      * @param {String} eaId environmental authority id
      * @param {Number} year optional year to filter data, 2018 by default
      *
@@ -161,7 +161,7 @@ module.exports = (
     ),
 
     /**
-     * Find the the persistence of human footprint areas in the given environmental authority
+     * Find the persistence of human footprint areas in the given environmental authority
      * @param {String} eaId environmental authority id
      *
      * @returns {Object[]} Array of persistence values.
@@ -173,6 +173,22 @@ module.exports = (
         .sum('area_ha as area')
         .select('hf_pers as key')
         .orderBy('key')
+    ),
+
+    /**
+     * Find the human footprint value through time in the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    findTotalHFTimeLine: async eaId => (
+      geoHF.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where({ id_ea: eaId })
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year')
     ),
 
     /**

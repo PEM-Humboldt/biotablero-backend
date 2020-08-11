@@ -61,6 +61,36 @@
  */
 
 /**
+ * @apiDefine TimelineInGeofenceExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "key": "aTotal"
+ *    "data": [
+ *      {
+ *        "x": 1970,
+ *        "y": 34.71575965882226,
+ *      },
+ *      {
+ *        "x": 1990,
+ *        "y": 40.211355678553204,
+ *      },
+ *      {
+ *        "x": 2000,
+ *        "y": 41.50084127642091,
+ *      },
+ *      {
+ *        "x": 2015,
+ *        "y": 42.89788123876601,
+ *      },
+ *      {
+ *        "x": 2018,
+ *        "y": 43.48783967791546,
+ *      },
+ *    ]
+ *  }
+ */
+
+/**
 * @apiDefine CategoriesLayerInGeofenceExample
 * @apiSuccessExample {json} Success-Example:
 * {

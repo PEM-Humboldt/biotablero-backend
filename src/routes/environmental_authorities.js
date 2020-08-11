@@ -262,7 +262,7 @@ module.exports = (errorHandler, eaService) => {
    * area inside the specified area and the non protected area.
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {String} se_type strategiareasc ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area type
@@ -429,6 +429,34 @@ module.exports = (errorHandler, eaService) => {
     eaService.getAreaByHFPersistence(req.params.ea_id)
       .then((areas) => {
         res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/timeline TimeLineInEA
+   * @apiName HFTimeLineInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given environmental authority.
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CDMB/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/timeline', errorHandler((req, res, next) => (
+    eaService.getTotalHFTimeLine(req.params.ea_id)
+      .then((values) => {
+        res.send(values);
         next();
       })
   )));

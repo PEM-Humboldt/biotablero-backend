@@ -262,7 +262,7 @@ module.exports = (errorHandler, eaService) => {
    * area inside the specified area and the non protected area.
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} se_type strategiareasc ecosystem type
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area type

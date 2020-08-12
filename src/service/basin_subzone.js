@@ -200,6 +200,23 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
+     * Get the human footprint value through time in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    getTotalHFTimeLine: async (subzoneId) => {
+      const values = await basinSubzonePersistence.findTotalHFTimeLine(subzoneId);
+      return {
+        key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
      * Get the national layer divided by basin subzones
      */
     getNationalLayer: async () => basinSubzonePersistence.findNationalLayer(),

@@ -260,6 +260,23 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
+     * Get the human footprint value through time in the given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    getTotalHFTimeLine: async (eaId) => {
+      const values = await eaPersistence.findTotalHFTimeLine(eaId);
+      return {
+        key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
      * Get the national layer divided by environmental authority
      */
     getNationalLayer: async () => eaPersistence.findNationalLayer(),

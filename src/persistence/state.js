@@ -109,6 +109,22 @@ module.exports = (
     ),
 
     /**
+     * Find the human footprint value through time in the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    findTotalHFTimeLine: async stateId => (
+      geoHF.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where({ id_state: stateId })
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year')
+    ),
+
+    /**
      * Get GeoJson layer with states at national level
      */
     findNationalLayer: () => (

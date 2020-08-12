@@ -206,6 +206,23 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
+     * Get the human footprint value through time in the given environmental state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    getTotalHFTimeLine: async (stateId) => {
+      const values = await statePersistence.findTotalHFTimeLine(stateId);
+      return {
+        key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
      * Get the national layer divided by states
      */
     getNationalLayer: async () => statePersistence.findNationalLayer(),

@@ -93,7 +93,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     },
 
     /**
-     * Find the the current value of human footprint in the given protected area category
+     * Find the current value of human footprint in the given protected area category
      * @param {String} categoryName protected area category
      * @param {Number} year optional year to filter data, 2018 by default
      *
@@ -112,7 +112,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     },
 
     /**
-     * Find the the persistence of human footprint areas in the given protected area category
+     * Find the persistence of human footprint areas in the given protected area category
      * @param {String} categoryName protected area category
      *
      * @returns {Object[]} Array of persistence values.
@@ -127,6 +127,26 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
         .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
         .groupBy('hf_pers')
         .orderBy('key');
+    },
+
+    /**
+     * Find the human footprint value through time in the given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    findTotalHFTimeLine: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db('geo_hf')
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year');
     },
 
     /**

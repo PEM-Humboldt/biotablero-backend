@@ -199,6 +199,23 @@ module.exports = (paPersistence, seService) => {
     },
 
     /**
+     * Get the human footprint value through time in the given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    getTotalHFTimeLine: async (categoryName) => {
+      const values = await paPersistence.findTotalHFTimeLine(categoryName);
+      return {
+        key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
      * Get the national layer divided by protected area
      */
     getNationalLayer: async () => null,

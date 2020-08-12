@@ -210,8 +210,8 @@ module.exports = (basinSubzonePersistence, seService) => {
       return {
         key: 'aTotal',
         data: values.map(value => ({
-          x: value.year,
-          y: value.avg,
+          x: String(value.year),
+          y: Number(value.avg),
         })),
       };
     },

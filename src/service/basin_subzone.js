@@ -1,4 +1,4 @@
-const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -209,6 +209,25 @@ module.exports = (basinSubzonePersistence, seService) => {
       const values = await basinSubzonePersistence.findTotalHFTimeLine(subzoneId);
       return {
         key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
+     * Request a given strategic ecosystem HF timeline data inside a basin subzone
+     * @param {Number} subzoneId basin subzone id
+     * @param {String} seType strategic ecosystem type
+     *
+     * @return {Object} Object of HF values through time
+     */
+
+    getSEHFTimeline: async (eaId, seType) => {
+      const values = await seService.getSEHFTimelineInGeofence('subzones', eaId, seType);
+      return {
+        key: SEKeys(seType),
         data: values.map(value => ({
           x: String(value.year),
           y: Number(value.avg),

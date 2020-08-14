@@ -224,8 +224,8 @@ module.exports = (basinSubzonePersistence, seService) => {
      * @return {Object} Object of HF values through time
      */
 
-    getSEHFTimeline: async (eaId, seType) => {
-      const values = await seService.getSEHFTimelineInGeofence('subzones', eaId, seType);
+    getSEHFTimeline: async (subzoneId, seType) => {
+      const values = await seService.getSEHFTimelineInGeofence('subzones', subzoneId, seType);
       return {
         key: SEKeys(seType),
         data: values.map(value => ({

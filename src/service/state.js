@@ -230,8 +230,8 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * @return {Object} Object of HF values through time
      */
 
-    getSEHFTimeline: async (eaId, seType) => {
-      const values = await seService.getSEHFTimelineInGeofence('states', eaId, seType);
+    getSEHFTimeline: async (stateId, seType) => {
+      const values = await seService.getSEHFTimelineInGeofence('states', stateId, seType);
       return {
         key: SEKeys(seType),
         data: values.map(value => ({

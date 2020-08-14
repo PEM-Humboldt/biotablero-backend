@@ -327,7 +327,7 @@ module.exports = (errorHandler, paService) => {
   /**
    * @apiGroup s_hf
    * @api {get} /pa/:category/hf/timeline TimeLineInPA
-   * @apiName HFTimeLineInPA
+   * @apiName TimeLineInPA
    * @apiVersion 0.1.0
    * @apiDescription
    * Values for the human footprint through time inside the given protected area category.

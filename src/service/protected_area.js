@@ -1,4 +1,4 @@
-const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
 
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
@@ -208,6 +208,25 @@ module.exports = (paPersistence, seService) => {
       const values = await paPersistence.findTotalHFTimeLine(categoryName);
       return {
         key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
+     * Request a given strategic ecosystem HF timeline data inside a protected area category
+     * @param {String} categoryName protected area category
+     * @param {String} seType strategic ecosystem type
+     *
+     * @return {Object} Object of HF values through time
+     */
+
+    getSEHFTimeline: async (categoryName, seType) => {
+      const values = await seService.getSEHFTimelineInPA(categoryName, seType);
+      return {
+        key: SEKeys(seType),
         data: values.map(value => ({
           x: String(value.year),
           y: Number(value.avg),

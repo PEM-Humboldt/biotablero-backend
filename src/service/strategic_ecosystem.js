@@ -517,6 +517,54 @@ module.exports = (
   },
 
   /**
+   * Get an strategic ecosystem HF timeline data inside an environmental authority, state or
+   * basin subzone
+   * @param {String} geofence identifier for the geofence type: ea, states, subzones
+   * @param {String | Number} geofenceId geofence id
+   * @param {String} ecosystem ecosystem to get the layer for
+   *
+   * @return {Object} Object with the desired data
+   */
+  getSEHFTimelineInGeofence: async (geofence, geofenceId, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findSEHFTimeLineInGeofence(geofence, geofenceId);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findSEHFTimeLineInGeofence(geofence, geofenceId);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findSEHFTimeLineInGeofence(geofence, geofenceId);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
+   * Get an strategic ecosystem HF timeline data inside a protected area category
+   * @param {String} categoryName protected area category
+   * @param {String} ecosystem ecosystem to get the layer for
+   *
+   * @return {Object} Object with the desired data
+   */
+  getSEHFTimelineInPA: async (categoryName, ecosystem) => {
+    switch (ecosystem) {
+      case 'Páramo': {
+        return paramoPersistence.findSEHFTimeLineInPA(categoryName);
+      }
+      case 'Humedal': {
+        return wetlandPersistence.findSEHFTimeLineInPA(categoryName);
+      }
+      case 'Bosque Seco Tropical': {
+        return tropicalDryForestPersistence.findSEHFTimeLineInPA(categoryName);
+      }
+      default:
+        return {};
+    }
+  },
+
+  /**
    * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
    * @param {String} geofence identifier for the geofence type: ea, states, subzones
    * @param {String | Number} geofenceId geofence id

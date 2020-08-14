@@ -16,4 +16,12 @@ module.exports = {
       default: return val;
     }
   },
+  SEKeys: (val) => {
+    switch (val) {
+      case 'Páramo': return 'paramo';
+      case 'Humedal': return 'wetland';
+      case 'Bosque Seco Tropical': return 'dryForest';
+      default: return val;
+    }
+  },
 };

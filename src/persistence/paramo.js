@@ -2,7 +2,12 @@ const config = require('config');
 
 module.exports = (
   db,
-  { geoParamoDetails, geoEnvironmentalAuthorities, globalBinaryProtectedAreas },
+  {
+    geoParamoDetails,
+    geoEnvironmentalAuthorities,
+    globalBinaryProtectedAreas,
+    geoHFParamo,
+  },
 ) => {
   const geometriesConfig = config.geometries;
 
@@ -247,6 +252,48 @@ module.exports = (
         .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
         .orderBy('gbpa.binary_protected', 'desc')
     ),
+
+    /**
+     * Find the HF timeline data inside an environmental authority,state or basin subzone
+     * @param {String} geofence identifier for the geofence type: ea, states, subzones
+     * @param {String | Number} geofenceId geofence id
+     *
+     * @result {Object} Object with the desired data
+     */
+    findSEHFTimeLineInGeofence: async (geofence, geofenceId) => {
+      const columnName = {
+        ea: 'id_ea',
+        states: 'id_state',
+        subzones: 'id_subzone',
+      };
+      return geoHFParamo.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where(db.raw('?? = ?', [columnName[geofence], geofenceId]))
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year');
+    },
+
+    /**
+     * Find the HF timeline data inside a protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @result {Object} Object with the desired data
+     */
+    findSEHFTimeLineInPA: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return geoHFParamo.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year');
+    },
 
     /**
      * Find the geometry associated inside an environmental authority, state or basin subzone

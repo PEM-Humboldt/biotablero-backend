@@ -202,7 +202,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -225,7 +225,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy,
+        [
           bitMask,
           bitMask,
           year,
@@ -258,7 +258,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -279,7 +279,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy,
+        [
           bitMask,
           bitMask,
           bitMask,

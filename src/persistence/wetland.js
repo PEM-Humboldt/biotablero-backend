@@ -1,5 +1,3 @@
-const config = require('config');
-
 module.exports = (
   db,
   {
@@ -7,10 +5,8 @@ module.exports = (
     globalBinaryProtectedAreas,
     geoHFWetland,
   },
-) => {
-  const geometriesConfig = config.geometries;
-
-  return {
+) => (
+  {
     /**
      * Get the area inside the given environmental authority
      *
@@ -327,5 +323,5 @@ module.exports = (
       )
         .then(layers => layers.rows[0].collection);
     },
-  };
-};
+  }
+);

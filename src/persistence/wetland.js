@@ -1,5 +1,3 @@
-const config = require('config');
-
 module.exports = (
   db,
   {
@@ -7,10 +5,8 @@ module.exports = (
     globalBinaryProtectedAreas,
     geoHFWetland,
   },
-) => {
-  const geometriesConfig = config.geometries;
-
-  return {
+) => (
+  {
     /**
      * Get the area inside the given environmental authority
      *
@@ -291,12 +287,12 @@ module.exports = (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(geom)::json as geometry
             FROM geo_hf_wetland as ghw
             WHERE ?? = ? AND hf_year = ?
           ) as f
         ) as fc`,
-        [geometriesConfig.tolerance_heavy, columnName[geofence], geofenceId, year],
+        [columnName[geofence], geofenceId, year],
       )
         .then(layers => layers.rows[0].collection);
     },
@@ -318,14 +314,14 @@ module.exports = (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(geom)::json as geometry
             FROM geo_hf_wetland as ghw
             WHERE (binary_protected & ?) = ? AND hf_year = ?
           ) as f
         ) as fc`,
-        [geometriesConfig.tolerance_heavy, bitMask, bitMask, year],
+        [bitMask, bitMask, year],
       )
         .then(layers => layers.rows[0].collection);
     },
-  };
-};
+  }
+);

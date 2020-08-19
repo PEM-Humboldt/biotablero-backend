@@ -325,6 +325,64 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/hf/timeline TimeLineInPA
+   * @apiName TimeLineInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given protected area category.
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/pa/:category/hf/timeline', errorHandler((req, res, next) => (
+    paService.getTotalHFTimeLine(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /pa/:category/:se_type/hf/timeline SETimeLineInPA
+   * @apiName SETimeLineInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time for a strategic ecosystem inside the given
+   * protected area category
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key key that identifies strategic ecosystem type
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/se/Páramo/hf/timeline
+   * @apiUse SETimelineInGeofenceExample
+   */
+  router.get('/pa/:category/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
+    paService.getSEHFTimeline(req.params.category, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer

@@ -109,6 +109,22 @@ module.exports = (
     ),
 
     /**
+     * Find the human footprint value through time in the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    findTotalHFTimeLine: async stateId => (
+      geoHF.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where({ id_state: stateId })
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year')
+    ),
+
+    /**
      * Get GeoJson layer with states at national level
      */
     findNationalLayer: () => (
@@ -181,7 +197,7 @@ module.exports = (
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -204,7 +220,7 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy, stateId, year, stateId, year],
+        [stateId, year, stateId, year],
       )
         .then(layers => layers.rows[0].collection)
     ),
@@ -226,7 +242,7 @@ module.exports = (
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -247,7 +263,7 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy, stateId, stateId],
+        [stateId, stateId],
       )
         .then(layers => layers.rows[0].collection)
     ),

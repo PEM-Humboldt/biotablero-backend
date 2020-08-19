@@ -356,6 +356,64 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/timeline TimeLineInState
+   * @apiName TimeLineInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given state
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/timeline', errorHandler((req, res, next) => (
+    stateService.getTotalHFTimeLine(req.params.state_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/se/:se_type/hf/timeline SETimeLineInState
+   * @apiName SETimeLineInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time for a strategic ecosystem inside the given
+   * state
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key key that identifies strategic ecosystem type
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/Páramo/hf/timeline
+   * @apiUse SETimelineInGeofenceExample
+   */
+  router.get('/states/:state_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
+    stateService.getSEHFTimeline(req.params.state_id, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer

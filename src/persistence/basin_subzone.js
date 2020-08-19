@@ -80,7 +80,7 @@ module.exports = (
     ),
 
     /**
-     * Find the the current value of human footprint in the given basin subzone
+     * Find the current value of human footprint in the given basin subzone
      * @param {Number} subzoneId basin subzone id
      * @param {Number} year optional year to filter data, 2018 by default
      *
@@ -94,7 +94,7 @@ module.exports = (
     ),
 
     /**
-     * Find the the persistence of human footprint areas in the given basin subzone
+     * Find the persistence of human footprint areas in the given basin subzone
      * @param {Number} subzoneId basin subzone id
      *
      * @returns {Object[]} Array of persistence values.
@@ -106,6 +106,22 @@ module.exports = (
         .sum('area_ha as area')
         .select('hf_pers as key')
         .orderBy('key')
+    ),
+
+    /**
+     * Find the human footprint value through time in the given basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    findTotalHFTimeLine: async subzoneId => (
+      geoHF.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where({ id_subzone: subzoneId })
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year')
     ),
 
     /**
@@ -181,7 +197,7 @@ module.exports = (
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -204,7 +220,7 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy, subzoneId, year, subzoneId, year],
+        [subzoneId, year, subzoneId, year],
       )
         .then(layers => layers.rows[0].collection)
     ),
@@ -225,7 +241,7 @@ module.exports = (
             SELECT 
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json AS geometry 
+              ST_AsGeoJSON(geom)::json AS geometry
             FROM (
               SELECT 
                 ST_Collect(geom) AS geom,
@@ -246,7 +262,7 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [geometriesConfig.tolerance_heavy, subzoneId, subzoneId],
+        [subzoneId, subzoneId],
       )
         .then(layers => layers.rows[0].collection)
     ),

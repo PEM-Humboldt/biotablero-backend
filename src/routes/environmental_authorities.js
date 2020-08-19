@@ -433,6 +433,64 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/hf/timeline TimeLineInEA
+   * @apiName TimeLineInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given environmental authority
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CDMB/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/ea/:ea_id/hf/timeline', errorHandler((req, res, next) => (
+    eaService.getTotalHFTimeLine(req.params.ea_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /ea/:ea_id/se/:se_type/hf/timeline SETimeLineInEA
+   * @apiName SETimeLineInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time for a strategic ecosystem inside the given
+   * environmental authority
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key key that identifies strategic ecosystem type
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CDMB/se/Páramo/hf/timeline
+   * @apiUse SETimelineInGeofenceExample
+   */
+  router.get('/ea/:ea_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
+    eaService.getSEHFTimeline(req.params.ea_id, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
 
   /**
    * @apiGroup geofence_ea

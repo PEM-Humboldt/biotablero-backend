@@ -328,6 +328,64 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
+   * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/hf/timeline TimeLineInSubzone
+   * @apiName TimeLineInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given basin subzone
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/hf/timeline', errorHandler((req, res, next) => (
+    basinSubzoneService.getTotalHFTimeLine(req.params.subzone_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /basinSubzones/:subzone_id/se/:se_type/hf/timeline SETimeLineInSubzone
+   * @apiName SETimeLineInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time for a strategic ecosystem inside the given
+   * basin subzone
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key key that identifies strategic ecosystem type
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3701/se/Páramo/hf/timeline
+   * @apiUse SETimelineInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
+    basinSubzoneService.getSEHFTimeline(req.params.subzone_id, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer

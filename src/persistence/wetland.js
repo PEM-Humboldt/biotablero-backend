@@ -1,9 +1,12 @@
-const config = require('config');
-
-module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) => {
-  const geometriesConfig = config.geometries;
-
-  return {
+module.exports = (
+  db,
+  {
+    colombiaWetlandDetails,
+    globalBinaryProtectedAreas,
+    geoHFWetland,
+  },
+) => (
+  {
     /**
      * Get the area inside the given environmental authority
      *
@@ -223,6 +226,48 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
     ),
 
     /**
+     * Find the HF timeline data inside an environmental authority,state or basin subzone
+     * @param {String} geofence identifier for the geofence type: ea, states, subzones
+     * @param {String | Number} geofenceId geofence id
+     *
+     * @result {Object} Object with the desired data
+     */
+    findSEHFTimeLineInGeofence: async (geofence, geofenceId) => {
+      const columnName = {
+        ea: 'id_ea',
+        states: 'id_state',
+        subzones: 'id_subzone',
+      };
+      return geoHFWetland.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where(db.raw('?? = ?', [columnName[geofence], geofenceId]))
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year');
+    },
+
+    /**
+     * Find the HF timeline data inside a protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @result {Object} Object with the desired data
+     */
+    findSEHFTimeLineInPA: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas.query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return geoHFWetland.query()
+        .select('hf_year as year')
+        .avg('hf_avg as avg')
+        .where(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
+        .whereNot({ hf_avg: -9999 })
+        .groupBy('year')
+        .orderBy('year');
+    },
+
+    /**
      * Find the geometry associated inside an environmental authority, state or basin subzone
      * @param {String} geofence identifier for the geofence type: ea, states, subzones
      * @param {String | Number} geofenceId geofence id
@@ -242,12 +287,12 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(geom)::json as geometry
             FROM geo_hf_wetland as ghw
             WHERE ?? = ? AND hf_year = ?
           ) as f
         ) as fc`,
-        [geometriesConfig.tolerance_heavy, columnName[geofence], geofenceId, year],
+        [columnName[geofence], geofenceId, year],
       )
         .then(layers => layers.rows[0].collection);
     },
@@ -269,14 +314,14 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas }) =>
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
             SELECT 'Feature' as type,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(geom)::json as geometry
             FROM geo_hf_wetland as ghw
             WHERE (binary_protected & ?) = ? AND hf_year = ?
           ) as f
         ) as fc`,
-        [geometriesConfig.tolerance_heavy, bitMask, bitMask, year],
+        [bitMask, bitMask, year],
       )
         .then(layers => layers.rows[0].collection);
     },
-  };
-};
+  }
+);

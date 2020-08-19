@@ -1,4 +1,4 @@
-const { persistenceKeys, HFCategoriesKeys } = require('../util/appropriate_keys');
+const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -203,6 +203,42 @@ module.exports = (statePersistence, municipalityService, seService) => {
         key: persistenceKeys(value.key),
         percentage: value.area / stateArea,
       }));
+    },
+
+    /**
+     * Get the human footprint value through time in the given state
+     * @param {Number} stateId state id
+     *
+     * @returns {Object} Object of HF values through time
+     */
+    getTotalHFTimeLine: async (stateId) => {
+      const values = await statePersistence.findTotalHFTimeLine(stateId);
+      return {
+        key: 'aTotal',
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
+    },
+
+    /**
+     * Request a given strategic ecosystem HF timeline data inside a state
+     * @param {Number} stateId state id
+     * @param {String} seType strategic ecosystem type
+     *
+     * @return {Object} Object of HF values through time
+     */
+
+    getSEHFTimeline: async (stateId, seType) => {
+      const values = await seService.getSEHFTimelineInGeofence('states', stateId, seType);
+      return {
+        key: SEKeys(seType),
+        data: values.map(value => ({
+          x: String(value.year),
+          y: Number(value.avg),
+        })),
+      };
     },
 
     /**

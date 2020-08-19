@@ -167,11 +167,13 @@ module.exports = (statePersistence, municipalityService, seService) => {
       let stateArea = await state.getTotalArea(stateId);
       stateArea = stateArea.total_area;
       const values = await statePersistence.findAreaByHFCategory(stateId);
-      return values.map(value => ({
-        area: Number(value.area),
-        key: HFCategoriesKeys(value.key),
-        percentage: value.area / stateArea,
-      }));
+      return values
+        .sort((a, b) => HFCategoriesKeys(a.key).order - HFCategoriesKeys(b.key).order)
+        .map(value => ({
+          area: Number(value.area),
+          key: HFCategoriesKeys(value.key).key,
+          percentage: value.area / stateArea,
+        }));
     },
 
     /**
@@ -198,11 +200,13 @@ module.exports = (statePersistence, municipalityService, seService) => {
       let stateArea = await state.getTotalArea(stateId);
       stateArea = stateArea.total_area;
       const values = await statePersistence.findHFPersistenceAreas(stateId);
-      return values.map(value => ({
-        area: Number(value.area),
-        key: persistenceKeys(value.key),
-        percentage: value.area / stateArea,
-      }));
+      return values
+        .sort((a, b) => persistenceKeys(a.key).order - persistenceKeys(b.key).order)
+        .map(value => ({
+          area: Number(value.area),
+          key: persistenceKeys(value.key).key,
+          percentage: value.area / stateArea,
+        }));
     },
 
     /**
@@ -282,7 +286,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: HFCategoriesKeys(feature.properties.key),
+            key: HFCategoriesKeys(feature.properties.key).key,
           },
         }));
         return geom;
@@ -304,7 +308,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: persistenceKeys(feature.properties.key),
+            key: persistenceKeys(feature.properties.key).key,
           },
         }));
         return geom;

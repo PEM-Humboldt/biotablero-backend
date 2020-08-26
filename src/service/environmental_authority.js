@@ -220,11 +220,13 @@ module.exports = (eaPersistence, seService) => {
       let eaArea = await envAuth.getTotalArea(eaId);
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findAreaByHFCategory(eaId);
-      return values.map(value => ({
-        area: Number(value.area),
-        key: HFCategoriesKeys(value.key),
-        percentage: value.area / eaArea,
-      }));
+      return values
+        .sort((a, b) => HFCategoriesKeys(a.key).order - HFCategoriesKeys(b.key).order)
+        .map(value => ({
+          area: Number(value.area),
+          key: HFCategoriesKeys(value.key).key,
+          percentage: value.area / eaArea,
+        }));
     },
 
     /**
@@ -252,11 +254,13 @@ module.exports = (eaPersistence, seService) => {
       let eaArea = await envAuth.getTotalArea(eaId);
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findHFPersistenceAreas(eaId);
-      return values.map(value => ({
-        area: Number(value.area),
-        key: persistenceKeys(value.key),
-        percentage: value.area / eaArea,
-      }));
+      return values
+        .sort((a, b) => persistenceKeys(a.key).order - persistenceKeys(b.key).order)
+        .map(value => ({
+          area: Number(value.area),
+          key: persistenceKeys(value.key).key,
+          percentage: value.area / eaArea,
+        }));
     },
 
     /**
@@ -335,7 +339,7 @@ module.exports = (eaPersistence, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: HFCategoriesKeys(feature.properties.key),
+            key: HFCategoriesKeys(feature.properties.key).key,
           },
         }));
         return geom;
@@ -357,7 +361,7 @@ module.exports = (eaPersistence, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: persistenceKeys(feature.properties.key),
+            key: persistenceKeys(feature.properties.key).key,
           },
         }));
         return geom;

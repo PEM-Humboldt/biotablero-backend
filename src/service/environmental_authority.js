@@ -368,6 +368,19 @@ module.exports = (eaPersistence, seService) => {
       }
       return {};
     },
+
+    /**
+   * Get biomes by a given environmental authority.
+   *
+   * @param {String} envAuthority environmental authority name to filter by
+   *
+   * @return {Object} TopoJson Object with biomes as geometries from a GeometryCollection
+   */
+    getBiomeByEA: async (envAuthority) => {
+      let geometry = await eaPersistence.findBiomeByEA(envAuthority);
+      if (geometry === null || geometry.features === null) geometry = null;
+      return geometry;
+    },
   };
 
   return envAuth;

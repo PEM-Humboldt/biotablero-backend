@@ -9,36 +9,6 @@ module.exports = (
 
   return {
     /**
-     * Select biomes by a given environmental authority.
-     *
-     * @param {String} envAuthority environmental authority name to filter by
-     *
-     * @returns {Object} GeoJson Object with biomes as features from a FeatureCollection
-     */
-    findBiomeByEA: envAuthority => (
-      db.raw(
-        `SELECT row_to_json(fc) as collection
-        FROM (
-          SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
-          FROM(
-            SELECT 'Feature' as type,
-              row_to_json(geo_biomes2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
-            FROM geo_ea_biomes as geo_biomes1
-            INNER JOIN (
-              SELECT geb.gid, geb.name_biome, geb.id_biome, gb.compensation_factor
-              FROM geo_ea_biomes as geb
-              INNER JOIN geo_biomes as gb ON gb.id_biome = geb.id_biome
-            ) as geo_biomes2 ON geo_biomes2.gid = geo_biomes1.gid
-            WHERE geo_biomes1.id_ea = ?
-          ) as f
-        ) as fc`,
-        [geometriesConfig.tolerance, envAuthority],
-      )
-        .then(biomes => biomes.rows[0].collection)
-    ),
-
-    /**
      * Bulk create a set of project impacted biomes
      *
      * @param {Object[]} biomes project impacted biomes to create

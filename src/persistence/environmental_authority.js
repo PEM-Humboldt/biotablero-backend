@@ -343,7 +343,7 @@ module.exports = (
      *
      * @returns {Object} GeoJson Object with biomes as features from a FeatureCollection
      */
-    findBiomeByEA: envAuthority => (
+    findBiomesLayerById: envAuthority => (
       db.raw(
         `SELECT row_to_json(fc) as collection
         FROM (

@@ -647,7 +647,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiUse BiomesLayerInEAExample
    */
   router.get('/ea/layers/:ea_id/biomes', errorHandler((req, res, next) => (
-    eaService.getBiomeByEA(req.params.ea_id)
+    eaService.getBiomesLayer(req.params.ea_id)
       .then((biomes) => {
         res.send(biomes);
         next();

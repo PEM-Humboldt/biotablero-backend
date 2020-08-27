@@ -625,5 +625,34 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup geofence_ea
+   * @api {get} /ea/layers/:ea_id/biomes BiomesLayerInEA
+   * @apiName BiomesLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Find all biomes that belong to the given environmental authority.
+   *
+   * @apiParam {String} ea_id environmental authority id to filter biomes
+   *
+   * @apiSuccess (geojson) {Object} result GeoJSONJ object
+   * @apiSuccess (geojson) {Object} result.features.properties Specific properties for each feature
+   * @apiSuccess (geojson) {Number} result.features.properties.gid feature id
+   * @apiSuccess (geojson) {String} result.features.properties.name_biome biome name
+   * @apiSuccess (geojson) {Number} result.features.properties.id_biome biome id
+   * @apiSuccess (geojson) {Number} result.features.properties.compensation_factor biome CF
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/layers/CORPOBOYACA/biomes
+   * @apiUse BiomesLayerInEAExample
+   */
+  router.get('/ea/layers/:ea_id/biomes', errorHandler((req, res, next) => (
+    eaService.getBiomesLayer(req.params.ea_id)
+      .then((biomes) => {
+        res.send(biomes);
+        next();
+      })
+  )));
+
   return router;
 };

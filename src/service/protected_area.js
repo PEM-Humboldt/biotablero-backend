@@ -1,4 +1,9 @@
-const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
+const {
+  persistenceKeys,
+  HFCategoriesKeys,
+  SEKeys,
+  HFCategoriesRangeKeys,
+} = require('../util/appropriate_keys');
 
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
@@ -169,17 +174,20 @@ module.exports = (paPersistence, seService) => {
     },
 
     /**
-     * Get the current value of human footprint for the given protected area
+     * Get the current value and category of human footprint for the given protected area
      * @param {String} categoryName protected area category
      *
-     * @returns {Object} One attribute object with the current human footprint value.
+     * @returns {Object} Object with the current human footprint value.
      */
     getCurrentHFValue: async (categoryName) => {
       const value = await paPersistence.findCurrentHFValue(categoryName);
       if (value[0].CurrentHFValue === null) {
         throw new Error('protected area category doesn\'t exists');
       }
-      return { value: value[0].CurrentHFValue };
+      return {
+        value: value[0].CurrentHFValue,
+        category: HFCategoriesRangeKeys(value[0].CurrentHFValue),
+      };
     },
 
     /**

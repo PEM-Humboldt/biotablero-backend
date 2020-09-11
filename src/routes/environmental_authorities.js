@@ -379,14 +379,16 @@ module.exports = (errorHandler, eaService) => {
    * @apiName CurrentValueInEA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given environmental authority
+   * Value and category of the current human footprint inside the given environmental authority
    *
-   * Values calculated for 2018
+   * Value calculated for 2018
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.value current value of human footprint inside the given
+   * environmental authority
+   * @apiSuccess {String} result.category category of human footprint inside the given
    * environmental authority
    *
    * @apiExample {curl} Example usage:

@@ -35,7 +35,7 @@
  */
 
 /**
- * @apiDefine BiomesInEALayerExample
+ * @apiDefine BiomesLayerInEAExample
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "type": "FeatureCollection",

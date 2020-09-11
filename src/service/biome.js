@@ -2,19 +2,6 @@ const groupObjects = require('../util/groupObjects');
 
 module.exports = biomePersistence => ({
   /**
-   * Get biomes by a given environmental authority.
-   *
-   * @param {String} envAuthority environmental authority name to filter by
-   *
-   * @return {Object} TopoJson Object with biomes as geometries from a GeometryCollection
-   */
-  getBiomeByEA: async (envAuthority) => {
-    let geometry = await biomePersistence.findBiomeByEA(envAuthority);
-    if (geometry === null || geometry.features === null) geometry = null;
-    return geometry;
-  },
-
-  /**
    * Bulk create a set of project impacted biomes
    *
    * @param {Object[]} biomes project impacted biomes to create

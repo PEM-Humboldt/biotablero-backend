@@ -1,6 +1,6 @@
 const {
-  persistenceKeys,
-  HFCategoriesKeys,
+  persistenceKeysOrder,
+  HFCategoriesKeysOrder,
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
@@ -226,10 +226,10 @@ module.exports = (eaPersistence, seService) => {
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findAreaByHFCategory(eaId);
       return values
-        .sort((a, b) => HFCategoriesKeys(a.key).order - HFCategoriesKeys(b.key).order)
+        .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
         .map(value => ({
           area: Number(value.area),
-          key: HFCategoriesKeys(value.key).key,
+          key: value.key,
           percentage: value.area / eaArea,
         }));
     },
@@ -263,10 +263,10 @@ module.exports = (eaPersistence, seService) => {
       eaArea = eaArea.total_area;
       const values = await eaPersistence.findHFPersistenceAreas(eaId);
       return values
-        .sort((a, b) => persistenceKeys(a.key).order - persistenceKeys(b.key).order)
+        .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
         .map(value => ({
           area: Number(value.area),
-          key: persistenceKeys(value.key).key,
+          key: value.key,
           percentage: value.area / eaArea,
         }));
     },
@@ -347,7 +347,7 @@ module.exports = (eaPersistence, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: HFCategoriesKeys(feature.properties.key).key,
+            key: feature.properties.key,
           },
         }));
         return geom;
@@ -369,7 +369,7 @@ module.exports = (eaPersistence, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: persistenceKeys(feature.properties.key).key,
+            key: feature.properties.key,
           },
         }));
         return geom;

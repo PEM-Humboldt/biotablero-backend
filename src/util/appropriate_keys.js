@@ -24,4 +24,17 @@ module.exports = {
       default: return val;
     }
   },
+  HFCategoriesRangeKeys: (val) => {
+    switch (true) {
+      case val >= 0 && val <= 15:
+        return 'natural';
+      case val > 15 && val <= 30:
+        return 'baja';
+      case val > 30 && val <= 60:
+        return 'media';
+      case val > 60 && val <= 100:
+        return 'alta';
+      default: return val;
+    }
+  },
 };

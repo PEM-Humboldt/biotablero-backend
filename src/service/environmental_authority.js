@@ -1,4 +1,9 @@
-const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
+const {
+  persistenceKeys,
+  HFCategoriesKeys,
+  SEKeys,
+  HFCategoriesRangeKeys,
+} = require('../util/appropriate_keys');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -230,17 +235,20 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
-     * Get the current value of human footprint for the given environmental authority
+     * Get the current value and category of human footprint for the given environmental authority
      * @param {String} eaId environmental authority id
      *
-     * @returns {Object} One attribute object with the current human footprint value.
+     * @returns {Object} Object with the current human footprint value and category.
      */
     getCurrentHFValue: async (eaId) => {
       const value = await eaPersistence.findCurrentHFValue(eaId);
       if (value[0].CurrentHFValue === null) {
         throw new Error('environmental authority doesn\'t exists');
       }
-      return { value: value[0].CurrentHFValue };
+      return {
+        value: value[0].CurrentHFValue,
+        category: HFCategoriesRangeKeys(value[0].CurrentHFValue),
+      };
     },
 
     /**

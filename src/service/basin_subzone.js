@@ -1,4 +1,9 @@
-const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
+const {
+  persistenceKeys,
+  HFCategoriesKeys,
+  SEKeys,
+  HFCategoriesRangeKeys,
+} = require('../util/appropriate_keys');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -171,17 +176,20 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
-     * Get the current value of human footprint for the given basin subzone
+     * Get the current value and category of human footprint for the given basin subzone
      * @param {Number} subzoneId basin subzone id
      *
-     * @returns {Object} One attribute object with the current human footprint value.
+     * @returns {Object} Object with the current human footprint value.
      */
     getCurrentHFValue: async (subzoneId) => {
       const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
       if (value[0].CurrentHFValue === null) {
         throw new Error('basin subzone doesn\'t exists');
       }
-      return { value: value[0].CurrentHFValue };
+      return {
+        value: value[0].CurrentHFValue,
+        category: HFCategoriesRangeKeys(value[0].CurrentHFValue),
+      };
     },
 
     /**

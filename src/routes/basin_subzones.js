@@ -274,14 +274,16 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiName CurrentValueInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given basin subzone
+   * Value and category of the current value of human footprint inside the given basin subzone
    *
-   * Values calculated for 2018
+   * Value calculated for 2018
    *
    * @apiParam (Path params) {Number} subzone_id basin subzone id
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.value current value of human footprint inside the given
+   * basin subzone
+   * @apiSuccess {String} result.category category of human footprint inside the given
    * basin subzone
    *
    * @apiExample {curl} Example usage:

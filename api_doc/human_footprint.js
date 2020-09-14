@@ -7,7 +7,8 @@
  * @apiDefine CurrentValueInGeofenceExample
  * @apiSuccessExample {json} Success-Example:
  *  {
- *    "value": "43.4878396779154589"
+ *    "value": "43.4878396779154589",
+ *    "category": "media"
  *  }
  */
 

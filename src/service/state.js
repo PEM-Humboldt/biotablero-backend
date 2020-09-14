@@ -1,4 +1,9 @@
-const { persistenceKeys, HFCategoriesKeys, SEKeys } = require('../util/appropriate_keys');
+const {
+  persistenceKeys,
+  HFCategoriesKeys,
+  SEKeys,
+  HFCategoriesRangeKeys,
+} = require('../util/appropriate_keys');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -177,17 +182,20 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
-     * Get the current value of human footprint for the given state
+     * Get the current value and category of human footprint for the given state
      * @param {Number} stateId state id
      *
-     * @returns {Object} One attribute object with the current human footprint value.
+     * @returns {Object} Object with the current human footprint value.
      */
     getCurrentHFValue: async (stateId) => {
       const value = await statePersistence.findCurrentHFValue(stateId);
       if (value[0].CurrentHFValue === null) {
         throw new Error('state doesn\'t exists');
       }
-      return { value: value[0].CurrentHFValue };
+      return {
+        value: value[0].CurrentHFValue,
+        category: HFCategoriesRangeKeys(value[0].CurrentHFValue),
+      };
     },
 
     /**

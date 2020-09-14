@@ -271,14 +271,16 @@ module.exports = (errorHandler, paService) => {
    * @apiName CurrentValueInPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Value of the current value of human footprint inside the given protected area
+   * Value and category of the current value of human footprint inside the given protected area
    *
-   * Values calculated for 2018
+   * Value calculated for 2018
    *
    * @apiParam (Path params) {String} protected area category
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.value current value of human footprint inside the given
+   * protected area
+   * @apiSuccess {String} result.category category of human footprint inside the given
    * protected area
    *
    * @apiExample {curl} Example usage:

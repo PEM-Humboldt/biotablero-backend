@@ -1,6 +1,6 @@
 const {
-  persistenceKeys,
-  HFCategoriesKeys,
+  persistenceKeysOrder,
+  HFCategoriesKeysOrder,
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
@@ -173,10 +173,10 @@ module.exports = (statePersistence, municipalityService, seService) => {
       stateArea = stateArea.total_area;
       const values = await statePersistence.findAreaByHFCategory(stateId);
       return values
-        .sort((a, b) => HFCategoriesKeys(a.key).order - HFCategoriesKeys(b.key).order)
+        .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
         .map(value => ({
           area: Number(value.area),
-          key: HFCategoriesKeys(value.key).key,
+          key: value.key,
           percentage: value.area / stateArea,
         }));
     },
@@ -209,10 +209,10 @@ module.exports = (statePersistence, municipalityService, seService) => {
       stateArea = stateArea.total_area;
       const values = await statePersistence.findHFPersistenceAreas(stateId);
       return values
-        .sort((a, b) => persistenceKeys(a.key).order - persistenceKeys(b.key).order)
+        .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
         .map(value => ({
           area: Number(value.area),
-          key: persistenceKeys(value.key).key,
+          key: value.key,
           percentage: value.area / stateArea,
         }));
     },
@@ -294,7 +294,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: HFCategoriesKeys(feature.properties.key).key,
+            key: feature.properties.key,
           },
         }));
         return geom;
@@ -316,7 +316,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
           ...feature,
           properties: {
             ...feature.properties,
-            key: persistenceKeys(feature.properties.key).key,
+            key: feature.properties.key,
           },
         }));
         return geom;

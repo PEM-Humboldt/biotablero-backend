@@ -54,7 +54,7 @@ It is recommended to use the [current release](https://github.com/PEM-Humboldt/b
 
 #### Config
 
-After you've built the image, create a copy of the [config](config/develop) file with your configuration values. Remember to match the config file name with the env variable set for the container at run time.
+After you've built the image, create a copy of the [config](config/default.json) file with your configuration values.
 
 **NOTE**: *If you change the server port in the configuration (4000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
 
@@ -63,9 +63,8 @@ After you've built the image, create a copy of the [config](config/develop) file
 In the file [docker-compose.yml](docker-compose.yml):
 
 1. Update the image tag to use
-1. Change (if necessary) the NODE_CONFIG_ENV value to match your config file
-1. The host part of **volumes** section must match the location of your config files. And the file name must match the NODE_CONFIG_ENV value.
-1. If you changed the port in the config, change the container side of **ports** section for the value set, and change the host side for the ort in which you want to expose the servide
+1. In the **volumes** section link the config file you created in the previous step to the config file in the container. The name of the file inside the container must match the NODE_CONFIG_ENV value.
+1. If you changed the port in the config, change the container side of **ports** section for the value set, and change the host side for the ort in which you want to expose the service
 
 Then run: `docker-compose up -d`
 

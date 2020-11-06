@@ -4,6 +4,7 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
+const sci = require('../tmp/sci.json');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -252,6 +253,14 @@ module.exports = (statePersistence, municipalityService, seService) => {
         })),
       };
     },
+
+    /**
+     * Get the SCI with HF information inside an state
+     * @param {Number} stateId state id
+     *
+     * @return {Object[]} Object of SCI HF values
+     */
+    getSCIHF: async () => sci,
 
     /**
      * Get the national layer divided by states

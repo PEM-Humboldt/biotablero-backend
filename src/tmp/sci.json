@@ -1,0 +1,146 @@
+[
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "alta",
+    "pa": "PNN",
+    "area": 101834
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "alta",
+    "pa": "PNR",
+    "area": 134886
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "alta",
+    "pa": "RFPN",
+    "area": 43953
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "alta",
+    "pa": "ANU",
+    "area": 57573
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "alta",
+    "pa": "NO PA",
+    "area": 134886
+  },
+  {
+    "hf_pers": "estable_baja",
+    "sci_cat": "alta",
+    "pa": "NO PA",
+    "area": 53236
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "PNN",
+    "area": 135436
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "PNR",
+    "area": 9625
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "DRMI",
+    "area": 72849
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "RFPR",
+    "area": 162804
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "ANU",
+    "area": 82973
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "alta",
+    "pa": "NO PA",
+    "area": 140084
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "moderada",
+    "pa": "RFPN",
+    "area": 69124
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "moderada",
+    "pa": "RFPR",
+    "area": 147791
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "moderada",
+    "pa": "DRMI",
+    "area": 174169
+  },
+  {
+    "hf_pers": "dinamica",
+    "sci_cat": "moderada",
+    "pa": "NO PA",
+    "area": 73437
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "PNN",
+    "area": 82363
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "PNR",
+    "area": 150954
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "RFF",
+    "area": 94163
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "DSC",
+    "area": 110470
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "RFPR",
+    "area": 108039
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "DRMI",
+    "area": 116067
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "ANU",
+    "area": 37092
+  },
+  {
+    "hf_pers": "estable_alta",
+    "sci_cat": "moderada",
+    "pa": "NO PA",
+    "area": 110568
+  }
+]

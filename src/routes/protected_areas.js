@@ -385,6 +385,37 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup sci_hf
+   * @api {get} /pa/:category/sci_hf SCIHFInPA
+   * @apiName SCIHFInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest structural condition index crossed with human footprint and protected
+   * area categories inside the given protected area category
+   *
+   * Values based on human footprint for 2018
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object[]} result list of objects with information about sci, hf and pa
+   * @apiSuccess {String} result.hf_pers human footprint persistence category
+   * @apiSuccess {String} result.sci_cat forest structural condition index category
+   * @apiSuccess {String} result.pa protected area category
+   * @apiSuccess {Number} result.area Area inside the category for hf_pers, sci_cat and pa
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/sci_hf
+   * @apiUse SCIHFPAxample
+   */
+  router.get('/pa/:category/sci_hf', errorHandler((req, res, next) => (
+    paService.getSCIHF(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer

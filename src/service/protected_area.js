@@ -4,6 +4,7 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
+const sci = require('../tmp/sci.json');
 
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
@@ -245,6 +246,14 @@ module.exports = (paPersistence, seService) => {
         })),
       };
     },
+
+    /**
+     * Get the SCI with HF information inside a protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object[]} Object of SCI HF values
+     */
+    getSCIHF: async () => sci,
 
     /**
      * Get the national layer divided by protected area

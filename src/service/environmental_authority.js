@@ -4,6 +4,7 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
+const sci = require('../tmp/sci.json');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -306,6 +307,14 @@ module.exports = (eaPersistence, seService) => {
         })),
       };
     },
+
+    /**
+     * Get the SCI with HF information inside an environmental authority
+     * @param {Number} eaId environmental authority id
+     *
+     * @return {Object[]} Object of SCI HF values
+     */
+    getSCIHF: async () => sci,
 
     /**
      * Get the national layer divided by environmental authority

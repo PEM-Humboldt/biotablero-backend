@@ -4,6 +4,7 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
+const sci = require('../tmp/sci.json');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -235,7 +236,6 @@ module.exports = (basinSubzonePersistence, seService) => {
      *
      * @return {Object} Object of HF values through time
      */
-
     getSEHFTimeline: async (subzoneId, seType) => {
       const values = await seService.getSEHFTimelineInGeofence('subzones', subzoneId, seType);
       return {
@@ -246,6 +246,14 @@ module.exports = (basinSubzonePersistence, seService) => {
         })),
       };
     },
+
+    /**
+     * Get the SCI with HF information inside a basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object[]} Object of SCI HF values
+     */
+    getSCIHF: async () => sci,
 
     /**
      * Get the national layer divided by basin subzones

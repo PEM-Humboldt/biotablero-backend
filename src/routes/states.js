@@ -386,6 +386,37 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
+   * @apiGroup sci
+   * @api {get} /states/:state_id/sci/hf SCIHFInState
+   * @apiName SCIHFInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest structural condition index crossed with human footprint and protected
+   * area categories inside the given state
+   *
+   * Values based on human footprint for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object[]} result list of objects with information about sci, hf and pa
+   * @apiSuccess {String} result.hf_pers human footprint persistence category
+   * @apiSuccess {String} result.sci_cat forest structural condition index category
+   * @apiSuccess {String} result.pa protected area category
+   * @apiSuccess {Number} result.area Area inside the state for hf_pers, sci_cat and pa
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/86/sci/hf
+   * @apiUse SCIHFPAxample
+   */
+  router.get('/states/:state_id/sci/hf', errorHandler((req, res, next) => (
+    stateService.getSCIHF(req.params.state_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup s_hf
    * @api {get} /states/:state_id/se/:se_type/hf/timeline SETimeLineInState
    * @apiName SETimeLineInState

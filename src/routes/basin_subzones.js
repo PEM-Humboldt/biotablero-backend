@@ -388,6 +388,37 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
+   * @apiGroup sci
+   * @api {get} /basinSubzones/:subzone_id/sci/hf SCIHFInSubzone
+   * @apiName SCIHFInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest structural condition index crossed with human footprint and protected
+   * area categories inside the given basin subzone
+   *
+   * Values based on human footprint for 2018
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object[]} result list of objects with information about sci, hf and pa
+   * @apiSuccess {String} result.hf_pers human footprint persistence category
+   * @apiSuccess {String} result.sci_cat forest structural condition index category
+   * @apiSuccess {String} result.pa protected area category
+   * @apiSuccess {Number} result.area Area inside the basin subzone for hf_pers, sci_cat and pa
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3701/sci/hf
+   * @apiUse SCIHFPAxample
+   */
+  router.get('/basinSubzones/:subzone_id/sci/hf', errorHandler((req, res, next) => (
+    basinSubzoneService.getSCIHF(req.params.subzone_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer

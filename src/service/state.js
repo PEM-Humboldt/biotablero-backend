@@ -5,6 +5,7 @@ const {
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
 const sci = require('../tmp/sci.json');
+const forestLP = require('../tmp/forestLP.json');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -261,6 +262,14 @@ module.exports = (statePersistence, municipalityService, seService) => {
      * @return {Object[]} Object of SCI HF values
      */
     getSCIHF: async () => sci,
+
+    /**
+     * Get the forest loss and persistence data inside an state
+     * @param {Number} stateId state id
+     *
+     * @return {Object[]} Object of forest loss and persistence values
+     */
+    getForestLP: async () => forestLP,
 
     /**
      * Get the national layer divided by states

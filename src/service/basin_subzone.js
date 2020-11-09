@@ -5,6 +5,7 @@ const {
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
 const sci = require('../tmp/sci.json');
+const forestLP = require('../tmp/forestLP.json');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -254,6 +255,14 @@ module.exports = (basinSubzonePersistence, seService) => {
      * @return {Object[]} Object of SCI HF values
      */
     getSCIHF: async () => sci,
+
+    /**
+     * Get the forest loss and persistence data inside a basin subzone
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object[]} Object of forest loss and persistence values
+     */
+    getForestLP: async () => forestLP,
 
     /**
      * Get the national layer divided by basin subzones

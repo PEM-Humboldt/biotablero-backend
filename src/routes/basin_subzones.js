@@ -419,6 +419,34 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
+   * @apiGroup s_ecoChange
+   * @api {get} /basinSubzones/:subzone_id/ecoChange/lp/categories/ ForestLPInSubzone
+   * @apiName ForestLPInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest loss and persistence inside the given basin subzone
+   *
+   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object[]} result list of objects with information about forest LP
+   * @apiSuccess {String} result.id period
+   * @apiSuccess {String} result.data data for forest LP divided by categories
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3701/ecoChange/lp/categories
+   * @apiUse ForestLPAxample
+   */
+  router.get('/basinSubzones/:subzone_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
+    basinSubzoneService.getForestLP(req.params.subzone_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer

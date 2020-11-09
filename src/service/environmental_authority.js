@@ -5,6 +5,7 @@ const {
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
 const sci = require('../tmp/sci.json');
+const forestLP = require('../tmp/forestLP.json');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -315,6 +316,14 @@ module.exports = (eaPersistence, seService) => {
      * @return {Object[]} Object of SCI HF values
      */
     getSCIHF: async () => sci,
+
+    /**
+     * Get the forest loss and persistence data inside an environmental authority
+     * @param {Number} eaId environmental authority id
+     *
+     * @return {Object[]} Object of forest loss and persistence values
+     */
+    getForestLP: async () => forestLP,
 
     /**
      * Get the national layer divided by environmental authority

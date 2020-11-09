@@ -494,8 +494,8 @@ module.exports = (errorHandler, eaService) => {
   )));
 
   /**
-   * @apiGroup sci_hf
-   * @api {get} /ea/:ea_id/sci_hf SCIHFInEA
+   * @apiGroup sci
+   * @api {get} /ea/:ea_id/sci/hf SCIHFInEA
    * @apiName SCIHFInEA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -514,10 +514,10 @@ module.exports = (errorHandler, eaService) => {
    * and pa
    *
    * @apiExample {curl} Example usage:
-   *  /ea/CDMB/sci_hf
+   *  /ea/CDMB/sci/hf
    * @apiUse SCIHFPAxample
    */
-  router.get('/ea/:ea_id/sci_hf', errorHandler((req, res, next) => (
+  router.get('/ea/:ea_id/sci/hf', errorHandler((req, res, next) => (
     eaService.getSCIHF(req.params.ea_id)
       .then((values) => {
         res.send(values);

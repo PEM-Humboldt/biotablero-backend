@@ -1,7 +1,6 @@
 /**
- * @apiDefine sci_hf Search > Forest Structural Condition Index (with Human Footprint)
- * Information related to the forest structural condition index crossed with human footprint in a
- * given geofence.
+ * @apiDefine sci Search > Forest Structural Condition Index
+ * Information related to the forest structural condition index in a given geofence.
  */
 
 /**

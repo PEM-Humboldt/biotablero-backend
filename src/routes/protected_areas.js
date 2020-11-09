@@ -385,8 +385,8 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup sci_hf
-   * @api {get} /pa/:category/sci_hf SCIHFInPA
+   * @apiGroup sci
+   * @api {get} /pa/:category/sci/hf SCIHFInPA
    * @apiName SCIHFInPA
    * @apiVersion 0.1.0
    * @apiDescription
@@ -404,10 +404,10 @@ module.exports = (errorHandler, paService) => {
    * @apiSuccess {Number} result.area Area inside the category for hf_pers, sci_cat and pa
    *
    * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/sci_hf
+   *  /pa/Parques Naturales Regionales/sci/hf
    * @apiUse SCIHFPAxample
    */
-  router.get('/pa/:category/sci_hf', errorHandler((req, res, next) => (
+  router.get('/pa/:category/sci/hf', errorHandler((req, res, next) => (
     paService.getSCIHF(req.params.category)
       .then((values) => {
         res.send(values);

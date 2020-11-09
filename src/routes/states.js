@@ -386,8 +386,8 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup sci_hf
-   * @api {get} /states/:state_id/sci_hf SCIHFInState
+   * @apiGroup sci
+   * @api {get} /states/:state_id/sci/hf SCIHFInState
    * @apiName SCIHFInState
    * @apiVersion 0.1.0
    * @apiDescription
@@ -405,10 +405,10 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Number} result.area Area inside the state for hf_pers, sci_cat and pa
    *
    * @apiExample {curl} Example usage:
-   *  /states/86/sci_hf
+   *  /states/86/sci/hf
    * @apiUse SCIHFPAxample
    */
-  router.get('/states/:state_id/sci_hf', errorHandler((req, res, next) => (
+  router.get('/states/:state_id/sci/hf', errorHandler((req, res, next) => (
     stateService.getSCIHF(req.params.state_id)
       .then((values) => {
         res.send(values);

@@ -388,8 +388,8 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup sci_hf
-   * @api {get} /basinSubzones/:subzone_id/sci_hf SCIHFInSubzone
+   * @apiGroup sci
+   * @api {get} /basinSubzones/:subzone_id/sci/hf SCIHFInSubzone
    * @apiName SCIHFInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
@@ -407,10 +407,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiSuccess {Number} result.area Area inside the basin subzone for hf_pers, sci_cat and pa
    *
    * @apiExample {curl} Example usage:
-   *  /basinSubzones/3701/sci_hf
+   *  /basinSubzones/3701/sci/hf
    * @apiUse SCIHFPAxample
    */
-  router.get('/basinSubzones/:subzone_id/sci_hf', errorHandler((req, res, next) => (
+  router.get('/basinSubzones/:subzone_id/sci/hf', errorHandler((req, res, next) => (
     basinSubzoneService.getSCIHF(req.params.subzone_id)
       .then((values) => {
         res.send(values);

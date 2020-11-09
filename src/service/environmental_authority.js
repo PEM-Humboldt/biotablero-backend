@@ -311,7 +311,7 @@ module.exports = (eaPersistence, seService) => {
 
     /**
      * Get the SCI with HF information inside an environmental authority
-     * @param {Number} eaId environmental authority id
+     * @param {String} eaId environmental authority id
      *
      * @return {Object[]} Object of SCI HF values
      */
@@ -319,11 +319,11 @@ module.exports = (eaPersistence, seService) => {
 
     /**
      * Get the forest loss and persistence data inside an environmental authority
-     * @param {Number} eaId environmental authority id
+     * @param {String} eaId environmental authority id
      *
      * @return {Object[]} Object of forest loss and persistence values
      */
-    getForestLP: async () => forestLP,
+    getEcoChangeLP: async () => forestLP,
 
     /**
      * Get the national layer divided by environmental authority

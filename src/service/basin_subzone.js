@@ -262,7 +262,7 @@ module.exports = (basinSubzonePersistence, seService) => {
      *
      * @return {Object[]} Object of forest loss and persistence values
      */
-    getForestLP: async () => forestLP,
+    getEcoChangeLP: async () => forestLP,
 
     /**
      * Get the national layer divided by basin subzones

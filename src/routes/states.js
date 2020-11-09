@@ -434,10 +434,10 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/86/ecoChange/lp/categories
-   * @apiUse ForestLPAxample
+   * @apiUse ForestLPExample
    */
   router.get('/states/:state_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    stateService.getForestLP(req.params.state_id)
+    stateService.getEcoChangeLP(req.params.state_id)
       .then((values) => {
         res.send(values);
         next();

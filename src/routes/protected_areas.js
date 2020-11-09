@@ -433,10 +433,10 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/ecoChange/lp/categories
-   * @apiUse ForestLPAxample
+   * @apiUse ForestLPExample
    */
   router.get('/pa/:category/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    paService.getForestLP(req.params.category)
+    paService.getEcoChangeLP(req.params.category)
       .then((values) => {
         res.send(values);
         next();

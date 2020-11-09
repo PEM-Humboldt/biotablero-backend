@@ -543,10 +543,10 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CDMB/ecoChange/lp/categories
-   * @apiUse ForestLPAxample
+   * @apiUse ForestLPExample
    */
   router.get('/ea/:ea_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    eaService.getForestLP(req.params.ea_id)
+    eaService.getEcoChangeLP(req.params.ea_id)
       .then((values) => {
         res.send(values);
         next();

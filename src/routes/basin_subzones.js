@@ -420,7 +420,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_ecoChange
-   * @api {get} /basinSubzones/:subzone_id/ecoChange/lp/categories/ ForestLPInSubzone
+   * @api {get} /basinSubzones/:subzone_id/ecoChange/lp/categories ForestLPInSubzone
    * @apiName ForestLPInSubzone
    * @apiVersion 0.1.0
    * @apiDescription
@@ -436,10 +436,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/3701/ecoChange/lp/categories
-   * @apiUse ForestLPAxample
+   * @apiUse ForestLPExample
    */
   router.get('/basinSubzones/:subzone_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    basinSubzoneService.getForestLP(req.params.subzone_id)
+    basinSubzoneService.getEcoChangeLP(req.params.subzone_id)
       .then((values) => {
         res.send(values);
         next();

@@ -1,10 +1,10 @@
 /**
  * @apiDefine s_ecoChange Search > Forest
- * Information related to forest  in a given geofence.
+ * Information related to forest in a given geofence.
  */
 
 /**
- * @apiDefine ForestLPAxample
+ * @apiDefine ForestLPExample
  * @apiSuccessExample {json} Success-Example:
  * [
  *   {

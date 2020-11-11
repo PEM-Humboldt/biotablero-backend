@@ -6,6 +6,7 @@ const {
 } = require('../util/appropriate_keys');
 const sci = require('../tmp/sci.json');
 const forestLP = require('../tmp/forestLP.json');
+const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -324,6 +325,14 @@ module.exports = (eaPersistence, seService) => {
      * @return {Object[]} Object of forest loss and persistence values
      */
     getEcoChangeLP: async () => forestLP,
+
+    /**
+     * Get the forest persistence area inside an environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Object of forest persistence value
+     */
+    getEcoChangePersistenceValue: async () => forestPersistenceArea,
 
     /**
      * Get the national layer divided by environmental authority

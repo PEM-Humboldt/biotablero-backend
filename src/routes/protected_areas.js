@@ -444,6 +444,33 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup s_ecoChange
+   * @api {get} /pa/:category/ecoChange/persistence ForestPersistenceInPA
+   * @apiName ForestPersistenceInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value for the forest persistence inside the given protected area category
+   *
+   * Value calculated for 2016-2019 period
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object} result object with forest persistence value
+   * @apiSuccess {String} result.area value of forest persistence area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/ecoChange/persistence
+   * @apiUse PersistenceAreaExample
+   */
+  router.get('/pa/:category/ecoChange/persistence', errorHandler((req, res, next) => (
+    paService.getEcoChangePersistenceValue(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer

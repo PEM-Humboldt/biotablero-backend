@@ -553,6 +553,33 @@ module.exports = (errorHandler, eaService) => {
       })
   )));
 
+  /**
+   * @apiGroup s_ecoChange
+   * @api {get} /ea/:ea_id/ecoChange/persistence ForestPersistenceInEA
+   * @apiName ForestPersistenceInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value for the forest persistence inside the given environmental authority
+   *
+   * Value calculated for 2016-2019 period
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess {Object} result object with forest persistence value
+   * @apiSuccess {String} result.area value of forest persistence area
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CDMB/ecoChange/persistence
+   * @apiUse PersistenceAreaExample
+   */
+  router.get('/ea/:ea_id/ecoChange/persistence', errorHandler((req, res, next) => (
+    eaService.getEcoChangePersistenceValue(req.params.ea_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
 
   /**
    * @apiGroup geofence_ea

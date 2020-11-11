@@ -447,6 +447,33 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
+   * @apiGroup s_ecoChange
+   * @api {get} /basinSubzones/:subzone_id/ecoChange/persistence ForestPersistenceInSubzone
+   * @apiName ForestPersistenceInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value for the forest persistence inside the given basin subzone
+   *
+   * Value calculated for 2016-2019 period
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess {Object} result object with forest persistence value
+   * @apiSuccess {String} result.area value of forest persistence area
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3701/ecoChange/persistence
+   * @apiUse PersistenceAreaExample
+   */
+  router.get('/basinSubzones/:subzone_id/ecoChange/persistence', errorHandler((req, res, next) => (
+    basinSubzoneService.getEcoChangePersistenceValue(req.params.subzone_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer

@@ -35,3 +35,11 @@
  *   ...
  * ]
  */
+
+/**
+ * @apiDefine PersistenceAreaExample
+ * @apiSuccessExample {json} Success-Example:
+ *  {
+ *    "area": "2500",
+ *  }
+ */

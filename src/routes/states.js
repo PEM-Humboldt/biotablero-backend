@@ -417,6 +417,61 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
+   * @apiGroup s_ecoChange
+   * @api {get} /states/:state_id/ecoChange/lp/categories ForestLPInState
+   * @apiName ForestLPInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest loss and persistence inside the given basin state
+   *
+   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object[]} result list of objects with information about forest LP
+   * @apiSuccess {String} result.id period
+   * @apiSuccess {String} result.data data for forest LP divided by categories
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/86/ecoChange/lp/categories
+   * @apiUse ForestLPExample
+   */
+  router.get('/states/:state_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
+    stateService.getEcoChangeLP(req.params.state_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_ecoChange
+   * @api {get} /states/:state_id/ecoChange/persistence ForestPersistenceInState
+   * @apiName ForestPersistenceInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value for the forest persistence inside the given basin state
+   *
+   * Value calculated for 2016-2019 period
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result object with forest persistence value
+   * @apiSuccess {String} result.area value of forest persistence area
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/86/ecoChange/persistence
+   * @apiUse PersistenceAreaExample
+   */
+  router.get('/states/:state_id/ecoChange/persistence', errorHandler((req, res, next) => (
+    stateService.getEcoChangePersistenceValue(req.params.state_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup s_hf
    * @api {get} /states/:state_id/se/:se_type/hf/timeline SETimeLineInState
    * @apiName SETimeLineInState

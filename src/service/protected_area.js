@@ -5,6 +5,8 @@ const {
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
 const sci = require('../tmp/sci.json');
+const forestLP = require('../tmp/forestLP.json');
+const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (paPersistence, seService) => {
   const protectedArea = {
@@ -254,6 +256,22 @@ module.exports = (paPersistence, seService) => {
      * @return {Object[]} Object of SCI HF values
      */
     getSCIHF: async () => sci,
+
+    /**
+     * Get the forest loss and persistence data inside a protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object[]} Object of forest loss and persistence values
+     */
+    getEcoChangeLP: async () => forestLP,
+
+    /**
+     * Get the forest persistence area inside a protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Object of forest persistence value
+     */
+    getEcoChangePersistenceValue: async () => forestPersistenceArea,
 
     /**
      * Get the national layer divided by protected area

@@ -416,6 +416,61 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
+   * @apiGroup s_ecoChange
+   * @api {get} /pa/:category/ecoChange/lp/categories ForestLPInPA
+   * @apiName ForestLPInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the forest loss and persistence inside the given protected area category
+   *
+   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object[]} result list of objects with information about forest LP
+   * @apiSuccess {String} result.id period
+   * @apiSuccess {String} result.data data for forest LP divided by categories
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/ecoChange/lp/categories
+   * @apiUse ForestLPExample
+   */
+  router.get('/pa/:category/ecoChange/lp/categories', errorHandler((req, res, next) => (
+    paService.getEcoChangeLP(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_ecoChange
+   * @api {get} /pa/:category/ecoChange/persistence ForestPersistenceInPA
+   * @apiName ForestPersistenceInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value for the forest persistence inside the given protected area category
+   *
+   * Value calculated for 2016-2019 period
+   *
+   * @apiParam (Path params) {String} protected area category
+   *
+   * @apiSuccess {Object} result object with forest persistence value
+   * @apiSuccess {String} result.area value of forest persistence area
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/ecoChange/persistence
+   * @apiUse PersistenceAreaExample
+   */
+  router.get('/pa/:category/ecoChange/persistence', errorHandler((req, res, next) => (
+    paService.getEcoChangePersistenceValue(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_pa
    * @api {get} /pa/layers/national NationalLayer
    * @apiName PANationalLayer

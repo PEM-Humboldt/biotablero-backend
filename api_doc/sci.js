@@ -22,3 +22,74 @@
  *   ...
  * ]
  */
+
+/**
+ * @apiDefine SCIHFInGeofenceExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   "type": "FeatureCollection",
+ *   "features": [
+ *     {
+ *       "type": "Feature",
+ *       "properties": {
+ *         "area": 800153,
+ *         "hf_pers": "estable_alta",
+ *         "sci_cat": "moderada"
+ *       },
+ *       "geometry": {
+ *         "geometries": [
+ *           {
+ *             "type": "MultiPolygon",
+ *             "coordinates": [
+ *               [
+ *                 [
+ *                   [
+ *                     -75.9355268362944,
+ *                     4.80674184545984
+ *                   ],
+ *                   ...
+ *                 ]
+ *               ]
+ *             ]
+ *           }
+ *         ]
+ *       }
+ *     },
+ *     ...
+ *   ]
+ * }
+ */
+
+/**
+ * @apiDefine SCIHFPAInGeofenceExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   "type": "FeatureCollection",
+ *   "features": [
+ *     {
+ *       "type": "Feature",
+ *       "properties": {
+ *         "pa_label": "Distritos Regionales de Manejo Integrado"
+ *       },
+ *       "geometry": {
+ *         "type": "MultiPolygon",
+ *         "coordinates": [
+ *           [
+ *             [
+ *               [
+ *                 -76.0875466650366,
+ *                 5.04537111840702
+ *               ],
+ *               [
+ *                 -76.0804526759551,
+ *                 5.04806343034337
+ *               ]...
+ *             ]
+ *           ]
+ *         ]
+ *       }
+ *     },
+ *     ...
+ *   ]
+ * }
+ */

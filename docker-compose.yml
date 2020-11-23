@@ -6,7 +6,7 @@ services:
     environment:
       - NODE_CONFIG_ENV=production
     volumes:
-      - ./config/develop.json:/app/config/production.json
+      - ./config/develop.json:/home/node/app/config/production.json
     ports:
       - "4500:4000"
     restart: always

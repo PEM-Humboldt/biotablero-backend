@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine companiesProjects Companies/Projects
+ * @apiDefine comp_companiesProjects Compensation > Companies/Projects
  * Queries and actions directly related with projects
  */
 
@@ -208,7 +208,7 @@ module.exports = (errorHandler, projectService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects listProjectsByCompany
    * @apiName listProjectsByCompany
    * @apiVersion 0.1.0
@@ -216,8 +216,8 @@ module.exports = (errorHandler, projectService) => {
    * Find all projects that belongs to a given company.
    * If group_props is passed, results will be grouped by the first prop, then by the second, so on.
    *
-   * @apiParam {Number} id_company company id to get projects
-   * @apiParam {String[]} [group_props] list of properties to group results by
+   * @apiParam (Path params) {Number} id_company company id to get projects
+   * @apiParam (Query params) {String[]} [group_props] list of properties to group results by
    *
    * @apiSuccess {Object[]} project project information
    * @apiSuccess {Number} project.gid project id
@@ -246,15 +246,15 @@ module.exports = (errorHandler, projectService) => {
   }));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project getProjectById
    * @apiName getProjectById
    * @apiVersion 0.1.0
    * @apiDescription
    * Find a project by its id
    *
-   * @apiParam {Number} id_company project's owner id
-   * @apiParam {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
    * @apiSuccess {Object} project project information
    * @apiSuccess {Number} project.gid project id
@@ -278,22 +278,21 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects createProject
    * @apiName createProject
    * @apiVersion 0.1.0
    * @apiDescription
    * Create a project
    *
-   * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
    *
-   * @apiParam (body) {Object} project object to be created
-   * @apiParam (body) {String} project.name project name
-   * @apiParam (body) {String} [project.details] extra information about the project
-   * @apiParam (body) {String} [project.prj_status] project status
-   * @apiParam (body) {Number} project.id_company project's owner id
-   * @apiParam (body) {String} project.id_region project region
+   * @apiParam (Body Params) {Object} project object to be created
+   * @apiParam (Body Params) {String} project.name project name
+   * @apiParam (Body Params) {String} [project.details] extra information about the project
+   * @apiParam (Body Params) {String} [project.prj_status] project status
+   * @apiParam (Body Params) {Number} project.id_company project's owner id
+   * @apiParam (Body Params) {String} project.id_region project region
    *
    * @apiSuccess {Object} project new project
    * @apiSuccess {String} project.gid newly created project id
@@ -318,7 +317,7 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects/:id_project/biomes addImpactedBiomes
    * @apiName addImpactedBiomes
    * @apiVersion 0.1.0
@@ -326,20 +325,23 @@ module.exports = (errorHandler, projectService) => {
    * Associate a set of biomes as impacted by a given project. This automatically updates the
    *  associated project total area
    *
-   * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
-   * @apiParam (body) {Object[]} biomes array of biomes to associate with the project
-   * @apiParam (body) {Number} biomes.id_biome biome id
-   * @apiParam (body) {Number} [biomes.id_ea] environmental
-   * @apiParam (body) {Number} [biomes.id_subzone] sub-basin id
-   * @apiParam (body) {Number} [biomes.natural_area_ha] natural area affected in this biome
-   * @apiParam (body) {Number} [biomes.secondary_area_ha] secondary area affected in this biome
-   * @apiParam (body) {Number} [biomes.transformed_area_ha] transformed area affected in this biome
-   * @apiParam (body) {Number} [biomes.area_impacted_ha] total area affected in this biome
-   * @apiParam (body) {Number} [biomes.area_to_compensate_ha] area to compensate for this biome
-   * @apiParam (body) {Number} [biomes.area_impacted_pct] percentage that represents this biome in
-   *  the total project area
+   * @apiParam (Body Params) {Object[]} biomes array of biomes to associate with the project
+   * @apiParam (Body Params) {Number} biomes.id_biome biome id
+   * @apiParam (Body Params) {Number} [biomes.id_ea] environmental
+   * @apiParam (Body Params) {Number} [biomes.id_subzone] sub-basin id
+   * @apiParam (Body Params) {Number} [biomes.natural_area_ha] natural area affected in this biome
+   * @apiParam (Body Params) {Number} [biomes.secondary_area_ha] secondary area affected in this
+   * biome
+   * @apiParam (Body Params) {Number} [biomes.transformed_area_ha] transformed area affected in this
+   * biome
+   * @apiParam (Body Params) {Number} [biomes.area_impacted_ha] total area affected in this biome
+   * @apiParam (Body Params) {Number} [biomes.area_to_compensate_ha] area to compensate for this
+   * biome
+   * @apiParam (Body Params) {Number} [biomes.area_impacted_pct] percentage that represents this
+   * biome in the total project area
    *
    * @apiSuccess {Object[]} biomes array of biomes to associate with the project
    * @apiSuccess {Number} biomes.id association id
@@ -370,15 +372,15 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/decisionTree impactedBiomesDecisionTree
    * @apiName impactedBiomesDecisionTree
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the impacted biomes decision tree for a given project
    *
-   * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
    * @apiSuccess {Object} tree the decision tree
    * @apiSuccess {Object} tree.biome biome name (starting point on the decision tree)
@@ -404,15 +406,15 @@ module.exports = (errorHandler, projectService) => {
   )));
 
   /**
-   * @apiGroup companiesProjects
+   * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/biomes getImpactedBiomes
    * @apiName getImpactedBiomes
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the impacted biomes for a given project
    *
-   * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
    * @apiSuccess {Object} result impacted biomes info
    * @apiSuccess {Object[]} result.biomes information for each biomes

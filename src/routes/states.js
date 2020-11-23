@@ -5,42 +5,12 @@ const { Router } = require('restify-router');
  * Endpoints related with queries about states
  */
 
-/**
- * @apiDefine getAllStatesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id": "44",
- *      "name": "La Guajira"
- *    },
- *    {
- *      "id": "97",
- *      "name": "Vaupés"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine stateByMunicipalitiesExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "id_municipality": "90",
- *      "municipality": "Dibulla"
- *    },
- *    {
- *      "id_municipality": "560",
- *      "municipality": "Manaure"
- *    }...
- *  ]
- */
-
 module.exports = (errorHandler, stateService) => {
   const router = new Router();
 
   /**
-   * @apiGroup states
-   * @api {get} /states listStates
+   * @apiGroup geofence_states
+   * @api {get} /states listAll
    * @apiName listStates
    * @apiVersion 0.1.0
    * @apiDescription
@@ -63,14 +33,39 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/municipalities stateByMunicipalities
+   * @apiGroup geofence_states
+   * @api {get} /states/:category StateDetails
+   * @apiName StateDetails
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get details about an specific state. For now, only the total area is returned.
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {Number} result.total_area Area for the specified state
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/1
+   * @apiUse GeofenceDetailsExample
+   */
+  router.get('/states/:state_id', errorHandler((req, res, next) => (
+    stateService.getTotalArea(req.params.state_id)
+      .then((details) => {
+        res.send(details);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_states
+   * @api {get} /states/:state_id/municipalities MunicipalitiesInState
    * @apiName stateByMunicipalities
    * @apiVersion 0.1.0
    * @apiDescription
    * List all municipalities information in the given state
    *
-   * @apiParam {Number} state_id state id
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.municipality municipality name
@@ -78,7 +73,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/municipalities
-   * @apiUse stateByMunicipalitiesExample
+   * @apiUse MunicipalitiesInStateExample
    */
   router.get('/states/:state_id/municipalities', errorHandler((req, res, next) => (
     stateService.getMunicipalities(req.params.state_id)
@@ -89,14 +84,17 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/se StateBySE
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /states/:state_id/se SEInState
    * @apiName StateBySE
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by strategic ecosystems. <br/>
+   * Separate the state total area by strategic ecosystems.
+   *
    * The result is the list of strategic ecosystems with area and percentage inside the state and an
    * extra element with the total area inside strategic ecosystems on the state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the strategic ecosystem
@@ -105,7 +103,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se
-   * @apiUse GeofenceBySEExample
+   * @apiUse SEInGeofenceExample
    */
   router.get('/states/:state_id/se', errorHandler((req, res, next) => (
     stateService.getAreaBySE(req.params.state_id)
@@ -116,7 +114,7 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_strategic_ecosystems
    * @api {get} /states/:state_id/se/:se_type SEDetailInState
    * @apiName SEDetailInState
    * @apiVersion 0.1.0
@@ -124,8 +122,8 @@ module.exports = (errorHandler, stateService) => {
    * Given an strategic ecosystem type inside an specific state, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
@@ -133,7 +131,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo
-   * @apiUse SEInsideGeofenceDetailExample
+   * @apiUse SEInGeofenceDetailExample
    */
   router.get('/states/:state_id/se/:se_type', errorHandler((req, res, next) => (
     stateService.getSEDetails(req.params.state_id, req.params.se_type)
@@ -144,18 +142,19 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_coverages
    * @api {get} /states/:state_id/se/:se_type/coverage SECoverageInState
    * @apiName SECoverageInState
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific state, get the coverage
-   * distribution in that area. <br/>
+   * distribution in that area.
+   *
    * The result is the list of cover types with area and percentage inside the specified strategic
    * ecosystem in the state.
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -164,7 +163,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse SECoverageInGeofenceExample
    */
   router.get('/states/:state_id/se/:se_type/coverage', errorHandler((req, res, next) => (
     stateService.getCoverageInSE(req.params.state_id, req.params.se_type)
@@ -175,19 +174,20 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
+   * @apiGroup s_protected_areas
    * @api {get} /states/:state_id/se/:se_type/pa SEPAInState
    * @apiName SEPAInState
    * @apiVersion 0.1.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific state, get the protected area
-   * categories distribution in that area. <br/>
-   * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the state and two extra elements: the total protected area
-   * inside the specified area and the non protected area.
+   * categories distribution in that area.
    *
-   * @apiParam {String} state_id state id
-   * @apiParam {String} se_type strategic ecosystem type
+   * The result is the list of protected area types with area and percentage inside the specified
+   * strategic ecosystem in the state and one extra element with the total protected area
+   * inside the specified state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -196,7 +196,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/states/:state_id/se/:se_type/pa', errorHandler((req, res, next) => (
     stateService.getPAInSE(req.params.state_id, req.params.se_type)
@@ -207,14 +207,17 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/pa StateByPA
+   * @apiGroup s_protected_areas
+   * @api {get} /states/:state_id/pa PAInState
    * @apiName StateByPA
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by protected areas. <br/>
+   * Separate the state total area by protected areas.
+   *
    * The result is the list of protected area types with area and percentage inside the state and
-   * two extra elements: the total protected area inside the state and the non protected area.
+   * one extra element with the total protected area inside the state.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the protected area
@@ -223,7 +226,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/pa
-   * @apiUse GeofenceByPAExample
+   * @apiUse PAInGeofenceExample
    */
   router.get('/states/:state_id/pa', errorHandler((req, res, next) => (
     stateService.getAreaByPA(req.params.state_id)
@@ -234,14 +237,17 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/:state_id/coverage StateByCoverage
+   * @apiGroup s_coverages
+   * @api {get} /states/:state_id/coverage CoverageInState
    * @apiName StateByCoverage
    * @apiVersion 0.1.0
    * @apiDescription
-   * Separate the state total area by coverage type. <br/>
+   * Separate the state total area by coverage type.
+   *
    * The result is the list of cover types with area and percentage inside the state and an extra
    * element with the total state area.
+   *
+   * @apiParam (Path params) {Number} state_id state id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.type Specifies the coverage type
@@ -250,7 +256,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/44/coverage
-   * @apiUse GeofenceByCoverageExample
+   * @apiUse CoverageInGeofenceExample
    */
   router.get('/states/:state_id/coverage', errorHandler((req, res, next) => (
     stateService.getAreaByCoverage(req.params.state_id)
@@ -261,20 +267,167 @@ module.exports = (errorHandler, stateService) => {
   )));
 
   /**
-   * @apiGroup states
-   * @api {get} /states/layers/national StatesNationalLayer
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/categories CategoriesInState
+   * @apiName CategoriesInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Area distribution for each human footprint category in the given state
+   *
+   * Values calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key Category identifier (natural, baja, media, alta)
+   * @apiSuccess {Number} result.area Area inside the state for the category
+   * @apiSuccess {Number} result.percentage Percentage of the specified category respect to
+   * the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/categories
+   * @apiUse CategoriesInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/categories', errorHandler((req, res, next) => (
+    stateService.getAreaByHFCategory(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/current/value CurrentValueInState
+   * @apiName CurrentValueInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Value and category of the current value of human footprint inside the given state
+   *
+   * Value calculated for 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.value current value of human footprint inside the given
+   * state
+   * @apiSuccess {String} result.category category of human footprint inside the given
+   * state
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/current/value
+   * @apiUse CurrentValueInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/current/value', errorHandler((req, res, next) => (
+    stateService.getCurrentHFValue(req.params.state_id)
+      .then((value) => {
+        res.send(value);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/persistence PersistenceInState
+   * @apiName HFPersistenceInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List the persistence of human footprint inside the given state.
+   *
+   * Values calculated between 1970 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key Persistence identifier (estable_natural, dinamica,
+   *  estable_alta)
+   * @apiSuccess {Number} result.area Area inside the state for the persistence value
+   * @apiSuccess {Number} result.percentage Percentage of the specified persistence value respect to
+   *  the state.
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/persistence
+   * @apiUse PersistenceInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/persistence', errorHandler((req, res, next) => (
+    stateService.getAreaByHFPersistence(req.params.state_id)
+      .then((areas) => {
+        res.send(areas);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/timeline TimeLineInState
+   * @apiName TimeLineInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time inside the given state
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key aTotal that identifies total values for geofence
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/timeline
+   * @apiUse TimelineInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/timeline', errorHandler((req, res, next) => (
+    stateService.getTotalHFTimeLine(req.params.state_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/se/:se_type/hf/timeline SETimeLineInState
+   * @apiName SETimeLineInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Values for the human footprint through time for a strategic ecosystem inside the given
+   * state
+   *
+   * Values calculated for 1970, 1990, 2000, 2015 and 2018
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} se_type strategic ecosystem type
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.key key that identifies strategic ecosystem type
+   * @apiSuccess {Object} result.data values x (year) and y (hf value)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/Páramo/hf/timeline
+   * @apiUse SETimelineInGeofenceExample
+   */
+  router.get('/states/:state_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
+    stateService.getSEHFTimeline(req.params.state_id, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_states
+   * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer
    * @apiVersion 0.1.0
    * @apiDescription
    * Get the national layer divided by states
    *
-   * **The response is a GeoJson object, only the first level will be described here**
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type The geometry type
-   * @apiSuccess {Number} result.totalFeatures number of features in this geometry
-   * @apiSuccess {Object[]} result.features features information (id, type, properties, etc)
-   * @apiSuccess {Object} result.crs Coordinate Reference Systems specification
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Number} result.totalFeatures number of features in this geometry
+   * @apiSuccess (geojson) {Object[]} result.features features information (id, type, etc)
+   * @apiSuccess (geojson) {Object} result.crs Coordinate Reference Systems specification
    *
    * @apiExample {curl} Example usage:
    *  /states/layers/national
@@ -282,6 +435,111 @@ module.exports = (errorHandler, stateService) => {
    */
   router.get('/states/layers/national', errorHandler((req, res, next) => (
     stateService.getNationalLayer()
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_states
+   * @api {get} /states/layers/:state_id StateLayer
+   * @apiName StateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific state
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/layers/44
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/layers/:state_id', errorHandler((req, res, next) => (
+    stateService.getLayer(req.params.state_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_strategic_ecosystems
+   * @api {get} /states/:state_id/se/layers/:se_type SEInStateLayer
+   * @apiName SEInStateLayer
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the layer for an specific strategic ecosystem inside an state
+   *
+   * @apiParam (Path params) {Number} state_id state id.
+   * @apiParam (Path params) {String} se_type strategic ecosystem type.
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Array[]} result.coordinates Coordinate Reference Systems specification
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/se/layers/Páramo
+   * @apiUse SpecificLayerExample
+   */
+  router.get('/states/:state_id/se/layers/:se_type', errorHandler((req, res, next) => (
+    stateService.getSELayer(req.params.state_id, req.params.se_type)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/layers/current/categories CategoriesLayerInState
+   * @apiName CategoriesLayerInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the current human footprint layer divided by categories in a given state
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/layers/current/categories
+   * @apiUse CategoriesLayerInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/layers/current/categories', errorHandler((req, res, next) => (
+    stateService.getHFCategoriesLayerById(req.params.state_id)
+      .then((geometry) => {
+        res.send(geometry);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_hf
+   * @api {get} /states/:state_id/hf/layers/persistence PersistenceLayerInState
+   * @apiName PersistenceLayerInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the persistence human footprint layer divided by categories in a given state
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/44/hf/layers/persistence
+   * @apiUse PersistenceLayerInGeofenceExample
+   */
+  router.get('/states/:state_id/hf/layers/persistence', errorHandler((req, res, next) => (
+    stateService.getHFPersistenceLayerById(req.params.state_id)
       .then((geometry) => {
         res.send(geometry);
         next();

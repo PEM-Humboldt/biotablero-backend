@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine companiesProjectsStrategies Companies/Projects/Strategies
+ * @apiDefine comp_companiesProjectsStrategies Compensation > Companies/Projects/Strategies
  * Queries and actions directly related with projects strategies selected inside a project
  */
 
@@ -70,25 +70,26 @@ module.exports = (errorHandler, projectStrategyService) => {
   const router = new Router();
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {post} /companies/:id_company/projects/:id_project/strategies createProjectStrategy
    * @apiName createProjectStrategy
    * @apiVersion 0.1.0
    * @apiDescription
    * Create a new strategy as part of the selected strategies of the given project
    *
-   * @apiParam (query) {Number} id_company project's owner id
-   * @apiParam (query) {Number} id_project project associated with this strategy
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project associated with this strategy
    *
-   * @apiParam (body) {Object} strategy strategy to be created
-   * @apiParam (body) {Number} strategy.id_biome biome to associate with the strategy
-   * @apiParam (body) {String} strategy.id_ea environmental authority to associate with the strategy
-   * @apiParam (body) {Number} strategy.id_subzone 'subzona hidrográfica' to associate with the
-   *  strategy
-   * @apiParam (body) {Number} strategy.id_strategy strategy to associate with
-   * @apiParam (body) {Number} strategy.area area (in ha) included with this strategy
-   * @apiParam (body) {Number} strategy.id_user user that created the strategy
-   * @apiParam (body) {String} [strategy.area_status] ???
+   * @apiParam (Body Params) {Object} strategy strategy to be created
+   * @apiParam (Body Params) {Number} strategy.id_biome biome to associate with the strategy
+   * @apiParam (Body Params) {String} strategy.id_ea environmental authority to associate with the
+   * strategy
+   * @apiParam (Body Params) {Number} strategy.id_subzone 'subzona hidrográfica' to associate with
+   * the strategy
+   * @apiParam (Body Params) {Number} strategy.id_strategy strategy to associate with
+   * @apiParam (Body Params) {Number} strategy.area area (in ha) included with this strategy
+   * @apiParam (Body Params) {Number} strategy.id_user user that created the strategy
+   * @apiParam (Body Params) {String} [strategy.area_status] ???
    *
    * @apiSuccess {Object} strategy new strategy
    * @apiSuccess {Number} strategy.id newly created strategy id
@@ -115,15 +116,15 @@ module.exports = (errorHandler, projectStrategyService) => {
   )));
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies listProjectStrategies
    * @apiName listProjectStrategies
    * @apiVersion 0.1.0
    * @apiDescription
    * List all saved (selected) strategies associated with the given project
    *
-   * @apiParam {Number} id_company project's owner id
-   * @apiParam {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
    * @apiSuccess {Object[]} strategies list of strategies
    * @apiSuccess {Number} strategies.id strategy id
@@ -163,7 +164,7 @@ module.exports = (errorHandler, projectStrategyService) => {
   )));
 
   /**
-   * @apiGroup companiesProjectsStrategies
+   * @apiGroup comp_companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies/download
    *  downloadSelectedStrategies
    * @apiName downloadSelectedStrategies
@@ -171,10 +172,11 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiDescription
    * Generate a GeoJson file that includes all selected strategies information for a given project
    *
-   * @apiParam {Number} id_company project's owner id
-   * @apiParam {Number} id_project project id
+   * @apiParam (Path params) {Number} id_company project's owner id
+   * @apiParam (Path params) {Number} id_project project id
    *
-   * @apiSuccess {File} strategies.geojson GeoJson file with selected strategies as features
+   * @apiSuccess (geojson) {File} strategies.geojson GeoJson file with selected strategies as
+   * features
    *
    * @apiExample {bash} Example usage:
    *  /companies/1/projects/1/strategies/download

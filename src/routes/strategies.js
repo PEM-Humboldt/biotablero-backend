@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 
 /**
- * @apiDefine strategies Strategies
+ * @apiDefine comp_strategies Compensation > Strategies
  * Endpoints related with queries about strategies
  */
 
@@ -48,7 +48,7 @@ module.exports = (errorHandler, strategiesService) => {
   const router = new Router();
 
   /**
-   * @apiGroup strategies
+   * @apiGroup comp_strategies
    * @api {post} /strategies/biomeSubzoneEA listStrategiesByBiomeSubzoneEA
    * @apiName listStrategiesByBiomeSubzoneEA
    * @apiVersion 0.1.0
@@ -59,9 +59,9 @@ module.exports = (errorHandler, strategiesService) => {
    * **Some of the response properties are GeoJson standard properties, so they are not
    * described here.**
    *
-   * @apiParam (body) {Number} id_biome biome id
-   * @apiParam (body) {Number} id_subzone sub-basin id
-   * @apiParam (body) {String} id_ea environmental authority id
+   * @apiParam (Body params) {Number} id_biome biome id
+   * @apiParam (Body params) {Number} id_subzone sub-basin id
+   * @apiParam (Body params) {String} id_ea environmental authority id
    *
    * @apiSuccess {Object} object response
    * @apiSuccess {Object[]} object.strategies array of strategies information

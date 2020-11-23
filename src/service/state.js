@@ -7,7 +7,7 @@ const {
 const sci = require('../tmp/sci.json');
 const forestLP = require('../tmp/forestLP.json');
 const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
-const geoSciHf = require('../tmp/sci_hf2.json');
+const geoSciHf = require('../tmp/sci_hf.json');
 const altaDinamica = require('../tmp/pa_alta_dinamica.json');
 const moderadaDinamica = require('../tmp/pa_moderada_dinamica.json');
 

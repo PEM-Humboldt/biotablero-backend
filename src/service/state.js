@@ -7,6 +7,9 @@ const {
 const sci = require('../tmp/sci.json');
 const forestLP = require('../tmp/forestLP.json');
 const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
+const geoSciHf = require('../tmp/sci_hf.json');
+const altaDinamica = require('../tmp/pa_alta_dinamica.json');
+const moderadaDinamica = require('../tmp/pa_moderada_dinamica.json');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -349,6 +352,28 @@ module.exports = (statePersistence, municipalityService, seService) => {
         return geom;
       }
       return {};
+    },
+
+    /**
+     * Get the layer for structural condition index - human footprint persistence categories
+     * @param {Number} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSCIHFLayerById: async () => geoSciHf,
+
+    /**
+     * Get the layer for protected areas inside a combination of sci - hf persistence category
+     *
+     * @param {Number} stateId state id
+     * @param {String} sciCat structural condition index category
+     * @param {String} hfPers human footprint persistence category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    getSCIHFPALayer: async (stateId, sciCat, hfPers) => {
+      if (sciCat === 'moderada' && hfPers === 'dinamica') return moderadaDinamica;
+      return altaDinamica;
     },
   };
 

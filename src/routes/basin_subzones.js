@@ -604,5 +604,63 @@ module.exports = (errorHandler, basinSubzoneService) => {
       })
   )));
 
+  /**
+   * @apiGroup sci
+   * @api {get} /basinSubzones/:subzone_id/sci/hf/layers SCIHFLayerInSubzone
+   * @apiName SCIHFLayerInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer in a given basin subzone
+   *
+   * @apiParam (Path params) {Number} subzone_id subzone id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/sci/hf/layers
+   * @apiUse SCIHFInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/sci/hf/layers', errorHandler((req, res, next) => (
+    basinSubzoneService.getSCIHFLayerById(req.params.subzone_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup sci
+   * @api {get} /basinSubzones/:subzone_id/sci/:sci_cat/hf/:hf_pers/layers/pa SCIHFPALayerInSubzone
+   * @apiName SCIHFPALayerInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer divided by protected areas in a given basin subzone
+   *
+   * @apiParam (Path params) {Number} subzone_id subzone id
+   * @apiParam (Path params) {String} sci_cat structural condition index category
+   * @apiParam (Path params) {String} hf_pers human footprint persistence category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/2903/sci/moderada/hf/dinamica/layers/pa
+   * @apiUse SCIHFPAInGeofenceExample
+   */
+  router.get('/basinSubzones/:subzone_id/sci/:sci_cat/hf/:hf_pers/layers/pa', errorHandler((req, res, next) => (
+    basinSubzoneService.getSCIHFPALayer(
+      req.params.subzone_id, req.params.sci_cat, req.params.hf_pers,
+    )
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
   return router;
 };

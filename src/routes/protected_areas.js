@@ -605,5 +605,64 @@ module.exports = (errorHandler, paService) => {
       })
   )));
 
+  /**
+   * @apiGroup sci
+   * @api {get} /pa/:category/sci/hf/layers SCIHFLayerInPA
+   * @apiName SCIHFLayerInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer in a given protected area category
+   *
+   * @apiParam (Path params) {String} category protected area category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/sci/hf/layers
+   * @apiUse SCIHFInGeofenceExample
+   */
+  router.get('/pa/:category/sci/hf/layers', errorHandler((req, res, next) => (
+    paService.getSCIHFLayerById(req.params.category)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup sci
+   * @api {get} /pa/:category/sci/:sci_cat/hf/:hf_pers/layers/pa SCIHFPALayerInPA
+   * @apiName SCIHFPALayerInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer divided by protected areas in a given protected area
+   * category
+   *
+   * @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} sci_cat structural condition index category
+   * @apiParam (Path params) {String} hf_pers human footprint persistence category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/sci/moderada/hf/dinamica/layers/pa
+   * @apiUse SCIHFPAInGeofenceExample
+   */
+  router.get('/pa/:category/sci/:sci_cat/hf/:hf_pers/layers/pa', errorHandler((req, res, next) => (
+    paService.getSCIHFPALayer(
+      req.params.category, req.params.sci_cat, req.params.hf_pers,
+    )
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
   return router;
 };

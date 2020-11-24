@@ -715,6 +715,65 @@ module.exports = (errorHandler, eaService) => {
   )));
 
   /**
+   * @apiGroup sci
+   * @api {get} /ea/:ea_id/sci/hf/layers SCIHFLayerInEA
+   * @apiName SCIHFLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer in a given environmental authority
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/sci/hf/layers
+   * @apiUse SCIHFInGeofenceExample
+   */
+  router.get('/ea/:ea_id/sci/hf/layers', errorHandler((req, res, next) => (
+    eaService.getSCIHFLayerById(req.params.ea_id)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup sci
+   * @api {get} /ea/:ea_id/sci/:sci_cat/hf/:hf_pers/layers/pa SCIHFPALayerInEA
+   * @apiName SCIHFPALayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the sci - hf persistence layer divided by protected areas in a given environmental
+   * authority
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} sci_cat structural condition index category
+   * @apiParam (Path params) {String} hf_pers human footprint persistence category
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CRQ/sci/moderada/hf/dinamica/layers/pa
+   * @apiUse SCIHFPAInGeofenceExample
+   */
+  router.get('/ea/:ea_id/sci/:sci_cat/hf/:hf_pers/layers/pa', errorHandler((req, res, next) => (
+    eaService.getSCIHFPALayer(
+      req.params.ea_id, req.params.sci_cat, req.params.hf_pers,
+    )
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/:ea_id/biomes BiomesLayerInEA
    * @apiName BiomesLayerInEA

@@ -555,6 +555,37 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_ecoChange
+   * @api {get} /ea/:ea_id/ecoChange/layers/lp/period/:period/categories/ LPCategoriesLayerInEA
+   * @apiName LPCategoriesLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the the forest loss and persistence layer for a given period, divided by categories
+   * inside the given environmental authority
+   *
+   * Data for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   * @apiParam (Path params) {String} period period
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type the geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CARDER/ecoChange/layers/lp/period/2016-2019/categories/
+   * @apiUse ForestLPLayerExample
+   */
+  router.get('/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
+    eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_ecoChange
    * @api {get} /ea/:ea_id/ecoChange/persistence ForestPersistenceInEA
    * @apiName ForestPersistenceInEA
    * @apiVersion 0.1.0
@@ -579,7 +610,6 @@ module.exports = (errorHandler, eaService) => {
         next();
       })
   )));
-
 
   /**
    * @apiGroup geofence_ea

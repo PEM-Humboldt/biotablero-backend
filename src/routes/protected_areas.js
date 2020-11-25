@@ -453,10 +453,9 @@ module.exports = (errorHandler, paService) => {
    * Get the the forest loss and persistence layer for a given period, divided by categories
    * inside the protected area category
    *
-   * Data for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
-   *
    * @apiParam (Path params) {String} protected area category
    * @apiParam (Path params) {String} period period
+   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
    *
    * @apiSuccess (geojson) {Object[]} result
    * @apiSuccess (geojson) {String} result.type the geometry type

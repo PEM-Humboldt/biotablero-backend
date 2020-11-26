@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "start": "npx nodemon --watch src --watch config",
-    "start-prod": "node src/app.js",
+    "start-prod": "node --max-old-space-size=4096 src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint src",
     "gen_docs": "npx apidoc -i api_doc/ -i src/ -o docs/"

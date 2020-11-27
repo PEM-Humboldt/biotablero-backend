@@ -445,37 +445,6 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup s_ecoChange
-   * @api {get} /pa/:category/ecoChange/layers/lp/period/:period/categories/
-   * LPCategoriesLayerInPA
-   * @apiName LPCategoriesLayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the the forest loss and persistence layer for a given period, divided by categories
-   * inside the protected area category
-   *
-   * @apiParam (Path params) {String} protected area category
-   * @apiParam (Path params) {String} period period
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type the geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/
-   * @apiUse ForestLPLayerExample
-   */
-  router.get('/pa/:category/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup s_ecoChange
    * @api {get} /pa/:category/ecoChange/persistence ForestPersistenceInPA
    * @apiName ForestPersistenceInPA
    * @apiVersion 0.1.0
@@ -689,6 +658,37 @@ module.exports = (errorHandler, paService) => {
     paService.getSCIHFPALayer(
       req.params.category, req.params.sci_cat, req.params.hf_pers,
     )
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_ecoChange
+   * @api {get} /pa/:category/ecoChange/layers/lp/period/:period/categories/
+   * LPCategoriesLayerInPA
+   * @apiName LPCategoriesLayerInPA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the the forest loss and persistence layer for a given period, divided by categories
+   * inside the protected area category
+   *
+   * @apiParam (Path params) {String} protected area category
+   * @apiParam (Path params) {String} period period
+   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type the geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/
+   * @apiUse ForestLPLayerExample
+   */
+  router.get('/pa/:category/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
+    paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
       .then((values) => {
         res.send(values);
         next();

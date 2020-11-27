@@ -446,37 +446,6 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_ecoChange
-   * @api {get} /states/:state_id/ecoChange/layers/lp/period/:period/categories/
-   * LPCategoriesLayerInState
-   * @apiName LPCategoriesLayerInState
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the the forest loss and persistence layer for a given period, divided by categories
-   * inside the state
-   *
-   * @apiParam (Path params) {Number} state_id state id
-   * @apiParam (Path params) {String} period period
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type the geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /states/86/ecoChange/layers/lp/period/2016-2019/categories/
-   * @apiUse ForestLPLayerExample
-   */
-  router.get('/states/:state_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup s_ecoChange
    * @api {get} /states/:state_id/ecoChange/persistence ForestPersistenceInState
    * @apiName ForestPersistenceInState
    * @apiVersion 0.1.0
@@ -715,6 +684,37 @@ module.exports = (errorHandler, stateService) => {
     stateService.getSCIHFPALayer(
       req.params.state_id, req.params.sci_cat, req.params.hf_pers,
     )
+      .then((values) => {
+        res.send(values);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup s_ecoChange
+   * @api {get} /states/:state_id/ecoChange/layers/lp/period/:period/categories/
+   * LPCategoriesLayerInState
+   * @apiName LPCategoriesLayerInState
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the the forest loss and persistence layer for a given period, divided by categories
+   * inside the state
+   *
+   * @apiParam (Path params) {Number} state_id state id
+   * @apiParam (Path params) {String} period period
+   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type the geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /states/86/ecoChange/layers/lp/period/2016-2019/categories/
+   * @apiUse ForestLPLayerExample
+   */
+  router.get('/states/:state_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
+    stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
       .then((values) => {
         res.send(values);
         next();

@@ -5,7 +5,7 @@
       "type": "Feature",
       "properties": {
         "key": "persistencia",
-        "area_ha": 1000
+        "area": 1000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -565,7 +565,7 @@
       "type": "Feature",
       "properties": {
         "key": "persistencia",
-        "area_ha": 2000
+        "area": 2000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -4465,7 +4465,7 @@
       "type": "Feature",
       "properties": {
         "key": "persistencia",
-        "area_ha": 3000
+        "area": 3000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -9033,7 +9033,7 @@
       "type": "Feature",
       "properties": {
         "key": "persistencia",
-        "area_ha": 4000
+        "area": 4000
       },
       "geometry": {
         "type": "Polygon",
@@ -9935,7 +9935,7 @@
       "type": "Feature",
       "properties": {
         "key": "persistencia",
-        "area_ha": 5000
+        "area": 5000
       },
       "geometry": {
         "type": "Polygon",
@@ -10535,7 +10535,7 @@
       "type": "Feature",
       "properties": {
         "key": "perdida",
-        "area_ha": 500
+        "area": 500
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -11583,7 +11583,7 @@
       "type": "Feature",
       "properties": {
         "key": "perdida",
-        "area_ha": 1000
+        "area": 1000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -11711,7 +11711,7 @@
       "type": "Feature",
       "properties": {
         "key": "perdida",
-        "area_ha": 1500
+        "area": 1500
       },
       "geometry": {
         "type": "Polygon",
@@ -11765,7 +11765,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 10000
+        "area": 10000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -13025,7 +13025,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 11000
+        "area": 11000
       },
       "geometry": {
         "type": "Polygon",
@@ -13671,7 +13671,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 12000
+        "area": 12000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -14279,7 +14279,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 13000
+        "area": 13000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -15919,7 +15919,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 14000
+        "area": 14000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -16903,7 +16903,7 @@
       "type": "Feature",
       "properties": {
         "key": "ganancia",
-        "area_ha": 15000
+        "area": 15000
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -20055,7 +20055,7 @@
       "type": "Feature",
       "properties": {
         "key": "no_bosque",
-        "area_ha": 3500
+        "area": 3500
       },
       "geometry": {
         "type": "Polygon",
@@ -20093,7 +20093,7 @@
       "type": "Feature",
       "properties": {
         "key": "no_bosque",
-        "area_ha": 4500
+        "area": 4500
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -25463,7 +25463,7 @@
       "type": "Feature",
       "properties": {
         "key": "no_bosque",
-        "area_ha": 5500
+        "area": 5500
       },
       "geometry": {
         "type": "MultiPolygon",
@@ -25619,7 +25619,7 @@
       "type": "Feature",
       "properties": {
         "key": "no_bosque",
-        "area_ha": 6500
+        "area": 6500
       },
       "geometry": {
         "type": "MultiPolygon",

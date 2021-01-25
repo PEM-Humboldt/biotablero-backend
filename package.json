@@ -12,12 +12,12 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bookshelf": "0.13.3",
+    "bookshelf": "^1.2.0",
     "bottlejs": "1.7.1",
     "config": "2.0.1",
-    "knex": "0.14.6",
-    "pg": "7.4.3",
-    "restify": "7.2.1",
+    "knex": "^0.21.16",
+    "pg": "^8.5.1",
+    "restify": "^8.5.1",
     "restify-cors-middleware": "1.1.1",
     "restify-router": "0.5.0",
     "winston": "3.1.0"

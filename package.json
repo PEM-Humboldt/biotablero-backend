@@ -4,11 +4,11 @@
   "description": "Backend for 'Biotablero' project",
   "main": "src/app.js",
   "scripts": {
-    "start": "npx nodemon --watch src --watch config",
+    "start": "nodemon --watch src --watch config",
     "start-prod": "node src/app.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "npx eslint src",
-    "gen_docs": "npx apidoc -i api_doc/ -i src/ -o docs/"
+    "lint": "eslint src",
+    "gen_docs": "apidoc -i api_doc/ -i src/ -o docs/"
   },
   "license": "MIT",
   "dependencies": {
@@ -29,15 +29,6 @@
     "eslint-plugin-import": "2.14.0",
     "nodemon": "^2.0.7"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/PEM-Humboldt/biotablero-backend.git"
-  },
-  "author": "",
-  "bugs": {
-    "url": "https://github.com/PEM-Humboldt/biotablero-backend/issues"
-  },
-  "homepage": "https://github.com/PEM-Humboldt/biotablero-backend#readme",
   "apidoc": {
     "name": "Biotablero REST API",
     "version": "0.1.0"

@@ -5,10 +5,10 @@ Backend side for BioTablero project.
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
-You'll need nodejs v8.11+ and npm v5.6+ to run the project.
+You'll need nodejs v8.11+ and yarn to run the project.
 
 ### Install dependencies
-After cloning the project, install its dependencies running: `npm i`
+After cloning the project, install its dependencies running: `yarn install`
 
 ### Setup
 Copy the [config file](config/default.json) with the name of the environment you're running, this name needs to be the same as the env var **NODE_CONFIG_ENV**.
@@ -38,7 +38,7 @@ The property users is an array of objects, each one has a *username* and *passwo
 **This property isn't present in the default config file, if you don't provide it in your custom configuration all endpoints related with users will not work**
 
 ### Run
-Run `npm start` to start the server, this will launch nodemon with a delay of 3 seconds, ready to watch your changes.
+Run `yarn start` to start the server, this will launch nodemon with a delay of 3 seconds, ready to watch your changes.
 
 ## Deployment
 
@@ -72,7 +72,7 @@ Then run: `docker-compose up -d`
 There are no tests currently.
 
 ## Documentation
-You can generate the API documentation with `npm run gen_docs`, it will generate them under the */docs* folder
+You can generate the API documentation with `yarn run gen_docs`, it will generate them under the */docs* folder
 
 Production version of these docs are available [here](https://pem-humboldt.github.io/biotablero-backend/).
 

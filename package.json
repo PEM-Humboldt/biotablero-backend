@@ -1,36 +1,19 @@
 {
-  "name": "biotablero-backend",
+  "name": "biotablero-services",
   "version": "1.3.0",
-  "description": "Backend for 'Biotablero' project",
+  "description": "Backend services for Biotablero",
   "main": "src/app.js",
   "scripts": {
-    "start": "nodemon --watch src --watch config",
-    "start-prod": "node src/app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint src",
-    "gen_docs": "apidoc -i api_doc/ -i src/ -o docs/"
+    "g:lint": "cd $INIT_CWD && eslint"
   },
   "license": "MIT",
-  "dependencies": {
-    "bookshelf": "^1.2.0",
-    "bottlejs": "1.7.1",
-    "config": "2.0.1",
-    "knex": "^0.21.16",
-    "pg": "^8.5.1",
-    "restify": "^8.5.1",
-    "restify-cors-middleware": "1.1.1",
-    "restify-router": "0.5.0",
-    "winston": "3.1.0"
-  },
   "devDependencies": {
-    "apidoc": "0.17.6",
     "eslint": "5.5.0",
     "eslint-config-airbnb-base": "13.1.0",
-    "eslint-plugin-import": "2.14.0",
-    "nodemon": "^2.0.7"
+    "eslint-plugin-import": "2.14.0"
   },
-  "apidoc": {
-    "name": "Biotablero REST API",
-    "version": "0.1.0"
-  }
+  "private": true,
+  "workspaces": [
+    "services/*"
+  ]
 }

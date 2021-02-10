@@ -383,6 +383,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"backend@workspace:services/backend":
+  version: 0.0.0-use.local
+  resolution: "backend@workspace:services/backend"
+  dependencies:
+    apidoc: 0.17.6
+    bookshelf: ^1.2.0
+    bottlejs: 1.7.1
+    config: 2.0.1
+    knex: ^0.21.16
+    nodemon: ^2.0.7
+    pg: ^8.5.1
+    restify: ^8.5.1
+    restify-cors-middleware: 1.1.1
+    restify-router: 0.5.0
+    winston: 3.1.0
+  languageName: unknown
+  linkType: soft
+
 "balanced-match@npm:^1.0.0":
   version: 1.0.0
   resolution: "balanced-match@npm:1.0.0"
@@ -421,24 +439,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"biotablero-backend@workspace:.":
+"biotablero-services@workspace:.":
   version: 0.0.0-use.local
-  resolution: "biotablero-backend@workspace:."
+  resolution: "biotablero-services@workspace:."
   dependencies:
-    apidoc: 0.17.6
-    bookshelf: ^1.2.0
-    bottlejs: 1.7.1
-    config: 2.0.1
     eslint: 5.5.0
     eslint-config-airbnb-base: 13.1.0
     eslint-plugin-import: 2.14.0
-    knex: ^0.21.16
-    nodemon: ^2.0.7
-    pg: ^8.5.1
-    restify: ^8.5.1
-    restify-cors-middleware: 1.1.1
-    restify-router: 0.5.0
-    winston: 3.1.0
   languageName: unknown
   linkType: soft
 

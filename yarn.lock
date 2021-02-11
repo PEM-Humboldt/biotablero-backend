@@ -387,7 +387,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "backend@workspace:services/backend"
   dependencies:
-    apidoc: 0.17.6
     bookshelf: ^1.2.0
     bottlejs: 1.7.1
     config: 2.0.1
@@ -443,6 +442,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "biotablero-services@workspace:."
   dependencies:
+    apidoc: 0.17.6
     eslint: 5.5.0
     eslint-config-airbnb-base: 13.1.0
     eslint-plugin-import: 2.14.0

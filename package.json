@@ -4,10 +4,13 @@
   "description": "Backend services for Biotablero",
   "main": "src/app.js",
   "scripts": {
-    "g:lint": "cd $INIT_CWD && eslint"
+    "g:lint": "cd $INIT_CWD && eslint",
+    "g:docs": "cd $INIT_CWD && apidoc",
+    "all_docs": "apidoc -v -i services/ -e node_modules -e docs -o docs/"
   },
   "license": "MIT",
   "devDependencies": {
+    "apidoc": "0.17.6",
     "eslint": "5.5.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-plugin-import": "2.14.0"
@@ -15,5 +18,9 @@
   "private": true,
   "workspaces": [
     "services/*"
-  ]
+  ],
+  "apidoc": {
+    "name": "Biotablero REST API",
+    "version": "0.1.0"
+  }
 }

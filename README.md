@@ -17,7 +17,7 @@ Check every [service](./services) documentation to correctly config them.
 [WIP]
 
 ## Documentation
-To generate the global documentation run `yarn all docs`, it will be located under the */docs* folder
+To generate the global documentation run `yarn all_docs`, it will be located under the */docs* folder
 
 Production version of these docs are available [here](https://pem-humboldt.github.io/biotablero-backend/).
 

@@ -38,7 +38,7 @@ The property users is an array of objects, each one has a *username* and *passwo
 **This property isn't present in the default config file, if you don't provide it in your custom configuration all endpoints related with users will not work**
 
 ### Run
-Run `yarn start` to start the server, this will launch nodemon with a delay of 3 seconds, ready to watch your changes.
+Run `yarn start` to start the server, this will launch nodemon ready to watch your changes.
 
 ## Deployment
 

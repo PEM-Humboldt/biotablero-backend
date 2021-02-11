@@ -99,8 +99,5 @@ There are no guidelines for contribution currently.
 | src.util.errorHandler.js | Wrapper to handle uncaught errors, and to log all of them. |
 | src.util.logger.js | Logger object, it logs to console and error and info files. |
 
-## Authors
-Ingeniería de Datos y Desarrollo, Programa de Evaluación y Monitoreo de la Biodiversidad, Instituto Alexander von Humboldt Colombia
-
 ## License
 This project is licensed under the MIT License.

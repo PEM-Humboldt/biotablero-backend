@@ -23,14 +23,19 @@ Production version of these docs are available [here](https://pem-humboldt.githu
 
 If you want to generate only one service documentation run `yarn workspace <service_name> run docs`, it will be located under the */docs* folder for that service.
 
-If you want to generate the documentation for all services, but keep it separated run `yarn workspaces foreach run docs`, it will be located under the */docs* folder in every service.
+If you want to generate the documentation for all services, but keep them separated run `yarn workspaces foreach run docs`, it will be located under the */docs* folder in every service.
 
 ## Contributing
 
 There are no guidelines for contribution currently.
 
 ## Authors
-Ingeniería de Datos y Desarrollo, Programa de Evaluación y Monitoreo de la Biodiversidad, Instituto Alexander von Humboldt Colombia
+Arquitectura informática y manejo de datos - Programa de Evaluación y Monitoreo de la Biodiversidad - Instituto Alexander von Humboldt Colombia
+
+- **Erika Suárez** - [Erikasv](https://github.com/erikasv)
+- **Camilo Zapata** - [cazapatamar](https://github.com/cazapatamar)
+
+See also the list of [contributors](https://github.com/PEM-Humboldt/biotablero-backend/graphs/contributors) who participated in this project.
 
 ## License
 This project is licensed under the MIT License.

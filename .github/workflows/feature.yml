@@ -22,8 +22,8 @@ jobs:
         yarn workspaces foreach run lint
       env:
         CI: true
-    - name: verify docs were not updated
-      run: |
-        git checkout develop
-        git checkout -
-        git diff develop HEAD --exit-code --quiet -- docs
+    # - name: verify docs were not updated
+    #   run: |
+    #     git checkout develop
+    #     git checkout -
+    #     git diff develop HEAD --exit-code --quiet -- docs

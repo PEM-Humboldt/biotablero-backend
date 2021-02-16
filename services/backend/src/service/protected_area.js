@@ -23,6 +23,15 @@ module.exports = (paPersistence, seService) => {
     getCategories: async () => paPersistence.findCategories(),
 
     /**
+     * Get protected areas categories by binary protected values
+     *
+     * @param {String[]} binaryProtected binary protected values to filter by
+     */
+    getCategoriesByBinaryProtected: async binaryProtected => (
+      paPersistence.findCategoriesByBinaryProtected(binaryProtected)
+    ),
+
+    /**
      * Get protected area divided by strategic ecosystem type
      *
      * @param {String} categoryName category to filter by

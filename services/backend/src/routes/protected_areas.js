@@ -28,6 +28,34 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup geofence_pa
+   * @api {get} /pa/categories/binary_protected/:binary_protected listCategoriesByBinaryProtected
+   * @apiName listCategoriesByBinaryProtected
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * List available protected area categories for the given binary protected values
+   *
+   * @apiParam (Path params) {String} binary_proyected list of binary protected values
+   * separated by &
+   *
+   * @apiSuccess {Object[]} category list of protected area categories
+   *  for the given binary protected values
+   * @apiSuccess {String} binary_protected binary value
+   * @apiSuccess {String} label category name
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/categories/binary_protected/000001000000000&010100000000000&100000100000000
+   * @apiUse PACategoriesByBinaryProtectedExample
+   */
+  router.get('/pa/categories/binary_protected/:binary_protected', errorHandler((req, res, next) => (
+    paService.getCategoriesByBinaryProtected(req.params.binary_protected.split('&'))
+      .then((categories) => {
+        res.send(categories);
+        next();
+      })
+  )));
+
+  /**
+   * @apiGroup geofence_pa
    * @api {get} /pa/:category CategoryDetails
    * @apiName PACategoryDetails
    * @apiVersion 0.1.0

@@ -34,6 +34,9 @@ module.exports = (errorHandler, paService) => {
    * @apiDescription
    * List available protected area categories for the given binary protected values
    *
+   * @apiParam (Path params) {String} binary_proyected list of binary protected values
+   * separated by &
+   *
    * @apiSuccess {Object[]} category list of protected area categories
    *  for the given binary protected values
    * @apiSuccess {String} binary_protected binary value

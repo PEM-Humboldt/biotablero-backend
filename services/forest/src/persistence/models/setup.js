@@ -3,7 +3,7 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
-
+const geoIntegrity = require('./geo_integrity');
 
 const dbConfig = config.get('db');
 let conn = null;
@@ -31,7 +31,7 @@ const setupModels = () => {
 
   const dbConn = connect();
   models = {
-
+    geoIntegrity: geoIntegrity(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

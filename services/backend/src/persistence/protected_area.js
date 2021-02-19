@@ -27,6 +27,20 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     ),
 
     /**
+     * Get the binary protected value for the given category name
+     *
+     * @param {String} categoryName protected area category name
+     *
+     * @returns {Object} binary protected value
+     *
+     */
+    findBinaryProtectedByCategory: categoryName => (
+      globalBinaryProtectedAreas.query()
+        .where('label', categoryName)
+        .select('binary_protected')
+    ),
+
+    /**
      * Get the total area for the given category
      *
      * @param {String} categoryName protected area category name

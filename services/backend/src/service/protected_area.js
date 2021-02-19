@@ -32,6 +32,22 @@ module.exports = (paPersistence, seService) => {
     ),
 
     /**
+     * Get the binary protected value for the given category name
+     *
+     * @param {String} categoryName protected area category name
+     *
+     * @returns {Object} binary protected value
+     *
+     */
+    getBinaryProtectedByCategory: async (categoryName) => {
+      const binaryProtected = await paPersistence.findBinaryProtectedByCategory(categoryName);
+      if (binaryProtected.length === 0) {
+        throw new Error('protected area category doesn\'t exists');
+      }
+      return binaryProtected[0];
+    },
+
+    /**
      * Get protected area divided by strategic ecosystem type
      *
      * @param {String} categoryName category to filter by

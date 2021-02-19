@@ -32,6 +32,15 @@
  */
 
 /**
+ * @apiDefine BinaryProtectedByCategoryExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *    binary_protected:"000001000000000"
+ * }
+ *
+ */
+
+/**
  * @apiDefine PALayerExample
  * @apiSuccessExample {json} Success-Example:
  *  {

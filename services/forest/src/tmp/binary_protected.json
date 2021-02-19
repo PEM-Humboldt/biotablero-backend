@@ -4,7 +4,183 @@
     "label": "No Protegida"
   },
   {
+    "binary_protected": "000000000000001",
+    "label": "Areas de Recreacion"
+  },
+  {
+    "binary_protected": "000000000000010",
+    "label": "Via Parque"
+  },
+  {
+    "binary_protected": "000000000000100",
+    "label": "Santuario de Flora"
+  },
+  {
+    "binary_protected": "000000000001000",
+    "label": "Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "000000000010000",
+    "label": "Santuario de Fauna"
+  },
+  {
+    "binary_protected": "000000000100000",
+    "label": "Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000000000101000",
+    "label": "Reserva Natural de la Sociedad Civil y Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "000000001000000",
+    "label": "Reserva Natural"
+  },
+  {
+    "binary_protected": "000000010000000",
+    "label": "Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000000010100000",
+    "label": "Reservas Forestales Protectoras Regionales y Reserva Natural de la Sociedad Civil"
+  },
+  {
     "binary_protected": "000000100000000",
     "label": "Reservas Forestales Protectoras Nacionales"
+  },
+  {
+    "binary_protected": "000000100001000",
+    "label": "Reservas Forestales Protectoras Nacionales y Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "000000100100000",
+    "label": "Reservas Forestales Protectoras Nacionales y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000000110000000",
+    "label": "Reservas Forestales Protectoras Nacionales y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000001000000000",
+    "label": "Parques Naturales Regionales"
+  },
+  {
+    "binary_protected": "000001000001000",
+    "label": "Parques Naturales Regionales y Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "000001000100000",
+    "label": "Parques Naturales Regionales y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000001010000000",
+    "label": "Parques Naturales Regionales y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000001100000000",
+    "label": "Parques Naturales Regionales y Reservas Forestales Protectoras Nacionales"
+  },
+  {
+    "binary_protected": "000010000000000",
+    "label": "Parque Nacional Natural"
+  },
+  {
+    "binary_protected": "000010000100000",
+    "label": "Parque Nacional Natural y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000010010000000",
+    "label": "Parque Nacional Natural y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000010100000000",
+    "label": "Parque Nacional Natural y Reservas Forestales Protectoras Nacionales"
+  },
+  {
+    "binary_protected": "000010100100000",
+    "label": "Parque Nacional Natural y Reservas Forestales Protectoras Nacionales y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000011000000000",
+    "label": "Parque Nacional Natural y Parques Naturales Regionales"
+  },
+  {
+    "binary_protected": "000100000000000",
+    "label": "Distritos Regionales de Manejo Integrado"
+  },
+  {
+    "binary_protected": "000100000001000",
+    "label": "Distritos Regionales de Manejo Integrado y Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "000100000010000",
+    "label": "Distritos Regionales de Manejo Integrado y Santuario de Fauna"
+  },
+  {
+    "binary_protected": "000100000100000",
+    "label": "Distritos Regionales de Manejo Integrado y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000100010000000",
+    "label": "Distritos Regionales de Manejo Integrado y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000100100000000",
+    "label": "Distritos Regionales de Manejo Integrado y Reservas Forestales Protectoras Nacionales"
+  },
+  {
+    "binary_protected": "000100100100000",
+    "label": "Distritos Regionales de Manejo Integrado y Reservas Forestales Protectoras Nacionales y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "000101000000000",
+    "label": "Distritos Regionales de Manejo Integrado y Parques Naturales Regionales"
+  },
+  {
+    "binary_protected": "000101010000000",
+    "label": "Distritos Regionales de Manejo Integrado y Parques Naturales Regionales y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "000110000000000",
+    "label": "Distritos Regionales de Manejo Integrado y Parque Nacional Natural"
+  },
+  {
+    "binary_protected": "001000000000000",
+    "label": "Distritos Nacionales de Manejo Integrado"
+  },
+  {
+    "binary_protected": "010000000000000",
+    "label": "Distritos de Conservacion de Suelos"
+  },
+  {
+    "binary_protected": "010000000001000",
+    "label": "Distritos de Conservacion de Suelos y Santuario de Fauna y Flora"
+  },
+  {
+    "binary_protected": "010000000100000",
+    "label": "Distritos de Conservacion de Suelos y Reserva Natural de la Sociedad Civil"
+  },
+  {
+    "binary_protected": "010000010000000",
+    "label": "Distritos de Conservacion de Suelos y Reservas Forestales Protectoras Regionales"
+  },
+  {
+    "binary_protected": "010000100000000",
+    "label": "Distritos de Conservacion de Suelos y Reservas Forestales Protectoras Nacionales"
+  },
+  {
+    "binary_protected": "010010000000000",
+    "label": "Distritos de Conservacion de Suelos y Parque Nacional Natural"
+  },
+  {
+    "binary_protected": "010100000000000",
+    "label": "Distritos de Conservacion de Suelos y Distritos Regionales de Manejo Integrado"
+  },
+  {
+    "binary_protected": "100000000000000",
+    "label": "Area Natural Unica"
+  },
+  {
+    "binary_protected": "100000100000000",
+    "label": "Area Natural Unica y Reservas Forestales Protectoras Nacionales"
   }
 ]

@@ -40,8 +40,11 @@ module.exports = (paPersistence, seService) => {
      *
      */
     getBinaryProtectedByCategory: async (categoryName) => {
-      const data = await paPersistence.findBinaryProtectedByCategory(categoryName);
-      return data ? data[0] : null;
+      const binaryProtected = await paPersistence.findBinaryProtectedByCategory(categoryName);
+      if (binaryProtected.length === 0) {
+        throw new Error('protected area category doesn\'t exists');
+      }
+      return binaryProtected[0];
     },
 
     /**

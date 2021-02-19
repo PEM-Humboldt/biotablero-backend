@@ -1,0 +1,10 @@
+[
+  {
+    "binary_protected": "000000000000000",
+    "label": "No Protegida"
+  },
+  {
+    "binary_protected": "000000100000000",
+    "label": "Reservas Forestales Protectoras Nacionales"
+  }
+]

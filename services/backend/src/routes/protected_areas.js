@@ -64,7 +64,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiParam @apiParam (Path params) {String} category protected area category
    *
-   * @apiSuccess {Object[]} result
+   * @apiSuccess {Object} result
    * @apiSuccess {Object} result.binary_protected binary protected value
    *
    * @apiExample {curl} Example usage:

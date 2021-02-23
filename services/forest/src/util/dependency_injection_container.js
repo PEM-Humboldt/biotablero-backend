@@ -5,6 +5,8 @@ const logger = require('./logger');
 
 const bookshelfModels = require('../persistence/models/setup');
 
+const restAPI = require('./restAPI');
+
 const SCIHFPersistence = require('../persistence/SCIHF');
 
 const SCIHFService = require('../service/SCIHF');
@@ -16,11 +18,13 @@ const bottle = new Bottlejs();
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
+bottle.factory('restAPI', () => restAPI);
+
 bottle.factory('SCIHFPersistence', () => (
   SCIHFPersistence(bookshelfModels.db, bookshelfModels.models)
 ));
 
-bottle.factory('SCIHFService', container => SCIHFService(container.SCIHFPersistence));
+bottle.factory('SCIHFService', container => SCIHFService(container.SCIHFPersistence, container.restAPI));
 
 bottle.factory('routes', container => ([
   SCIHFRoute(container.errorHandler, container.SCIHFService),

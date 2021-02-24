@@ -36,7 +36,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
         throw new Error('Data for SCIHF doesn\'t exists to the selected area id and area type');
       }
 
-      const binaryProtectedValues = [...new Set(data.map(b => (b.binary_protected)))].join('&');
+      const binaryProtectedValues = [...new Set(data.map(b => (b.binary_protected)))].join(';');
       const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(binaryProtectedValues);
 
       return data.map((item) => {
@@ -129,7 +129,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
         throw new Error('Data layer for SCIHF PA doesn\'t exists to the selected area id and area type');
       }
 
-      const binaryProtectedValues = [...new Set(data.features.map(b => (b.properties.binary_protected)))].join('&');
+      const binaryProtectedValues = [...new Set(data.features.map(b => (b.properties.binary_protected)))].join(';');
       const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(binaryProtectedValues);
 
       return data.features.map((item) => {

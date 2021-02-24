@@ -36,18 +36,24 @@ module.exports = (SCIHFPersistence, restAPI) => {
         throw new Error('Data for SCIHF doesn\'t exists to the selected area id and area type');
       }
 
-      const binaryProtectedValues = [...new Set(data.map(b => (b.binary_protected)))].join(';');
-      const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(binaryProtectedValues);
+      try {
+        const binaryProtectedValues = [...new Set(data.map(b => (b.binary_protected)))].join(';');
+        const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
+          binaryProtectedValues,
+        );
 
-      return data.map((item) => {
-        const { label } = categoriesPA.find(bp => bp.binary_protected === item.binary_protected);
-        return {
-          hf_pers: item.hf_pers,
-          sci_cat: item.sci_cat,
-          pa: label,
-          area: item.area,
-        };
-      });
+        return data.map((item) => {
+          const { label } = categoriesPA.find(bp => bp.binary_protected === item.binary_protected);
+          return {
+            hf_pers: item.hf_pers,
+            sci_cat: item.sci_cat,
+            pa: label,
+            area: item.area,
+          };
+        });
+      } catch (e) {
+        throw new Error(`Error by returning SCIHF data: [${e}]`);
+      }
     },
 
     /**
@@ -129,20 +135,26 @@ module.exports = (SCIHFPersistence, restAPI) => {
         throw new Error('Data layer for SCIHF PA doesn\'t exists to the selected area id and area type');
       }
 
-      const binaryProtectedValues = [...new Set(data.features.map(b => (b.properties.binary_protected)))].join(';');
-      const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(binaryProtectedValues);
-
-      return data.features.map((item) => {
-        const { label } = categoriesPA.find(
-          bp => bp.binary_protected === item.properties.binary_protected,
+      try {
+        const binaryProtectedValues = [...new Set(data.features.map(b => (b.properties.binary_protected)))].join(';');
+        const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
+          binaryProtectedValues,
         );
-        return {
-          ...item,
-          properties: {
-            pa_label: label,
-          },
-        };
-      });
+
+        return data.features.map((item) => {
+          const { label } = categoriesPA.find(
+            bp => bp.binary_protected === item.properties.binary_protected,
+          );
+          return {
+            ...item,
+            properties: {
+              pa_label: label,
+            },
+          };
+        });
+      } catch (e) {
+        throw new Error(`Error by returning SCIHFPALayer data: [${e}]`);
+      }
     },
   };
 

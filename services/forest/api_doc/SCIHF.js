@@ -1,6 +1,6 @@
 /**
- * @apiDefine sci Search > Forest Structural Condition Index
- * Information related to the forest structural condition index in a given geofence.
+ * @apiDefine Search > Forest Structural Condition Index
+ * Information related to the forest structural condition index in a given area.
  */
 
 /**
@@ -32,7 +32,7 @@
  *     {
  *       "type": "Feature",
  *       "properties": {
- *         "sci_cat": "moderada",
+ *         "sci_cat": "baja_moderada",
  *         "hf_pers": "estable_alta"
  *       },
  *       "geometry": {

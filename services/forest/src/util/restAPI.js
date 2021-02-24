@@ -11,7 +11,7 @@ const makeGetRequest = endpoint => (
 
 module.exports = {
   requestCategoriesByBinaryProtected: async binaryProtectedValues => (
-    makeGetRequest(`pa/categories/binary_protected/${binaryProtectedValues}`)
+    makeGetRequest(`pa/categories/binary_protected?binary_protected=${binaryProtectedValues}`)
   ),
   requestBinaryProtectedByCategory: async category => (
     makeGetRequest(`pa/${category}/binary_protected`)

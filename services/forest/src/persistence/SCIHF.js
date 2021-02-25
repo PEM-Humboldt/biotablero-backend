@@ -25,7 +25,7 @@ module.exports = (
      * Find the area grouped by SCI, HF persistence and PA categories
      * in the given state
      *
-     * @param {String} areaId state id
+     * @param {Number} areaId state id
      * @param {Number} year optional year to filter data, 2018 by default
      *
      * @return {Object} Array of areas grouped by SCI, HF persistence and PA categories
@@ -127,7 +127,7 @@ module.exports = (
      * Find the layer of the forest structural condition index crossed with human footprint
      * in the given state
      *
-     * @param {String} areaId state id
+     * @param {Number} areaId state id
      * @param {Number} year optional year to filter data, 2018 by default
      *
      * @return {Object} Geojson object with the geometry
@@ -324,7 +324,7 @@ module.exports = (
      * Find the layer of one combination of forest structural condition index category and a human
      * footprint persistence category, divided by protected areas in the given state
      *
-     * @param {String} areaId state id
+     * @param {Number} areaId state id
      * @param {String} sciCat sci category
      * @param {String} hfPers human footprint persistence category
      * @param {Number} year optional year to filter data, 2018 by default

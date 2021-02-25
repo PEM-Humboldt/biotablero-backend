@@ -28,7 +28,7 @@ module.exports = (
      * @param {Number} areaId state id
      * @param {Number} year optional year to filter data, 2018 by default
      *
-     * @return {Object} Array of areas grouped by SCI, HF persistence and PA categories
+     * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
      */
     findSCIHFInState: async (areaId, year = 2018) => (
       geoIntegrity.query()
@@ -46,7 +46,7 @@ module.exports = (
      * @param {Number} areaId basin subzone id
      * @param {Number} year optional year to filter data, 2018 by default
      *
-     * @return {Object} Array of areas grouped by SCI, HF persistence and PA categories
+     * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
      */
     findSCIHFInBasinSubzone: async (areaId, year = 2018) => (
       geoIntegrity.query()
@@ -64,7 +64,7 @@ module.exports = (
      * @param {String} areaId protected area category
      * @param {Number} year optional year to filter data, 2018 by default
      *
-     * @return {Object} Array of areas grouped by SCI, HF persistence and PA categories
+     * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
      */
     findSCIHFInPA: async (areaId, year = 2018) => (
       geoIntegrity.query()

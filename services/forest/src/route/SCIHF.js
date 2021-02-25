@@ -14,7 +14,7 @@ module.exports = (errorHandler, SCIHFService) => {
    *
    * Value calculated for 2018
    *
-   * @apiParam (Query params) {String | Number} areaType area type
+   * @apiParam (Query params) {String|Number} areaType area type
    * @apiParam (Query params) {String} areaId area id
    *
    * @apiSuccess {Object[]} result
@@ -45,7 +45,7 @@ module.exports = (errorHandler, SCIHFService) => {
    *
    * Value calculated for 2018
    *
-   * @apiParam (Query params) {String | Number} areaType area type
+   * @apiParam (Query params) {String|Number} areaType area type
    * @apiParam (Query params) {String} areaId area id
    *
    * @apiSuccess (geojson) {Object[]} result
@@ -78,7 +78,7 @@ module.exports = (errorHandler, SCIHFService) => {
    *
    * @apiParam (Path params) {String} sciCat sci category
    * @apiParam (Path params) {String} hfPers human footprint persistence category
-   * @apiParam (Query params) {String | Number} areaType area type
+   * @apiParam (Query params) {String|Number} areaType area type
    * @apiParam (Query params) {String} areaId area id
    *
    * @apiSuccess (geojson) {Object[]} result

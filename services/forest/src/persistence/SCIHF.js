@@ -58,16 +58,16 @@ module.exports = (
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
-   * in the given protected area category
+   * in the given protected area category(ies)
    *
-   * @param {String} areaId protected area category
+   * @param {String} paCode code that represents one o many protected area categories
    * @param {Number} year optional year to filter data, 2018 by default
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInPA: async (areaId, year = 2018) => (
+  findSCIHFInPA: async (paCode, year = 2018) => (
     geoIntegrity.query()
-      .where({ binary_protected: areaId, sci_year: year })
+      .where({ binary_protected: paCode, sci_year: year })
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
       .groupBy('binary_protected', 'sci_cat', 'hf_pers')
@@ -220,14 +220,14 @@ module.exports = (
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
-   * in the given protected area category
+   * in the given protected area category(ies)
    *
-   * @param {String} areaId protected area category
+   * @param {String} paCode code that represents one o many protected area categories
    * @param {Number} year optional year to filter data, 2018 by default
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInPA: async (areaId, year = 2018) => (
+  findSCIHFLayerInPA: async (paCode, year = 2018) => (
     db.raw(
       `
       SELECT row_to_json(fc) AS collection
@@ -261,7 +261,7 @@ module.exports = (
         ) as f
       ) as fc;
       `,
-      [areaId, areaId, year, areaId, areaId, year],
+      [paCode, paCode, year, paCode, paCode, year],
     )
       .then(layers => layers.rows[0].collection)
   ),
@@ -425,16 +425,16 @@ module.exports = (
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
-   * footprint persistence category in the given protected area category
+   * footprint persistence category in the given protected area category(ies)
    *
-   * @param {String} areaId protected area category
+   * @param {String} paCode code that represents one o many protected area categories
    * @param {String} sciCat sci category
    * @param {String} hfPers human footprint persistence category
    * @param {Number} year optional year to filter data, 2018 by default
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInPA: async (areaId, sciCat, hfPers, year = 2018) => (
+  findSCIHFPALayerInPA: async (paCode, sciCat, hfPers, year = 2018) => (
     db.raw(
       `
       SELECT row_to_json(fc) AS collection
@@ -470,7 +470,7 @@ module.exports = (
         ) as f
       ) as fc;
       `,
-      [areaId, areaId, year, sciCat, hfPers, areaId, areaId, year, sciCat, hfPers],
+      [paCode, paCode, year, sciCat, hfPers, paCode, paCode, year, sciCat, hfPers],
     )
       .then(layers => layers.rows[0].collection)
   ),

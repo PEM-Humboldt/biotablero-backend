@@ -5,7 +5,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/hf/:areaType/:areaId SCIHF
+   * @api {get} /sci/hf SCIHF
    * @apiName SCIHF
    * @apiVersion 1.0.0
    * @apiDescription
@@ -37,7 +37,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/hf/layer/:areaType/:areaId SCIHFLayer
+   * @api {get} /sci/hf/layer SCIHFLayer
    * @apiName SCIHFLayer
    * @apiVersion 1.0.0
    * @apiDescription
@@ -67,7 +67,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/:sci_cat/hf/:hf_pers/layer/:areaType/:areaId SCIHFPALayer
+   * @api {get} /sci/:sci_cat/hf/:hf_pers/layer SCIHFPALayer
    * @apiName SCIHFPALayer
    * @apiVersion 1.0.0
    * @apiDescription

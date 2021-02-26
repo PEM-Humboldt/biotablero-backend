@@ -21,7 +21,7 @@ bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 bottle.factory('restAPI', () => restAPI);
 
 bottle.factory('SCIHFPersistence', () => (
-  SCIHFPersistence(bookshelfModels.db, bookshelfModels.models)
+  SCIHFPersistence(bookshelfModels.db, bookshelfModels.models, logger)
 ));
 
 bottle.factory('SCIHFService', container => SCIHFService(container.SCIHFPersistence, container.restAPI));

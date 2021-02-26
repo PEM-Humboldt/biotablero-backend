@@ -1,6 +1,7 @@
 module.exports = (
   db,
   { geoIntegrity },
+  logger,
 ) => ({
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -11,14 +12,19 @@ module.exports = (
    *
    * @returns {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInEA: async (areaId, year = 2018) => (
-    geoIntegrity.query()
-      .where({ id_ea: areaId, sci_year: year })
-      .select('hf_pers', 'sci_cat', 'binary_protected')
-      .sum('area_ha as area')
-      .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
-  ),
+  findSCIHFInEA: async (areaId, year = 2018) => {
+    try {
+      return geoIntegrity.query()
+        .where({ id_ea: areaId, sci_year: year })
+        .select('hf_pers', 'sci_cat', 'binary_protected')
+        .sum('area_ha as area')
+        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFInEA persistence');
+    }
+  },
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -29,14 +35,19 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInState: async (areaId, year = 2018) => (
-    geoIntegrity.query()
-      .where({ id_state: areaId, sci_year: year })
-      .select('hf_pers', 'sci_cat', 'binary_protected')
-      .sum('area_ha as area')
-      .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
-  ),
+  findSCIHFInState: async (areaId, year = 2018) => {
+    try {
+      return geoIntegrity.query()
+        .where({ id_state: areaId, sci_year: year })
+        .select('hf_pers', 'sci_cat', 'binary_protected')
+        .sum('area_ha as area')
+        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFInState persistence');
+    }
+  },
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -47,14 +58,19 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInBasinSubzone: async (areaId, year = 2018) => (
-    geoIntegrity.query()
-      .where({ id_subzone: areaId, sci_year: year })
-      .select('hf_pers', 'sci_cat', 'binary_protected')
-      .sum('area_ha as area')
-      .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
-  ),
+  findSCIHFInBasinSubzone: async (areaId, year = 2018) => {
+    try {
+      return geoIntegrity.query()
+        .where({ id_subzone: areaId, sci_year: year })
+        .select('hf_pers', 'sci_cat', 'binary_protected')
+        .sum('area_ha as area')
+        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFInBasinSubzone persistence');
+    }
+  },
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -65,14 +81,19 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInPA: async (paCode, year = 2018) => (
-    geoIntegrity.query()
-      .where({ binary_protected: paCode, sci_year: year })
-      .select('hf_pers', 'sci_cat', 'binary_protected')
-      .sum('area_ha as area')
-      .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
-  ),
+  findSCIHFInPA: async (paCode, year = 2018) => {
+    try {
+      return geoIntegrity.query()
+        .where({ binary_protected: paCode, sci_year: year })
+        .select('hf_pers', 'sci_cat', 'binary_protected')
+        .sum('area_ha as area')
+        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFInPA persistence');
+    }
+  },
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -83,44 +104,49 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInEA: async (areaId, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFLayerInEA: async (areaId, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              sci_cat,
-              hf_pers
-            FROM geo_integrity
-            WHERE id_ea = ?
-              AND sci_year = ?
-            GROUP BY sci_cat, hf_pers
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
               FROM geo_integrity
               WHERE id_ea = ?
                 AND sci_year = ?
-                GROUP BY sci_cat, hf_pers
-            ) AS prop
-            ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
-        ) as f
-      ) as fc;
-      `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY sci_cat, hf_pers
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  sci_cat,
+                  hf_pers
+                FROM geo_integrity
+                WHERE id_ea = ?
+                  AND sci_year = ?
+                  GROUP BY sci_cat, hf_pers
+              ) AS prop
+              ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
+          ) as f
+        ) as fc;
+        `,
+        [areaId, year, areaId, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFLayerInEA persistence');
+    }
+  },
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -131,9 +157,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInState: async (areaId, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFLayerInState: async (areaId, year = 2018) => {
+    try {
+      return db.raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -165,10 +192,14 @@ module.exports = (
         ) as f
       ) as fc;
       `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+        [areaId, year, areaId, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFLayerInState persistence');
+    }
+  },
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -179,44 +210,49 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInBasinSubzone: async (areaId, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFLayerInBasinSubzone: async (areaId, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              sci_cat,
-              hf_pers
-            FROM geo_integrity
-            WHERE id_subzone = ?
-              AND sci_year = ?
-            GROUP BY sci_cat, hf_pers
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
               FROM geo_integrity
               WHERE id_subzone = ?
                 AND sci_year = ?
-                GROUP BY sci_cat, hf_pers
-            ) AS prop
-            ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
-        ) as f
-      ) as fc;
-      `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY sci_cat, hf_pers
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  sci_cat,
+                  hf_pers
+                FROM geo_integrity
+                WHERE id_subzone = ?
+                  AND sci_year = ?
+                  GROUP BY sci_cat, hf_pers
+              ) AS prop
+              ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
+          ) as f
+        ) as fc;
+        `,
+        [areaId, year, areaId, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFLayerInBasinSubzone persistence');
+    }
+  },
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -227,44 +263,49 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInPA: async (paCode, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFLayerInPA: async (paCode, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              sci_cat,
-              hf_pers
-            FROM geo_integrity
-            WHERE (binary_protected & ?) = ?
-              AND sci_year = ?
-            GROUP BY sci_cat, hf_pers
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
               FROM geo_integrity
               WHERE (binary_protected & ?) = ?
                 AND sci_year = ?
-                GROUP BY sci_cat, hf_pers
-            ) AS prop
-            ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
-        ) as f
-      ) as fc;
-      `,
-      [paCode, paCode, year, paCode, paCode, year],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY sci_cat, hf_pers
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  sci_cat,
+                  hf_pers
+                FROM geo_integrity
+                WHERE (binary_protected & ?) = ?
+                  AND sci_year = ?
+                  GROUP BY sci_cat, hf_pers
+              ) AS prop
+              ON geo.sci_cat = prop.sci_cat AND geo.hf_pers = prop.hf_pers
+          ) as f
+        ) as fc;
+        `,
+        [paCode, paCode, year, paCode, paCode, year],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFLayerInPA persistence');
+    }
+  },
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -278,46 +319,51 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInEA: async (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFPALayerInEA: async (areaId, sciCat, hfPers, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              binary_protected
-            FROM geo_integrity
-            WHERE id_ea = ?
-              AND sci_year = ?
-              AND sci_cat = ?
-              AND hf_pers = ?
-            GROUP BY binary_protected
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
               WHERE id_ea = ?
                 AND sci_year = ?
                 AND sci_cat = ?
                 AND hf_pers = ?
-                GROUP BY binary_protected
-            ) AS prop
-            ON geo.binary_protected = prop.binary_protected
-        ) as f
-      ) as fc;
-      `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY binary_protected
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  binary_protected
+                FROM geo_integrity
+                WHERE id_ea = ?
+                  AND sci_year = ?
+                  AND sci_cat = ?
+                  AND hf_pers = ?
+                  GROUP BY binary_protected
+              ) AS prop
+              ON geo.binary_protected = prop.binary_protected
+          ) as f
+        ) as fc;
+        `,
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFPALayerInEA persistence');
+    }
+  },
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -330,46 +376,51 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInState: async (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFPALayerInState: async (areaId, sciCat, hfPers, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              binary_protected
-            FROM geo_integrity
-            WHERE id_state = ?
-              AND sci_year = ?
-              AND sci_cat = ?
-              AND hf_pers = ?
-            GROUP BY binary_protected
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
               WHERE id_state = ?
                 AND sci_year = ?
                 AND sci_cat = ?
                 AND hf_pers = ?
-                GROUP BY binary_protected
-            ) AS prop
-            ON geo.binary_protected = prop.binary_protected
-        ) as f
-      ) as fc;
-      `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY binary_protected
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  binary_protected
+                FROM geo_integrity
+                WHERE id_state = ?
+                  AND sci_year = ?
+                  AND sci_cat = ?
+                  AND hf_pers = ?
+                  GROUP BY binary_protected
+              ) AS prop
+              ON geo.binary_protected = prop.binary_protected
+          ) as f
+        ) as fc;
+        `,
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFPALayerInState persistence');
+    }
+  },
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -382,46 +433,51 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInBasinSubzone: async (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFPALayerInBasinSubzone: async (areaId, sciCat, hfPers, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              binary_protected
-            FROM geo_integrity
-            WHERE id_subzone = ?
-              AND sci_year = ?
-              AND sci_cat = ?
-              AND hf_pers = ?
-            GROUP BY binary_protected
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
               WHERE id_subzone = ?
                 AND sci_year = ?
                 AND sci_cat = ?
                 AND hf_pers = ?
-                GROUP BY binary_protected
-            ) AS prop
-            ON geo.binary_protected = prop.binary_protected
-        ) as f
-      ) as fc;
-      `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY binary_protected
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  binary_protected
+                FROM geo_integrity
+                WHERE id_subzone = ?
+                  AND sci_year = ?
+                  AND sci_cat = ?
+                  AND hf_pers = ?
+                  GROUP BY binary_protected
+              ) AS prop
+              ON geo.binary_protected = prop.binary_protected
+          ) as f
+        ) as fc;
+        `,
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFPALayerInBasinSubzone persistence');
+    }
+  },
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -434,44 +490,49 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInPA: async (paCode, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
-      SELECT row_to_json(fc) AS collection
-      FROM (
-        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+  findSCIHFPALayerInPA: async (paCode, sciCat, hfPers, year = 2018) => {
+    try {
+      return db.raw(
+        `
+        SELECT row_to_json(fc) AS collection
         FROM (
-          SELECT 
-            'Feature' AS TYPE,
-            row_to_json(prop) AS properties,
-            ST_AsGeoJSON(geom)::json AS geometry
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
             SELECT 
-              ST_Collect(geom) AS geom,
-              binary_protected
-            FROM geo_integrity
-            WHERE (binary_protected & ?) = ?
-              AND sci_year = ?
-              AND sci_cat = ?
-              AND hf_pers = ?
-            GROUP BY binary_protected
-            ) AS geo
-            INNER JOIN (
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
               SELECT 
+                ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
               WHERE (binary_protected & ?) = ?
                 AND sci_year = ?
                 AND sci_cat = ?
                 AND hf_pers = ?
-                GROUP BY binary_protected
-            ) AS prop
-            ON geo.binary_protected = prop.binary_protected
-        ) as f
-      ) as fc;
-      `,
-      [paCode, paCode, year, sciCat, hfPers, paCode, paCode, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
-  ),
+              GROUP BY binary_protected
+              ) AS geo
+              INNER JOIN (
+                SELECT 
+                  binary_protected
+                FROM geo_integrity
+                WHERE (binary_protected & ?) = ?
+                  AND sci_year = ?
+                  AND sci_cat = ?
+                  AND hf_pers = ?
+                  GROUP BY binary_protected
+              ) AS prop
+              ON geo.binary_protected = prop.binary_protected
+          ) as f
+        ) as fc;
+        `,
+        [paCode, paCode, year, sciCat, hfPers, paCode, paCode, year, sciCat, hfPers],
+      )
+        .then(layers => layers.rows[0].collection);
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error at findSCIHFPALayerInPA persistence');
+    }
+  },
 });

@@ -5,7 +5,7 @@ const backendURL = config.services.backend;
 
 const makeGetRequest = endpoint => (
   fetch(`${backendURL}/${endpoint}`)
-    .then(response => response.json())
+    .then(response => (response.status === 200 ? response.json() : new Error('Response code is not 200')))
     .catch(error => new Error('Error making the request', error))
 );
 

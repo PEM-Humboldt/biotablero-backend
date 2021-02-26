@@ -37,7 +37,9 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       try {
-        const binaryProtectedValues = [...new Set(data.map(b => (b.binary_protected)))].join(';');
+        const binaryProtectedValues = [
+          ...new Set(data.map(b => (b.binary_protected))),
+        ].join(';');
         const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
           binaryProtectedValues,
         );
@@ -136,7 +138,9 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       try {
-        const binaryProtectedValues = [...new Set(data.features.map(b => (b.properties.binary_protected)))].join(';');
+        const binaryProtectedValues = [
+          ...new Set(data.features.map(b => (b.properties.binary_protected))),
+        ].join(';');
         const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
           binaryProtectedValues,
         );

@@ -5,8 +5,15 @@ const backendURL = config.services.backend;
 
 const makeGetRequest = endpoint => (
   fetch(`${backendURL}/${endpoint}`)
-    .then(response => (response.status === 200 ? response.json() : new Error('Response code is not 200')))
-    .catch(error => new Error('Error making the request', error))
+    .then(response => (
+      response.status === 200 ? response.json() : {
+        stack: response.body.error, message: 'Error communicating with other services',
+      }
+    ))
+    .catch((e) => {
+      const error = { stack: e.stack, message: 'Error communicating with other services' };
+      throw error;
+    })
 );
 
 module.exports = {

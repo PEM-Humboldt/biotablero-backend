@@ -24,7 +24,10 @@ bottle.factory('SCIHFPersistence', () => (
   SCIHFPersistence(bookshelfModels.db, bookshelfModels.models, logger)
 ));
 
-bottle.factory('SCIHFService', container => SCIHFService(container.SCIHFPersistence, container.restAPI));
+bottle.factory('SCIHFService', container => SCIHFService(
+  container.SCIHFPersistence,
+  container.restAPI,
+));
 
 bottle.factory('routes', container => ([
   SCIHFRoute(container.errorHandler, container.SCIHFService),

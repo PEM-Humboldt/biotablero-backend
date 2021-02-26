@@ -1,5 +1,5 @@
 /**
- * @apiDefine Search > Forest Structural Condition Index
+ * @apiDefine s_sci_hf Search > Forest Structural Condition Index
  * Information related to the forest structural condition index in a given area.
  */
 

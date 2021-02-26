@@ -22,7 +22,7 @@ module.exports = (
         .orderBy('binary_protected', 'sci_cat', 'hf_pers');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFInEA persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -45,7 +45,7 @@ module.exports = (
         .orderBy('binary_protected', 'sci_cat', 'hf_pers');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFInState persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -68,7 +68,7 @@ module.exports = (
         .orderBy('binary_protected', 'sci_cat', 'hf_pers');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFInBasinSubzone persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -91,7 +91,7 @@ module.exports = (
         .orderBy('binary_protected', 'sci_cat', 'hf_pers');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFInPA persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -144,7 +144,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFLayerInEA persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -197,7 +197,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFLayerInState persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -250,7 +250,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFLayerInBasinSubzone persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -303,7 +303,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFLayerInPA persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -361,7 +361,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFPALayerInEA persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -418,7 +418,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFPALayerInState persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -475,7 +475,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFPALayerInBasinSubzone persistence');
+      throw new Error('Error getting data');
     }
   },
 
@@ -532,7 +532,7 @@ module.exports = (
         .then(layers => layers.rows[0].collection);
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error at findSCIHFPALayerInPA persistence');
+      throw new Error('Error getting data');
     }
   },
 });

@@ -1,0 +1,47 @@
+[
+  {
+    "id": "RNSC",
+    "data": [
+      {
+        "key": "dpc",
+        "value": 0.5
+      }
+    ]
+  },
+  {
+    "id": "RFPR",
+    "data": [
+      {
+        "key": "dpc",
+        "value": 0.4
+      }
+    ]
+  },
+  {
+    "id": "DCS",
+    "data": [
+      {
+        "key": "dpc",
+        "value": 0.3
+      }
+    ]
+  },
+  {
+    "id": "RFPN",
+    "data": [
+      {
+        "key": "dpc",
+        "value": 0.2
+      }
+    ]
+  },
+  {
+    "id": "PNR",
+    "data": [
+      {
+        "key": "dpc",
+        "value": 0.1
+      }
+    ]
+  }
+]

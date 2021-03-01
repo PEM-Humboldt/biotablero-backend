@@ -19,6 +19,7 @@
     "bottlejs": "^2.0.0",
     "config": "^3.3.3",
     "knex": "^0.21.17",
+    "node-fetch": "^2.6.1",
     "pg": "^8.5.1",
     "restify": "^8.5.1",
     "restify-cors-middleware": "^1.1.1",

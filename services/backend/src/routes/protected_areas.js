@@ -28,14 +28,14 @@ module.exports = (errorHandler, paService) => {
 
   /**
    * @apiGroup geofence_pa
-   * @api {get} /pa/categories/binary_protected/:binary_protected listCategoriesByBinaryProtected
+   * @api {get} /pa/categories/binary_protected listCategoriesByBinaryProtected
    * @apiName listCategoriesByBinaryProtected
    * @apiVersion 0.1.0
    * @apiDescription
    * List available protected area categories for the given binary protected values
    *
-   * @apiParam (Path params) {String} binary_proyected list of binary protected values
-   * separated by &
+   * @apiParam (Query params) {String} binary_protected list of binary protected values
+   * separated by ;
    *
    * @apiSuccess {Object[]} category list of protected area categories
    *  for the given binary protected values
@@ -43,11 +43,11 @@ module.exports = (errorHandler, paService) => {
    * @apiSuccess {String} label category name
    *
    * @apiExample {curl} Example usage:
-   *  /pa/categories/binary_protected/000001000000000&010100000000000&100000100000000
+   *  /pa/categories/binary_protected?binary_protected=000001000000000;010100000000000
    * @apiUse PACategoriesByBinaryProtectedExample
    */
-  router.get('/pa/categories/binary_protected/:binary_protected', errorHandler((req, res, next) => (
-    paService.getCategoriesByBinaryProtected(req.params.binary_protected.split('&'))
+  router.get('/pa/categories/binary_protected', errorHandler((req, res, next) => (
+    paService.getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
       .then((categories) => {
         res.send(categories);
         next();
@@ -62,7 +62,7 @@ module.exports = (errorHandler, paService) => {
    * @apiDescription
    * Get the binary protected value for the given category name
    *
-   * @apiParam @apiParam (Path params) {String} category protected area category
+   * @apiParam (Path params) {String} category protected area category
    *
    * @apiSuccess {Object} result
    * @apiSuccess {Object} result.binary_protected binary protected value

@@ -138,7 +138,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
           break;
       }
 
-      if (!data) {
+      if (!data || !data.features) {
         throw new Error('Data layer for SCIHF PA doesn\'t exists in the selected area id and area type');
       }
 

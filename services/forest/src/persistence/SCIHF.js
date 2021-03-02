@@ -112,12 +112,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
@@ -127,7 +127,7 @@ module.exports = (
               GROUP BY sci_cat, hf_pers
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   sci_cat,
                   hf_pers
                 FROM geo_integrity
@@ -165,12 +165,12 @@ module.exports = (
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
         FROM (
-          SELECT 
+          SELECT
             'Feature' AS TYPE,
             row_to_json(prop) AS properties,
             ST_AsGeoJSON(geom)::json AS geometry
           FROM (
-            SELECT 
+            SELECT
               ST_Collect(geom) AS geom,
               sci_cat,
               hf_pers
@@ -180,7 +180,7 @@ module.exports = (
             GROUP BY sci_cat, hf_pers
             ) AS geo
             INNER JOIN (
-              SELECT 
+              SELECT
                 sci_cat,
                 hf_pers
               FROM geo_integrity
@@ -218,12 +218,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
@@ -233,7 +233,7 @@ module.exports = (
               GROUP BY sci_cat, hf_pers
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   sci_cat,
                   hf_pers
                 FROM geo_integrity
@@ -271,12 +271,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 sci_cat,
                 hf_pers
@@ -286,7 +286,7 @@ module.exports = (
               GROUP BY sci_cat, hf_pers
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   sci_cat,
                   hf_pers
                 FROM geo_integrity
@@ -327,12 +327,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
@@ -343,7 +343,7 @@ module.exports = (
               GROUP BY binary_protected
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   binary_protected
                 FROM geo_integrity
                 WHERE id_ea = ?
@@ -384,12 +384,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
@@ -400,7 +400,7 @@ module.exports = (
               GROUP BY binary_protected
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   binary_protected
                 FROM geo_integrity
                 WHERE id_state = ?
@@ -441,12 +441,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
@@ -457,7 +457,7 @@ module.exports = (
               GROUP BY binary_protected
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   binary_protected
                 FROM geo_integrity
                 WHERE id_subzone = ?
@@ -498,12 +498,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 binary_protected
               FROM geo_integrity
@@ -514,7 +514,7 @@ module.exports = (
               GROUP BY binary_protected
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   binary_protected
                 FROM geo_integrity
                 WHERE (binary_protected & ?) = ?

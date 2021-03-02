@@ -33,7 +33,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error('Data for SCIHF doesn\'t exists to the selected area id and area type');
+        throw new Error('Data for SCIHF doesn\'t exists in the selected area id and area type');
       }
 
       try {
@@ -54,7 +54,12 @@ module.exports = (SCIHFPersistence, restAPI) => {
           };
         });
       } catch (e) {
-        throw new Error(`Error by returning SCIHF data: [${e}]`);
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving SCIHF data',
+        };
+        throw error;
       }
     },
 
@@ -90,7 +95,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error('Data layer for SCIHF doesn\'t exists to the selected area id and area type');
+        throw new Error('Data layer for SCIHF doesn\'t exists in the selected area id and area type');
       }
 
       return data;
@@ -134,7 +139,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error('Data layer for SCIHF PA doesn\'t exists to the selected area id and area type');
+        throw new Error('Data layer for SCIHF PA doesn\'t exists in the selected area id and area type');
       }
 
       try {
@@ -157,7 +162,12 @@ module.exports = (SCIHFPersistence, restAPI) => {
           };
         });
       } catch (e) {
-        throw new Error(`Error by returning SCIHFPALayer data: [${e}]`);
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving SCIHFPA layer',
+        };
+        throw error;
       }
     },
   };

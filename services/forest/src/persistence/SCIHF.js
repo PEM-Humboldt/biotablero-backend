@@ -350,6 +350,7 @@ module.exports = (
                   AND sci_year = ?
                   AND sci_cat = ?
                   AND hf_pers = ?
+                  AND binary_protected != B'000000000000000'
                   GROUP BY binary_protected
               ) AS prop
               ON geo.binary_protected = prop.binary_protected
@@ -407,6 +408,7 @@ module.exports = (
                   AND sci_year = ?
                   AND sci_cat = ?
                   AND hf_pers = ?
+                  AND binary_protected != B'000000000000000'
                   GROUP BY binary_protected
               ) AS prop
               ON geo.binary_protected = prop.binary_protected
@@ -464,6 +466,7 @@ module.exports = (
                   AND sci_year = ?
                   AND sci_cat = ?
                   AND hf_pers = ?
+                  AND binary_protected != B'000000000000000'
                   GROUP BY binary_protected
               ) AS prop
               ON geo.binary_protected = prop.binary_protected
@@ -521,6 +524,7 @@ module.exports = (
                   AND sci_year = ?
                   AND sci_cat = ?
                   AND hf_pers = ?
+                  AND binary_protected != B'000000000000000'
                   GROUP BY binary_protected
               ) AS prop
               ON geo.binary_protected = prop.binary_protected

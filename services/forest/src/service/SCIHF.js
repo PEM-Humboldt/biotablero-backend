@@ -150,7 +150,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
           binaryProtectedValues,
         );
 
-        return data.features.map((item) => {
+        const newFeatures = data.features.map((item) => {
           const { label } = categoriesPA.find(
             bp => bp.binary_protected === item.properties.binary_protected,
           );
@@ -161,6 +161,8 @@ module.exports = (SCIHFPersistence, restAPI) => {
             },
           };
         });
+        data.features = newFeatures;
+        return data;
       } catch (e) {
         const error = {
           code: 500,

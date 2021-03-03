@@ -4,16 +4,12 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
-const sci = require('../tmp/sci.json');
 const forestLP = require('../tmp/forestLP.json');
 const forestLPLayer20162019 = require('../tmp/forestLPLayer20162019.json');
 const forestLPLayer20112015 = require('../tmp/forestLPLayer20112015.json');
 const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
 const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
 const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
-const geoSciHf = require('../tmp/sci_hf.json');
-const altaDinamica = require('../tmp/pa_alta_dinamica.json');
-const moderadaDinamica = require('../tmp/pa_moderada_dinamica.json');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -257,14 +253,6 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
-     * Get the SCI with HF information inside a basin subzone
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object[]} Object of SCI HF values
-     */
-    getSCIHF: async () => sci,
-
-    /**
      * Get the forest loss and persistence data inside a basin subzone
      * @param {Number} subzoneId basin subzone id
      *
@@ -366,28 +354,6 @@ module.exports = (basinSubzonePersistence, seService) => {
         return geom;
       }
       return {};
-    },
-
-    /**
-     * Get the layer for structural condition index - human footprint persistence categories
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getSCIHFLayerById: async () => geoSciHf,
-
-    /**
-     * Get the layer for protected areas inside a combination of sci - hf persistence category
-     *
-     * @param {Number} subzoneId basin subzone id
-     * @param {String} sciCat structural condition index category
-     * @param {String} hfPers human footprint persistence category
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getSCIHFPALayer: async (subzoneId, sciCat, hfPers) => {
-      if (sciCat === 'moderada' && hfPers === 'dinamica') return moderadaDinamica;
-      return altaDinamica;
     },
   };
 

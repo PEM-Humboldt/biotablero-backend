@@ -438,37 +438,6 @@ module.exports = (errorHandler, paService) => {
   )));
 
   /**
-   * @apiGroup sci
-   * @api {get} /pa/:category/sci/hf SCIHFInPA
-   * @apiName SCIHFInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Values for the forest structural condition index crossed with human footprint and protected
-   * area categories inside the given protected area category
-   *
-   * Values based on human footprint for 2018
-   *
-   * @apiParam (Path params) {String} protected area category
-   *
-   * @apiSuccess {Object[]} result list of objects with information about sci, hf and pa
-   * @apiSuccess {String} result.hf_pers human footprint persistence category
-   * @apiSuccess {String} result.sci_cat forest structural condition index category
-   * @apiSuccess {String} result.pa protected area category
-   * @apiSuccess {Number} result.area Area inside the category for hf_pers, sci_cat and pa
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/sci/hf
-   * @apiUse SCIHFPAxample
-   */
-  router.get('/pa/:category/sci/hf', errorHandler((req, res, next) => (
-    paService.getSCIHF(req.params.category)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
    * @apiGroup s_ecoChange
    * @api {get} /pa/:category/ecoChange/lp/categories ForestLPInPA
    * @apiName ForestLPInPA
@@ -654,65 +623,6 @@ module.exports = (errorHandler, paService) => {
     paService.getHFPersistenceLayerById(req.params.category)
       .then((geometry) => {
         res.send(geometry);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup sci
-   * @api {get} /pa/:category/sci/hf/layers SCIHFLayerInPA
-   * @apiName SCIHFLayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the sci - hf persistence layer in a given protected area category
-   *
-   * @apiParam (Path params) {String} category protected area category
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/sci/hf/layers
-   * @apiUse SCIHFInGeofenceExample
-   */
-  router.get('/pa/:category/sci/hf/layers', errorHandler((req, res, next) => (
-    paService.getSCIHFLayerById(req.params.category)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup sci
-   * @api {get} /pa/:category/sci/:sci_cat/hf/:hf_pers/layers/pa SCIHFPALayerInPA
-   * @apiName SCIHFPALayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the sci - hf persistence layer divided by protected areas in a given protected area
-   * category
-   *
-   * @apiParam (Path params) {String} category protected area category
-   * @apiParam (Path params) {String} sci_cat structural condition index category
-   * @apiParam (Path params) {String} hf_pers human footprint persistence category
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parque Nacional Natural y Parques Naturales Regionales/sci/moderada/hf/dinamica/layers/pa
-   * @apiUse SCIHFPAInGeofenceExample
-   */
-  router.get('/pa/:category/sci/:sci_cat/hf/:hf_pers/layers/pa', errorHandler((req, res, next) => (
-    paService.getSCIHFPALayer(
-      req.params.category, req.params.sci_cat, req.params.hf_pers,
-    )
-      .then((values) => {
-        res.send(values);
         next();
       })
   )));

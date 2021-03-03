@@ -388,37 +388,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
   )));
 
   /**
-   * @apiGroup sci
-   * @api {get} /basinSubzones/:subzone_id/sci/hf SCIHFInSubzone
-   * @apiName SCIHFInSubzone
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Values for the forest structural condition index crossed with human footprint and protected
-   * area categories inside the given basin subzone
-   *
-   * Values based on human footprint for 2018
-   *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id
-   *
-   * @apiSuccess {Object[]} result list of objects with information about sci, hf and pa
-   * @apiSuccess {String} result.hf_pers human footprint persistence category
-   * @apiSuccess {String} result.sci_cat forest structural condition index category
-   * @apiSuccess {String} result.pa protected area category
-   * @apiSuccess {Number} result.area Area inside the basin subzone for hf_pers, sci_cat and pa
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/3701/sci/hf
-   * @apiUse SCIHFPAxample
-   */
-  router.get('/basinSubzones/:subzone_id/sci/hf', errorHandler((req, res, next) => (
-    basinSubzoneService.getSCIHF(req.params.subzone_id)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
    * @apiGroup s_ecoChange
    * @api {get} /basinSubzones/:subzone_id/ecoChange/lp/categories ForestLPInSubzone
    * @apiName ForestLPInSubzone
@@ -600,64 +569,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
     basinSubzoneService.getHFPersistenceLayerById(req.params.subzone_id)
       .then((geometry) => {
         res.send(geometry);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup sci
-   * @api {get} /basinSubzones/:subzone_id/sci/hf/layers SCIHFLayerInSubzone
-   * @apiName SCIHFLayerInSubzone
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the sci - hf persistence layer in a given basin subzone
-   *
-   * @apiParam (Path params) {Number} subzone_id subzone id
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/2903/sci/hf/layers
-   * @apiUse SCIHFInGeofenceExample
-   */
-  router.get('/basinSubzones/:subzone_id/sci/hf/layers', errorHandler((req, res, next) => (
-    basinSubzoneService.getSCIHFLayerById(req.params.subzone_id)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
-
-  /**
-   * @apiGroup sci
-   * @api {get} /basinSubzones/:subzone_id/sci/:sci_cat/hf/:hf_pers/layers/pa SCIHFPALayerInSubzone
-   * @apiName SCIHFPALayerInSubzone
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the sci - hf persistence layer divided by protected areas in a given basin subzone
-   *
-   * @apiParam (Path params) {Number} subzone_id subzone id
-   * @apiParam (Path params) {String} sci_cat structural condition index category
-   * @apiParam (Path params) {String} hf_pers human footprint persistence category
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/2903/sci/moderada/hf/dinamica/layers/pa
-   * @apiUse SCIHFPAInGeofenceExample
-   */
-  router.get('/basinSubzones/:subzone_id/sci/:sci_cat/hf/:hf_pers/layers/pa', errorHandler((req, res, next) => (
-    basinSubzoneService.getSCIHFPALayer(
-      req.params.subzone_id, req.params.sci_cat, req.params.hf_pers,
-    )
-      .then((values) => {
-        res.send(values);
         next();
       })
   )));

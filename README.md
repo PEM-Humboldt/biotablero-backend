@@ -14,7 +14,7 @@ Check every [service](./services) documentation to correctly config them.
 
 ## Deployment
 
-[WIP]
+See instructions in every service.
 
 ## Documentation
 To generate the global documentation run `yarn all_docs`, it will be located under the */docs* folder

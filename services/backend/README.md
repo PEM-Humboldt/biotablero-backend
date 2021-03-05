@@ -1,4 +1,4 @@
-# Biotablero
+# Biotablero main service
 Main service for BioTablero backend.
 
 ## Getting Started
@@ -50,15 +50,13 @@ To build the image run: `docker build -t biotablero-backend:<version> .`
 
 It is recommended to use the [current release](https://github.com/PEM-Humboldt/biotablero-backend/releases) for the image tag version.
 
-### Deploy container
-
-#### Config
+### Config
 
 After you've built the image, create a copy of the [config](config/default.json) file with your configuration values.
 
 **NOTE**: *If you change the server port in the configuration (4000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
 
-#### Deploy
+### Deploy
 
 In the file [docker-compose.yml](docker-compose.yml):
 
@@ -72,9 +70,7 @@ Then run: `docker-compose up -d`
 There are no tests currently.
 
 ## Documentation
-You can generate the API documentation with `yarn run gen_docs`, it will generate them under the */docs* folder
-
-Production version of these docs are available [here](https://pem-humboldt.github.io/biotablero-backend/).
+You can generate the API documentation with `yarn run docs`, it will generate them under the */docs* folder
 
 ## Contributing
 

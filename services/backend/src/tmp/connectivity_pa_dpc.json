@@ -1,47 +1,32 @@
 [
   {
     "id": "Campoalegre",
-    "data": [
-      {
-        "key": "dpc",
-        "value": 0.5
-      }
-    ]
+    "key": "muy_bajo",
+    "value": 0.1,
+    "area": 8000
   },
   {
     "id": "Cuchilla Del San Juan",
-    "data": [
-      {
-        "key": "dpc",
-        "value": 0.4
-      }
-    ]
+    "key": "bajo",
+    "value": 0.2,
+    "area": 15000
   },
   {
     "id": "Barbas  Bremen",
-    "data": [
-      {
-        "key": "dpc",
-        "value": 0.3
-      }
-    ]
-  },
-  {
-    "id": "Ucumari",
-    "data": [
-      {
-        "key": "dpc",
-        "value": 0.2
-      }
-    ]
+    "key": "medio",
+    "value": 0.3,
+    "area": 5400
   },
   {
     "id": "Alto del Nudo",
-    "data": [
-      {
-        "key": "dpc",
-        "value": 0.1
-      }
-    ]
+    "key": "alto",
+    "value": 0.4,
+    "area": 7200
+  },
+  {
+    "id": "Ucumari",
+    "key": "muy_alto",
+    "value": 0.5,
+    "area": 1500
   }
 ]

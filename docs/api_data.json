@@ -2247,6 +2247,65 @@
   {
     "group": "geofence_pa",
     "type": "get",
+    "url": "/pa/:category/binary_protected",
+    "title": "BinaryProtectedByCategory",
+    "name": "BinaryProtectedByCategory",
+    "version": "0.1.0",
+    "description": "<p>Get the binary protected value for the given category name</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.binary_protected",
+            "description": "<p>binary protected value</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   binary_protected:\"000001000000000\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/binary_protected",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Geofence > Protected Areas",
+    "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
+  },
+  {
+    "group": "geofence_pa",
+    "type": "get",
     "url": "/pa/:category",
     "title": "CategoryDetails",
     "name": "PACategoryDetails",
@@ -2475,6 +2534,72 @@
       {
         "title": "Example usage:",
         "content": "/pa/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Geofence > Protected Areas",
+    "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
+  },
+  {
+    "group": "geofence_pa",
+    "type": "get",
+    "url": "/pa/categories/binary_protected",
+    "title": "listCategoriesByBinaryProtected",
+    "name": "listCategoriesByBinaryProtected",
+    "version": "0.1.0",
+    "description": "<p>List available protected area categories for the given binary protected values</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "binary_protected",
+            "description": "<p>list of binary protected values separated by ;</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "category",
+            "description": "<p>list of protected area categories for the given binary protected values</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "binary_protected",
+            "description": "<p>binary value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "label",
+            "description": "<p>category name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"binary_protected\": \"000001000000000\",\n    \"label\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"binary_protected\": \"010100000000000\",\n    \"label\": \"Distritos de Conservacion de Suelos y Distritos Regionales de Manejo Integrado\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/categories/binary_protected?binary_protected=000001000000000;010100000000000",
         "type": "curl"
       }
     ],
@@ -7372,6 +7497,255 @@
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
   {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/hf",
+    "title": "SCIHF",
+    "name": "SCIHF",
+    "version": "1.0.0",
+    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.hf_pers",
+            "description": "<p>Persistence category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.sci_cat",
+            "description": "<p>SCI categoy</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.pa",
+            "description": "<p>Protected area category name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area inside the given area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/hf?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
+  },
+  {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/hf/layer",
+    "title": "SCIHFLayer",
+    "name": "SCIHFLayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of the forest structural condition index crossed with human footprint for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"sci_cat\": \"baja_moderada\",\n        \"hf_pers\": \"estable_alta\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/hf/layer?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
+  },
+  {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/:sci_cat/hf/:hf_pers/layer",
+    "title": "SCIHFPALayer",
+    "name": "SCIHFPALayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of one combination of forest structural condition index category and a human footprint persistence category, divided by protected areas for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "sciCat",
+            "description": "<p>sci category</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "hfPers",
+            "description": "<p>human footprint persistence category</p>"
+          }
+        ],
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
+  },
+  {
     "group": "s_strategic_ecosystems",
     "type": "get",
     "url": "/ea/:ea_id/se",
@@ -8218,910 +8592,6 @@
     "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/ea/:ea_id/sci/hf",
-    "title": "SCIHFInEA",
-    "name": "SCIHFInEA",
-    "version": "0.1.0",
-    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories inside the given environmental authority</p> <p>Values based on human footprint for 2018</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "ea_id",
-            "description": "<p>environmental authority id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": "<p>list of objects with information about sci, hf and pa</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.sci_cat",
-            "description": "<p>forest structural condition index category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.pa",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "result.area",
-            "description": "<p>Area inside the environmental authority for hf_pers, sci_cat and pa</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/ea/CDMB/sci/hf",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/environmental_authorities.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/pa/:category/sci/hf",
-    "title": "SCIHFInPA",
-    "name": "SCIHFInPA",
-    "version": "0.1.0",
-    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories inside the given protected area category</p> <p>Values based on human footprint for 2018</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "protected",
-            "description": "<p>area category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": "<p>list of objects with information about sci, hf and pa</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.sci_cat",
-            "description": "<p>forest structural condition index category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.pa",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "result.area",
-            "description": "<p>Area inside the category for hf_pers, sci_cat and pa</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/pa/Parques Naturales Regionales/sci/hf",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/protected_areas.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/states/:state_id/sci/hf",
-    "title": "SCIHFInState",
-    "name": "SCIHFInState",
-    "version": "0.1.0",
-    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories inside the given state</p> <p>Values based on human footprint for 2018</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "state_id",
-            "description": "<p>state id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": "<p>list of objects with information about sci, hf and pa</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.sci_cat",
-            "description": "<p>forest structural condition index category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.pa",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "result.area",
-            "description": "<p>Area inside the state for hf_pers, sci_cat and pa</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/states/86/sci/hf",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/states.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/basinSubzones/:subzone_id/sci/hf",
-    "title": "SCIHFInSubzone",
-    "name": "SCIHFInSubzone",
-    "version": "0.1.0",
-    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories inside the given basin subzone</p> <p>Values based on human footprint for 2018</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "subzone_id",
-            "description": "<p>basin subzone id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200": [
-          {
-            "group": "Success 200",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": "<p>list of objects with information about sci, hf and pa</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.sci_cat",
-            "description": "<p>forest structural condition index category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "String",
-            "optional": false,
-            "field": "result.pa",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Success 200",
-            "type": "Number",
-            "optional": false,
-            "field": "result.area",
-            "description": "<p>Area inside the basin subzone for hf_pers, sci_cat and pa</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/basinSubzones/3701/sci/hf",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/basin_subzones.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/ea/:ea_id/sci/hf/layers",
-    "title": "SCIHFLayerInEA",
-    "name": "SCIHFLayerInEA",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer in a given environmental authority</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "ea_id",
-            "description": "<p>environmental authority id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"area\": 800153,\n        \"hf_pers\": \"estable_alta\",\n        \"sci_cat\": \"moderada\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/ea/CRQ/sci/hf/layers",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/environmental_authorities.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/pa/:category/sci/hf/layers",
-    "title": "SCIHFLayerInPA",
-    "name": "SCIHFLayerInPA",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer in a given protected area category</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "category",
-            "description": "<p>protected area category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"area\": 800153,\n        \"hf_pers\": \"estable_alta\",\n        \"sci_cat\": \"moderada\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/pa/Parque Nacional Natural y Parques Naturales Regionales/sci/hf/layers",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/protected_areas.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/states/:state_id/sci/hf/layers",
-    "title": "SCIHFLayerInState",
-    "name": "SCIHFLayerInState",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer in a given state</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "state_id",
-            "description": "<p>state id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"area\": 800153,\n        \"hf_pers\": \"estable_alta\",\n        \"sci_cat\": \"moderada\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/states/44/sci/hf/layers",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/states.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/basinSubzones/:subzone_id/sci/hf/layers",
-    "title": "SCIHFLayerInSubzone",
-    "name": "SCIHFLayerInSubzone",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer in a given basin subzone</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "subzone_id",
-            "description": "<p>subzone id</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"area\": 800153,\n        \"hf_pers\": \"estable_alta\",\n        \"sci_cat\": \"moderada\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/basinSubzones/2903/sci/hf/layers",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/basin_subzones.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/ea/:ea_id/sci/:sci_cat/hf/:hf_pers/layers/pa",
-    "title": "SCIHFPALayerInEA",
-    "name": "SCIHFPALayerInEA",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer divided by protected areas in a given environmental authority</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "ea_id",
-            "description": "<p>environmental authority id</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "sci_cat",
-            "description": "<p>structural condition index category</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/ea/CRQ/sci/moderada/hf/dinamica/layers/pa",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/environmental_authorities.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/pa/:category/sci/:sci_cat/hf/:hf_pers/layers/pa",
-    "title": "SCIHFPALayerInPA",
-    "name": "SCIHFPALayerInPA",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer divided by protected areas in a given protected area category</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "category",
-            "description": "<p>protected area category</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "sci_cat",
-            "description": "<p>structural condition index category</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/pa/Parque Nacional Natural y Parques Naturales Regionales/sci/moderada/hf/dinamica/layers/pa",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/protected_areas.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/states/:state_id/sci/:sci_cat/hf/:hf_pers/layers/pa",
-    "title": "SCIHFPALayerInState",
-    "name": "SCIHFPALayerInState",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer divided by protected areas in a given state</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "state_id",
-            "description": "<p>state id</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "sci_cat",
-            "description": "<p>structural condition index category</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/states/44/sci/moderada/hf/dinamica/layers/pa",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/states.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
-  },
-  {
-    "group": "sci",
-    "type": "get",
-    "url": "/basinSubzones/:subzone_id/sci/:sci_cat/hf/:hf_pers/layers/pa",
-    "title": "SCIHFPALayerInSubzone",
-    "name": "SCIHFPALayerInSubzone",
-    "version": "0.1.0",
-    "description": "<p>Get the sci - hf persistence layer divided by protected areas in a given basin subzone</p>",
-    "parameter": {
-      "fields": {
-        "Path params": [
-          {
-            "group": "Path params",
-            "type": "Number",
-            "optional": false,
-            "field": "subzone_id",
-            "description": "<p>subzone id</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "sci_cat",
-            "description": "<p>structural condition index category</p>"
-          },
-          {
-            "group": "Path params",
-            "type": "String",
-            "optional": false,
-            "field": "hf_pers",
-            "description": "<p>human footprint persistence category</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "fields": {
-        "Success 200: GeoJson object": [
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result",
-            "description": ""
-          },
-          {
-            "group": "geojson",
-            "type": "String",
-            "optional": false,
-            "field": "result.type",
-            "description": "<p>The geometry type</p>"
-          },
-          {
-            "group": "geojson",
-            "type": "Object[]",
-            "optional": false,
-            "field": "result.features",
-            "description": "<p>features information (type, properties, geometry)</p>"
-          }
-        ]
-      },
-      "examples": [
-        {
-          "title": "Success-Example:",
-          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "examples": [
-      {
-        "title": "Example usage:",
-        "content": "/basinSubzones/2903/sci/moderada/hf/dinamica/layers/pa",
-        "type": "curl"
-      }
-    ],
-    "filename": "services/backend/src/routes/basin_subzones.js",
-    "groupTitle": "Search > Forest Structural Condition Index",
-    "groupDescription": "<p>Information related to the forest structural condition index in a given geofence.</p>"
   },
   {
     "group": "users",

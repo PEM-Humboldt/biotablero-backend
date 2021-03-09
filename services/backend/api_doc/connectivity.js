@@ -66,3 +66,16 @@
  *   ]
  * }
  */
+
+/**
+ * @apiDefine CurrentBySEExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     "key": "unprot",
+ *     "area": 1500,
+ *     "percentage": 15
+ *   },
+ *   ...
+ * ]
+ */

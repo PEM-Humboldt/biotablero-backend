@@ -34,6 +34,7 @@ const BasinAreaService = require('../service/basin_area');
 const BasinZoneService = require('../service/basin_zone');
 const BasinSubzoneService = require('../service/basin_subzone');
 const SEService = require('../service/strategic_ecosystem');
+const ConnectivityService = require('../service/connectivity');
 
 const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
@@ -47,6 +48,7 @@ const PARoutes = require('../routes/protected_areas');
 const BasinsRoutes = require('../routes/basins');
 const BasinSubzonesRoutes = require('../routes/basin_subzones');
 const SERoutes = require('../routes/strategic_ecosystems');
+const ConnectivityRoutes = require('../routes/connectivity');
 
 const bottle = new Bottlejs();
 
@@ -129,6 +131,7 @@ bottle.factory('seService',
     container.sePersistence, container.paramoPersistence, container.tropicalDryForestPersistence,
     container.wetlandPersistence,
   ));
+bottle.factory('connectivityService', () => ConnectivityService());
 
 bottle.factory('routes', container => ([
   BiomesRoutes(container.errorHandler, container.biomeService),
@@ -143,6 +146,7 @@ bottle.factory('routes', container => ([
   BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
   BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
   SERoutes(container.errorHandler, container.seService),
+  ConnectivityRoutes(container.errorHandler, container.connectivityService),
 ]));
 
 

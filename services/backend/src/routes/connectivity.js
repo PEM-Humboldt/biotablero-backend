@@ -114,5 +114,45 @@ module.exports = (errorHandler, connectivityService) => {
       });
   }));
 
+  /**
+   * @apiGroup s_pa_connectivity
+   * @api {get} /connectivity/current/se CurrentBySE
+   * @apiName CurrentBySE
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Area distribution for each category of protected area connectivity for an specific strategic
+   * ecosystem in a given area
+   *
+   * Value calculated for 2018
+   *
+   * @apiParam (Query params) {String|Number} areaType area type
+   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} seType strategic ecosystem type
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.key PA connectivity category
+   * @apiSuccess {String} result.area area of the specified PA connectivity category
+   * @apiSuccess {String} result.percentage percentage of the specified PA connectivity category
+   *
+   * @apiExample {curl} Example usage:
+   *  /connectivity/current/se?areaType=ea&areaId=DAGMA&seType=Páramo
+   * @apiUse CurrentBySEExample
+   */
+  router.get('/connectivity/current/se', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+      const error = { code: 400, message: 'areaType, areaId and seType required' };
+      throw error;
+    }
+    return connectivityService.getCurrentPAConnectivityBySE(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.seType,
+    )
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
   return router;
 };

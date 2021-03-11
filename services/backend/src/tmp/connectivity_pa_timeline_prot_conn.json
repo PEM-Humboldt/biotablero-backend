@@ -1,10 +1,9 @@
 {
-  "key": "ProtConn",
-  "label": "Prot-Conn",
+  "key": "prot_conn",
   "data": [
     {
       "x": "1938",
-      "y": 50
+      "y": 60
     },
     {
       "x": "1972",

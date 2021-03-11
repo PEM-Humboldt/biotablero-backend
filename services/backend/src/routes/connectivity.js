@@ -114,6 +114,43 @@ module.exports = (errorHandler, connectivityService) => {
       });
   }));
 
+
+  /**
+   * @apiGroup s_pa_connectivity
+   * @api {get} /connectivity/timeline TimelineByCategory
+   * @apiName TimelineByCategory
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Values of protected and protected connected of all years for a given area
+   *
+   * @apiParam (Query params) {String|Number} areaType area type
+   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} category category of connectivity index
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.id PA connectivity category
+   * @apiSuccess {Object[]} result.data timeline data
+   *
+   * @apiExample {curl} Example usage:
+   *  connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot
+   * @apiUse TimelineByCategoryExample
+   */
+  router.get('/connectivity/timeline', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.category)) {
+      const error = { code: 400, message: 'areaType, areaId and category are required' };
+      throw error;
+    }
+    return connectivityService.getTimelinePAConnectivity(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.category,
+    )
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
   /**
    * @apiGroup s_pa_connectivity
    * @api {get} /connectivity/current/se CurrentBySE

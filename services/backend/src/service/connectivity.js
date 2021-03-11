@@ -1,6 +1,8 @@
 const connectivityPACurrent = require('../tmp/connectivity_pa_current.json');
 const connectivityDPC = require('../tmp/connectivity_pa_dpc.json');
 const connectivityPALayers = require('../tmp/connectivity_pa_layers.json');
+const connectivityPATimelineProt = require('../tmp/connectivity_pa_timeline_prot.json');
+const connectivityPATimelineProtConn = require('../tmp/connectivity_pa_timeline_prot_conn.json');
 const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
 const connectivityPACurrentParamo = require('../tmp/connectivity_pa_se_paramo.json');
 const connectivityPACurrentWetland = require('../tmp/connectivity_pa_se_wetland.json');
@@ -41,6 +43,40 @@ module.exports = () => {
      * @returns {Object} Geojson object with the geometry
      */
     getPAConnectivityLayers: async () => connectivityPALayers,
+
+    /**
+     * Get the timeline of protected areas by category(prot | prot_conn)
+     *
+     * @param {String | Number} areaType area type
+     * @param {String} areaId area id
+     * @param {String} category category
+     *
+     * @returns {Object[]} Values prot or prot_conn indexes for all years of a protected area
+     * connectivity
+     */
+
+    getTimelinePAConnectivity: async (areaType, areaId, category) => {
+      let data;
+      switch (category) {
+        case 'prot':
+          data = connectivityPATimelineProt;
+          break;
+        case 'prot_conn':
+          data = connectivityPATimelineProtConn;
+          break;
+        default:
+          data = null;
+          break;
+      }
+
+      if (!data) {
+        throw new Error(
+          'Data of timeline pa connectivity for selected area doesn\'t exists',
+        );
+      }
+
+      return data;
+    },
 
     /**
      * Get the area distribution for each category of protected area connectivity for an specific

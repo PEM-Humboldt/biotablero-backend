@@ -68,6 +68,23 @@
  */
 
 /**
+ * @apiDefine TimelineByCategoryExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     "key": "prot",
+ *     "label": Prot,
+ *     "data": [
+ *       {
+ *         "x": "1938",
+ *         "y": 50
+ *       },
+ *       ...
+ *   }
+ * ]
+ */
+
+/**
  * @apiDefine CurrentBySEExample
  * @apiSuccessExample {json} Success-Example:
  * [

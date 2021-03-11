@@ -83,7 +83,7 @@ module.exports = () => {
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id
-     * @param {String} seType number of protected area layers to return
+     * @param {String} seType seType strategic ecosystem type
      *
      * @returns {Object[]} Values of the area distribution for each category of protected area
      * connectivity

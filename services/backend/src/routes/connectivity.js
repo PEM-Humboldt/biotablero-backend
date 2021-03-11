@@ -114,7 +114,6 @@ module.exports = (errorHandler, connectivityService) => {
       });
   }));
 
-
   /**
    * @apiGroup s_pa_connectivity
    * @api {get} /connectivity/timeline TimelineByCategory
@@ -128,8 +127,8 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiParam (Query params) {String} category category of connectivity index
    *
    * @apiSuccess {Object} result
-   * @apiSuccess {Object} result.key PA connectivity category
-   * @apiSuccess {Object} result.data timeline data values x (year) and y (percentage)
+   * @apiSuccess {String} result.key category of the connectivity index
+   * @apiSuccess {Object[]} result.data timeline data values x (year) and y (percentage)
    *
    * @apiExample {curl} Example usage:
    *  connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot

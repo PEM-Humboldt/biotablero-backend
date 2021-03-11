@@ -70,18 +70,15 @@
 /**
  * @apiDefine TimelineByCategoryExample
  * @apiSuccessExample {json} Success-Example:
- * [
- *   {
- *     "key": "prot",
- *     "label": Prot,
- *     "data": [
- *       {
- *         "x": "1938",
- *         "y": 50
- *       },
- *       ...
- *   }
- * ]
+ * {
+ *   "key": "prot",
+ *   "data": [
+ *     {
+ *       "x": "1938",
+ *       "y": 50
+ *     },
+ *     ...
+ * }
  */
 
 /**

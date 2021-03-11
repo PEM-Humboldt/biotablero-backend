@@ -45,16 +45,15 @@ module.exports = () => {
     getPAConnectivityLayers: async () => connectivityPALayers,
 
     /**
-     * Get the timeline of protected areas by category(prot | prot_conn)
+     * Get the values through time of a protected area connectivity category in a given area
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id
      * @param {String} category category
      *
-     * @returns {Object[]} Values prot or prot_conn indexes for all years of a protected area
-     * connectivity
+     * @returns {Object} Values through time of a protected area connectivity category
+     *
      */
-
     getTimelinePAConnectivity: async (areaType, areaId, category) => {
       let data;
       switch (category) {

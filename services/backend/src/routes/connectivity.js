@@ -122,13 +122,15 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiDescription
    * Values through time of a protected area connectivity category in a given area
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} category category of connectivity index
    *
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.key category of the connectivity index
-   * @apiSuccess {Object[]} result.data timeline data values x (year) and y (percentage)
+   * @apiSuccess {Object[]} result.data timeline data values
+   * @apiSuccess {String} result.data.x x-axis years data
+   * @apiSuccess {Number} result.data.y y-axis percentage values of the connectivity index
    *
    * @apiExample {curl} Example usage:
    *  connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot

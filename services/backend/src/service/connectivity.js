@@ -1,6 +1,8 @@
 const connectivityPACurrent = require('../tmp/connectivity_pa_current.json');
 const connectivityDPC = require('../tmp/connectivity_pa_dpc.json');
 const connectivityPALayers = require('../tmp/connectivity_pa_layers.json');
+const connectivityPATimelineProt = require('../tmp/connectivity_pa_timeline_prot.json');
+const connectivityPATimelineProtConn = require('../tmp/connectivity_pa_timeline_prot_conn.json');
 const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
 const connectivityPACurrentParamo = require('../tmp/connectivity_pa_se_paramo.json');
 const connectivityPACurrentWetland = require('../tmp/connectivity_pa_se_wetland.json');
@@ -43,12 +45,45 @@ module.exports = () => {
     getPAConnectivityLayers: async () => connectivityPALayers,
 
     /**
+     * Get the values through time of a protected area connectivity category in a given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @param {String} category category of the connectivity index
+     *
+     * @returns {Object} Values through time of a protected area connectivity category
+     *
+     */
+    getTimelinePAConnectivity: async (areaType, areaId, category) => {
+      let data;
+      switch (category) {
+        case 'prot':
+          data = connectivityPATimelineProt;
+          break;
+        case 'prot_conn':
+          data = connectivityPATimelineProtConn;
+          break;
+        default:
+          data = null;
+          break;
+      }
+
+      if (!data) {
+        throw new Error(
+          'Data of timeline pa connectivity for selected area doesn\'t exists',
+        );
+      }
+
+      return data;
+    },
+
+    /**
      * Get the area distribution for each category of protected area connectivity for an specific
      * strategic ecosystem in a given area
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id
-     * @param {String} seType number of protected area layers to return
+     * @param {String} seType seType strategic ecosystem type
      *
      * @returns {Object[]} Values of the area distribution for each category of protected area
      * connectivity

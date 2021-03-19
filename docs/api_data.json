@@ -69,7 +69,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/biomes.js",
+    "filename": "services/backend/src/routes/biomes.js",
     "groupTitle": "Biomes",
     "groupDescription": "<p>Endpoints related with queries about biomes</p>"
   },
@@ -249,7 +249,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/project_strategies.js",
+    "filename": "services/backend/src/routes/project_strategies.js",
     "groupTitle": "Compensation > Companies/Projects/Strategies",
     "groupDescription": "<p>Queries and actions directly related with projects strategies selected inside a project</p>"
   },
@@ -301,7 +301,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/project_strategies.js",
+    "filename": "services/backend/src/routes/project_strategies.js",
     "groupTitle": "Compensation > Companies/Projects/Strategies",
     "groupDescription": "<p>Queries and actions directly related with projects strategies selected inside a project</p>"
   },
@@ -500,7 +500,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/project_strategies.js",
+    "filename": "services/backend/src/routes/project_strategies.js",
     "groupTitle": "Compensation > Companies/Projects/Strategies",
     "groupDescription": "<p>Queries and actions directly related with projects strategies selected inside a project</p>"
   },
@@ -715,7 +715,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -867,7 +867,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -1024,7 +1024,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -1132,7 +1132,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -1254,7 +1254,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -1374,7 +1374,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/projects.js",
+    "filename": "services/backend/src/routes/projects.js",
     "groupTitle": "Compensation > Companies/Projects",
     "groupDescription": "<p>Queries and actions directly related with projects</p>"
   },
@@ -1489,7 +1489,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategies.js",
+    "filename": "services/backend/src/routes/strategies.js",
     "groupTitle": "Compensation > Strategies",
     "groupDescription": "<p>Endpoints related with queries about strategies</p>"
   },
@@ -1556,7 +1556,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1615,7 +1615,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1668,7 +1668,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1721,7 +1721,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basins.js",
+    "filename": "services/backend/src/routes/basins.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1788,7 +1788,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1848,7 +1848,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basins.js",
+    "filename": "services/backend/src/routes/basins.js",
     "groupTitle": "Geofence > Basin subzones",
     "groupDescription": "<p>Information exclusively about basins: areas, zones and subzones: details, list all options, national layer</p>"
   },
@@ -1935,7 +1935,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
   },
@@ -1994,7 +1994,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
   },
@@ -2047,7 +2047,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
   },
@@ -2114,7 +2114,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
   },
@@ -2187,7 +2187,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
   },
@@ -2240,9 +2240,68 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Geofence > Environmental Authorities",
     "groupDescription": "<p>Information exclusively about environmental authorities: details, list all options, national layer</p>"
+  },
+  {
+    "group": "geofence_pa",
+    "type": "get",
+    "url": "/pa/:category/binary_protected",
+    "title": "BinaryProtectedByCategory",
+    "name": "BinaryProtectedByCategory",
+    "version": "0.1.0",
+    "description": "<p>Get the binary protected value for the given category name</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result.binary_protected",
+            "description": "<p>binary protected value</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   binary_protected:\"000001000000000\"\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/binary_protected",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Geofence > Protected Areas",
+    "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
   },
   {
     "group": "geofence_pa",
@@ -2299,7 +2358,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Geofence > Protected Areas",
     "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
   },
@@ -2365,7 +2424,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Geofence > Protected Areas",
     "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
   },
@@ -2432,7 +2491,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Geofence > Protected Areas",
     "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
   },
@@ -2478,7 +2537,73 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Geofence > Protected Areas",
+    "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
+  },
+  {
+    "group": "geofence_pa",
+    "type": "get",
+    "url": "/pa/categories/binary_protected",
+    "title": "listCategoriesByBinaryProtected",
+    "name": "listCategoriesByBinaryProtected",
+    "version": "0.1.0",
+    "description": "<p>List available protected area categories for the given binary protected values</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "binary_protected",
+            "description": "<p>list of binary protected values separated by ;</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "category",
+            "description": "<p>list of protected area categories for the given binary protected values</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "binary_protected",
+            "description": "<p>binary value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "label",
+            "description": "<p>category name</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"binary_protected\": \"000001000000000\",\n    \"label\": \"Parques Naturales Regionales\"\n  },\n  {\n    \"binary_protected\": \"010100000000000\",\n    \"label\": \"Distritos de Conservacion de Suelos y Distritos Regionales de Manejo Integrado\"\n  }...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/categories/binary_protected?binary_protected=000001000000000;010100000000000",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Geofence > Protected Areas",
     "groupDescription": "<p>Information exclusively about protected areas: details, list all options, national layer</p>"
   },
@@ -2551,7 +2676,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Geofence > Strategic Ecosystems",
     "groupDescription": "<p>Information exclusively about strategic ecosystems as a geofence: details, list all options, national layer</p>"
   },
@@ -2618,7 +2743,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Geofence > Strategic Ecosystems",
     "groupDescription": "<p>Information exclusively about strategic ecosystems as a geofence: details, list all options, national layer</p>"
   },
@@ -2664,7 +2789,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Geofence > Strategic Ecosystems",
     "groupDescription": "<p>Information exclusively about strategic ecosystems as a geofence: details, list all options, national layer</p>"
   },
@@ -2724,7 +2849,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Geofence > Strategic Ecosystems",
     "groupDescription": "<p>Information exclusively about strategic ecosystems as a geofence: details, list all options, national layer</p>"
   },
@@ -2783,7 +2908,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -2836,7 +2961,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -2903,7 +3028,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -2956,7 +3081,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/municipalities.js",
+    "filename": "services/backend/src/routes/municipalities.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -3009,7 +3134,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -3075,7 +3200,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Geofence > States",
     "groupDescription": "<p>Information about states and municipalities: details, list all options, national layer</p>"
   },
@@ -3141,7 +3266,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Biotic unit",
     "groupDescription": "<p>Information related to biotic units inside geofences</p>"
   },
@@ -3207,7 +3332,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Compensation Factor",
     "groupDescription": "<p>Information related to compensation factor inside geofences</p>"
   },
@@ -3280,7 +3405,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3353,7 +3478,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3433,7 +3558,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3513,7 +3638,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3593,7 +3718,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3673,7 +3798,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3746,7 +3871,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3819,7 +3944,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
   },
@@ -3892,9 +4017,801 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Search > Coverages",
     "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/ea/:ea_id/ecoChange/lp/categories",
+    "title": "ForestLPInEA",
+    "name": "ForestLPInEA",
+    "version": "0.1.0",
+    "description": "<p>Values for the forest loss and persistence inside the given environmental authority</p> <p>Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of objects with information about forest LP</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>period</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.data",
+            "description": "<p>data for forest LP divided by categories</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n  \"id\": \"2016-2019\",\n  \"data\": [\n    {\n      \"area\": 50000,\n      \"key\": \"persistencia\",\n      \"percentage\": 0.50\n    },\n     {\n      \"area\": 15000,\n      \"key\": \"perdida\",\n      \"percentage\": 0.15\n    },\n    {\n      \"area\": 25000,\n      \"key\": \"ganancia\",\n      \"percentage\": 0.25\n    },\n    {\n      \"area\": 10000,\n      \"key\": \"no_bosque\",\n      \"percentage\": 0.10\n    }\n  ]\n },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CDMB/ecoChange/lp/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/environmental_authorities.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/pa/:category/ecoChange/lp/categories",
+    "title": "ForestLPInPA",
+    "name": "ForestLPInPA",
+    "version": "0.1.0",
+    "description": "<p>Values for the forest loss and persistence inside the given protected area category</p> <p>Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "protected",
+            "description": "<p>area category</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of objects with information about forest LP</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>period</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.data",
+            "description": "<p>data for forest LP divided by categories</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n  \"id\": \"2016-2019\",\n  \"data\": [\n    {\n      \"area\": 50000,\n      \"key\": \"persistencia\",\n      \"percentage\": 0.50\n    },\n     {\n      \"area\": 15000,\n      \"key\": \"perdida\",\n      \"percentage\": 0.15\n    },\n    {\n      \"area\": 25000,\n      \"key\": \"ganancia\",\n      \"percentage\": 0.25\n    },\n    {\n      \"area\": 10000,\n      \"key\": \"no_bosque\",\n      \"percentage\": 0.10\n    }\n  ]\n },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/ecoChange/lp/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/states/:state_id/ecoChange/lp/categories",
+    "title": "ForestLPInState",
+    "name": "ForestLPInState",
+    "version": "0.1.0",
+    "description": "<p>Values for the forest loss and persistence inside the given basin state</p> <p>Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of objects with information about forest LP</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>period</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.data",
+            "description": "<p>data for forest LP divided by categories</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n  \"id\": \"2016-2019\",\n  \"data\": [\n    {\n      \"area\": 50000,\n      \"key\": \"persistencia\",\n      \"percentage\": 0.50\n    },\n     {\n      \"area\": 15000,\n      \"key\": \"perdida\",\n      \"percentage\": 0.15\n    },\n    {\n      \"area\": 25000,\n      \"key\": \"ganancia\",\n      \"percentage\": 0.25\n    },\n    {\n      \"area\": 10000,\n      \"key\": \"no_bosque\",\n      \"percentage\": 0.10\n    }\n  ]\n },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/86/ecoChange/lp/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/states.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/ecoChange/lp/categories",
+    "title": "ForestLPInSubzone",
+    "name": "ForestLPInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Values for the forest loss and persistence inside the given basin subzone</p> <p>Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": "<p>list of objects with information about forest LP</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>period</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.data",
+            "description": "<p>data for forest LP divided by categories</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n  \"id\": \"2016-2019\",\n  \"data\": [\n    {\n      \"area\": 50000,\n      \"key\": \"persistencia\",\n      \"percentage\": 0.50\n    },\n     {\n      \"area\": 15000,\n      \"key\": \"perdida\",\n      \"percentage\": 0.15\n    },\n    {\n      \"area\": 25000,\n      \"key\": \"ganancia\",\n      \"percentage\": 0.25\n    },\n    {\n      \"area\": 10000,\n      \"key\": \"no_bosque\",\n      \"percentage\": 0.10\n    }\n  ]\n },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/3701/ecoChange/lp/categories",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/basin_subzones.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/ea/:ea_id/ecoChange/persistence",
+    "title": "ForestPersistenceInEA",
+    "name": "ForestPersistenceInEA",
+    "version": "0.1.0",
+    "description": "<p>Value for the forest persistence inside the given environmental authority</p> <p>Value calculated for 2016-2019 period</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>object with forest persistence value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>value of forest persistence area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"area\": \"2500\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CDMB/ecoChange/persistence",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/environmental_authorities.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/pa/:category/ecoChange/persistence",
+    "title": "ForestPersistenceInPA",
+    "name": "ForestPersistenceInPA",
+    "version": "0.1.0",
+    "description": "<p>Value for the forest persistence inside the given protected area category</p> <p>Value calculated for 2016-2019 period</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "protected",
+            "description": "<p>area category</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>object with forest persistence value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>value of forest persistence area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"area\": \"2500\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/ecoChange/persistence",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/states/:state_id/ecoChange/persistence",
+    "title": "ForestPersistenceInState",
+    "name": "ForestPersistenceInState",
+    "version": "0.1.0",
+    "description": "<p>Value for the forest persistence inside the given basin state</p> <p>Value calculated for 2016-2019 period</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>object with forest persistence value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>value of forest persistence area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"area\": \"2500\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/86/ecoChange/persistence",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/states.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/ecoChange/persistence",
+    "title": "ForestPersistenceInSubzone",
+    "name": "ForestPersistenceInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Value for the forest persistence inside the given basin subzone</p> <p>Value calculated for 2016-2019 period</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": "<p>object with forest persistence value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>value of forest persistence area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"area\": \"2500\",\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/3701/ecoChange/persistence",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/basin_subzones.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/",
+    "title": "LPCategoriesLayerInEA",
+    "name": "LPCategoriesLayerInEA",
+    "version": "0.1.0",
+    "description": "<p>Get the the forest loss and persistence layer for a given period, divided by categories inside the given environmental authority</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "period",
+            "description": "<p>period (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>the geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"persistencia\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CARDER/ecoChange/layers/lp/period/2016-2019/categories/",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/environmental_authorities.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/pa/:category/ecoChange/layers/lp/period/:period/categories/",
+    "title": "LPCategoriesLayerInPA",
+    "name": "LPCategoriesLayerInPA",
+    "version": "0.1.0",
+    "description": "<p>Get the the forest loss and persistence layer for a given period, divided by categories inside the protected area category</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "protected",
+            "description": "<p>area category</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "period",
+            "description": "<p>period (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>the geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"persistencia\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/states/:state_id/ecoChange/layers/lp/period/:period/categories/",
+    "title": "LPCategoriesLayerInState",
+    "name": "LPCategoriesLayerInState",
+    "version": "0.1.0",
+    "description": "<p>Get the the forest loss and persistence layer for a given period, divided by categories inside the state</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "period",
+            "description": "<p>period (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>the geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"persistencia\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/86/ecoChange/layers/lp/period/2016-2019/categories/",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/states.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_ecoChange",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/ecoChange/layers/lp/period/:period/categories/",
+    "title": "LPCategoriesLayerInSubzone",
+    "name": "LPCategoriesLayerInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Get the the forest loss and persistence layer for a given period, divided by categories inside the basin subzone</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "period",
+            "description": "<p>period (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>the geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"persistencia\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/3701/ecoChange/layers/lp/period/2016-2019/categories/",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/basin_subzones.js",
+    "groupTitle": "Search > Forest",
+    "groupDescription": "<p>Information related to forest in a given geofence.</p>"
   },
   {
     "group": "s_general_biome",
@@ -3958,7 +4875,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > General Biome",
     "groupDescription": "<p>Information related to biomes inside geofences</p>"
   },
@@ -4031,7 +4948,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4104,7 +5021,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4177,7 +5094,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4250,7 +5167,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4316,7 +5233,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4382,7 +5299,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4448,7 +5365,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4514,7 +5431,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4580,7 +5497,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4646,7 +5563,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4712,7 +5629,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4778,7 +5695,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4851,7 +5768,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4924,7 +5841,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -4997,7 +5914,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5070,7 +5987,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5136,7 +6053,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5202,7 +6119,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5268,7 +6185,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5334,7 +6251,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5407,7 +6324,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5480,7 +6397,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5553,7 +6470,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5626,7 +6543,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5692,7 +6609,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5758,7 +6675,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5824,7 +6741,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5890,7 +6807,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Human Footprint",
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
@@ -5963,7 +6880,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6036,7 +6953,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6116,7 +7033,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6196,7 +7113,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6276,7 +7193,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6356,7 +7273,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6429,7 +7346,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6502,7 +7419,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
@@ -6575,9 +7492,258 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/strategic_ecosystems.js",
+    "filename": "services/backend/src/routes/strategic_ecosystems.js",
     "groupTitle": "Search > Protected Areas",
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
+  },
+  {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/hf",
+    "title": "SCIHF",
+    "name": "SCIHF",
+    "version": "1.0.0",
+    "description": "<p>Values for the forest structural condition index crossed with human footprint and protected area categories for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.hf_pers",
+            "description": "<p>Persistence category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.sci_cat",
+            "description": "<p>SCI categoy</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.pa",
+            "description": "<p>Protected area category name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>Area inside the given area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNN\",\n    \"area\": 101834\n  },\n  {\n    \"hf_pers\": \"estable_alta\",\n    \"sci_cat\": \"alta\",\n    \"pa\": \"PNR\",\n    \"area\": 134886\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/hf?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
+  },
+  {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/hf/layer",
+    "title": "SCIHFLayer",
+    "name": "SCIHFLayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of the forest structural condition index crossed with human footprint for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"sci_cat\": \"baja_moderada\",\n        \"hf_pers\": \"estable_alta\"\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/hf/layer?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
+  },
+  {
+    "group": "s_sci_hf",
+    "type": "get",
+    "url": "/sci/:sci_cat/hf/:hf_pers/layer",
+    "title": "SCIHFPALayer",
+    "name": "SCIHFPALayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of one combination of forest structural condition index category and a human footprint persistence category, divided by protected areas for a given area</p> <p>Value calculated for 2018</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "sciCat",
+            "description": "<p>sci category</p>"
+          },
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "hfPers",
+            "description": "<p>human footprint persistence category</p>"
+          }
+        ],
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n        \"pa_label\": \"Distritos Regionales de Manejo Integrado\"\n      },\n      \"geometry\": {\n        \"type\": \"MultiPolygon\",\n        \"coordinates\": [\n          [\n            [\n              [\n                -76.0875466650366,\n                5.04537111840702\n              ],\n              [\n                -76.0804526759551,\n                5.04806343034337\n              ]...\n            ]\n          ]\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/forest/src/route/SCIHF.js",
+    "groupTitle": "Search > Forest Structural Condition Index",
+    "groupDescription": "<p>Information related to the forest structural condition index in a given area.</p>"
   },
   {
     "group": "s_strategic_ecosystems",
@@ -6648,7 +7814,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -6721,7 +7887,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -6787,7 +7953,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -6853,7 +8019,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -6919,7 +8085,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -6985,7 +8151,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7058,7 +8224,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/environmental_authorities.js",
+    "filename": "services/backend/src/routes/environmental_authorities.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7131,7 +8297,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/protected_areas.js",
+    "filename": "services/backend/src/routes/protected_areas.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7204,7 +8370,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7277,7 +8443,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7350,7 +8516,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/states.js",
+    "filename": "services/backend/src/routes/states.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7423,7 +8589,7 @@
         "type": "curl"
       }
     ],
-    "filename": "src/routes/basin_subzones.js",
+    "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Strategic Ecosystems",
     "groupDescription": "<p>Information related explicitly to strategic ecosystems like total area or percentage in a geofence or in relation with the national total (not coverages or protected areas)</p>"
   },
@@ -7496,7 +8662,7 @@
         "type": "bash"
       }
     ],
-    "filename": "src/routes/users.js",
+    "filename": "services/backend/src/routes/users.js",
     "groupTitle": "Users",
     "groupDescription": "<p>Endpoint for actions on users</p>"
   }

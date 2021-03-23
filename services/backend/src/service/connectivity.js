@@ -105,10 +105,10 @@ module.exports = () => {
           data = connectivityPACurrentParamo;
           break;
         case 'Bosque Seco Tropical':
-          data = connectivityPALayerDryForest;
+          data = connectivityPACurrentDryForest;
           break;
         case 'Humedal':
-          data = connectivityPALayerWetland;
+          data = connectivityPACurrentWetland;
           break;
         default:
           data = null;
@@ -140,10 +140,10 @@ module.exports = () => {
           data = connectivityPALayerParamo;
           break;
         case 'Bosque Seco Tropical':
-          data = connectivityPACurrentDryForest;
+          data = connectivityPALayerDryForest;
           break;
         case 'Humedal':
-          data = connectivityPACurrentWetland;
+          data = connectivityPALayerWetland;
           break;
         default:
           data = null;

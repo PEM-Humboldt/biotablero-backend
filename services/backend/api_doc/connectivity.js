@@ -93,3 +93,35 @@
  *   ...
  * ]
  */
+
+/**
+ * @apiDefine SELayerExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   "type": "FeatureCollection",
+ *   "features": [
+ *     {
+ *       "type": "Feature",
+ *       "geometry": {
+ *         "geometries": [
+ *           {
+ *             "type": "MultiPolygon",
+ *             "coordinates": [
+ *               [
+ *                 [
+ *                   [
+ *                     -75.9355268362944,
+ *                     4.80674184545984
+ *                   ],
+ *                   ...
+ *                 ]
+ *               ]
+ *             ]
+ *           }
+ *         ]
+ *       }
+ *     },
+ *     ...
+ *   ]
+ * }
+ */

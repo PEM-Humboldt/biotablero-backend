@@ -48,10 +48,10 @@ module.exports = () => {
      * @returns {Object} Geojson object with the geometry
      */
     getPAConnectivityLayers: async (areaType, areaId, paNumber) => {
-      if (paNumber) {
-        return connectivityPALayers;
+      if (paNumber === 'undefined' || paNumber <= 0) {
+        return connectivityPALayersAll;
       }
-      return connectivityPALayersAll;
+      return connectivityPALayers;
     },
 
     /**

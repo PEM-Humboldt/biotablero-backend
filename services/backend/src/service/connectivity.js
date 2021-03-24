@@ -16,8 +16,8 @@ module.exports = () => {
     /**
      * Get the area distribution for each category of protected area connectivity in a given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      *
      * @returns {Object[]} Values of area distribution for each category of protected area
      * connectivity
@@ -28,8 +28,8 @@ module.exports = () => {
      * Get the values of connectivity for the protected areas with higher dPC value in a
      * given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {Number} paNumber number of protected areas to return
      *
      * @returns {Object[]} Values of connectivity for the 5 protected areas with higher dPC value
@@ -41,8 +41,8 @@ module.exports = () => {
      * Get the layers of the protected areas with higher dPC value in a given area. If paNumber
      * is not provided, all layers are returned
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {Number} paNumber number of protected area layers to return
      *
      * @returns {Object} Geojson object with the geometry
@@ -91,8 +91,8 @@ module.exports = () => {
      * Get the area distribution for each category of protected area connectivity for an specific
      * strategic ecosystem in a given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} seType seType strategic ecosystem type
      *
      * @returns {Object[]} Values of the area distribution for each category of protected area
@@ -127,8 +127,8 @@ module.exports = () => {
     /**
      * Get the layer of a strategic ecosystem in a given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} seType seType strategic ecosystem type
      *
      * @returns {Object} Geojson object with the geometry

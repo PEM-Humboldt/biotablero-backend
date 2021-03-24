@@ -13,8 +13,8 @@ module.exports = (errorHandler, connectivityService) => {
    *
    * Value calculated for 2020
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key PA connectivity category
@@ -45,8 +45,8 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiDescription
    * Values of connectivity for the protected areas with higher dPC value in a given area
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {Number} paNumber number of protected areas to return
    *
    * @apiSuccess {Object[]} result
@@ -83,8 +83,8 @@ module.exports = (errorHandler, connectivityService) => {
    * Layers of the protected areas with higher dPC value in a given area. If paNumber is not
    * provided, all layers are returned
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {Number} [paNumber] number of protected areas layers to return
    *
    * @apiSuccess (geojson) {Object[]} result
@@ -164,8 +164,8 @@ module.exports = (errorHandler, connectivityService) => {
    *
    * Value calculated for 2020
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} seType strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
@@ -203,8 +203,8 @@ module.exports = (errorHandler, connectivityService) => {
    *
    * Value calculated for 2020
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} seType strategic ecosystem type
    *
    * @apiSuccess (geojson) {Object[]} result

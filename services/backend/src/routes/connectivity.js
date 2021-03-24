@@ -85,7 +85,7 @@ module.exports = (errorHandler, connectivityService) => {
    *
    * @apiParam (Query params) {String|Number} areaType area type
    * @apiParam (Query params) {String} areaId area id
-   * @apiParam (Query params) {Number} paNumber number of protected areas layers to return
+   * @apiParam (Query params) {Number} [paNumber] number of protected areas layers to return
    *
    * @apiSuccess (geojson) {Object[]} result
    * @apiSuccess (geojson) {String} result.type The geometry type

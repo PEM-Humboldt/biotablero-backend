@@ -125,7 +125,7 @@ module.exports = () => {
     },
 
     /**
-     * Get the layer of a estrategic ecosystem in a given area
+     * Get the layer of a strategic ecosystem in a given area
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id

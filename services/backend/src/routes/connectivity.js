@@ -199,7 +199,7 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiName SELayer
    * @apiVersion 1.0.0
    * @apiDescription
-   * Layer of a estrategic ecosystem in a given area
+   * Layer of a strategic ecosystem in a given area
    *
    * Value calculated for 2020
    *

@@ -11,10 +11,10 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiDescription
    * Area distribution for each category of protected area connectivity in a given area
    *
-   * Value calculated for 2018
+   * Value calculated for 2020
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.key PA connectivity category
@@ -45,8 +45,8 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiDescription
    * Values of connectivity for the protected areas with higher dPC value in a given area
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {Number} paNumber number of protected areas to return
    *
    * @apiSuccess {Object[]} result
@@ -80,11 +80,12 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiName DPCLayer
    * @apiVersion 1.0.0
    * @apiDescription
-   * Layers of the protected areas with higher dPC value in a given area
+   * Layers of the protected areas with higher dPC value in a given area. If paNumber is not
+   * provided, all layers are returned
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
-   * @apiParam (Query params) {Number} paNumber number of protected areas layers to return
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {Number} [paNumber] number of protected areas layers to return
    *
    * @apiSuccess (geojson) {Object[]} result
    * @apiSuccess (geojson) {String} result.type The geometry type
@@ -161,10 +162,10 @@ module.exports = (errorHandler, connectivityService) => {
    * Area distribution for each category of protected area connectivity for an specific strategic
    * ecosystem in a given area
    *
-   * Value calculated for 2018
+   * Value calculated for 2020
    *
-   * @apiParam (Query params) {String|Number} areaType area type
-   * @apiParam (Query params) {String} areaId area id
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} seType strategic ecosystem type
    *
    * @apiSuccess {Object[]} result
@@ -182,6 +183,45 @@ module.exports = (errorHandler, connectivityService) => {
       throw error;
     }
     return connectivityService.getCurrentPAConnectivityBySE(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.seType,
+    )
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup s_pa_connectivity
+   * @api {get} /connectivity/se/layer SELayer
+   * @apiName SELayer
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Layer of a strategic ecosystem in a given area
+   *
+   * Value calculated for 2020
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} seType strategic ecosystem type
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /connectivity/se/layer?areaType=ea&areaId=DAGMA&seType=Páramo
+   * @apiUse SELayerExample
+   */
+  router.get('/connectivity/se/layer', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+      const error = { code: 400, message: 'areaType, areaId and seType required' };
+      throw error;
+    }
+    return connectivityService.getSELayer(
       req.params.areaType,
       req.params.areaId,
       req.params.seType,

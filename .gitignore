@@ -3,3 +3,9 @@ config/*
 !config/default.json
 logs/*
 .history/*
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+.pnp.*

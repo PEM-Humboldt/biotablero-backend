@@ -1,0 +1,16 @@
+{
+  "db": {
+    "host": "localhost",
+    "port": 5432,
+    "user": "user",
+    "password": "password",
+    "database": "database"
+  },
+  "server" : {
+    "port": 6000,
+    "origins": ["*"]
+  },
+  "logs": {
+    "dir": "logs"
+  }
+}

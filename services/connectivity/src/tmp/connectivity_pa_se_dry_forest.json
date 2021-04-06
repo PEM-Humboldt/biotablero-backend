@@ -1,0 +1,17 @@
+[
+  {
+    "key": "unprot",
+    "area": 15000,
+    "percentage": 60
+  },
+  {
+    "key": "prot_conn",
+    "area": 3500,
+    "percentage": 25
+  },
+  {
+    "key": "prot_unconn",
+    "area": 2500,
+    "percentage": 15
+  }
+]

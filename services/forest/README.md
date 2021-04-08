@@ -32,13 +32,13 @@ It is recommended to use the [current release](https://github.com/PEM-Humboldt/b
 
 After you've built the image, create a copy of the [config](config/default.json) file with your configuration values.
 
-**NOTE**: *If you change the server port in the configuration (5000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
+**NOTE**: *If you change the server port in the configuration (4001 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
 
 ### Deploy
 
 Run
 ```
-docker run --restart always --name biotablero-forest -p 5000:5000 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-forest:<version>
+docker run --restart always --name biotablero-forest -p 4001:4001 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-forest:<version>
 ```
 
 to start the container.

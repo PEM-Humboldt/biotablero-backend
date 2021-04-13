@@ -1,7 +1,3 @@
-const connectivityPACurrent = require('../tmp/connectivity_pa_current.json');
-const connectivityDPC = require('../tmp/connectivity_pa_dpc.json');
-const connectivityPALayers = require('../tmp/connectivity_pa_layers.json');
-const connectivityPALayersAll = require('../tmp/connectivity_pa_layers_all.json');
 const connectivityPATimelineProt = require('../tmp/connectivity_pa_timeline_prot.json');
 const connectivityPATimelineProtConn = require('../tmp/connectivity_pa_timeline_prot_conn.json');
 const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
@@ -11,7 +7,12 @@ const connectivityPALayerDryForest = require('../tmp/connectivity_pa_se_layer_dr
 const connectivityPALayerParamo = require('../tmp/connectivity_pa_se_layer_paramo.json');
 const connectivityPALayerWetland = require('../tmp/connectivity_pa_se_layer_wetland.json');
 
-module.exports = () => {
+const {
+  areaTypeKeys,
+  paConnCategoriesKeys,
+} = require('../util/appropriate_keys');
+
+module.exports = (connectivityPersistence) => {
   const connectivity = {
     /**
      * Get the area distribution for each category of protected area connectivity in a given area
@@ -22,7 +23,37 @@ module.exports = () => {
      * @returns {Object[]} Values of area distribution for each category of protected area
      * connectivity
      */
-    getCurrentPAConnectivity: async () => connectivityPACurrent,
+    getCurrentPAConnectivity: async (areaType, areaId) => {
+      try {
+        const rawData = await connectivityPersistence.findCurrentPAConnectivity(
+          areaTypeKeys(areaType), areaId,
+        );
+
+        const paConnDataInArea = rawData[0] ? rawData[0] : null;
+        if (!paConnDataInArea) {
+          throw new Error(
+            'Data for Current PA Connectivity doesn\'t exists in the selected area id and area type',
+          );
+        }
+
+        const totalArea = Number(paConnDataInArea.area_ha);
+        delete paConnDataInArea.area_ha;
+        return Object.keys(paConnDataInArea).map(key => (
+          {
+            key: paConnCategoriesKeys(key),
+            area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
+            percentage: Number(paConnDataInArea[key]),
+          }
+        ));
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving CurrentPAConnectivity data',
+        };
+        throw error;
+      }
+    },
 
     /**
      * Get the values of connectivity for the protected areas with higher dPC value in a
@@ -32,10 +63,21 @@ module.exports = () => {
      * @param {String | Number} areaId area id
      * @param {Number} paNumber number of protected areas to return
      *
-     * @returns {Object[]} Values of connectivity for the 5 protected areas with higher dPC value
+     * @returns {Object[]} Values of connectivity for the protected areas with higher dPC value
      * in a given area
      */
-    getPADPC: async () => connectivityDPC,
+    getPADPC: async (areaType, areaId, paNumber) => {
+      try {
+        return await connectivityPersistence.findPADPC(areaType, areaId, paNumber);
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving PADPC data',
+        };
+        throw error;
+      }
+    },
 
     /**
      * Get the layers of the protected areas with higher dPC value in a given area. If paNumber
@@ -48,10 +90,16 @@ module.exports = () => {
      * @returns {Object} Geojson object with the geometry
      */
     getPAConnectivityLayers: async (areaType, areaId, paNumber) => {
-      if (paNumber === 'undefined' || paNumber <= 0) {
-        return connectivityPALayersAll;
+      try {
+        return await connectivityPersistence.findPAConnectivityLayers(areaType, areaId, paNumber);
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving PAConnectivityLayers data',
+        };
+        throw error;
       }
-      return connectivityPALayers;
     },
 
     /**

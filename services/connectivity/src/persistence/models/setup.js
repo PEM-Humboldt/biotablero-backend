@@ -3,6 +3,9 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
+const connectivity = require('./connectivity');
+const connectivityDpc = require('./connectivity_dpc');
+const geoProtectedAreas = require('./geo_protected_areas');
 
 const dbConfig = config.get('db');
 let conn = null;
@@ -29,6 +32,9 @@ const setupModels = () => {
   if (models !== null) return models;
   const dbConn = connect();
   models = {
+    connectivity: connectivity(dbConn),
+    connectivityDpc: connectivityDpc(dbConn),
+    geoProtectedAreas: geoProtectedAreas(dbConn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

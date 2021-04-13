@@ -64,10 +64,14 @@ module.exports = (errorHandler, connectivityService) => {
       const error = { code: 400, message: 'areaType and areaId required' };
       throw error;
     }
-    if (!req.params.paNumber) {
-      req.params.paNumber = 1;
+    if (!req.params.paNumber || req.params.paNumber === 'undefined') {
+      req.params.paNumber = null;
     }
-    return connectivityService.getPADPC(req.params.areaType, req.params.areaId, req.params.paNumber)
+    return connectivityService.getPADPC(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.paNumber,
+    )
       .then((value) => {
         res.send(value);
         next();
@@ -101,8 +105,8 @@ module.exports = (errorHandler, connectivityService) => {
       const error = { code: 400, message: 'areaType and areaId required' };
       throw error;
     }
-    if (!req.params.paNumber) {
-      req.params.paNumber = 1;
+    if (!req.params.paNumber || req.params.paNumber === 'undefined') {
+      req.params.paNumber = null;
     }
     return connectivityService.getPAConnectivityLayers(
       req.params.areaType,

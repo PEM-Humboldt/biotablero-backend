@@ -47,7 +47,7 @@ module.exports = (errorHandler, connectivityService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {Number} paNumber number of protected areas to return
+   * @apiParam (Query params) {Number} [paNumber] number of protected areas to return
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id protected area name

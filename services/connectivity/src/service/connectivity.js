@@ -24,40 +24,31 @@ module.exports = (connectivityPersistence) => {
      * connectivity
      */
     getCurrentPAConnectivity: async (areaType, areaId) => {
-      try {
-        const rawData = await connectivityPersistence.findCurrentPAConnectivity(
-          areaTypeKeys(areaType), areaId,
+      const rawData = await connectivityPersistence.findCurrentPAConnectivity(
+        areaTypeKeys(areaType), areaId,
+      );
+
+      const paConnDataInArea = rawData[0] ? rawData[0] : null;
+      if (!paConnDataInArea) {
+        throw new Error(
+          'Data for Current PA Connectivity doesn\'t exists in the selected area id and area type',
         );
-
-        const paConnDataInArea = rawData[0] ? rawData[0] : null;
-        if (!paConnDataInArea) {
-          throw new Error(
-            'Data for Current PA Connectivity doesn\'t exists in the selected area id and area type',
-          );
-        }
-
-        const totalArea = Number(paConnDataInArea.area_ha);
-        delete paConnDataInArea.area_ha;
-        return Object.keys(paConnDataInArea).map(key => (
-          {
-            key: paConnCategoriesKeys(key),
-            area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
-            percentage: Number(paConnDataInArea[key]),
-          }
-        ));
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving CurrentPAConnectivity data',
-        };
-        throw error;
       }
+
+      const totalArea = Number(paConnDataInArea.area_ha);
+      delete paConnDataInArea.area_ha;
+      return Object.keys(paConnDataInArea).map(key => (
+        {
+          key: paConnCategoriesKeys(key),
+          area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
+          percentage: Number(paConnDataInArea[key]),
+        }
+      ));
     },
 
     /**
      * Get the values of connectivity for the protected areas with higher dPC value in a
-     * given area
+     * given area. If paNumber is not provided, all protected areas are returned
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
@@ -66,18 +57,9 @@ module.exports = (connectivityPersistence) => {
      * @returns {Object[]} Values of connectivity for the protected areas with higher dPC value
      * in a given area
      */
-    getPADPC: async (areaType, areaId, paNumber) => {
-      try {
-        return await connectivityPersistence.findPADPC(areaType, areaId, paNumber);
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving PADPC data',
-        };
-        throw error;
-      }
-    },
+    getPADPC: (areaType, areaId, paNumber) => (
+      connectivityPersistence.findPADPC(areaType, areaId, paNumber)
+    ),
 
     /**
      * Get the layers of the protected areas with higher dPC value in a given area. If paNumber
@@ -89,18 +71,9 @@ module.exports = (connectivityPersistence) => {
      *
      * @returns {Object} Geojson object with the geometry
      */
-    getPAConnectivityLayers: async (areaType, areaId, paNumber) => {
-      try {
-        return await connectivityPersistence.findPAConnectivityLayers(areaType, areaId, paNumber);
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving PAConnectivityLayers data',
-        };
-        throw error;
-      }
-    },
+    getPAConnectivityLayers: (areaType, areaId, paNumber) => (
+      connectivityPersistence.findPAConnectivityLayers(areaType, areaId, paNumber)
+    ),
 
     /**
      * Get the values through time of a protected area connectivity category in a given area

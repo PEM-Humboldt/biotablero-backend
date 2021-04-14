@@ -3,8 +3,9 @@ const Bottlejs = require('bottlejs');
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
-// eslint-disable-next-line no-unused-vars
 const bookshelfModels = require('../persistence/models/setup');
+
+const ConnectivityPersistence = require('../persistence/connectivity');
 
 const ConnectivityService = require('../service/connectivity');
 
@@ -15,7 +16,11 @@ const bottle = new Bottlejs();
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 
-bottle.factory('connectivityService', () => ConnectivityService());
+bottle.factory('connectivityPersistence', () => (
+  ConnectivityPersistence(bookshelfModels.db, bookshelfModels.models, logger)
+));
+
+bottle.factory('connectivityService', container => ConnectivityService(container.connectivityPersistence));
 
 bottle.factory('routes', container => ([
   ConnectivityRoutes(container.errorHandler, container.connectivityService),

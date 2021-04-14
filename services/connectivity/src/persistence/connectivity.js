@@ -28,7 +28,7 @@ module.exports = (
 
   /**
    * Find the values of connectivity for the protected areas with higher dPC value in a
-   * given area. If paNumber is not provided, all layers are returned
+   * given area. If paNumber is not provided, all protected areas are returned
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id

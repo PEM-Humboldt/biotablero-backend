@@ -39,7 +39,7 @@ module.exports = (
    */
   findPADPC: async (areaType, areaId, paNumber) => {
     try {
-      return db('connectivity_dpc as dpc')
+      const query = db('connectivity_dpc as dpc')
         .select(
           'pa.name as id',
           `dpc.${dpcCategoriesDBKeys(areaType)} as key`,
@@ -49,8 +49,11 @@ module.exports = (
         .where(areaTypeDBKeys(areaType), areaId)
         .leftJoin('geo_protected_areas as pa', 'dpc.id_pa', 'pa.pa_id')
         .groupBy('dpc.id_pa', `dpc.${dpcCategoriesDBKeys(areaType)}`, 'pa.name', 'pa.area_ha')
-        .orderBy('value', 'desc')
-        .limit(paNumber);
+        .orderBy('value', 'desc');
+      if (paNumber) {
+        query.limit(paNumber);
+      }
+      return query;
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');

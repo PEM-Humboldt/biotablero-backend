@@ -62,15 +62,15 @@ module.exports = (
   },
 
   /**
-     * Find the layers of the protected areas with higher dPC value in a given area. If paNumber
-     * is not provided, all layers are returned
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @param {Number} paNumber number of protected area layers to return
-     *
-     * @returns {Object} Geojson object with the geometry
-     */
+   * Find the layers of the protected areas with higher dPC value in a given area. If paNumber
+   * is not provided, all layers are returned
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   * @param {Number} paNumber number of protected area layers to return
+   *
+   * @returns {Object} Geojson object with the geometry
+   */
   findPAConnectivityLayers: (areaType, areaId, paNumber) => (
     db.raw(
       `

@@ -111,5 +111,9 @@ module.exports = (
       [areaId, paNumber],
     )
       .then(layers => layers.rows[0].collection)
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })
   ),
 });

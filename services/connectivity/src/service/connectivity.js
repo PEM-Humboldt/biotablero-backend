@@ -1,5 +1,3 @@
-const connectivityPATimelineProt = require('../tmp/connectivity_pa_timeline_prot.json');
-const connectivityPATimelineProtConn = require('../tmp/connectivity_pa_timeline_prot_conn.json');
 const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
 const connectivityPACurrentParamo = require('../tmp/connectivity_pa_se_paramo.json');
 const connectivityPACurrentWetland = require('../tmp/connectivity_pa_se_wetland.json');

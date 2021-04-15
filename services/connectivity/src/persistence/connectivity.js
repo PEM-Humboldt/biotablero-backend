@@ -78,12 +78,12 @@ module.exports = (
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
         FROM (
-          SELECT 
+          SELECT
             'Feature' AS TYPE,
             row_to_json(prop) AS properties,
             ST_AsGeoJSON(geom)::json AS geometry
           FROM (
-            SELECT 
+            SELECT
               ST_Collect(geom) AS geom,
               pa_id AS id_pa
             FROM geo_protected_areas
@@ -116,4 +116,48 @@ module.exports = (
         throw new Error('Error getting data');
       })
   ),
+
+  /**
+   * Find the values through time of protected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected area connectivity index in a given area
+   *
+   */
+  findTimelinePAConnectivityProt: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('prot', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the values through time of protected connected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected connected area connectivity index in
+   * a given area
+   *
+   */
+  findTimelinePAConnectivityProtConn: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('protconn', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
 });

@@ -1,5 +1,3 @@
-const connectivityPATimelineProt = require('../tmp/connectivity_pa_timeline_prot.json');
-const connectivityPATimelineProtConn = require('../tmp/connectivity_pa_timeline_prot_conn.json');
 const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
 const connectivityPACurrentParamo = require('../tmp/connectivity_pa_se_paramo.json');
 const connectivityPACurrentWetland = require('../tmp/connectivity_pa_se_wetland.json');
@@ -86,26 +84,33 @@ module.exports = (connectivityPersistence) => {
      *
      */
     getTimelinePAConnectivity: async (areaType, areaId, category) => {
-      let data;
+      let values;
       switch (category) {
         case 'prot':
-          data = connectivityPATimelineProt;
-          break;
+          values = await connectivityPersistence.findTimelinePAConnectivityProt(
+            areaTypeKeys(areaType), areaId,
+          );
+          return {
+            key: 'prot',
+            data: values.map(value => ({
+              x: String(value.prot_year),
+              y: Number(value.prot),
+            })),
+          };
         case 'prot_conn':
-          data = connectivityPATimelineProtConn;
-          break;
+          values = await connectivityPersistence.findTimelinePAConnectivityProtConn(
+            areaTypeKeys(areaType), areaId,
+          );
+          return {
+            key: 'prot_conn',
+            data: values.map(value => ({
+              x: String(value.prot_year),
+              y: Number(value.protconn),
+            })),
+          };
         default:
-          data = null;
-          break;
+          return null;
       }
-
-      if (!data) {
-        throw new Error(
-          'Data of timeline pa connectivity for selected area doesn\'t exists',
-        );
-      }
-
-      return data;
     },
 
     /**

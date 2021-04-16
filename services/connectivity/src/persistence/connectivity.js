@@ -67,6 +67,49 @@ module.exports = (
   },
 
   /**
+   * Find the values through time of protected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected area connectivity index in a given area
+   *
+   */
+  findTimelinePAConnectivityProt: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('prot', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the values through time of protected connected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected connected area connectivity index in
+   * a given area
+   *
+   */
+  findTimelinePAConnectivityProtConn: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('protconn', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
    * Find the area distribution for each category of protected area connectivity in Paramo
    * strategic ecosystem
    *
@@ -186,49 +229,6 @@ module.exports = (
         throw new Error('Error getting data');
       })
   ),
-
-  /**
-   * Find the values through time of protected area connectivity index in a given area
-   *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Values through time of protected area connectivity index in a given area
-   *
-   */
-  findTimelinePAConnectivityProt: async (areaType, areaId) => {
-    try {
-      return connectivity.query()
-        .where({ geofence_type: areaType, geofence_id: areaId })
-        .select('prot', 'prot_year')
-        .orderBy('prot_year', 'asc');
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
-
-  /**
-   * Find the values through time of protected connected area connectivity index in a given area
-   *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Values through time of protected connected area connectivity index in
-   * a given area
-   *
-   */
-  findTimelinePAConnectivityProtConn: async (areaType, areaId) => {
-    try {
-      return connectivity.query()
-        .where({ geofence_type: areaType, geofence_id: areaId })
-        .select('protconn', 'prot_year')
-        .orderBy('prot_year', 'asc');
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
 
   /**
    * Get the layer of Paramo strategic ecosystem in a given area

@@ -231,7 +231,7 @@ module.exports = (
   ),
 
   /**
-   * Get the layer of Paramo strategic ecosystem in a given area
+   * Find the layer of Paramo strategic ecosystem in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
@@ -272,7 +272,7 @@ module.exports = (
   ),
 
   /**
-   * Get the layer of Tropical Dry Forest strategic ecosystem in a given area
+   * Find the layer of Tropical Dry Forest strategic ecosystem in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
@@ -313,7 +313,7 @@ module.exports = (
   ),
 
   /**
-   * Get the layer of Wetland strategic ecosystem in a given area
+   * Find the layer of Wetland strategic ecosystem in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id

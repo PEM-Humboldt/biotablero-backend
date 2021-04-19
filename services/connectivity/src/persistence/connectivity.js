@@ -2,7 +2,12 @@ const { areaTypeDBKeys, dpcDBKeys, dpcCategoriesDBKeys } = require('../util/appr
 
 module.exports = (
   db,
-  { connectivity },
+  {
+    connectivity,
+    geoConnParamo,
+    geoConnTropicalDryForest,
+    geoConnWetland,
+  },
   logger,
 ) => ({
   /**
@@ -55,6 +60,114 @@ module.exports = (
             queryBuilder.limit(paNumber);
           }
         });
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the values through time of protected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected area connectivity index in a given area
+   *
+   */
+  findTimelinePAConnectivityProt: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('prot', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the values through time of protected connected area connectivity index in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values through time of protected connected area connectivity index in
+   * a given area
+   *
+   */
+  findTimelinePAConnectivityProtConn: async (areaType, areaId) => {
+    try {
+      return connectivity.query()
+        .where({ geofence_type: areaType, geofence_id: areaId })
+        .select('protconn', 'prot_year')
+        .orderBy('prot_year', 'asc');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the area distribution for each category of protected area connectivity in Paramo
+   * strategic ecosystem
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   * @param {Number} year optional year to filter data, 2020 by default
+   *
+   * @returns {Object[]} Values of the area distribution for each category of protected area
+   * connectivity
+   */
+  findCurrentPAConnectivityInParamo: async (areaType, areaId, year = 2020) => {
+    try {
+      return geoConnParamo.query()
+        .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
+        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the area distribution for each category of protected area connectivity in
+   * Tropical Dry Forest strategic ecosystem
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   * @param {Number} year optional year to filter data, 2020 by default
+   *
+   * @returns {Object[]} Values of the area distribution for each category of protected area
+   * connectivity
+   */
+  findCurrentPAConnectivityInDryForest: async (areaType, areaId, year = 2020) => {
+    try {
+      return geoConnTropicalDryForest.query()
+        .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
+        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+   * Find the area distribution for each category of protected area connectivity in Wetland
+   * strategic ecosystem
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Values of the area distribution for each category of protected area
+   * connectivity
+   */
+  findCurrentPAConnectivityInWetland: async (areaType, areaId, year = 2020) => {
+    try {
+      return geoConnWetland.query()
+        .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
+        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
@@ -118,46 +231,125 @@ module.exports = (
   ),
 
   /**
-   * Find the values through time of protected area connectivity index in a given area
+   * Find the layer of Paramo strategic ecosystem in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
+   * @param {Number} year optional year to filter data, 2020 by default
    *
-   * @returns {Object[]} Values through time of protected area connectivity index in a given area
-   *
+   * @returns {Object} Geojson object with the geometry
    */
-  findTimelinePAConnectivityProt: async (areaType, areaId) => {
-    try {
-      return connectivity.query()
-        .where({ geofence_type: areaType, geofence_id: areaId })
-        .select('prot', 'prot_year')
-        .orderBy('prot_year', 'asc');
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findSELayerInParamo: (areaType, areaId, year = 2020) => (
+    db.raw(
+      `
+      SELECT row_to_json(fc) AS collection
+      FROM (
+        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+        FROM (
+          SELECT 
+          'Feature' AS TYPE,
+          ST_AsGeoJSON(geom)::json AS geometry
+        FROM (
+          SELECT
+            ST_Collect(geom) AS geom,
+            gid AS key
+          FROM geo_conn_paramo
+          WHERE geofence_type = ?
+            AND geofence_id = ?
+            AND prot_year = ?
+          GROUP BY key 
+          ) AS geo
+        ) as f
+      ) as fc;
+    `,
+      [areaType, areaId, year],
+    )
+      .then(layers => layers.rows[0].collection)
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })
+  ),
 
   /**
-   * Find the values through time of protected connected area connectivity index in a given area
+   * Find the layer of Tropical Dry Forest strategic ecosystem in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
+   * @param {Number} year optional year to filter data, 2020 by default
    *
-   * @returns {Object[]} Values through time of protected connected area connectivity index in
-   * a given area
-   *
+   * @returns {Object} Geojson object with the geometry
    */
-  findTimelinePAConnectivityProtConn: async (areaType, areaId) => {
-    try {
-      return connectivity.query()
-        .where({ geofence_type: areaType, geofence_id: areaId })
-        .select('protconn', 'prot_year')
-        .orderBy('prot_year', 'asc');
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findSELayerInDryForest: (areaType, areaId, year = 2020) => (
+    db.raw(
+      `
+      SELECT row_to_json(fc) AS collection
+      FROM (
+        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+        FROM (
+          SELECT 
+          'Feature' AS TYPE,
+          ST_AsGeoJSON(geom)::json AS geometry
+        FROM (
+          SELECT
+            ST_Collect(geom) AS geom,
+            gid AS key
+          FROM geo_conn_tropical_dry_forest
+          WHERE geofence_type = ?
+            AND geofence_id = ?
+            AND prot_year = ?
+          GROUP BY key 
+          ) AS geo
+        ) as f
+      ) as fc;
+    `,
+      [areaType, areaId, year],
+    )
+      .then(layers => layers.rows[0].collection)
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })
+  ),
 
+  /**
+   * Find the layer of Wetland strategic ecosystem in a given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   * @param {Number} year optional year to filter data, 2020 by default
+   *
+   * @returns {Object} Geojson object with the geometry
+   */
+  findSELayerInWetland: (areaType, areaId, year = 2020) => (
+    db.raw(
+      `
+      SELECT row_to_json(fc) AS collection
+      FROM (
+        SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+        FROM (
+          SELECT 
+          'Feature' AS TYPE,
+          ST_AsGeoJSON(geom)::json AS geometry
+        FROM (
+          SELECT
+            ST_Collect(geom) AS geom,
+            gid AS key
+          FROM geo_conn_wetland
+          WHERE geofence_type = ?
+            AND geofence_id = ?
+            AND prot_year = ?
+          GROUP BY key 
+          ) AS geo
+        ) as f
+      ) as fc;
+    `,
+      [areaType, areaId, year],
+    )
+      .then(layers => layers.rows[0].collection)
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })
+  ),
 });

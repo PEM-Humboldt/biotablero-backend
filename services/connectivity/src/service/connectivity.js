@@ -1,10 +1,3 @@
-const connectivityPACurrentDryForest = require('../tmp/connectivity_pa_se_dry_forest.json');
-const connectivityPACurrentParamo = require('../tmp/connectivity_pa_se_paramo.json');
-const connectivityPACurrentWetland = require('../tmp/connectivity_pa_se_wetland.json');
-const connectivityPALayerDryForest = require('../tmp/connectivity_pa_se_layer_dry_forest.json');
-const connectivityPALayerParamo = require('../tmp/connectivity_pa_se_layer_paramo.json');
-const connectivityPALayerWetland = require('../tmp/connectivity_pa_se_layer_wetland.json');
-
 const {
   areaTypeKeys,
   paConnCategoriesKeys,
@@ -35,13 +28,15 @@ module.exports = (connectivityPersistence) => {
 
       const totalArea = Number(paConnDataInArea.area_ha);
       delete paConnDataInArea.area_ha;
-      return Object.keys(paConnDataInArea).map(key => (
+      const data = Object.keys(paConnDataInArea).map(key => (
         {
           key: paConnCategoriesKeys(key),
           area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
           percentage: Number(paConnDataInArea[key]),
         }
       ));
+      const invalidValues = data.filter(obj => !obj.area || obj.area === 0);
+      return invalidValues.length === data.length ? [] : data;
     },
 
     /**
@@ -125,29 +120,50 @@ module.exports = (connectivityPersistence) => {
      * connectivity
      */
     getCurrentPAConnectivityBySE: async (areaType, areaId, seType) => {
-      let data;
+      let rawData;
+      let strategicEcosystem;
       switch (seType) {
         case 'Páramo':
-          data = connectivityPACurrentParamo;
+          rawData = await connectivityPersistence.findCurrentPAConnectivityInParamo(
+            areaTypeKeys(areaType), areaId,
+          );
+          strategicEcosystem = 'Paramo';
           break;
         case 'Bosque Seco Tropical':
-          data = connectivityPACurrentDryForest;
+          rawData = await connectivityPersistence.findCurrentPAConnectivityInDryForest(
+            areaTypeKeys(areaType), areaId,
+          );
+          strategicEcosystem = 'Tropical Dry Forest';
           break;
         case 'Humedal':
-          data = connectivityPACurrentWetland;
+          rawData = await connectivityPersistence.findCurrentPAConnectivityInWetland(
+            areaTypeKeys(areaType), areaId,
+          );
+          strategicEcosystem = 'Wetland';
           break;
         default:
-          data = null;
-          break;
+          rawData = null;
+          strategicEcosystem = seType;
       }
 
-      if (!data) {
+      const paConnDataInSE = rawData && rawData[0] ? rawData[0] : null;
+      if (!paConnDataInSE) {
         throw new Error(
-          'Data for pa connectivity by SE doesn\'t exists in the selected area id, area type and seType',
+          `Data for Current PA Connectivity In ${strategicEcosystem} doesn't exists in the selected area id and area type`,
         );
       }
 
-      return data;
+      const totalArea = Number(paConnDataInSE.area_ha);
+      delete paConnDataInSE.area_ha;
+      const data = Object.keys(paConnDataInSE).map(key => (
+        {
+          key: paConnCategoriesKeys(key),
+          area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
+          percentage: Number(paConnDataInSE[key]),
+        }
+      ));
+      const invalidValues = data.filter(obj => !obj.area || obj.area === 0);
+      return invalidValues.length === data.length ? [] : data;
     },
 
     /**
@@ -160,29 +176,24 @@ module.exports = (connectivityPersistence) => {
      * @returns {Object} Geojson object with the geometry
      */
     getSELayer: async (areaType, areaId, seType) => {
-      let data;
       switch (seType) {
         case 'Páramo':
-          data = connectivityPALayerParamo;
-          break;
+          return connectivityPersistence.findSELayerInParamo(
+            areaTypeKeys(areaType), areaId,
+          );
         case 'Bosque Seco Tropical':
-          data = connectivityPALayerDryForest;
-          break;
+          return connectivityPersistence.findSELayerInDryForest(
+            areaTypeKeys(areaType), areaId,
+          );
         case 'Humedal':
-          data = connectivityPALayerWetland;
-          break;
+          return connectivityPersistence.findSELayerInWetland(
+            areaTypeKeys(areaType), areaId,
+          );
         default:
-          data = null;
-          break;
+          throw new Error(
+            'Data for SE Layer doesn\'t exists in the selected area id, area type and seType',
+          );
       }
-
-      if (!data) {
-        throw new Error(
-          'Data for SE Layer doesn\'t exists in the selected area id, area type and seType',
-        );
-      }
-
-      return data;
     },
   };
 

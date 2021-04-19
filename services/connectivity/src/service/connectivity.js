@@ -28,13 +28,15 @@ module.exports = (connectivityPersistence) => {
 
       const totalArea = Number(paConnDataInArea.area_ha);
       delete paConnDataInArea.area_ha;
-      return Object.keys(paConnDataInArea).map(key => (
+      const data = Object.keys(paConnDataInArea).map(key => (
         {
           key: paConnCategoriesKeys(key),
           area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
           percentage: Number(paConnDataInArea[key]),
         }
       ));
+      const invalidValues = data.filter(obj => !obj.area || obj.area === 0);
+      return invalidValues.length === data.length ? [] : data;
     },
 
     /**
@@ -119,71 +121,49 @@ module.exports = (connectivityPersistence) => {
      */
     getCurrentPAConnectivityBySE: async (areaType, areaId, seType) => {
       let rawData;
-      let paConnDataInSE;
-      let totalArea;
+      let strategicEcosystem;
       switch (seType) {
         case 'Páramo':
           rawData = await connectivityPersistence.findCurrentPAConnectivityInParamo(
             areaTypeKeys(areaType), areaId,
           );
-          paConnDataInSE = rawData[0] ? rawData[0] : null;
-          if (!paConnDataInSE) {
-            throw new Error(
-              'Data for Current PA Connectivity In Paramo doesn\'t exists in the selected area id and area type',
-            );
-          }
-          totalArea = Number(paConnDataInSE.area_ha);
-          delete paConnDataInSE.area_ha;
-          return Object.keys(paConnDataInSE).map(key => (
-            {
-              key: paConnCategoriesKeys(key),
-              area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
-              percentage: Number(paConnDataInSE[key]),
-            }
-          ));
+          strategicEcosystem = 'Paramo';
+          break;
         case 'Bosque Seco Tropical':
           rawData = await connectivityPersistence.findCurrentPAConnectivityInDryForest(
             areaTypeKeys(areaType), areaId,
           );
-          paConnDataInSE = rawData[0] ? rawData[0] : null;
-          if (!paConnDataInSE) {
-            throw new Error(
-              'Data for Current PA Connectivity In Tropical Dry Forest doesn\'t exists in the selected area id and area type',
-            );
-          }
-          totalArea = Number(paConnDataInSE.area_ha);
-          delete paConnDataInSE.area_ha;
-          return Object.keys(paConnDataInSE).map(key => (
-            {
-              key: paConnCategoriesKeys(key),
-              area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
-              percentage: Number(paConnDataInSE[key]),
-            }
-          ));
+          strategicEcosystem = 'Tropical Dry Forest';
+          break;
         case 'Humedal':
           rawData = await connectivityPersistence.findCurrentPAConnectivityInWetland(
             areaTypeKeys(areaType), areaId,
           );
-          paConnDataInSE = rawData[0] ? rawData[0] : null;
-          if (!paConnDataInSE) {
-            throw new Error(
-              'Data for Current PA Connectivity In Wetland doesn\'t exists in the selected area id and area type',
-            );
-          }
-          totalArea = Number(paConnDataInSE.area_ha);
-          delete paConnDataInSE.area_ha;
-          return Object.keys(paConnDataInSE).map(key => (
-            {
-              key: paConnCategoriesKeys(key),
-              area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
-              percentage: Number(paConnDataInSE[key]),
-            }
-          ));
+          strategicEcosystem = 'Wetland';
+          break;
         default:
-          throw new Error(
-            'Data for PA Connectivity By SE doesn\'t exists in the selected area id, area type and seType',
-          );
+          rawData = null;
+          strategicEcosystem = seType;
       }
+
+      const paConnDataInSE = rawData && rawData[0] ? rawData[0] : null;
+      if (!paConnDataInSE) {
+        throw new Error(
+          `Data for Current PA Connectivity In ${strategicEcosystem} doesn't exists in the selected area id and area type`,
+        );
+      }
+
+      const totalArea = Number(paConnDataInSE.area_ha);
+      delete paConnDataInSE.area_ha;
+      const data = Object.keys(paConnDataInSE).map(key => (
+        {
+          key: paConnCategoriesKeys(key),
+          area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
+          percentage: Number(paConnDataInSE[key]),
+        }
+      ));
+      const invalidValues = data.filter(obj => !obj.area || obj.area === 0);
+      return invalidValues.length === data.length ? [] : data;
     },
 
     /**

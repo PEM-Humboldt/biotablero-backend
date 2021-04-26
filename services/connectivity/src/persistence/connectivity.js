@@ -46,14 +46,15 @@ module.exports = (
     try {
       return db('connectivity_dpc as dpc')
         .select(
-          'pa.name as id',
+          'pa.pa_id as id',
+          'pa.name as name',
           `dpc.${dpcCategoriesDBKeys(areaType)} as key`,
           'pa.area_ha as area',
         )
         .avg(`dpc.${dpcDBKeys(areaType)} as value`)
         .where(areaTypeDBKeys(areaType), areaId)
         .leftJoin('geo_protected_areas as pa', 'dpc.id_pa', 'pa.pa_id')
-        .groupBy('dpc.id_pa', `dpc.${dpcCategoriesDBKeys(areaType)}`, 'pa.name', 'pa.area_ha')
+        .groupBy('dpc.id_pa', `dpc.${dpcCategoriesDBKeys(areaType)}`, 'pa.name', 'pa.area_ha', 'pa.pa_id')
         .orderBy('value', 'desc')
         .modify((queryBuilder) => {
           if (paNumber) {
@@ -198,25 +199,25 @@ module.exports = (
           FROM (
             SELECT
               ST_Collect(geom) AS geom,
-              pa_id AS id_pa
+              pa_id AS id
             FROM geo_protected_areas
-            GROUP BY id_pa
+            GROUP BY id
             ) AS geo
             INNER JOIN (
               SELECT
-                dpc.id_pa AS id_pa,
-                gpa.name AS key,
+                dpc.id_pa AS id,
+                gpa.name AS name,
                 dpc.${dpcCategoriesDBKeys(areaType)} AS dpc_cat,
                 avg(dpc.${dpcDBKeys(areaType)}) AS value,
                 gpa.area_ha AS area
               FROM connectivity_dpc dpc
               INNER JOIN geo_protected_areas gpa ON gpa.pa_id = dpc.id_pa
               WHERE ${areaTypeDBKeys(areaType)} = ?
-              GROUP BY id_pa, dpc_cat, key, area
+              GROUP BY id_pa, dpc_cat, gpa.name, area
               ORDER BY value DESC
               LIMIT ?
             ) AS prop
-            ON geo.id_pa = prop.id_pa
+            ON geo.id = prop.id
             ORDER BY value DESC
         ) as f
       ) as fc;

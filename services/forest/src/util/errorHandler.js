@@ -17,7 +17,7 @@ module.exports = logger => callback => (
       logger.error(e.stack || e.Error || e.message || e);
       res.send(code, {
         code,
-        userMsg: e.message || e.userMsg || 'There was an internal error',
+        userMsg: e.userMsg || e.message || 'There was an internal error',
       });
     }
   }

@@ -24,7 +24,7 @@ module.exports = (
     try {
       return connectivity.query()
         .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
-        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+        .select('protconn', 'protunconn', 'unprotected', 'area_ha');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
@@ -125,7 +125,7 @@ module.exports = (
     try {
       return geoConnParamo.query()
         .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
-        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+        .select('protconn', 'protunconn', 'unprotected', 'area_ha');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
@@ -147,7 +147,7 @@ module.exports = (
     try {
       return geoConnTropicalDryForest.query()
         .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
-        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+        .select('protconn', 'protunconn', 'unprotected', 'area_ha');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
@@ -168,7 +168,7 @@ module.exports = (
     try {
       return geoConnWetland.query()
         .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
-        .select('unprotected', 'protconn', 'protunconn', 'area_ha');
+        .select('protconn', 'protunconn', 'unprotected', 'area_ha');
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');

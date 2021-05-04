@@ -121,7 +121,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
         case 'states':
           data = await SCIHFPersistence.findSCIHFPALayerInState(areaId, sciCat, hfPers);
           break;
-        case 'basinSubzone':
+        case 'basinSubzones':
           data = await SCIHFPersistence.findSCIHFPALayerInBasinSubzone(areaId, sciCat, hfPers);
           break;
         case 'pa': {

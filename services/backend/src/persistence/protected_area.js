@@ -9,9 +9,9 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      */
     findCategories: () => (
       globalBinaryProtectedAreas.query()
-        .where(db.raw("trim(both '0' from binary_protected::varchar) = '1'"))
-        .orderBy('binary_protected')
         .select('label as name')
+        .where(db.raw("trim(both '0' from binary_protected::varchar) = '1'"))
+        .orderBy('name')
     ),
 
     /**

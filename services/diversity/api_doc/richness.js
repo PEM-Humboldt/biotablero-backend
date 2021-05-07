@@ -33,3 +33,17 @@
  *   }
  * ]
  */
+
+/**
+ * @apiDefine NSThresholdsExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     id: "total",
+ *     min_inferred: 3,
+ *     min_observed: 5,
+ *     max_inferred: 100,
+ *     max_observed: 110
+ *   }
+ * ]
+ */

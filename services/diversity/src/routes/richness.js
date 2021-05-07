@@ -39,5 +39,44 @@ module.exports = (errorHandler, Richness) => {
       });
   }));
 
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/number-species/thresholds NSThresholds
+   * @apiName NSThresholds
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Lowest and highest values for the number of species among national areas of the same type. Can
+   * be filtered by group
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String} [group] group to filter results
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.id group id related to the results
+   * @apiSuccess {Number} result.min_inferred minimum number of inferred species (according to
+   * BioModelos)
+   * @apiSuccess {Number} result.min_observed minimum number of observed species (according to
+   * I2D)
+   * @apiSuccess {Number} result.max_inferred maximum number of inferred species (according to
+   * BioModelos)
+   * @apiSuccess {Number} result.max_observed maximum number of observed species (according to
+   * I2D)
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/thresholds?areaType=ea&group=total
+   * @apiUse NSThresholdsExample
+   */
+  router.get('/richness/number-species/thresholds', errorHandler((req, res, next) => {
+    if (!(req.params.areaType)) {
+      const error = { code: 400, message: 'areaType is required' };
+      throw error;
+    }
+    return Richness.getNSThresholds(req.params.areaType, req.params.group)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
   return router;
 };

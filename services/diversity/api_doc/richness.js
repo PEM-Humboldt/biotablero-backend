@@ -10,22 +10,26 @@
  *   {
  *     id: "total",
  *     inferred: 30,
- *     observed: 40
+ *     observed: 40,
+ *     region: 100
  *   },
  *   {
  *     id: "endemic",
  *     inferred: 20,
- *     observed: 25
+ *     observed: 25,
+ *     region: 100
  *   },
  *   {
  *     id: "invasive",
  *     inferred: 10,
- *     observed: 20
+ *     observed: 20,
+ *     region: 100
  *   },
  *   {
  *     id: "threatened",
  *     inferred: 15,
- *     observed: 20
+ *     observed: 20,
+ *     region: 100
  *   }
  * ]
  */

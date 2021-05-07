@@ -1,8 +1,7 @@
 module.exports = () => {
   const Richness = {
     /**
-     * Get values for the forest structural condition index crossed with human footprint
-     * and protected area categories for a given area
+     * Get values for the number of speceis in the given area of the given group
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id
@@ -17,21 +16,25 @@ module.exports = () => {
           id: 'total',
           inferred: 30,
           observed: 40,
+          region: 100,
         },
         {
           id: 'endemic',
           inferred: 20,
           observed: 25,
+          region: 100,
         },
         {
           id: 'invasive',
           inferred: 10,
           observed: 20,
+          region: 100,
         },
         {
           id: 'threatened',
           inferred: 15,
           observed: 20,
+          region: 100,
         },
       ];
       switch (group) {

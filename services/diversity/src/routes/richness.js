@@ -9,8 +9,9 @@ module.exports = (errorHandler, Richness) => {
    * @apiName NumberOfSpecies
    * @apiVersion 1.0.0
    * @apiDescription
-   * Number of observed and inferred species for a given area, filtered by groups: total,
-   * endemic, invasive, threatened or all.
+   * Number of observed and inferred species for a given area, and number of species in the region
+   * the area is in. Can be filtered by group: total, endemic, invasive and threatened, or get all
+   * of them.
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
@@ -20,6 +21,7 @@ module.exports = (errorHandler, Richness) => {
    * @apiSuccess {String} result.id group id related to the results
    * @apiSuccess {Number} result.inferred inferred number of species (according to BioModelos)
    * @apiSuccess {Number} result.observed observed number of species (according to I2D)
+   * @apiSuccess {Number} result.region number of species in the region the area belongs to
    *
    * @apiExample {curl} Example usage:
    *  /richness/number-species?areaType=ea&areaId=CARDER&group=all

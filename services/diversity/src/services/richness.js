@@ -14,27 +14,27 @@ module.exports = () => {
       const data = [
         {
           id: 'total',
-          inferred: 30,
-          observed: 40,
-          region: 100,
+          inferred: 40,
+          observed: 10,
+          region: 120,
         },
         {
           id: 'endemic',
           inferred: 20,
           observed: 25,
-          region: 100,
+          region: 120,
         },
         {
           id: 'invasive',
-          inferred: 10,
-          observed: 20,
-          region: 100,
+          inferred: 20,
+          observed: 10,
+          region: 120,
         },
         {
           id: 'threatened',
           inferred: 15,
           observed: 20,
-          region: 100,
+          region: 120,
         },
       ];
       switch (group) {
@@ -65,8 +65,8 @@ module.exports = () => {
       const data = [
         {
           id: 'total',
-          min_inferred: 4,
-          min_observed: 6,
+          min_inferred: 10,
+          min_observed: 4,
           max_inferred: 101,
           max_observed: 111,
         },
@@ -74,13 +74,13 @@ module.exports = () => {
           id: 'endemic',
           min_inferred: 2,
           min_observed: 4,
-          max_inferred: 99,
-          max_observed: 109,
+          max_inferred: 109,
+          max_observed: 99,
         },
         {
           id: 'invasive',
-          min_inferred: 1,
-          min_observed: 3,
+          min_inferred: 3,
+          min_observed: 1,
           max_inferred: 98,
           max_observed: 108,
         },
@@ -88,8 +88,8 @@ module.exports = () => {
           id: 'threatened',
           min_inferred: 3,
           min_observed: 5,
-          max_inferred: 100,
-          max_observed: 110,
+          max_inferred: 110,
+          max_observed: 100,
         },
       ];
       switch (group) {

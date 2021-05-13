@@ -21,7 +21,10 @@ module.exports = (errorHandler, Richness) => {
    * @apiSuccess {String} result.id group id related to the results
    * @apiSuccess {Number} result.inferred inferred number of species (according to BioModelos)
    * @apiSuccess {Number} result.observed observed number of species (according to I2D)
-   * @apiSuccess {Number} result.region number of species in the region the area belongs to
+   * @apiSuccess {Number} result.region_observed number of observed species in the region the
+   * area belongs to
+   * @apiSuccess {Number} result.region_inferred number of inferred species in the region the
+   * area belongs to
    *
    * @apiExample {curl} Example usage:
    *  /richness/number-species?areaType=ea&areaId=CARDER&group=all

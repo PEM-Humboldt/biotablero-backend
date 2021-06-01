@@ -1,7 +1,7 @@
 module.exports = () => {
   const Richness = {
     /**
-     * Get values for the number of speceis in the given area of the given group
+     * Get values for the number of species in the given area of the given group
      *
      * @param {String | Number} areaType area type
      * @param {String} areaId area id
@@ -109,6 +109,48 @@ module.exports = () => {
         default:
           return data;
       }
+    },
+
+    /**
+     * Get values for richness species gaps in the given area
+     *
+     * @param {String | Number} areaType area type
+     * @param {String} areaId area id
+     *
+     * @returns {Object} Values of richness species gaps
+     */
+    // eslint-disable-next-line no-unused-vars
+    getGaps: async (areaType, areaId) => {
+      const data = {
+        id: 'gaps',
+        avg: 0.34,
+        min: 0.4,
+        max: 0.8,
+        min_threshold: 0.15,
+        max_threshold: 0.95,
+      };
+      return data;
+    },
+
+    /**
+     * Get values for richness species concentration in the given area
+     *
+     * @param {String | Number} areaType area type
+     * @param {String} areaId area id
+     *
+     * @returns {Object} Values of richness species concentration
+     */
+    // eslint-disable-next-line no-unused-vars
+    getConcentration: async (areaType, areaId) => {
+      const data = {
+        id: 'concentration',
+        avg: 0.3,
+        min: 0.2,
+        max: 0.6,
+        min_threshold: 0.1,
+        max_threshold: 1,
+      };
+      return data;
     },
   };
 

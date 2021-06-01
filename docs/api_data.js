@@ -6812,6 +6812,521 @@ define({ "api": [
     "groupDescription": "<p>Information related to human footprint in a given geofence.</p>"
   },
   {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/current",
+    "title": "Current",
+    "name": "Current",
+    "version": "1.0.0",
+    "description": "<p>Area distribution for each category of protected area connectivity in a given area</p> <p>Value calculated for 2020</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.key",
+            "description": "<p>PA connectivity category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>area of the specified PA connectivity category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>percentage of the specified PA connectivity category</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"key\": \"unprot\",\n    \"area\": 20548,\n    \"percentage\": 0.5\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/connectivity/current?areaType=ea&areaId=DAGMA",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/current/se",
+    "title": "CurrentBySE",
+    "name": "CurrentBySE",
+    "version": "1.0.0",
+    "description": "<p>Area distribution for each category of protected area connectivity for an specific strategic ecosystem in a given area</p> <p>Value calculated for 2020</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "seType",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.key",
+            "description": "<p>PA connectivity category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>area of the specified PA connectivity category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.percentage",
+            "description": "<p>percentage of the specified PA connectivity category</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"key\": \"unprot\",\n    \"area\": 1500,\n    \"percentage\": 0.15\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/connectivity/current/se?areaType=ea&areaId=DAGMA&seType=Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/dpc",
+    "title": "DPC",
+    "name": "DPC",
+    "version": "1.0.0",
+    "description": "<p>Values of connectivity for the protected areas with higher dPC value in a given area</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "Number",
+            "optional": true,
+            "field": "paNumber",
+            "description": "<p>number of protected areas to return</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>protected area name</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.key",
+            "description": "<p>dpc category</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.value",
+            "description": "<p>dpc value</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.area",
+            "description": "<p>area of the protected area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    \"id\": \"Campoalegre\",\n    \"key\": \"unprot\",\n    \"value\": 0.1,\n    \"area\": 20548,\n  },\n  ...\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/connectivity/dpc?areaType=ea&areaId=DAGMA&paNumber=5",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/dpc/layer",
+    "title": "DPCLayer",
+    "name": "DPCLayer",
+    "version": "1.0.0",
+    "description": "<p>Layers of the protected areas with higher dPC value in a given area. If paNumber is not provided, all layers are returned</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "Number",
+            "optional": true,
+            "field": "paNumber",
+            "description": "<p>number of protected areas layers to return</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"properties\": {\n      \"key\": \"Campoalegre\",\n      \"value\": 1,\n      \"area\": 21116,\n      },\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/connectivity/dpc/layer?areaType=ea&areaId=DAGMA&paNumber=5",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/se/layer",
+    "title": "SELayer",
+    "name": "SELayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of a strategic ecosystem in a given area</p> <p>Value calculated for 2020</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "seType",
+            "description": "<p>strategic ecosystem type</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"type\": \"FeatureCollection\",\n  \"features\": [\n    {\n      \"type\": \"Feature\",\n      \"geometry\": {\n        \"geometries\": [\n          {\n            \"type\": \"MultiPolygon\",\n            \"coordinates\": [\n              [\n                [\n                  [\n                    -75.9355268362944,\n                    4.80674184545984\n                  ],\n                  ...\n                ]\n              ]\n            ]\n          }\n        ]\n      }\n    },\n    ...\n  ]\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/connectivity/se/layer?areaType=ea&areaId=DAGMA&seType=Páramo",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
+    "group": "s_pa_connectivity",
+    "type": "get",
+    "url": "/connectivity/timeline",
+    "title": "TimelineByCategory",
+    "name": "TimelineByCategory",
+    "version": "1.0.0",
+    "description": "<p>Values through time of a protected area connectivity category in a given area</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>category of connectivity index</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.key",
+            "description": "<p>category of the connectivity index</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.data",
+            "description": "<p>timeline data values</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.data.x",
+            "description": "<p>x-axis years data</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.data.y",
+            "description": "<p>y-axis percentage values of the connectivity index</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  \"key\": \"prot\",\n  \"data\": [\n    {\n      \"x\": \"1938\",\n      \"y\": 0.5\n    },\n    ...\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/connectivity/src/routes/connectivity.js",
+    "groupTitle": "Search > Protected Areas Connectivity",
+    "groupDescription": "<p>Information related to protected areas connectivity in a given area.</p>"
+  },
+  {
     "group": "s_protected_areas",
     "type": "get",
     "url": "/ea/:ea_id/pa",

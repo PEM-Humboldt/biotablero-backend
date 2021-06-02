@@ -3,8 +3,8 @@ module.exports = () => {
     /**
      * Get values for the number of species in the given area of the given group
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
@@ -59,7 +59,7 @@ module.exports = () => {
     /**
      * Get thresholds for the number of species for the given area type in the given group
      *
-     * @param {String | Number} areaType area type
+     * @param {String} areaType area type
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
@@ -114,13 +114,12 @@ module.exports = () => {
     /**
      * Get values for richness species gaps in the given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      *
      * @returns {Object} Values of richness species gaps
      */
-    // eslint-disable-next-line no-unused-vars
-    getGaps: async (areaType, areaId) => {
+    getGaps: async () => {
       const data = {
         id: 'gaps',
         avg: 0.34,
@@ -135,13 +134,12 @@ module.exports = () => {
     /**
      * Get values for richness species concentration in the given area
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      *
      * @returns {Object} Values of richness species concentration
      */
-    // eslint-disable-next-line no-unused-vars
-    getConcentration: async (areaType, areaId) => {
+    getConcentration: async () => {
       const data = {
         id: 'concentration',
         avg: 0.3,

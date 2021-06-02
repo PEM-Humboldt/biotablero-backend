@@ -47,3 +47,33 @@
  *   }
  * ]
  */
+
+/**
+ * @apiDefine GapsExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     id: 'gaps',
+ *     avg: 0.34,
+ *     min: 0.4,
+ *     max: 0.8,
+ *     min_threshold: 0.15,
+ *     max_threshold: 0.95,
+ *   }
+ * ]
+ */
+
+/**
+ * @apiDefine ConcentrationExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     id: 'concentration',
+ *     avg: 0.3,
+ *     min: 0.2,
+ *     max: 0.6,
+ *     min_threshold: 0.1,
+ *     max_threshold: 1,
+ *   }
+ * ]
+ */

@@ -81,5 +81,77 @@ module.exports = (errorHandler, Richness) => {
       });
   }));
 
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/gaps Gaps
+   * @apiName Gaps
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Average, lowest and highest value of species richness gaps for a given area. Also,
+   * lowest and highest values among national areas of the same type.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.id group id related to the results
+   * @apiSuccess {Number} result.avg average value inside the given area
+   * @apiSuccess {Number} result.min lowest value inside the given area
+   * @apiSuccess {Number} result.max highest value inside the given area
+   * @apiSuccess {Number} result.min_threshold lowest value among national areas of the same type
+   * @apiSuccess {Number} result.max_threshold highest value among national areas of the same type
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/gaps?areaType=ea&areaId=CARDER
+   * @apiUse GapsExample
+   */
+  router.get('/richness/gaps', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = { code: 400, message: 'areaType and areaId are required' };
+      throw error;
+    }
+    return Richness.getGaps(req.params.areaType, req.params.areaId)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/concentration Concentration
+   * @apiName Concentration
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Average, minimun and máximun value of species richness concentration for a given area. Also,
+   * lowest and highest values at nacional level.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.id group id related to the results
+   * @apiSuccess {Number} result.avg average value inside the given area
+   * @apiSuccess {Number} result.min lowest value inside the given area
+   * @apiSuccess {Number} result.max highest value inside the given area
+   * @apiSuccess {Number} result.min_threshold lowest value among national areas of the same type
+   * @apiSuccess {Number} result.max_threshold highest value among national areas of the same type
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/concentration?areaType=ea&areaId=CARDER
+   * @apiUse ConcentrationExample
+   */
+  router.get('/richness/concentration', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = { code: 400, message: 'areaType and areaId are required' };
+      throw error;
+    }
+    return Richness.getConcentration(req.params.areaType, req.params.areaId)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
   return router;
 };

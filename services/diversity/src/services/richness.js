@@ -1,10 +1,10 @@
 module.exports = () => {
   const Richness = {
     /**
-     * Get values for the number of speceis in the given area of the given group
+     * Get values for the number of species in the given area of the given group
      *
-     * @param {String | Number} areaType area type
-     * @param {String} areaId area id
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
@@ -59,7 +59,7 @@ module.exports = () => {
     /**
      * Get thresholds for the number of species for the given area type in the given group
      *
-     * @param {String | Number} areaType area type
+     * @param {String} areaType area type
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
@@ -109,6 +109,46 @@ module.exports = () => {
         default:
           return data;
       }
+    },
+
+    /**
+     * Get values for richness species gaps in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Object} Values of richness species gaps
+     */
+    getGaps: async () => {
+      const data = {
+        id: 'gaps',
+        avg: 0.34,
+        min: 0.4,
+        max: 0.8,
+        min_threshold: 0.15,
+        max_threshold: 0.95,
+      };
+      return data;
+    },
+
+    /**
+     * Get values for richness species concentration in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Object} Values of richness species concentration
+     */
+    getConcentration: async () => {
+      const data = {
+        id: 'concentration',
+        avg: 0.3,
+        min: 0.2,
+        max: 0.6,
+        min_threshold: 0.1,
+        max_threshold: 1,
+      };
+      return data;
     },
   };
 

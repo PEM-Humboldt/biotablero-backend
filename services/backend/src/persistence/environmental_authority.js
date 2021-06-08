@@ -85,6 +85,7 @@ module.exports = (
     findAll: () => (
       geoEnvironmentalAuthorities.query()
         .select('id_ea as id', 'name')
+        .orderBy('name')
     ),
 
     /**

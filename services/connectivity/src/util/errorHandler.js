@@ -15,9 +15,6 @@ module.exports = logger => callback => (
     } catch (e) {
       const code = typeof e.code === 'number' ? e.code : 500;
       logger.error(e.stack || e.Error || e.message || e);
-      if ('schema' in e) {
-        e.userMsg = 'There was an internal error';
-      }
       res.send(code, {
         code,
         userMsg: e.userMsg || e.message || 'There was an internal error',

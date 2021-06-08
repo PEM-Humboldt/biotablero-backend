@@ -18,6 +18,7 @@ module.exports = (
     findAll: () => (
       geoStates.query()
         .select('id_state as id', 'name')
+        .orderBy('name')
     ),
 
     /**

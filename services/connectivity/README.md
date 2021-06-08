@@ -1,5 +1,5 @@
-# Biotablero Forest service
-Forest service for biotablero
+# Biotablero Connectivity service
+Connectivity service for biotablero
 
 ## Getting Started
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
@@ -24,7 +24,7 @@ Deployment is made with docker, you'll need Docker v17.05.0+ and docker compose 
 
 ### Build image
 
-To build the image run: `docker build -t biotablero-forest:<version> .`
+To build the image run: `docker build -t biotablero-connectivity:<version> .`
 
 It is recommended to use the [current release](https://github.com/PEM-Humboldt/biotablero-backend/releases) for the image tag version.
 
@@ -32,13 +32,13 @@ It is recommended to use the [current release](https://github.com/PEM-Humboldt/b
 
 After you've built the image, create a copy of the [config](config/default.json) file with your configuration values.
 
-**NOTE**: *If you change the server port in the configuration (4001 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
+**NOTE**: *If you change the server port in the configuration (4002 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
 
 ### Deploy
 
 Run
 ```
-docker run --restart always --name biotablero-forest -p 4001:4001 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-forest:<version>
+docker run --restart always --name biotablero-connectivity -p 4002:4002 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-connectivity:<version>
 ```
 
 to start the container.
@@ -52,4 +52,5 @@ There are no guidelines for contribution currently.
 
 ## License
 This project is licensed under the MIT License.
+
 

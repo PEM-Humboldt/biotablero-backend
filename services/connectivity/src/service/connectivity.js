@@ -32,7 +32,7 @@ module.exports = (connectivityPersistence) => {
         {
           key: paConnCategoriesKeys(key),
           area: Number(totalArea) * Number(paConnDataInArea[key]) / 100,
-          percentage: Number(paConnDataInArea[key]),
+          percentage: Number(paConnDataInArea[key]) / 100,
         }
       ));
       const invalidValues = data.filter(obj => !obj.area || obj.area === 0);
@@ -89,7 +89,7 @@ module.exports = (connectivityPersistence) => {
             key: 'prot',
             data: values.map(value => ({
               x: String(value.prot_year),
-              y: Number(value.prot),
+              y: Number(value.prot) / 100,
             })),
           };
         case 'prot_conn':
@@ -100,7 +100,7 @@ module.exports = (connectivityPersistence) => {
             key: 'prot_conn',
             data: values.map(value => ({
               x: String(value.prot_year),
-              y: Number(value.protconn),
+              y: Number(value.protconn) / 100,
             })),
           };
         default:
@@ -159,7 +159,7 @@ module.exports = (connectivityPersistence) => {
         {
           key: paConnCategoriesKeys(key),
           area: Number(totalArea) * Number(paConnDataInSE[key]) / 100,
-          percentage: Number(paConnDataInSE[key]),
+          percentage: Number(paConnDataInSE[key]) / 100,
         }
       ));
       const invalidValues = data.filter(obj => !obj.area || obj.area === 0);

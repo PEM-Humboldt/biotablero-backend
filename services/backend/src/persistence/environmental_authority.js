@@ -233,7 +233,7 @@ module.exports = (
           FROM (
             SELECT 'Feature' as type,
               row_to_json(ea2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_environmental_authorities as ea1
             INNER JOIN (
               SELECT gid as id, name as key
@@ -263,12 +263,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_cat AS key
               FROM geo_hf
@@ -277,7 +277,7 @@ module.exports = (
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_cat AS key,
                   sum(area_ha) AS area
                 FROM geo_hf
@@ -308,12 +308,12 @@ module.exports = (
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_pers AS key
               FROM geo_hf_persistence
@@ -321,7 +321,7 @@ module.exports = (
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_pers AS key,
                   sum(area_ha) AS area
                 FROM geo_hf_persistence

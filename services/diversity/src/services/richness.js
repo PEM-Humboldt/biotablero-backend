@@ -1,4 +1,4 @@
-module.exports = () => {
+module.exports = (RichnessPersistence, restAPI) => {
   const Richness = {
     /**
      * Get values for the number of species in the given area of the given group
@@ -149,6 +149,20 @@ module.exports = () => {
         max_threshold: 1,
       };
       return data;
+    },
+
+    NOSLayer: async (areaType, areaId) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessPersistence.getAreaLayer(areaGeom.features[0].geometry);
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
     },
   };
 

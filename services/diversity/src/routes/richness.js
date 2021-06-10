@@ -153,5 +153,17 @@ module.exports = (errorHandler, Richness) => {
       });
   }));
 
+  router.get('/richness/number-species/layer', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = { code: 400, message: 'areaType and areaId are required' };
+      throw error;
+    }
+    return Richness.NOSLayer(req.params.areaType, req.params.areaId)
+      .then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
+  }));
+
   return router;
 };

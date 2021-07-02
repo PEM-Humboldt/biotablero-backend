@@ -179,6 +179,34 @@ module.exports = (RichnessPersistence, restAPI) => {
         throw error;
       }
     },
+
+    /**
+     * Get the min and max value of the layer for the number of species in the given area
+     * of the given group
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @param {String} group group to select the proper layer, options are: 'total', 'endemic',
+     * 'invasive', 'threatened'.
+     *
+     * @returns {Object} Object with min and max value
+     */
+    NOSLayerThresholds: async (areaType, areaId, group) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessPersistence.getAreaLayerThresholds(
+          areaGeom.features[0].geometry,
+          rasterNOSKeys(group),
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+    },
   };
 
   return Richness;

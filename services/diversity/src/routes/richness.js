@@ -184,5 +184,38 @@ module.exports = (errorHandler, Richness) => {
       });
   }));
 
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/number-species/layer/thresholds NOSLayerThresholds
+   * @apiName NOSLayerThresholds
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Min and max value inside the layer of a specific group for richness - number of species
+   * in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} group to select the proper layer
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {String} result.min min value inside the layer
+   * @apiSuccess {Number} result.max max value inside the layer
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/layer/thresholds?areaType=ea&areaId=CARDER&group=total
+   * @apiUse NOSLayerThresholdsExample
+   */
+  router.get('/richness/number-species/layer/thresholds', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = { code: 400, message: 'areaType, areaId and group are required' };
+      throw error;
+    }
+    return Richness.NOSLayerThresholds(req.params.areaType, req.params.areaId, req.params.group)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
   return router;
 };

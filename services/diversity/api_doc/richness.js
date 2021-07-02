@@ -83,3 +83,12 @@
  * @apiSuccessExample {binary} Success-Example:
  * image/png
  */
+
+/**
+ * @apiDefine NSThresholdsExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   min: 0,
+ *   max: 2192,
+ * }
+ */

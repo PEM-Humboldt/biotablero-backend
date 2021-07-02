@@ -1,3 +1,5 @@
+const { rasterNOSKeys } = require('../util/appropriate_keys');
+
 module.exports = (RichnessPersistence, restAPI) => {
   const Richness = {
     /**
@@ -151,10 +153,23 @@ module.exports = (RichnessPersistence, restAPI) => {
       return data;
     },
 
-    NOSLayer: async (areaType, areaId) => {
+    /**
+     * Get layer for the number of species in the given area of the given group
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @param {String} group group to filter data, options are: 'total', 'endemic',
+     * 'invasive', 'threatened'.
+     *
+     * @returns {Binary} Image with the geometry
+     */
+    NOSLayer: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessPersistence.getAreaLayer(areaGeom.features[0].geometry);
+        return RichnessPersistence.getAreaLayer(
+          areaGeom.features[0].geometry,
+          rasterNOSKeys(group),
+        );
       } catch (e) {
         const error = {
           code: 500,

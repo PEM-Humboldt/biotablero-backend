@@ -1,11 +1,25 @@
 module.exports = db => ({
-  getAreaLayer: geometry => (
+  /**
+   * Find the layer for the number of species in the given area of the given group
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   * @param {String} group group to filter data, options are: 'total', 'endemic',
+   * 'invasive', 'threatened'.
+   *
+   * @returns {Binary} Image with the geometry
+   */
+  getAreaLayer: (geometry, filename) => (
     db.raw(
       `
       SELECT ST_AsPNG(
         ST_ColorMap(
           ST_Clip(
-            (Select rast FROM copy),
+            (SELECT ST_union(rast)
+              FROM geo_raster
+              WHERE filename = ?
+              AND ST_Intersects(rast, ST_GeomFromGeoJSON(?))
+            ),
             ST_GeomFromGeoJSON(?),
             TRUE
           ),
@@ -16,7 +30,7 @@ module.exports = db => ({
         )
       ) as image;
       `,
-      [geometry],
+      [filename, geometry, geometry],
     )
       .then(rast => rast.rows[0].image)
       .catch()

@@ -77,3 +77,9 @@
  *   }
  * ]
  */
+
+/**
+ * @apiDefine NOSLayerExample
+ * @apiSuccessExample {binary} Success-Example:
+ * image/png
+ */

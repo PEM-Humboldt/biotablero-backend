@@ -153,12 +153,31 @@ module.exports = (errorHandler, Richness) => {
       });
   }));
 
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/number-species/layer NOSLayer
+   * @apiName NOSLayer
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Layer of a specific group for richness - number of species in a given area. May be filtered
+   * by group: total, endemic, invasive and threatened.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} group to filter results
+   *
+   * @apiSuccess {Binary} result image with the geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/layer?areaType=ea&areaId=CARDER&group=total
+   * @apiUse NOSLayerExample
+   */
   router.get('/richness/number-species/layer', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId are required' };
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = { code: 400, message: 'areaType, areaId and group are required' };
       throw error;
     }
-    return Richness.NOSLayer(req.params.areaType, req.params.areaId)
+    return Richness.NOSLayer(req.params.areaType, req.params.areaId, req.params.group)
       .then((value) => {
         res.sendRaw(200, value, { 'Content-Type': 'image/png' });
         next();

@@ -158,7 +158,7 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
-     * @param {String} group group to filter data, options are: 'total', 'endemic',
+     * @param {String} group group to select the proper layer, options are: 'total', 'endemic',
      * 'invasive', 'threatened'.
      *
      * @returns {Binary} Image with the geometry

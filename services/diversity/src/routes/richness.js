@@ -159,12 +159,12 @@ module.exports = (errorHandler, Richness) => {
    * @apiName NOSLayer
    * @apiVersion 1.0.0
    * @apiDescription
-   * Layer of a specific group for richness - number of species in a given area. May be filtered
-   * by group: total, endemic, invasive and threatened.
+   * Layer of a specific group for richness - number of species in a given area. Parameter group
+   * may be selected from: total, endemic, invasive and threatened.
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} group to filter results
+   * @apiParam (Query params) {String} group to select the proper layer
    *
    * @apiSuccess {Binary} result image with the geometry
    *

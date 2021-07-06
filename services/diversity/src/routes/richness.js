@@ -45,8 +45,8 @@ module.exports = (errorHandler, Richness) => {
 
   /**
    * @apiGroup s_richness
-   * @api {get} /richness/number-species/thresholds NSThresholds
-   * @apiName NSThresholds
+   * @api {get} /richness/number-species/thresholds NOSThresholds
+   * @apiName NOSThresholds
    * @apiVersion 1.0.0
    * @apiDescription
    * Lowest and highest values for the number of species among national areas of the same type. Can
@@ -69,14 +69,14 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiExample {curl} Example usage:
    *  /richness/number-species/thresholds?areaType=ea&group=total
-   * @apiUse NSThresholdsExample
+   * @apiUse NOSThresholdsExample
    */
   router.get('/richness/number-species/thresholds', errorHandler((req, res, next) => {
     if (!(req.params.areaType)) {
       const error = { code: 400, message: 'areaType is required' };
       throw error;
     }
-    return Richness.getNSThresholds(req.params.areaType, req.params.group)
+    return Richness.getNOSThresholds(req.params.areaType, req.params.group)
       .then((value) => {
         res.send(value);
         next();

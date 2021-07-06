@@ -35,7 +35,7 @@
  */
 
 /**
- * @apiDefine NSThresholdsExample
+ * @apiDefine NOSThresholdsExample
  * @apiSuccessExample {json} Success-Example:
  * [
  *   {

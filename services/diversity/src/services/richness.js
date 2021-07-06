@@ -67,7 +67,7 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-    getNSThresholds: async (areaType, group = 'all') => {
+    getNOSThresholds: async (areaType, group = 'all') => {
       const data = [
         {
           id: 'total',

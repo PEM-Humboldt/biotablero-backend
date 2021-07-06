@@ -85,7 +85,7 @@
  */
 
 /**
- * @apiDefine NSThresholdsExample
+ * @apiDefine NOSLayerThresholdsExample
  * @apiSuccessExample {json} Success-Example:
  * {
  *   min: 0,

@@ -15,7 +15,8 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} [group] group to filter results
+   * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
+   * endemic, invasive and threatened.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id group id related to the results
@@ -49,10 +50,11 @@ module.exports = (errorHandler, Richness) => {
    * @apiVersion 1.0.0
    * @apiDescription
    * Lowest and highest values for the number of species among national areas of the same type. Can
-   * be filtered by group
+   * be filtered by group: total, endemic, invasive and threatened, or get all of them.
    *
    * @apiParam (Query params) {String} areaType area type
-   * @apiParam (Query params) {String} [group] group to filter results
+   * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
+   * endemic, invasive and threatened.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id group id related to the results
@@ -164,7 +166,8 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} group to select the proper layer
+   * @apiParam (Query params) {String} group group to select the proper layer. Options are:
+   * total, endemic, invasive and threatened.
    *
    * @apiSuccess {Binary} result image with the geometry
    *
@@ -195,10 +198,11 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} group to select the proper layer
+   * @apiParam (Query params) {String} group group to select the proper layer. Options are:
+   * total, endemic, invasive and threatened.
    *
    * @apiSuccess {Object} result
-   * @apiSuccess {String} result.min min value inside the layer
+   * @apiSuccess {Number} result.min min value inside the layer
    * @apiSuccess {Number} result.max max value inside the layer
    *
    * @apiExample {curl} Example usage:

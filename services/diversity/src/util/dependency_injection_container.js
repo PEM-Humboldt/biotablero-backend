@@ -3,8 +3,10 @@ const Bottlejs = require('bottlejs');
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
-// eslint-disable-next-line no-unused-vars
+const restAPI = require('./restAPI');
+
 const bookshelfModels = require('../persistence/models/setup.js');
+const RichnessPresistence = require('../persistence/richness');
 
 const RichnessService = require('../services/richness');
 
@@ -14,8 +16,13 @@ const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
+bottle.factory('restAPI', () => restAPI);
 
-bottle.factory('RichnessService', () => RichnessService());
+bottle.factory('RichnessPersistence', () => RichnessPresistence(bookshelfModels.db));
+
+bottle.factory('RichnessService', container => RichnessService(
+  container.RichnessPersistence, container.restAPI,
+));
 
 bottle.factory('routes', container => ([
   RichnessRoute(container.errorHandler, container.RichnessService),

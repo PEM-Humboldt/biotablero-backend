@@ -35,7 +35,7 @@
  */
 
 /**
- * @apiDefine NSThresholdsExample
+ * @apiDefine NOSThresholdsExample
  * @apiSuccessExample {json} Success-Example:
  * [
  *   {
@@ -76,4 +76,19 @@
  *     max_threshold: 1,
  *   }
  * ]
+ */
+
+/**
+ * @apiDefine NOSLayerExample
+ * @apiSuccessExample {binary} Success-Example:
+ * image/png
+ */
+
+/**
+ * @apiDefine NOSLayerThresholdsExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   min: 0,
+ *   max: 2192,
+ * }
  */

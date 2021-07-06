@@ -15,7 +15,8 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} [group] group to filter results
+   * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
+   * endemic, invasive and threatened.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id group id related to the results
@@ -44,15 +45,16 @@ module.exports = (errorHandler, Richness) => {
 
   /**
    * @apiGroup s_richness
-   * @api {get} /richness/number-species/thresholds NSThresholds
-   * @apiName NSThresholds
+   * @api {get} /richness/number-species/thresholds NOSThresholds
+   * @apiName NOSThresholds
    * @apiVersion 1.0.0
    * @apiDescription
    * Lowest and highest values for the number of species among national areas of the same type. Can
-   * be filtered by group
+   * be filtered by group: total, endemic, invasive and threatened, or get all of them.
    *
    * @apiParam (Query params) {String} areaType area type
-   * @apiParam (Query params) {String} [group] group to filter results
+   * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
+   * endemic, invasive and threatened.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id group id related to the results
@@ -67,14 +69,14 @@ module.exports = (errorHandler, Richness) => {
    *
    * @apiExample {curl} Example usage:
    *  /richness/number-species/thresholds?areaType=ea&group=total
-   * @apiUse NSThresholdsExample
+   * @apiUse NOSThresholdsExample
    */
   router.get('/richness/number-species/thresholds', errorHandler((req, res, next) => {
     if (!(req.params.areaType)) {
       const error = { code: 400, message: 'areaType is required' };
       throw error;
     }
-    return Richness.getNSThresholds(req.params.areaType, req.params.group)
+    return Richness.getNOSThresholds(req.params.areaType, req.params.group)
       .then((value) => {
         res.send(value);
         next();
@@ -147,6 +149,72 @@ module.exports = (errorHandler, Richness) => {
       throw error;
     }
     return Richness.getConcentration(req.params.areaType, req.params.areaId)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/number-species/layer NOSLayer
+   * @apiName NOSLayer
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Layer of a specific group for richness - number of species in a given area. Parameter group
+   * may be selected from: total, endemic, invasive and threatened.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} group group to select the proper layer. Options are:
+   * total, endemic, invasive and threatened.
+   *
+   * @apiSuccess {Binary} result image with the geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/layer?areaType=ea&areaId=CARDER&group=total
+   * @apiUse NOSLayerExample
+   */
+  router.get('/richness/number-species/layer', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = { code: 400, message: 'areaType, areaId and group are required' };
+      throw error;
+    }
+    return Richness.NOSLayer(req.params.areaType, req.params.areaId, req.params.group)
+      .then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/number-species/layer/thresholds NOSLayerThresholds
+   * @apiName NOSLayerThresholds
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Min and max value inside the layer of a specific group for richness - number of species
+   * in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} group group to select the proper layer. Options are:
+   * total, endemic, invasive and threatened.
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {Number} result.min min value inside the layer
+   * @apiSuccess {Number} result.max max value inside the layer
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/layer/thresholds?areaType=ea&areaId=CARDER&group=total
+   * @apiUse NOSLayerThresholdsExample
+   */
+  router.get('/richness/number-species/layer/thresholds', errorHandler((req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = { code: 400, message: 'areaType, areaId and group are required' };
+      throw error;
+    }
+    return Richness.NOSLayerThresholds(req.params.areaType, req.params.areaId, req.params.group)
       .then((value) => {
         res.send(value);
         next();

@@ -12,37 +12,41 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-    getNumberSpecies: async (areaType, areaId, group = 'all') => {
-      const data = [
-        {
-          id: 'total',
-          inferred: 40,
-          observed: 4,
-          region_observed: 110,
-          region_inferred: 130,
-        },
-        {
-          id: 'endemic',
-          inferred: 20,
-          observed: 25,
-          region_observed: 120,
-          region_inferred: 100,
-        },
-        {
-          id: 'invasive',
-          inferred: 20,
-          observed: 10,
-          region_observed: 90,
-          region_inferred: 80,
-        },
-        {
-          id: 'threatened',
-          inferred: 15,
-          observed: 20,
-          region_observed: 90,
-          region_inferred: 100,
-        },
-      ];
+    getNumberOfSpecies: async (areaType, areaId, group = 'all') => {
+      const values = await RichnessPersistence.findNumberOfSpecies(areaType, areaId, group);
+      if (values.length === 0) {
+        throw new Error('There\'s not any values of number of species');
+      }
+      const data = [];
+      const total = {
+        id: 'total',
+        inferred: values[0].rn_total_inf,
+        observed: values[0].rn_total_obs,
+        region_observed: values[0].rnr_total_obs,
+        region_inferred: values[0].rnr_total_inf,
+      };
+      const endemic = {
+        id: 'endemic',
+        inferred: values[0].rn_end_inf,
+        observed: values[0].rn_end_obs,
+        region_observed: values[0].rnr_end_obs,
+        region_inferred: values[0].rnr_end_inf,
+      };
+      const invasive = {
+        id: 'invasive',
+        inferred: values[0].rn_inv_inf,
+        observed: values[0].rn_inv_obs,
+        region_observed: values[0].rnr_inv_obs,
+        region_inferred: values[0].rnr_inv_inf,
+      };
+      const threatened = {
+        id: 'threatened',
+        inferred: values[0].rn_thr_inf,
+        observed: values[0].rn_thr_obs,
+        region_observed: values[0].rnr_thr_obs,
+        region_inferred: values[0].rnr_thr_inf,
+      };
+      data.push(total, endemic, invasive, threatened);
       switch (group) {
         case 'total':
           return [data[0]];

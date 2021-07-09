@@ -107,7 +107,9 @@ module.exports = (
      */
     findPAInEA: async (eaId, year = 2012) => (
       db('colombia_wetland_details as cwd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected',
+        )
         .where({ 'cwd.id_ea': eaId, 'cwd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -143,7 +145,9 @@ module.exports = (
         .where({ label: categoryName })
         .select('category_short as column');
       return db('colombia_wetland_details as cwd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected',
+        )
         .where('cwd.year_cover', year)
         .andWhere(paColumn[0].column, '>', 0)
         .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
@@ -174,7 +178,9 @@ module.exports = (
      */
     findPAInState: async (stateId, year = 2012) => (
       db('colombia_wetland_details as cwd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected',
+        )
         .where({ 'cwd.id_state': stateId, 'cwd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -204,7 +210,9 @@ module.exports = (
      */
     findPAInSubzone: async (subzoneId, year = 2012) => (
       db('colombia_wetland_details as cwd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected',
+        )
         .where({ 'cwd.id_subzone': subzoneId, 'cwd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -218,7 +226,9 @@ module.exports = (
      */
     findProtectedAreas: async (year = 2012) => (
       db('colombia_wetland_details as cwd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'cwd.binary_protected', 'gbpa.binary_protected',
+        )
         .where({ 'cwd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')

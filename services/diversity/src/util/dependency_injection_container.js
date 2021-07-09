@@ -18,7 +18,9 @@ bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 bottle.factory('restAPI', () => restAPI);
 
-bottle.factory('RichnessPersistence', () => RichnessPresistence(bookshelfModels.db, bookshelfModels.models, logger));
+bottle.factory('RichnessPersistence', () => RichnessPresistence(
+  bookshelfModels.db, bookshelfModels.models, logger,
+));
 
 bottle.factory('RichnessService', container => RichnessService(
   container.RichnessPersistence, container.restAPI,

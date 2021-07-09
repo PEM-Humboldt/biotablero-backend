@@ -149,7 +149,8 @@ module.exports = (connectivityPersistence) => {
       const paConnDataInSE = rawData && rawData[0] ? rawData[0] : null;
       if (!paConnDataInSE) {
         throw new Error(
-          `Data for Current PA Connectivity In ${strategicEcosystem} doesn't exists in the selected area id and area type`,
+          `Data for Current PA Connectivity In ${strategicEcosystem}
+           doesn't exists in the selected area id and area type`,
         );
       }
 

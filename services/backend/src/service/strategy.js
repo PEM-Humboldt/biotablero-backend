@@ -33,7 +33,8 @@ module.exports = (strategyPersistence, logger) => ({
     });
 
     if (geometry.features === null) {
-      logger.error(`Combination of biome: ${biomeId}, sub-basin: ${subzoneId} and ea: ${envAuthorityId} without strategies`);
+      logger.error(`Combination of biome: ${biomeId},
+      sub-basin: ${subzoneId} and ea: ${envAuthorityId} without strategies`);
       geometry = null;
     }
 

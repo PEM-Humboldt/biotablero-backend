@@ -108,11 +108,17 @@ module.exports = (
      */
     findAreaByPA: async (envAuthorityId, year = 2012) => (
       db('colombia_coverage_details as ccd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'ccd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'ccd.binary_protected', 'gbpa.binary_protected',
+        )
         .where({ 'ccd.id_ea': envAuthorityId, 'ccd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .orderBy('gbpa.binary_protected', 'desc')
-        .select(db.raw('coalesce(SUM(ccd.area_ha), 0) as area'), 'gbpa.label as type', 'gbpa.binary_protected as bp')
+        .select(
+          db.raw('coalesce(SUM(ccd.area_ha), 0) as area'),
+          'gbpa.label as type',
+          'gbpa.binary_protected as bp',
+        )
     ),
 
     /**

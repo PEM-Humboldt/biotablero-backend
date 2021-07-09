@@ -624,13 +624,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/86/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/states/:state_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
+  router.get('/states/:state_id/ecoChange/layers/lp/period/:period/categories/', errorHandler(
+    (req, res, next) => (
+      stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
+        .then((values) => {
+          res.send(values);
+          next();
+        })
+    ),
+  ));
 
   return router;
 };

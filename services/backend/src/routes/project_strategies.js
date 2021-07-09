@@ -107,13 +107,15 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiUse createStrategyExampleUsage
    * @apiUse createStrategyExampleResponse
    */
-  router.post('/companies/:id_company/projects/:id_project/strategies', errorHandler((req, res, next) => (
-    projectStrategyService.createStrategy(req.params.id_project, req.body)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
+  router.post('/companies/:id_company/projects/:id_project/strategies', errorHandler(
+    (req, res, next) => (
+      projectStrategyService.createStrategy(req.params.id_project, req.body)
+        .then((result) => {
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup comp_companiesProjectsStrategies
@@ -153,15 +155,17 @@ module.exports = (errorHandler, projectStrategyService) => {
    *  /companies/1/projects/1/strategies
    * @apiUse listStrategiesExample
    */
-  router.get('/companies/:id_company/projects/:id_project/strategies', errorHandler((req, res, next) => (
+  router.get('/companies/:id_company/projects/:id_project/strategies', errorHandler(
+    (req, res, next) => (
     // TODO: when authorization is available get user id from header
     // TODO: Authentication should verify user is from the given company
-    projectStrategyService.listStrategies(1, req.params.id_project)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
+      projectStrategyService.listStrategies(1, req.params.id_project)
+        .then((result) => {
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup comp_companiesProjectsStrategies
@@ -181,14 +185,16 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiExample {bash} Example usage:
    *  /companies/1/projects/1/strategies/download
    */
-  router.get('/companies/:id_company/projects/:id_project/strategies/download', errorHandler((req, res, next) => (
-    projectStrategyService.getSelectedStrategiesGeoJson(req.params.id_project)
-      .then((result) => {
-        res.header('Content-Disposition', 'attachment; filename=strategies.geojson');
-        res.send(result);
-        next();
-      })
-  )));
+  router.get('/companies/:id_company/projects/:id_project/strategies/download', errorHandler(
+    (req, res, next) => (
+      projectStrategyService.getSelectedStrategiesGeoJson(req.params.id_project)
+        .then((result) => {
+          res.header('Content-Disposition', 'attachment; filename=strategies.geojson');
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   return router;
 };

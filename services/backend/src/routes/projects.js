@@ -363,13 +363,15 @@ module.exports = (errorHandler, projectService) => {
    * @apiUse addBiomesProjectExampleUsage
    * @apiUse addBiomesProjectExampleResponse
    */
-  router.post('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
-    projectService.addBiomes(req.params.id_project, req.body)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
+  router.post('/companies/:id_company/projects/:id_project/biomes', errorHandler(
+    (req, res, next) => (
+      projectService.addBiomes(req.params.id_project, req.body)
+        .then((result) => {
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup comp_companiesProjects
@@ -397,13 +399,15 @@ module.exports = (errorHandler, projectService) => {
    *  /companies/1/projects/1/decisionTree
    * @apiUse impactedBiomesDecisionTreeExample
    */
-  router.get('/companies/:id_company/projects/:id_project/decisionTree', errorHandler((req, res, next) => (
-    projectService.getDecisionTree(req.params.id_project)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
+  router.get('/companies/:id_company/projects/:id_project/decisionTree', errorHandler(
+    (req, res, next) => (
+      projectService.getDecisionTree(req.params.id_project)
+        .then((result) => {
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup comp_companiesProjects
@@ -437,13 +441,15 @@ module.exports = (errorHandler, projectService) => {
    *  /companies/1/projects/1/biomes
    * @apiUse getImpactedBiomesExample
    */
-  router.get('/companies/:id_company/projects/:id_project/biomes', errorHandler((req, res, next) => (
-    projectService.getImpactedBiomes(req.params.id_project)
-      .then((result) => {
-        res.send(result);
-        next();
-      })
-  )));
+  router.get('/companies/:id_company/projects/:id_project/biomes', errorHandler(
+    (req, res, next) => (
+      projectService.getImpactedBiomes(req.params.id_project)
+        .then((result) => {
+          res.send(result);
+          next();
+        })
+    ),
+  ));
 
   return router;
 };

@@ -8,4 +8,14 @@ module.exports = {
       default: return val;
     }
   },
+
+  areaTypeKeys: (val) => {
+    switch (val) {
+      case 'basinZones': return 'basin_zones';
+      case 'ea': return 'environmental_authorities';
+      case 'basinSubzones': return 'basin_subzones';
+      default: return val;
+    }
+  },
+
 };

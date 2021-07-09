@@ -5,8 +5,8 @@ const logger = require('./logger');
 
 const restAPI = require('./restAPI');
 
-const bookshelfModels = require('../persistence/models/setup.js');
-const RichnessPresistence = require('../persistence/richness');
+const bookshelfModels = require('../persistence/models/setup');
+const RichnessPresistence = require('../persistence/richness_nos');
 
 const RichnessService = require('../services/richness');
 
@@ -18,7 +18,7 @@ bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', container => ErrorHandler(container.logger));
 bottle.factory('restAPI', () => restAPI);
 
-bottle.factory('RichnessPersistence', () => RichnessPresistence(bookshelfModels.db));
+bottle.factory('RichnessPersistence', () => RichnessPresistence(bookshelfModels.db, bookshelfModels.models, logger));
 
 bottle.factory('RichnessService', container => RichnessService(
   container.RichnessPersistence, container.restAPI,

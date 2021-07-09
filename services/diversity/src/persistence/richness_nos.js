@@ -4,7 +4,6 @@ module.exports = (
   db,
   {
     richnessNos,
-    richnessNosRegions,
   },
   logger,
 ) => ({
@@ -86,19 +85,16 @@ module.exports = (
   ),
 
   /**
-     * Get values for the number of species in the given area of the given group
+     * Find the values for the number of species in the given area
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
-     * @param {String} group group to filter data (default to all), options are: 'all', 'total',
-     * 'endemic', 'invasive', 'threatened'.
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
   findNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
-      // .left join richness_nos_regions rnr on rn.id_region = rnr.id_region
         .select(
           'rn.total_inf as rn_total_inf',
           'rn.total_obs as rn_total_obs',
@@ -119,6 +115,47 @@ module.exports = (
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+     * Get the thresholds for the number of species in a given area type
+     *
+     * @param {String} areaType area type.
+     *
+     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     */
+  getNOSThresholds: async (areaType) => {
+    try {
+      return richnessNos.query()
+        .where({ geofence_type: areaTypeKeys(areaType) })
+        .max(
+          {
+            max_total_inf: 'total_inf',
+            max_total_obs: 'total_obs',
+            max_end_inf: 'end_inf',
+            max_end_obs: 'end_obs',
+            max_inv_inf: 'inv_inf',
+            max_inv_obs: 'inv_obs',
+            max_thr_inf: 'thr_inf',
+            max_thr_obs: 'thr_obs',
+          },
+        )
+        .min(
+          {
+            min_total_inf: 'total_inf',
+            min_total_obs: 'total_obs',
+            min_end_inf: 'end_inf',
+            min_end_obs: 'end_obs',
+            min_inv_inf: 'inv_inf',
+            min_inv_obs: 'inv_obs',
+            min_thr_inf: 'thr_inf',
+            min_thr_obs: 'thr_obs',
+          },
+        );
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');

@@ -65,7 +65,9 @@ module.exports = (db, { selectedStrategies }) => ({
             INNER JOIN geo_basin_zones as gbz ON gbz.id_zone = gbs.id_zone
             INNER JOIN geo_basin_areas as gba ON gba.id_basin = gbs.id_basin
             INNER JOIN strategies as s ON ss.id_strategy = s.id_strategy
-            INNER JOIN geo_compensation_strategies_2018 as gcs ON ss.id_biome = gcs.id_biome AND ss.id_ea = gcs.id_ea AND ss.id_subzone = gcs.id_subzone AND ss.id_strategy = gcs.id_strategy
+            INNER JOIN geo_compensation_strategies_2018 as gcs ON ss.id_biome = gcs.id_biome
+            AND ss.id_ea = gcs.id_ea
+            AND ss.id_subzone = gcs.id_subzone AND ss.id_strategy = gcs.id_strategy
           ) as str2 ON str1.gid = str2.gid
           where str2.project_id = ?
         ) as f

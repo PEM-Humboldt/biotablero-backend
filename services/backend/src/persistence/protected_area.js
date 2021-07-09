@@ -89,7 +89,9 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
       return db('colombia_coverage_details as ccd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'ccd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa', 'ccd.binary_protected', 'gbpa.binary_protected',
+        )
         .select(db.raw('coalesce(SUM(ccd.area_ha), 0) as area'), 'gbpa.label')
         .where('year_cover', year)
         .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))

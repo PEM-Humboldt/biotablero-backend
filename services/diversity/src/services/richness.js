@@ -72,36 +72,40 @@ module.exports = (RichnessPersistence, restAPI) => {
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
     getNOSThresholds: async (areaType, group = 'all') => {
-      const data = [
-        {
-          id: 'total',
-          min_inferred: 10,
-          min_observed: 4,
-          max_inferred: 90,
-          max_observed: 85,
-        },
-        {
-          id: 'endemic',
-          min_inferred: 2,
-          min_observed: 4,
-          max_inferred: 75,
-          max_observed: 80,
-        },
-        {
-          id: 'invasive',
-          min_inferred: 3,
-          min_observed: 1,
-          max_inferred: 60,
-          max_observed: 65,
-        },
-        {
-          id: 'threatened',
-          min_inferred: 3,
-          min_observed: 5,
-          max_inferred: 50,
-          max_observed: 60,
-        },
-      ];
+      const values = await RichnessPersistence.getNOSThresholds(areaType);
+      if (values.length === 0) {
+        throw new Error('There\'s not any thresholds values of species');
+      }
+      const data = [];
+      const total = {
+        id: 'total',
+        min_inferred: values[0].min_total_inf,
+        min_observed: values[0].min_total_obs,
+        max_inferred: values[0].max_total_inf,
+        max_observed: values[0].max_total_obs,
+      };
+      const endemic = {
+        id: 'endemic',
+        min_inferred: values[0].min_end_inf,
+        min_observed: values[0].min_end_obs,
+        max_inferred: values[0].max_end_inf,
+        max_observed: values[0].max_end_obs,
+      };
+      const invasive = {
+        id: 'invasive',
+        min_inferred: values[0].min_inv_inf,
+        min_observed: values[0].min_inv_obs,
+        max_inferred: values[0].max_inv_inf,
+        max_observed: values[0].max_inv_obs,
+      };
+      const threatened = {
+        id: 'threatened',
+        min_inferred: values[0].min_thr_inf,
+        min_observed: values[0].min_thr_obs,
+        max_inferred: values[0].max_thr_inf,
+        max_observed: values[0].max_thr_obs,
+      };
+      data.push(total, endemic, invasive, threatened);
       switch (group) {
         case 'total':
           return [data[0]];

@@ -36,7 +36,7 @@ module.exports = (errorHandler, Richness) => {
       const error = { code: 400, message: 'areaType and areaId are required' };
       throw error;
     }
-    return Richness.getNumberSpecies(req.params.areaType, req.params.areaId, req.params.group)
+    return Richness.getNumberOfSpecies(req.params.areaType, req.params.areaId, req.params.group)
       .then((value) => {
         res.send(value);
         next();

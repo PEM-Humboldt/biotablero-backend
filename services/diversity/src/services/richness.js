@@ -47,7 +47,7 @@ module.exports = (RichnessPersistence, restAPI) => {
       }
 
       if (!result) {
-        throw new Error('There\'s not any values of number of species thresholds');
+        throw new Error('There\'s not any values of number of species');
       }
 
       return result;
@@ -97,7 +97,7 @@ module.exports = (RichnessPersistence, restAPI) => {
       }
 
       if (!result) {
-        throw new Error('There\'s not any values of number of species');
+        throw new Error('There\'s not any values of number of species thresholds');
       }
 
       return result;

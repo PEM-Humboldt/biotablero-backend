@@ -708,7 +708,6 @@ module.exports = (
         properties: {
           AREA: 180336000000,
           IDCAR: 'CORALINA',
-          // eslint-disable-next-line max-len
           NOMCAR: 'Corporacion para el Desarrollo Sostenible del Archipielago de San Andres, Providencia y Santa Catalina',
         },
       },

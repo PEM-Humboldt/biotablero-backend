@@ -85,33 +85,20 @@ module.exports = (
   ),
 
   /**
-     * Find the values for the number of species in the given area
+     * Find the values for the total number of species in the given area
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
-     *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     * @returns {Object[]} Number of total inferred and observed species.
      */
-  findNumberOfSpecies: async (areaType, areaId) => {
+  findTotalNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
         .select(
-          'rn.total_inf as rn_total_inf',
-          'rn.total_obs as rn_total_obs',
-          'rnr.total_obs as rnr_total_obs',
-          'rnr.total_inf as rnr_total_inf',
-          'rn.end_inf as rn_end_inf',
-          'rn.end_obs as rn_end_obs',
-          'rnr.end_obs as rnr_end_obs',
-          'rnr.end_inf as rnr_end_inf',
-          'rn.inv_inf as rn_inv_inf',
-          'rn.inv_obs as rn_inv_obs',
-          'rnr.inv_obs as rnr_inv_obs',
-          'rnr.inv_inf as rnr_inv_inf',
-          'rn.thr_inf as rn_thr_inf',
-          'rn.thr_obs as rn_thr_obs',
-          'rnr.thr_obs as rnr_thr_obs',
-          'rnr.thr_inf as rnr_thr_inf',
+          'rn.total_inf as inferred',
+          'rn.total_obs as observed',
+          'rnr.total_obs as region_observed',
+          'rnr.total_inf as region_inferred',
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
@@ -122,38 +109,26 @@ module.exports = (
   },
 
   /**
-     * Get the thresholds for the number of species in a given area type
+     * Get the thresholds for the total number of species in a given area type
      *
      * @param {String} areaType area type.
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-  getNOSThresholds: async (areaType) => {
+  findThresholdsTotalNumberOfSpecies: async (areaType) => {
     try {
       return richnessNos.query()
         .where({ geofence_type: areaTypeKeys(areaType) })
-        .max(
-          {
-            max_total_inf: 'total_inf',
-            max_total_obs: 'total_obs',
-            max_end_inf: 'end_inf',
-            max_end_obs: 'end_obs',
-            max_inv_inf: 'inv_inf',
-            max_inv_obs: 'inv_obs',
-            max_thr_inf: 'thr_inf',
-            max_thr_obs: 'thr_obs',
-          },
-        )
         .min(
           {
-            min_total_inf: 'total_inf',
-            min_total_obs: 'total_obs',
-            min_end_inf: 'end_inf',
-            min_end_obs: 'end_obs',
-            min_inv_inf: 'inv_inf',
-            min_inv_obs: 'inv_obs',
-            min_thr_inf: 'thr_inf',
-            min_thr_obs: 'thr_obs',
+            min_inferred: 'total_inf',
+            min_observed: 'total_obs',
+          },
+        )
+        .max(
+          {
+            max_inferred: 'total_inf',
+            max_observed: 'total_obs',
           },
         );
     } catch (e) {
@@ -162,4 +137,163 @@ module.exports = (
     }
   },
 
+  /**
+     * Find the values for the number of endemic species in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @returns {Object[]} Number of inferred and observed endemic species.
+     */
+  findEndemicNumberOfSpecies: async (areaType, areaId) => {
+    try {
+      return db('richness_nos as rn')
+        .select(
+          'rn.end_inf as inferred',
+          'rn.end_obs as observed',
+          'rnr.end_obs as region_observed',
+          'rnr.end_inf as region_inferred',
+        )
+        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+
+  /**
+     * Get the thresholds for the number of endemic species in a given area type
+     *
+     * @param {String} areaType area type.
+     *
+     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     */
+  findThresholdsEndemicNumberOfSpecies: async (areaType) => {
+    try {
+      return richnessNos.query()
+        .where({ geofence_type: areaTypeKeys(areaType) })
+        .min(
+          {
+            min_inferred: 'end_inf',
+            min_observed: 'end_obs',
+          },
+        )
+        .max(
+          {
+            max_inferred: 'end_inf',
+            max_observed: 'end_obs',
+          },
+        );
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+     * Find the values for the number of invasive species in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @returns {Object[]} Number of inferred and observed invasive species.
+     */
+  findInvasiveNumberOfSpecies: async (areaType, areaId) => {
+    try {
+      return db('richness_nos as rn')
+        .select(
+          'rn.inv_inf as inferred',
+          'rn.inv_obs as observed',
+          'rnr.inv_obs as region_observed',
+          'rnr.inv_inf as region_inferred',
+        )
+        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+     * Get the thresholds for the number of invasive species in a given area type
+     *
+     * @param {String} areaType area type.
+     *
+     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     */
+  findThresholdsInvasiveNumberOfSpecies: async (areaType) => {
+    try {
+      return richnessNos.query()
+        .where({ geofence_type: areaTypeKeys(areaType) })
+        .min(
+          {
+            min_inferred: 'inv_inf',
+            min_observed: 'inv_obs',
+          },
+        )
+        .max(
+          {
+            max_inferred: 'inv_inf',
+            max_observed: 'inv_obs',
+          },
+        );
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+     * Find the values for the number of threatened species in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @returns {Object[]} Number of inferred and observed threatened species.
+     */
+  findThreatenedNumberOfSpecies: async (areaType, areaId) => {
+    try {
+      return db('richness_nos as rn')
+        .select(
+          'rn.thr_inf as inferred',
+          'rn.thr_obs as observed',
+          'rnr.thr_obs as region_observed',
+          'rnr.thr_inf as region_inferred',
+        )
+        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
+
+  /**
+     * Get the thresholds for the number of threatened species in a given area type
+     *
+     * @param {String} areaType area type.
+     *
+     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     */
+  findThresholdsThreatenedNumberOfSpecies: async (areaType) => {
+    try {
+      return richnessNos.query()
+        .where({ geofence_type: areaTypeKeys(areaType) })
+        .min(
+          {
+            min_inferred: 'thr_inf',
+            min_observed: 'thr_obs',
+          },
+        )
+        .max(
+          {
+            max_inferred: 'thr_inf',
+            max_observed: 'thr_obs',
+          },
+        );
+    } catch (e) {
+      logger.error(e.stack || e.Error || e.message || e);
+      throw new Error('Error getting data');
+    }
+  },
 });

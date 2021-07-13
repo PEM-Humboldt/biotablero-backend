@@ -101,7 +101,6 @@ module.exports = (RichnessPersistence, restAPI) => {
       }
 
       return result;
-
     },
 
     /**

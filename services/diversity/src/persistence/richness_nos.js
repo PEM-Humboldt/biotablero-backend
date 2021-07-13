@@ -95,10 +95,10 @@ module.exports = (
     try {
       return db('richness_nos as rn')
         .select(
-          'rn.total_inf as inferred',
-          'rn.total_obs as observed',
-          'rnr.total_obs as region_observed',
-          'rnr.total_inf as region_inferred',
+          db.raw('coalesce(rn.total_inf, 0) as inferred'),
+          db.raw('coalesce(rn.total_obs, 0) as observed'),
+          db.raw('coalesce(rnr.total_obs, 0) as region_observed'),
+          db.raw('coalesce(rnr.total_inf, 0) as region_inferred'),
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
@@ -148,10 +148,10 @@ module.exports = (
     try {
       return db('richness_nos as rn')
         .select(
-          'rn.end_inf as inferred',
-          'rn.end_obs as observed',
-          'rnr.end_obs as region_observed',
-          'rnr.end_inf as region_inferred',
+          db.raw('coalesce(rn.end_inf, 0) as inferred'),
+          db.raw('coalesce(rn.end_obs, 0) as observed'),
+          db.raw('coalesce(rnr.end_obs, 0) as region_observed'),
+          db.raw('coalesce(rnr.end_inf, 0) as region_inferred'),
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
@@ -202,10 +202,10 @@ module.exports = (
     try {
       return db('richness_nos as rn')
         .select(
-          'rn.inv_inf as inferred',
-          'rn.inv_obs as observed',
-          'rnr.inv_obs as region_observed',
-          'rnr.inv_inf as region_inferred',
+          db.raw('coalesce(rn.inv_inf, 0) as inferred'),
+          db.raw('coalesce(rn.inv_obs, 0) as observed'),
+          db.raw('coalesce(rnr.inv_obs, 0) as region_observed'),
+          db.raw('coalesce(rnr.inv_inf, 0) as region_inferred'),
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
@@ -255,10 +255,10 @@ module.exports = (
     try {
       return db('richness_nos as rn')
         .select(
-          'rn.thr_inf as inferred',
-          'rn.thr_obs as observed',
-          'rnr.thr_obs as region_observed',
-          'rnr.thr_inf as region_inferred',
+          db.raw('coalesce(rn.thr_inf, 0) as inferred'),
+          db.raw('coalesce(rn.thr_obs, 0) as observed'),
+          db.raw('coalesce(rnr.thr_obs, 0) as region_observed'),
+          db.raw('coalesce(rnr.thr_inf, 0) as region_inferred'),
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });

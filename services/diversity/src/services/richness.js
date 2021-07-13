@@ -13,53 +13,44 @@ module.exports = (RichnessPersistence, restAPI) => {
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
     getNumberOfSpecies: async (areaType, areaId, group = 'all') => {
-      const values = await RichnessPersistence.findNumberOfSpecies(areaType, areaId, group);
-      if (values.length === 0) {
-        throw new Error('There\'s not any values of number of species');
-      }
-      const data = [];
-      const total = {
-        id: 'total',
-        inferred: values[0].rn_total_inf,
-        observed: values[0].rn_total_obs,
-        region_observed: values[0].rnr_total_obs,
-        region_inferred: values[0].rnr_total_inf,
-      };
-      const endemic = {
-        id: 'endemic',
-        inferred: values[0].rn_end_inf,
-        observed: values[0].rn_end_obs,
-        region_observed: values[0].rnr_end_obs,
-        region_inferred: values[0].rnr_end_inf,
-      };
-      const invasive = {
-        id: 'invasive',
-        inferred: values[0].rn_inv_inf,
-        observed: values[0].rn_inv_obs,
-        region_observed: values[0].rnr_inv_obs,
-        region_inferred: values[0].rnr_inv_inf,
-      };
-      const threatened = {
-        id: 'threatened',
-        inferred: values[0].rn_thr_inf,
-        observed: values[0].rn_thr_obs,
-        region_observed: values[0].rnr_thr_obs,
-        region_inferred: values[0].rnr_thr_inf,
-      };
-      data.push(total, endemic, invasive, threatened);
+      let values;
+      let result = [];
+      const lab = ['total', 'endemic', 'invasive', 'threatened'];
       switch (group) {
         case 'total':
-          return [data[0]];
+          values = await RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'endemic':
-          return [data[1]];
+          values = await RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'invasive':
-          return [data[2]];
+          values = await RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'threatened':
-          return [data[3]];
+          values = await RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'all':
+          values = await Promise.all([
+            RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId),
+          ]);
+          result = values.map((item, i) => ({ id: lab[i], ...item[0] }));
+          break;
         default:
-          return data;
+          return result;
       }
+
+      if (!result) {
+        throw new Error('There\'s not any values of number of species thresholds');
+      }
+
+      return result;
     },
 
     /**
@@ -72,53 +63,45 @@ module.exports = (RichnessPersistence, restAPI) => {
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
     getNOSThresholds: async (areaType, group = 'all') => {
-      const values = await RichnessPersistence.getNOSThresholds(areaType);
-      if (values.length === 0) {
-        throw new Error('There\'s not any thresholds values of species');
-      }
-      const data = [];
-      const total = {
-        id: 'total',
-        min_inferred: values[0].min_total_inf,
-        min_observed: values[0].min_total_obs,
-        max_inferred: values[0].max_total_inf,
-        max_observed: values[0].max_total_obs,
-      };
-      const endemic = {
-        id: 'endemic',
-        min_inferred: values[0].min_end_inf,
-        min_observed: values[0].min_end_obs,
-        max_inferred: values[0].max_end_inf,
-        max_observed: values[0].max_end_obs,
-      };
-      const invasive = {
-        id: 'invasive',
-        min_inferred: values[0].min_inv_inf,
-        min_observed: values[0].min_inv_obs,
-        max_inferred: values[0].max_inv_inf,
-        max_observed: values[0].max_inv_obs,
-      };
-      const threatened = {
-        id: 'threatened',
-        min_inferred: values[0].min_thr_inf,
-        min_observed: values[0].min_thr_obs,
-        max_inferred: values[0].max_thr_inf,
-        max_observed: values[0].max_thr_obs,
-      };
-      data.push(total, endemic, invasive, threatened);
+      let values;
+      let result = [];
+      const lab = ['total', 'endemic', 'invasive', 'threatened'];
       switch (group) {
         case 'total':
-          return [data[0]];
+          values = await RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'endemic':
-          return [data[1]];
+          values = await RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'invasive':
-          return [data[2]];
+          values = await RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'threatened':
-          return [data[3]];
+          values = await RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType);
+          result.push({ id: group, ...values[0] });
+          break;
         case 'all':
+          values = await Promise.all([
+            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType),
+            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType),
+            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType),
+            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType),
+          ]);
+          result = values.map((item, i) => ({ id: lab[i], ...item[0] }));
+          break;
         default:
-          return data;
+          return result;
       }
+
+      if (!result) {
+        throw new Error('There\'s not any values of number of species');
+      }
+
+      return result;
+
     },
 
     /**

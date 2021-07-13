@@ -8,12 +8,13 @@ module.exports = (
   logger,
 ) => ({
   /**
-     * Find the values for the total number of species in the given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @returns {Object[]} Number of total inferred and observed species.
-     */
+   * Find the values for the total number of species in the given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Number of total inferred and observed species.
+   */
   findTotalNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
@@ -32,12 +33,12 @@ module.exports = (
   },
 
   /**
-     * Get the thresholds for the total number of species in a given area type
-     *
-     * @param {String} areaType area type.
-     *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
-     */
+   * Get the thresholds for the total number of species in a given area type
+   *
+   * @param {String} areaType area type.
+   *
+   * @returns {Object[]} Number of inferred and observed species for the desired group.
+   */
   findThresholdsTotalNumberOfSpecies: async (areaType) => {
     try {
       return richnessNos.query()
@@ -61,12 +62,13 @@ module.exports = (
   },
 
   /**
-     * Find the values for the number of endemic species in the given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @returns {Object[]} Number of inferred and observed endemic species.
-     */
+   * Find the values for the number of endemic species in the given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Number of inferred and observed endemic species.
+   */
   findEndemicNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
@@ -84,14 +86,13 @@ module.exports = (
     }
   },
 
-
   /**
-     * Get the thresholds for the number of endemic species in a given area type
-     *
-     * @param {String} areaType area type.
-     *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
-     */
+   * Get the thresholds for the number of endemic species in a given area type
+   *
+   * @param {String} areaType area type.
+   *
+   * @returns {Object[]} Number of inferred and observed species for the desired group.
+   */
   findThresholdsEndemicNumberOfSpecies: async (areaType) => {
     try {
       return richnessNos.query()
@@ -115,12 +116,13 @@ module.exports = (
   },
 
   /**
-     * Find the values for the number of invasive species in the given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @returns {Object[]} Number of inferred and observed invasive species.
-     */
+   * Find the values for the number of invasive species in the given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Number of inferred and observed invasive species.
+   */
   findInvasiveNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
@@ -139,12 +141,12 @@ module.exports = (
   },
 
   /**
-     * Get the thresholds for the number of invasive species in a given area type
-     *
-     * @param {String} areaType area type.
-     *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
-     */
+   * Get the thresholds for the number of invasive species in a given area type
+   *
+   * @param {String} areaType area type.
+   *
+   * @returns {Object[]} Number of inferred and observed species for the desired group.
+   */
   findThresholdsInvasiveNumberOfSpecies: async (areaType) => {
     try {
       return richnessNos.query()
@@ -168,12 +170,13 @@ module.exports = (
   },
 
   /**
-     * Find the values for the number of threatened species in the given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @returns {Object[]} Number of inferred and observed threatened species.
-     */
+   * Find the values for the number of threatened species in the given area
+   *
+   * @param {String} areaType area type
+   * @param {String | Number} areaId area id
+   *
+   * @returns {Object[]} Number of inferred and observed threatened species.
+   */
   findThreatenedNumberOfSpecies: async (areaType, areaId) => {
     try {
       return db('richness_nos as rn')
@@ -192,12 +195,12 @@ module.exports = (
   },
 
   /**
-     * Get the thresholds for the number of threatened species in a given area type
-     *
-     * @param {String} areaType area type.
-     *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
-     */
+   * Get the thresholds for the number of threatened species in a given area type
+   *
+   * @param {String} areaType area type.
+   *
+   * @returns {Object[]} Number of inferred and observed species for the desired group.
+   */
   findThresholdsThreatenedNumberOfSpecies: async (areaType) => {
     try {
       return richnessNos.query()
@@ -219,6 +222,7 @@ module.exports = (
       throw new Error('Error getting data');
     }
   },
+
   /**
    * Find the layer for the number of species in the given area of the given group
    *

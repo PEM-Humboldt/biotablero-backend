@@ -16,10 +16,9 @@ module.exports = (RichnessPersistence, restAPI) => {
       const promises = [];
       let result;
       switch (group) {
-        case 'total': {
+        case 'total':
           promises.unshift(RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId));
           break;
-        }
         case 'endemic':
           promises.unshift(RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId));
           break;
@@ -58,52 +57,65 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
-     * Get thresholds for the number of species for the given area type in the given group
+     * Get thresholds for the number of species for the given area type and area id
+     * in the given group
      *
      * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-    getNOSThresholds: async (areaType, group = 'all') => {
-      let values;
-      let result = [];
-      const lab = ['total', 'endemic', 'invasive', 'threatened'];
+    getNOSThresholds: async (areaType, areaId, group = 'all') => {
+      const promises = [];
+      let result;
       switch (group) {
         case 'total':
-          values = await RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(
+            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
+          );
           break;
         case 'endemic':
-          values = await RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(
+            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
+          );
           break;
         case 'invasive':
-          values = await RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(
+            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
+          );
           break;
         case 'threatened':
-          values = await RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(
+            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+          );
           break;
-        case 'all':
-          values = await Promise.all([
-            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType),
-            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType),
-            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType),
-            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType),
-          ]);
-          result = values.map((item, i) => ({ id: lab[i], ...item[0] }));
+        case 'all': {
+          promises.unshift(
+            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+          );
           break;
+        }
         default:
-          return result;
+          return [];
       }
 
-      if (!result) {
-        throw new Error('There\'s not any values of number of species thresholds');
+      if (!promises) {
+        throw new Error('There\'s not any values of number of species');
+      } else if (group !== 'all') {
+        result = await Promise.all(promises)
+          .then(response => response.map(item => ({ id: group, ...item[0] })))
+          .catch();
+      } else {
+        const ids = ['total', 'endemic', 'invasive', 'threatened'];
+        result = await Promise.all(promises)
+          .then(response => response.map((item, i) => ({ id: ids[i], ...item[0] })))
+          .catch();
       }
-
       return result;
     },
 

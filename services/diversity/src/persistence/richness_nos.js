@@ -36,13 +36,14 @@ module.exports = (
    * Get the thresholds for the total number of species in a given area type
    *
    * @param {String} areaType area type.
+   * @param {String | Number} areaId area id
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholdsTotalNumberOfSpecies: async (areaType) => {
+  findThresholdsTotalNumberOfSpecies: async (areaType, areaId) => {
     try {
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType) })
+        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
         .min(
           {
             min_inferred: 'total_inf',
@@ -90,13 +91,14 @@ module.exports = (
    * Get the thresholds for the number of endemic species in a given area type
    *
    * @param {String} areaType area type.
+   * @param {String | Number} areaId area id
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholdsEndemicNumberOfSpecies: async (areaType) => {
+  findThresholdsEndemicNumberOfSpecies: async (areaType, areaId) => {
     try {
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType) })
+        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
         .min(
           {
             min_inferred: 'end_inf',
@@ -144,13 +146,14 @@ module.exports = (
    * Get the thresholds for the number of invasive species in a given area type
    *
    * @param {String} areaType area type.
+   * @param {String | Number} areaId area id
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholdsInvasiveNumberOfSpecies: async (areaType) => {
+  findThresholdsInvasiveNumberOfSpecies: async (areaType, areaId) => {
     try {
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType) })
+        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
         .min(
           {
             min_inferred: 'inv_inf',
@@ -195,16 +198,17 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the number of threatened species in a given area type
+   * Get the thresholds for the number of threatened species in a given area
    *
    * @param {String} areaType area type.
+   * @param {String | Number} areaId area id
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholdsThreatenedNumberOfSpecies: async (areaType) => {
+  findThresholdsThreatenedNumberOfSpecies: async (areaType, areaId) => {
     try {
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType) })
+        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
         .min(
           {
             min_inferred: 'thr_inf',

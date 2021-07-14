@@ -13,43 +13,47 @@ module.exports = (RichnessPersistence, restAPI) => {
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
     getNumberOfSpecies: async (areaType, areaId, group = 'all') => {
-      let values;
-      let result = [];
-      const lab = ['total', 'endemic', 'invasive', 'threatened'];
+      const promises = [];
+      let result;
       switch (group) {
-        case 'total':
-          values = await RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId);
-          result.push({ id: group, ...values[0] });
+        case 'total': {
+          promises.unshift(RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId));
           break;
+        }
         case 'endemic':
-          values = await RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId));
           break;
         case 'invasive':
-          values = await RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId));
           break;
         case 'threatened':
-          values = await RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId);
-          result.push({ id: group, ...values[0] });
+          promises.unshift(RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId));
           break;
-        case 'all':
-          values = await Promise.all([
+        case 'all': {
+          promises.unshift(
             RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId),
-          ]);
-          result = values.map((item, i) => ({ id: lab[i], ...item[0] }));
+          );
           break;
+        }
         default:
-          return result;
+          return [];
       }
 
-      if (!result) {
+      if (!promises) {
         throw new Error('There\'s not any values of number of species');
+      } else if (group !== 'all') {
+        result = await Promise.all(promises)
+          .then(response => response.map(item => ({ id: group, ...item[0] })))
+          .catch();
+      } else {
+        const ids = ['total', 'endemic', 'invasive', 'threatened'];
+        result = await Promise.all(promises)
+          .then(response => response.map((item, i) => ({ id: ids[i], ...item[0] })))
+          .catch();
       }
-
       return result;
     },
 

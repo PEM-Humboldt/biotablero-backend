@@ -28,7 +28,7 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'threatened':
           promises.unshift(RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId));
           break;
-        case 'all': {
+        case 'all':
           promises.unshift(
             RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId),
@@ -36,7 +36,6 @@ module.exports = (RichnessPersistence, restAPI) => {
             RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId),
           );
           break;
-        }
         default:
           return [];
       }
@@ -91,7 +90,7 @@ module.exports = (RichnessPersistence, restAPI) => {
             RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
           );
           break;
-        case 'all': {
+        case 'all':
           promises.unshift(
             RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
@@ -99,7 +98,6 @@ module.exports = (RichnessPersistence, restAPI) => {
             RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
           );
           break;
-        }
         default:
           return [];
       }

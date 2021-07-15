@@ -33,7 +33,7 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the total number of species in a given area type
+   * Get the thresholds for the total number of species in a given area
    *
    * @param {String} areaType area type.
    * @param {String | Number} areaId area id
@@ -42,8 +42,10 @@ module.exports = (
    */
   findThresholdsTotalNumberOfSpecies: async (areaType, areaId) => {
     try {
+      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
+        .where('id_region', 'in', region)
+        .andWhere({ geofence_type: areaTypeKeys(areaType) })
         .min(
           {
             min_inferred: 'total_inf',
@@ -88,7 +90,7 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the number of endemic species in a given area type
+   * Get the thresholds for the number of endemic species in a given area
    *
    * @param {String} areaType area type.
    * @param {String | Number} areaId area id
@@ -97,8 +99,10 @@ module.exports = (
    */
   findThresholdsEndemicNumberOfSpecies: async (areaType, areaId) => {
     try {
+      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
+        .where('id_region', 'in', region)
+        .andWhere({ geofence_type: areaTypeKeys(areaType) })
         .min(
           {
             min_inferred: 'end_inf',
@@ -143,7 +147,7 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the number of invasive species in a given area type
+   * Get the thresholds for the number of invasive species in a given area
    *
    * @param {String} areaType area type.
    * @param {String | Number} areaId area id
@@ -152,8 +156,10 @@ module.exports = (
    */
   findThresholdsInvasiveNumberOfSpecies: async (areaType, areaId) => {
     try {
+      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
+        .where('id_region', 'in', region)
+        .andWhere({ geofence_type: areaTypeKeys(areaType) })
         .min(
           {
             min_inferred: 'inv_inf',
@@ -207,8 +213,10 @@ module.exports = (
    */
   findThresholdsThreatenedNumberOfSpecies: async (areaType, areaId) => {
     try {
+      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
       return richnessNos.query()
-        .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId })
+        .where('id_region', 'in', region)
+        .andWhere({ geofence_type: areaTypeKeys(areaType) })
         .min(
           {
             min_inferred: 'thr_inf',

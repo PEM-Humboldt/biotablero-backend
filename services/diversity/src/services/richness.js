@@ -36,7 +36,7 @@ module.exports = (RichnessPersistence, restAPI) => {
           );
           break;
         default:
-          return [];
+          throw new Error('Data for  doesn\'t exists for the given group');
       }
       return Promise.all(promises)
         .then((response) => {
@@ -100,7 +100,7 @@ module.exports = (RichnessPersistence, restAPI) => {
           );
           break;
         default:
-          return [];
+          throw new Error('Data for  doesn\'t exists for the given group');
       }
       return Promise.all(promises)
         .then((response) => {

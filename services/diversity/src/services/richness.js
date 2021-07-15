@@ -38,19 +38,25 @@ module.exports = (RichnessPersistence, restAPI) => {
         default:
           return [];
       }
-      if (group !== 'all') {
-        return Promise.all(promises)
-          .then(response => response.map(item => ({ id: group, ...item[0] })))
-          .catch();
-      }
-      const ids = ['total', 'endemic', 'invasive', 'threatened'];
       return Promise.all(promises)
-        .then(response => response.map((item, i) => ({ id: ids[i], ...item[0] })))
+        .then((response) => {
+          if (group !== 'all') {
+            return response.map((item) => {
+              if (item.length > 0) return { id: group, ...item[0] };
+              return item;
+            });
+          }
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          return response.map((item, i) => {
+            if (item.length > 0) return { id: ids[i], ...item[0] };
+            return item;
+          });
+        })
         .catch();
     },
 
     /**
-     * Get thresholds for the number of species for the given area type and area id
+     * Get thresholds for the number of species for the given area type
      * in the given group
      *
      * @param {String} areaType area type
@@ -94,14 +100,20 @@ module.exports = (RichnessPersistence, restAPI) => {
         default:
           return [];
       }
-      if (group !== 'all') {
-        return Promise.all(promises)
-          .then(response => response.map(item => ({ id: group, ...item[0] })))
-          .catch();
-      }
-      const ids = ['total', 'endemic', 'invasive', 'threatened'];
       return Promise.all(promises)
-        .then(response => response.map((item, i) => ({ id: ids[i], ...item[0] })))
+        .then((response) => {
+          if (group !== 'all') {
+            return response.map((item) => {
+              if (item.length > 0) return { id: group, ...item[0] };
+              return item;
+            });
+          }
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          return response.map((item, i) => {
+            if (item.length > 0) return { id: ids[i], ...item[0] };
+            return item;
+          });
+        })
         .catch();
     },
 

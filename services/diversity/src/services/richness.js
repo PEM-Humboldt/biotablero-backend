@@ -52,7 +52,9 @@ module.exports = (RichnessPersistence, restAPI) => {
             return item;
           });
         })
-        .catch();
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS data' });
+        });
     },
 
     /**
@@ -114,7 +116,9 @@ module.exports = (RichnessPersistence, restAPI) => {
             return item;
           });
         })
-        .catch();
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS data' });
+        });
     },
 
     /**

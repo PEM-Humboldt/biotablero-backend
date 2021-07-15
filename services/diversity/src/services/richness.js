@@ -43,13 +43,13 @@ module.exports = (RichnessPersistence, restAPI) => {
           if (group !== 'all') {
             return response.map((item) => {
               if (item.length > 0) return { id: group, ...item[0] };
-              return item;
+              return [];
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
             if (item.length > 0) return { id: ids[i], ...item[0] };
-            return item;
+            return [];
           });
         })
         .catch((e) => {
@@ -106,13 +106,13 @@ module.exports = (RichnessPersistence, restAPI) => {
           if (group !== 'all') {
             return response.map((item) => {
               if (item.length > 0) return { id: group, ...item[0] };
-              return item;
+              return [];
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
             if (item.length > 0) return { id: ids[i], ...item[0] };
-            return item;
+            return [];
           });
         })
         .catch((e) => {

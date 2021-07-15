@@ -43,13 +43,13 @@ module.exports = (RichnessPersistence, restAPI) => {
           if (group !== 'all') {
             return response.map((item) => {
               if (item.length > 0) return { id: group, ...item[0] };
-              throw new Error('Error no data is found');
+              return item;
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
             if (item.length > 0) return { id: ids[i], ...item[0] };
-            throw new Error('Error no data is found');
+            return item;
           });
         })
         .catch((e) => {
@@ -58,8 +58,7 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
-     * Get thresholds for the number of species for the given area type
-     * in the given group
+     * Get thresholds for the number of species for the given area type in the given group
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
@@ -107,13 +106,13 @@ module.exports = (RichnessPersistence, restAPI) => {
           if (group !== 'all') {
             return response.map((item) => {
               if (item.length > 0) return { id: group, ...item[0] };
-              throw new Error('Error no data is found');
+              return item;
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
             if (item.length > 0) return { id: ids[i], ...item[0] };
-            throw new Error('Error no data is found');
+            return item;
           });
         })
         .catch((e) => {

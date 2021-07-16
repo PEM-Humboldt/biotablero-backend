@@ -105,7 +105,6 @@ module.exports = (RichnessPersistence, restAPI) => {
         .then((response) => {
           if (group !== 'all') {
             return response.map((item) => {
-              console.log(item);
               if (!item.every(element => element === null)) return { id: group, ...item[0] };
               return [];
             });

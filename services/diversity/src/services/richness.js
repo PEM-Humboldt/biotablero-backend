@@ -42,13 +42,13 @@ module.exports = (RichnessPersistence, restAPI) => {
         .then((response) => {
           if (group !== 'all') {
             return response.map((item) => {
-              if (item.length > 0) return { id: group, ...item[0] };
+              if (!item.every(element => element === null)) return { id: group, ...item[0] };
               return [];
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
-            if (item.length > 0) return { id: ids[i], ...item[0] };
+            if (!item.every(element => element === null)) return { id: ids[i], ...item[0] };
             return [];
           });
         })
@@ -105,18 +105,19 @@ module.exports = (RichnessPersistence, restAPI) => {
         .then((response) => {
           if (group !== 'all') {
             return response.map((item) => {
-              if (item.length > 0) return { id: group, ...item[0] };
+              console.log(item);
+              if (!item.every(element => element === null)) return { id: group, ...item[0] };
               return [];
             });
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
           return response.map((item, i) => {
-            if (item.length > 0) return { id: ids[i], ...item[0] };
+            if (!item.every(element => element === null)) return { id: ids[i], ...item[0] };
             return [];
           });
         })
         .catch((e) => {
-          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS data' });
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
         });
     },
 

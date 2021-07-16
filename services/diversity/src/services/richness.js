@@ -41,16 +41,18 @@ module.exports = (RichnessPersistence, restAPI) => {
       return Promise.all(promises)
         .then((response) => {
           if (group !== 'all') {
-            return response.map((item) => {
+            const result = response.map((item) => {
               if (!item.every(element => element === null)) return { id: group, ...item[0] };
               return [];
             });
+            return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
-          return response.map((item, i) => {
+          const result = response.map((item, i) => {
             if (!item.every(element => element === null)) return { id: ids[i], ...item[0] };
             return [];
           });
+          return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
           throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS data' });
@@ -104,16 +106,18 @@ module.exports = (RichnessPersistence, restAPI) => {
       return Promise.all(promises)
         .then((response) => {
           if (group !== 'all') {
-            return response.map((item) => {
-              if (!item.every(element => element === null)) return { id: group, ...item[0] };
-              return [];
+            const result = response.map((item) => {
+              if (Object.values(item[0]).some(element => element === null)) return [];
+              return { id: group, ...item[0] };
             });
+            return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
           }
           const ids = ['total', 'endemic', 'invasive', 'threatened'];
-          return response.map((item, i) => {
-            if (!item.every(element => element === null)) return { id: ids[i], ...item[0] };
-            return [];
+          const result = response.map((item, i) => {
+            if (Object.values(item[0]).some(element => element === null)) return [];
+            return { id: ids[i], ...item[0] };
           });
+          return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
           throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });

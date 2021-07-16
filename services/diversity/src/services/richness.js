@@ -46,10 +46,10 @@ module.exports = (RichnessPersistence, restAPI) => {
             if (group === 'all') {
               id = ids[i];
             }
-            if (!item.every(element => element === null)) return { id, ...item[0] };
-            return [];
+            if (item.length === 0) return [];
+            return { id, ...item[0] };
           });
-          return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
           throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
@@ -108,11 +108,10 @@ module.exports = (RichnessPersistence, restAPI) => {
             if (group === 'all') {
               id = ids[i];
             }
-            if (!Object.values(item[0])
-              .every(element => element === null)) return { id, ...item[0] };
-            return [];
+            if (Object.values(item[0]).some(element => element === null)) return [];
+            return { id, ...item[0] };
           });
-          return result.every(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
           throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });

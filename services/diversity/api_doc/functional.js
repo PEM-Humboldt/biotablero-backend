@@ -4,7 +4,7 @@
  */
 
 /**
- * @apiDefine DryForestValues
+ * @apiDefine DryForestValuesExample
  * @apiSuccessExample {json} Success-Example:
  * {
  *    richness: 27.12,

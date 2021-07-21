@@ -1,6 +1,6 @@
 /**
- * @apiDefine s_richness Search > Species richness
- * Information related to the species richness in a given area.
+ * @apiDefine s_functional_diversity Search > Functional diversity
+ * Information related to the functional diversity section.
  */
 
 /**

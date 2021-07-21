@@ -108,7 +108,11 @@ module.exports = (
      */
     findPAInEA: async (eaId, year = 2012) => (
       db('geo_tropical_dry_forest_details as gtdfd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'gtdfd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where({ 'gtdfd.id_ea': eaId, 'gtdfd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -146,7 +150,11 @@ module.exports = (
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
       return db('geo_tropical_dry_forest_details as gtdfd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'gtdfd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where('gtdfd.year_cover', year)
         .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))
         .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'gbpa.label')
@@ -177,7 +185,11 @@ module.exports = (
      */
     findPAInState: async (stateId, year = 2012) => (
       db('geo_tropical_dry_forest_details as gtdfd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'gtdfd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where({ 'gtdfd.id_state': stateId, 'gtdfd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -207,7 +219,11 @@ module.exports = (
      */
     findPAInSubzone: async (subzoneId, year = 2012) => (
       db('geo_tropical_dry_forest_details as gtdfd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'gtdfd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where({ 'gtdfd.id_subzone': subzoneId, 'gtdfd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')
@@ -221,7 +237,11 @@ module.exports = (
      */
     findProtectedAreas: async (year = 2012) => (
       db('geo_tropical_dry_forest_details as gtdfd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'gtdfd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'gtdfd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where({ 'gtdfd.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .select(db.raw('coalesce(SUM(gtdfd.area_ha), 0) as area'), 'gbpa.label as type')

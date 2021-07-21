@@ -36,7 +36,7 @@ module.exports = (errorHandler, Richness) => {
       const error = { code: 400, message: 'areaType and areaId are required' };
       throw error;
     }
-    return Richness.getNumberSpecies(req.params.areaType, req.params.areaId, req.params.group)
+    return Richness.getNumberOfSpecies(req.params.areaType, req.params.areaId, req.params.group)
       .then((value) => {
         res.send(value);
         next();
@@ -72,11 +72,11 @@ module.exports = (errorHandler, Richness) => {
    * @apiUse NOSThresholdsExample
    */
   router.get('/richness/number-species/thresholds', errorHandler((req, res, next) => {
-    if (!(req.params.areaType)) {
-      const error = { code: 400, message: 'areaType is required' };
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = { code: 400, message: 'areaType and areaId are required' };
       throw error;
     }
-    return Richness.getNOSThresholds(req.params.areaType, req.params.group)
+    return Richness.getNOSThresholds(req.params.areaType, req.params.areaId, req.params.group)
       .then((value) => {
         res.send(value);
         next();

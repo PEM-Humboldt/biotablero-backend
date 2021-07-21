@@ -379,13 +379,15 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3701/se/Páramo/hf/timeline
    * @apiUse SETimelineInGeofenceExample
    */
-  router.get('/basinSubzones/:subzone_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
-    basinSubzoneService.getSEHFTimeline(req.params.subzone_id, req.params.se_type)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
+  router.get('/basinSubzones/:subzone_id/se/:se_type/hf/timeline', errorHandler(
+    (req, res, next) => (
+      basinSubzoneService.getSEHFTimeline(req.params.subzone_id, req.params.se_type)
+        .then((values) => {
+          res.send(values);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup s_ecoChange
@@ -407,13 +409,15 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3701/ecoChange/lp/categories
    * @apiUse ForestLPExample
    */
-  router.get('/basinSubzones/:subzone_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    basinSubzoneService.getEcoChangeLP(req.params.subzone_id)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
+  router.get('/basinSubzones/:subzone_id/ecoChange/lp/categories', errorHandler(
+    (req, res, next) => (
+      basinSubzoneService.getEcoChangeLP(req.params.subzone_id)
+        .then((values) => {
+          res.send(values);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup s_ecoChange
@@ -538,13 +542,15 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/basinSubzones/:subzone_id/hf/layers/current/categories', errorHandler((req, res, next) => (
-    basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id)
-      .then((geometry) => {
-        res.send(geometry);
-        next();
-      })
-  )));
+  router.get('/basinSubzones/:subzone_id/hf/layers/current/categories', errorHandler(
+    (req, res, next) => (
+      basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id)
+        .then((geometry) => {
+          res.send(geometry);
+          next();
+        })
+    ),
+  ));
 
   /**
    * @apiGroup s_hf
@@ -596,13 +602,14 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3701/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/basinSubzones/:subzone_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    basinSubzoneService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
+  router.get('/basinSubzones/:subzone_id/ecoChange/layers/lp/period/:period/categories/',
+    errorHandler((req, res, next) => (
+      basinSubzoneService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
+        .then((values) => {
+          res.send(values);
+          next();
+        })
+    )));
 
   return router;
 };

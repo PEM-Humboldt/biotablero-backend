@@ -54,7 +54,13 @@ module.exports = (
         .avg(`dpc.${dpcDBKeys(areaType)} as value`)
         .where(areaTypeDBKeys(areaType), areaId)
         .leftJoin('geo_protected_areas as pa', 'dpc.id_pa', 'pa.pa_id')
-        .groupBy('dpc.id_pa', `dpc.${dpcCategoriesDBKeys(areaType)}`, 'pa.name', 'pa.area_ha', 'pa.pa_id')
+        .groupBy(
+          'dpc.id_pa',
+          `dpc.${dpcCategoriesDBKeys(areaType)}`,
+          'pa.name',
+          'pa.area_ha',
+          'pa.pa_id',
+        )
         .orderBy('value', 'desc')
         .modify((queryBuilder) => {
           if (paNumber) {
@@ -247,7 +253,7 @@ module.exports = (
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
         FROM (
-          SELECT 
+          SELECT
           'Feature' AS TYPE,
           ST_AsGeoJSON(geom)::json AS geometry
         FROM (
@@ -258,7 +264,7 @@ module.exports = (
           WHERE geofence_type = ?
             AND geofence_id = ?
             AND prot_year = ?
-          GROUP BY key 
+          GROUP BY key
           ) AS geo
         ) as f
       ) as fc;
@@ -288,7 +294,7 @@ module.exports = (
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
         FROM (
-          SELECT 
+          SELECT
           'Feature' AS TYPE,
           ST_AsGeoJSON(geom)::json AS geometry
         FROM (
@@ -299,7 +305,7 @@ module.exports = (
           WHERE geofence_type = ?
             AND geofence_id = ?
             AND prot_year = ?
-          GROUP BY key 
+          GROUP BY key
           ) AS geo
         ) as f
       ) as fc;
@@ -329,7 +335,7 @@ module.exports = (
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
         FROM (
-          SELECT 
+          SELECT
           'Feature' AS TYPE,
           ST_AsGeoJSON(geom)::json AS geometry
         FROM (
@@ -340,7 +346,7 @@ module.exports = (
           WHERE geofence_type = ?
             AND geofence_id = ?
             AND prot_year = ?
-          GROUP BY key 
+          GROUP BY key
           ) AS geo
         ) as f
       ) as fc;

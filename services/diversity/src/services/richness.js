@@ -12,105 +12,110 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-    getNumberSpecies: async (areaType, areaId, group = 'all') => {
-      const data = [
-        {
-          id: 'total',
-          inferred: 40,
-          observed: 4,
-          region_observed: 110,
-          region_inferred: 130,
-        },
-        {
-          id: 'endemic',
-          inferred: 20,
-          observed: 25,
-          region_observed: 120,
-          region_inferred: 100,
-        },
-        {
-          id: 'invasive',
-          inferred: 20,
-          observed: 10,
-          region_observed: 90,
-          region_inferred: 80,
-        },
-        {
-          id: 'threatened',
-          inferred: 15,
-          observed: 20,
-          region_observed: 90,
-          region_inferred: 100,
-        },
-      ];
+    getNumberOfSpecies: async (areaType, areaId, group = 'all') => {
+      const promises = [];
       switch (group) {
         case 'total':
-          return [data[0]];
+          promises.unshift(RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId));
+          break;
         case 'endemic':
-          return [data[1]];
+          promises.unshift(RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId));
+          break;
         case 'invasive':
-          return [data[2]];
+          promises.unshift(RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId));
+          break;
         case 'threatened':
-          return [data[3]];
+          promises.unshift(RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId));
+          break;
         case 'all':
+          promises.unshift(
+            RichnessPersistence.findTotalNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findEndemicNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findInvasiveNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThreatenedNumberOfSpecies(areaType, areaId),
+          );
+          break;
         default:
-          return data;
+          throw new Error('Data doesn\'t exist for the given group');
       }
+      return Promise.all(promises)
+        .then((response) => {
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          const result = response.map((item, i) => {
+            let id = group;
+            if (group === 'all') {
+              id = ids[i];
+            }
+            if (item.length === 0) return [];
+            return { id, ...item[0] };
+          });
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+        })
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+        });
     },
 
     /**
      * Get thresholds for the number of species for the given area type in the given group
      *
      * @param {String} areaType area type
+     * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
      * @returns {Object[]} Number of inferred and observed species for the desired group.
      */
-    getNOSThresholds: async (areaType, group = 'all') => {
-      const data = [
-        {
-          id: 'total',
-          min_inferred: 10,
-          min_observed: 4,
-          max_inferred: 90,
-          max_observed: 85,
-        },
-        {
-          id: 'endemic',
-          min_inferred: 2,
-          min_observed: 4,
-          max_inferred: 75,
-          max_observed: 80,
-        },
-        {
-          id: 'invasive',
-          min_inferred: 3,
-          min_observed: 1,
-          max_inferred: 60,
-          max_observed: 65,
-        },
-        {
-          id: 'threatened',
-          min_inferred: 3,
-          min_observed: 5,
-          max_inferred: 50,
-          max_observed: 60,
-        },
-      ];
+    getNOSThresholds: async (areaType, areaId, group = 'all') => {
+      const promises = [];
       switch (group) {
         case 'total':
-          return [data[0]];
+          promises.unshift(
+            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
+          );
+          break;
         case 'endemic':
-          return [data[1]];
+          promises.unshift(
+            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
+          );
+          break;
         case 'invasive':
-          return [data[2]];
+          promises.unshift(
+            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
+          );
+          break;
         case 'threatened':
-          return [data[3]];
+          promises.unshift(
+            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+          );
+          break;
         case 'all':
+          promises.unshift(
+            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+          );
+          break;
         default:
-          return data;
+          throw new Error('Data doesn\'t exist for the given group');
       }
+      return Promise.all(promises)
+        .then((response) => {
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          const result = response.map((item, i) => {
+            let id = group;
+            if (group === 'all') {
+              id = ids[i];
+            }
+            if (Object.values(item[0]).some(element => element === null)) return [];
+            return { id, ...item[0] };
+          });
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+        })
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+        });
     },
 
     /**

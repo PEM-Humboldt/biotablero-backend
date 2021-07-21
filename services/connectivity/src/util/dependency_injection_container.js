@@ -20,7 +20,8 @@ bottle.factory('connectivityPersistence', () => (
   ConnectivityPersistence(bookshelfModels.db, bookshelfModels.models, logger)
 ));
 
-bottle.factory('connectivityService', container => ConnectivityService(container.connectivityPersistence));
+bottle.factory('connectivityService',
+  container => ConnectivityService(container.connectivityPersistence));
 
 bottle.factory('routes', container => ([
   ConnectivityRoutes(container.errorHandler, container.connectivityService),

@@ -38,7 +38,9 @@ module.exports = (
      */
     findProjectImpactedWithSzhEa: projectId => (
       db.raw(
-        `SELECT DISTINCT(st.id_subzone, st.id_ea) as remove, st.id_subzone, st.id_ea, st.id_biome, gb.name as biome_name, gea.name as ea_name, gbs.name_subzone as nom_szh
+        `SELECT DISTINCT(st.id_subzone, st.id_ea) as remove,
+        st.id_subzone, st.id_ea, st.id_biome,
+        gb.name as biome_name, gea.name as ea_name, gbs.name_subzone as nom_szh
         FROM project_impacted_biomes as pib
         INNER JOIN geo_biomes as gb ON pib.id_biome = gb.id_biome
         INNER JOIN geo_compensation_strategies_2018 as st ON gb.id_main_biome = st.id_biome
@@ -61,8 +63,9 @@ module.exports = (
       projectImpactedBiomesMod
         .where('id_project', projectId)
         .fetchAll({
-          columns: ['id', 'id_project', 'natural_area_ha', 'secondary_area_ha', 'transformed_area_ha',
-            'area_impacted_ha', 'area_to_compensate_ha', 'id_biome', 'area_impacted_pct'],
+          columns: ['id', 'id_project', 'natural_area_ha', 'secondary_area_ha',
+            'transformed_area_ha', 'area_impacted_ha', 'area_to_compensate_ha',
+            'id_biome', 'area_impacted_pct'],
           withRelated: [{ biome: qb => qb.column('id_biome', 'name', 'compensation_factor') }],
         })
         .then(results => results.toJSON())

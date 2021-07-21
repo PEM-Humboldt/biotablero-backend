@@ -49,9 +49,15 @@ module.exports = (db, { selectedStrategies }) => ({
           FROM geo_compensation_strategies_2018 as str1
           INNER JOIN (
             SELECT ss.id_project as project_id, ss.area as selected_area_ha,
-              gb.id_biome as biome_id, gb.name as biome_name, gb.compensation_factor as biome_compensation_factor, gb.general_name as biome_general_name,
-              gea.id_ea as ea_id, gea.name as ea_name, gbs.id_subzone as subzone_id, gbs.name_subzone as subzone_name, gbz.id_zone as zone_id, gbz.name_zone as zone_name, gba.id_basin as area_id, gba.name_basin as area_name,
-              s.id_strategy as strategy_id, s.strategy as strategy_name, gcs.gid, gcs.area_ha as total_strategy_area, gcs.area_status as strategy_area_status
+              gb.id_biome as biome_id, gb.name as biome_name,
+              gb.compensation_factor as biome_compensation_factor,
+              gb.general_name as biome_general_name,
+              gea.id_ea as ea_id, gea.name as ea_name,
+              gbs.id_subzone as subzone_id, gbs.name_subzone as subzone_name,
+              gbz.id_zone as zone_id, gbz.name_zone as zone_name,
+              gba.id_basin as area_id, gba.name_basin as area_name,
+              s.id_strategy as strategy_id, s.strategy as strategy_name, gcs.gid,
+              gcs.area_ha as total_strategy_area, gcs.area_status as strategy_area_status
             FROM selected_strategies as ss
             INNER JOIN geo_biomes as gb ON ss.id_biome = gb.id_biome
             INNER JOIN geo_environmental_authorities as gea ON ss.id_ea = gea.id_ea
@@ -59,7 +65,9 @@ module.exports = (db, { selectedStrategies }) => ({
             INNER JOIN geo_basin_zones as gbz ON gbz.id_zone = gbs.id_zone
             INNER JOIN geo_basin_areas as gba ON gba.id_basin = gbs.id_basin
             INNER JOIN strategies as s ON ss.id_strategy = s.id_strategy
-            INNER JOIN geo_compensation_strategies_2018 as gcs ON ss.id_biome = gcs.id_biome AND ss.id_ea = gcs.id_ea AND ss.id_subzone = gcs.id_subzone AND ss.id_strategy = gcs.id_strategy
+            INNER JOIN geo_compensation_strategies_2018 as gcs ON ss.id_biome = gcs.id_biome
+            AND ss.id_ea = gcs.id_ea
+            AND ss.id_subzone = gcs.id_subzone AND ss.id_strategy = gcs.id_strategy
           ) as str2 ON str1.gid = str2.gid
           where str2.project_id = ?
         ) as f

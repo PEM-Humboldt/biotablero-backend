@@ -25,7 +25,9 @@ module.exports = (bookshelf, { saving }) => {
   obj.setRelations = (models) => {
     /* eslint-disable no-param-reassign */
     models.geoCompanyProjects.prototype.biomes = function biomes() {
-      return this.belongsToMany(models.geoBiomes, 'project_impacted_biomes', 'id_project', 'id_biome');
+      return this.belongsToMany(
+        models.geoBiomes, 'project_impacted_biomes', 'id_project', 'id_biome',
+      );
     };
   };
   /* eslint-enable no-param-reassign */

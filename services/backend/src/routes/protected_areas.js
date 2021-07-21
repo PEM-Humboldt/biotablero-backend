@@ -650,13 +650,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/pa/:category/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
-        res.send(values);
-        next();
-      })
-  )));
+  router.get('/pa/:category/ecoChange/layers/lp/period/:period/categories/', errorHandler(
+    (req, res, next) => (
+      paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
+        .then((values) => {
+          res.send(values);
+          next();
+        })
+    ),
+  ));
 
   return router;
 };

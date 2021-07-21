@@ -47,7 +47,7 @@ module.exports = (errorHandler, FunctionalService) => {
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
    *
-   * @apiSuccess {Object} result
+   * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id feature id
    * @apiSuccess {Number} result.min lowest value for the specific feature in the given area
    * @apiSuccess {Number} result.max highest value for the specific feature in the given area

@@ -9,8 +9,10 @@ const bookshelfModels = require('../persistence/models/setup');
 const RichnessPresistence = require('../persistence/richness_nos');
 
 const RichnessService = require('../services/richness');
+const FunctionalService = require('../services/functional');
 
 const RichnessRoute = require('../routes/richness');
+const FunctionalRoute = require('../routes/functional');
 
 const bottle = new Bottlejs();
 
@@ -25,9 +27,11 @@ bottle.factory('RichnessPersistence', () => RichnessPresistence(
 bottle.factory('RichnessService', container => RichnessService(
   container.RichnessPersistence, container.restAPI,
 ));
+bottle.factory('FunctionalService', () => FunctionalService());
 
 bottle.factory('routes', container => ([
   RichnessRoute(container.errorHandler, container.RichnessService),
+  FunctionalRoute(container.errorHandler, container.FunctionalService),
 ]));
 
 module.exports = bottle.container;

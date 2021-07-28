@@ -57,14 +57,16 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
-     * Get thresholds for the number of species for the given area type in the given group
+     * Get thresholds for the number of species in the same biotic unit as the given area id for the
+     * given group
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     * @returns {Object[]} Max an min number of inferred and observed species in the biotic unit for
+     * the desired group.
      */
     getNOSThresholds: async (areaType, areaId, group = 'all') => {
       const promises = [];

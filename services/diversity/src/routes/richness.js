@@ -49,10 +49,12 @@ module.exports = (errorHandler, Richness) => {
    * @apiName NOSThresholds
    * @apiVersion 1.0.0
    * @apiDescription
-   * Lowest and highest values for the number of species among national areas of the same type. Can
-   * be filtered by group: total, endemic, invasive and threatened, or get all of them.
+   * Lowest and highest values for the number of species among areas of the same type inside the
+   * same biotic region. Can be filtered by group: total, endemic, invasive and threatened, or get
+   * all of them.
    *
    * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
    * endemic, invasive and threatened.
    *
@@ -68,7 +70,7 @@ module.exports = (errorHandler, Richness) => {
    * I2D)
    *
    * @apiExample {curl} Example usage:
-   *  /richness/number-species/thresholds?areaType=ea&group=total
+   *  /richness/number-species/thresholds?areaType=ea&areaId=CARDER&group=total
    * @apiUse NOSThresholdsExample
    */
   router.get('/richness/number-species/thresholds', errorHandler((req, res, next) => {

@@ -121,6 +121,56 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
+     * Get national max values for the number of species in the given area type for the given group
+     *
+     * @param {String} areaType area type
+     * @param {String} group group to filter data (default to all), options are: 'all', 'total',
+     * 'endemic', 'invasive', 'threatened'.
+     *
+     * @returns {Object[]} Max number of inferred and observed species at a national level for the
+     * desired group.
+     */
+    getNOSNationalMax: async (areaType, group = 'all') => {
+      const promises = [];
+      switch (group) {
+        case 'total':
+        case 'endemic':
+        case 'invasive':
+        case 'threatened':
+          promises.unshift(
+            RichnessPersistence.findNationalMax(areaType, group),
+          );
+          break;
+        case 'all':
+          promises.unshift(
+            RichnessPersistence.findNationalMax(areaType, 'total'),
+            RichnessPersistence.findNationalMax(areaType, 'endemic'),
+            RichnessPersistence.findNationalMax(areaType, 'invasive'),
+            RichnessPersistence.findNationalMax(areaType, 'threatened'),
+          );
+          break;
+        default:
+          throw new Error('Data doesn\'t exist for the given group');
+      }
+      return Promise.all(promises)
+        .then((response) => {
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          const result = response.map((item, i) => {
+            let id = group;
+            if (group === 'all') {
+              id = ids[i];
+            }
+            if (Object.values(item[0]).some(element => element === null)) return [];
+            return { id, ...item[0] };
+          });
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+        })
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+        });
+    },
+
+    /**
      * Get values for richness species gaps in the given area
      *
      * @param {String} areaType area type

@@ -87,6 +87,42 @@ module.exports = (errorHandler, Richness) => {
 
   /**
    * @apiGroup s_richness
+   * @api {get} /richness/number-species/nationalMax NOSNationalMax
+   * @apiName NOSNationalMax
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Highest values for the number of species among national areas of the same type. Can
+   * be filtered by group: total, endemic, invasive and threatened, or get all of them.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String} [group] group to filter results. Options are: all, total,
+   * endemic, invasive and threatened.
+   *
+   * @apiSuccess {Object[]} result
+   * @apiSuccess {String} result.id group id related to the results
+   * @apiSuccess {Number} result.max_inferred maximum number of inferred species at a national level
+   * (according to BioModelos)
+   * @apiSuccess {Number} result.max_observed maximum number of observed species at a national level
+   * (according to I2D)
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/number-species/nationalMax?areaType=ea&group=total
+   * @apiUse NOSNationalMaxExample
+   */
+  router.get('/richness/number-species/nationalMax', errorHandler((req, res, next) => {
+    if (!(req.params.areaType)) {
+      const error = { code: 400, message: 'areaType is required' };
+      throw error;
+    }
+    return Richness.getNOSNationalMax(req.params.areaType, req.params.group)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
+  }));
+
+  /**
+   * @apiGroup s_richness
    * @api {get} /richness/gaps Gaps
    * @apiName Gaps
    * @apiVersion 1.0.0

@@ -18,4 +18,23 @@ module.exports = {
     }
   },
 
+  observedGroupKey: (val) => {
+    switch (val) {
+      case 'total': return 'total_obs';
+      case 'endemic': return 'end_obs';
+      case 'invasive': return 'inv_obs';
+      case 'threatened': return 'thr_obs';
+      default: return null;
+    }
+  },
+
+  inferredGroupKey: (val) => {
+    switch (val) {
+      case 'total': return 'total_inf';
+      case 'endemic': return 'end_inf';
+      case 'invasive': return 'inv_inf';
+      case 'threatened': return 'thr_inf';
+      default: return null;
+    }
+  },
 };

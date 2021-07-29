@@ -49,6 +49,18 @@
  */
 
 /**
+ * @apiDefine NOSNationalMaxExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     id: "total",
+ *     max_inferred: 100,
+ *     max_observed: 110
+ *   }
+ * ]
+ */
+
+/**
  * @apiDefine GapsExample
  * @apiSuccessExample {json} Success-Example:
  * [

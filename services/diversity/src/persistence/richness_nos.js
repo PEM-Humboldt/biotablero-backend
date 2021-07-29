@@ -1,4 +1,8 @@
-const { areaTypeKeys } = require('../util/appropriate_keys');
+const {
+  areaTypeKeys,
+  observedGroupKey,
+  inferredGroupKey,
+} = require('../util/appropriate_keys');
 
 module.exports = (
   db,
@@ -233,6 +237,38 @@ module.exports = (
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
     }
+  },
+
+  /**
+   * Get the national max value for the number of species in a given area and group
+   *
+   * @param {String} areaType area type.
+   * @param {String} group group to filter data (default to all), options are: 'all', 'total',
+   * 'endemic', 'invasive', 'threatened'.
+   *
+   * @returns {Object[]} Number of inferred and observed species for the desired group.
+   */
+  findNationalMax: async (areaType, group) => {
+    const obsColumn = observedGroupKey(group);
+    const infColumn = inferredGroupKey(group);
+
+    if (obsColumn === null || infColumn === null) {
+      logger.error(`Undefined group ${group} in database`);
+      throw new Error('Error getting data');
+    }
+
+    return richnessNos.query()
+      .where({ geofence_type: areaTypeKeys(areaType) })
+      .max(
+        {
+          max_inferred: infColumn,
+          max_observed: obsColumn,
+        },
+      )
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      });
   },
 
   /**

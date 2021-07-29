@@ -8362,11 +8362,11 @@ define({ "api": [
   {
     "group": "s_richness",
     "type": "get",
-    "url": "/richness/number-species/thresholds",
-    "title": "NOSThresholds",
-    "name": "NOSThresholds",
+    "url": "/richness/number-species/nationalMax",
+    "title": "NOSNationalMax",
+    "name": "NOSNationalMax",
     "version": "1.0.0",
-    "description": "<p>Lowest and highest values for the number of species among national areas of the same type. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
+    "description": "<p>Highest values for the number of species among national areas of the same type. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
     "parameter": {
       "fields": {
         "Query params": [
@@ -8376,6 +8376,93 @@ define({ "api": [
             "optional": false,
             "field": "areaType",
             "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": true,
+            "field": "group",
+            "description": "<p>group to filter results. Options are: all, total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_inferred",
+            "description": "<p>maximum number of inferred species at a national level (according to BioModelos)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_observed",
+            "description": "<p>maximum number of observed species at a national level (according to I2D)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: \"total\",\n    max_inferred: 100,\n    max_observed: 110\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species/nationalMax?areaType=ea&group=total",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species/thresholds",
+    "title": "NOSThresholds",
+    "name": "NOSThresholds",
+    "version": "1.0.0",
+    "description": "<p>Lowest and highest values for the number of species among areas of the same type inside the same biotic region. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
           },
           {
             "group": "Query params",
@@ -8445,7 +8532,7 @@ define({ "api": [
     "examples": [
       {
         "title": "Example usage:",
-        "content": "/richness/number-species/thresholds?areaType=ea&group=total",
+        "content": "/richness/number-species/thresholds?areaType=ea&areaId=CARDER&group=total",
         "type": "curl"
       }
     ],

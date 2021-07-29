@@ -57,14 +57,16 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
-     * Get thresholds for the number of species for the given area type in the given group
+     * Get thresholds for the number of species in the same biotic unit as the given area id for the
+     * given group
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      * @param {String} group group to filter data (default to all), options are: 'all', 'total',
      * 'endemic', 'invasive', 'threatened'.
      *
-     * @returns {Object[]} Number of inferred and observed species for the desired group.
+     * @returns {Object[]} Max an min number of inferred and observed species in the biotic unit for
+     * the desired group.
      */
     getNOSThresholds: async (areaType, areaId, group = 'all') => {
       const promises = [];
@@ -95,6 +97,56 @@ module.exports = (RichnessPersistence, restAPI) => {
             RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
             RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+          );
+          break;
+        default:
+          throw new Error('Data doesn\'t exist for the given group');
+      }
+      return Promise.all(promises)
+        .then((response) => {
+          const ids = ['total', 'endemic', 'invasive', 'threatened'];
+          const result = response.map((item, i) => {
+            let id = group;
+            if (group === 'all') {
+              id = ids[i];
+            }
+            if (Object.values(item[0]).some(element => element === null)) return [];
+            return { id, ...item[0] };
+          });
+          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+        })
+        .catch((e) => {
+          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+        });
+    },
+
+    /**
+     * Get national max values for the number of species in the given area type for the given group
+     *
+     * @param {String} areaType area type
+     * @param {String} group group to filter data (default to all), options are: 'all', 'total',
+     * 'endemic', 'invasive', 'threatened'.
+     *
+     * @returns {Object[]} Max number of inferred and observed species at a national level for the
+     * desired group.
+     */
+    getNOSNationalMax: async (areaType, group = 'all') => {
+      const promises = [];
+      switch (group) {
+        case 'total':
+        case 'endemic':
+        case 'invasive':
+        case 'threatened':
+          promises.unshift(
+            RichnessPersistence.findNationalMax(areaType, group),
+          );
+          break;
+        case 'all':
+          promises.unshift(
+            RichnessPersistence.findNationalMax(areaType, 'total'),
+            RichnessPersistence.findNationalMax(areaType, 'endemic'),
+            RichnessPersistence.findNationalMax(areaType, 'invasive'),
+            RichnessPersistence.findNationalMax(areaType, 'threatened'),
           );
           break;
         default:

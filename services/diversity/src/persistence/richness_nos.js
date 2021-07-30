@@ -132,7 +132,7 @@ module.exports = (
 
     const regionIdQuery = db('richness_nos as rn')
       .select('id_region')
-      .where({ geofence_type: areaType, geofence_id: areaId });
+      .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId });
 
     return richnessNos.query()
       .whereIn('id_region', regionIdQuery)

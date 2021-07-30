@@ -72,31 +72,19 @@ module.exports = (RichnessPersistence, restAPI) => {
       const promises = [];
       switch (group) {
         case 'total':
-          promises.unshift(
-            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
-          );
-          break;
         case 'endemic':
-          promises.unshift(
-            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
-          );
-          break;
         case 'invasive':
-          promises.unshift(
-            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
-          );
-          break;
         case 'threatened':
           promises.unshift(
-            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholds(areaType, areaId, group),
           );
           break;
         case 'all':
           promises.unshift(
-            RichnessPersistence.findThresholdsTotalNumberOfSpecies(areaType, areaId),
-            RichnessPersistence.findThresholdsEndemicNumberOfSpecies(areaType, areaId),
-            RichnessPersistence.findThresholdsInvasiveNumberOfSpecies(areaType, areaId),
-            RichnessPersistence.findThresholdsThreatenedNumberOfSpecies(areaType, areaId),
+            RichnessPersistence.findThresholds(areaType, areaId, 'total'),
+            RichnessPersistence.findThresholds(areaType, areaId, 'endemic'),
+            RichnessPersistence.findThresholds(areaType, areaId, 'invasive'),
+            RichnessPersistence.findThresholds(areaType, areaId, 'threatened'),
           );
           break;
         default:

@@ -37,38 +37,6 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the total number of species in a given area
-   *
-   * @param {String} areaType area type.
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed species for the desired group.
-   */
-  findThresholdsTotalNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
-      return richnessNos.query()
-        .where('id_region', 'in', region)
-        .andWhere({ geofence_type: areaTypeKeys(areaType) })
-        .min(
-          {
-            min_inferred: 'total_inf',
-            min_observed: 'total_obs',
-          },
-        )
-        .max(
-          {
-            max_inferred: 'total_inf',
-            max_observed: 'total_obs',
-          },
-        );
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
-
-  /**
    * Find the values for the number of endemic species in the given area
    *
    * @param {String} areaType area type
@@ -87,38 +55,6 @@ module.exports = (
         )
         .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
         .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
-
-  /**
-   * Get the thresholds for the number of endemic species in a given area
-   *
-   * @param {String} areaType area type.
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed species for the desired group.
-   */
-  findThresholdsEndemicNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
-      return richnessNos.query()
-        .where('id_region', 'in', region)
-        .andWhere({ geofence_type: areaTypeKeys(areaType) })
-        .min(
-          {
-            min_inferred: 'end_inf',
-            min_observed: 'end_obs',
-          },
-        )
-        .max(
-          {
-            max_inferred: 'end_inf',
-            max_observed: 'end_obs',
-          },
-        );
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
@@ -151,38 +87,6 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the number of invasive species in a given area
-   *
-   * @param {String} areaType area type.
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed species for the desired group.
-   */
-  findThresholdsInvasiveNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
-      return richnessNos.query()
-        .where('id_region', 'in', region)
-        .andWhere({ geofence_type: areaTypeKeys(areaType) })
-        .min(
-          {
-            min_inferred: 'inv_inf',
-            min_observed: 'inv_obs',
-          },
-        )
-        .max(
-          {
-            max_inferred: 'inv_inf',
-            max_observed: 'inv_obs',
-          },
-        );
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
-
-  /**
    * Find the values for the number of threatened species in the given area
    *
    * @param {String} areaType area type
@@ -208,35 +112,47 @@ module.exports = (
   },
 
   /**
-   * Get the thresholds for the number of threatened species in a given area
+   * Get the thresholds for the number of species in a given area and group
    *
    * @param {String} areaType area type.
    * @param {String | Number} areaId area id
+   * @param {String} group group to filter data (default to all), options are: 'all', 'total',
+   * 'endemic', 'invasive', 'threatened'.
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholdsThreatenedNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      const region = db('richness_nos as rn').select('id_region').where({ geofence_id: areaId });
-      return richnessNos.query()
-        .where('id_region', 'in', region)
-        .andWhere({ geofence_type: areaTypeKeys(areaType) })
-        .min(
-          {
-            min_inferred: 'thr_inf',
-            min_observed: 'thr_obs',
-          },
-        )
-        .max(
-          {
-            max_inferred: 'thr_inf',
-            max_observed: 'thr_obs',
-          },
-        );
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
+  findThresholds: async (areaType, areaId, group) => {
+    const obsColumn = observedGroupKey(group);
+    const infColumn = inferredGroupKey(group);
+
+    if (obsColumn === null || infColumn === null) {
+      logger.error(`Undefined group ${group} in database`);
       throw new Error('Error getting data');
     }
+
+    const regionIdQuery = db('richness_nos as rn')
+      .select('id_region')
+      .where({ geofence_type: areaType, geofence_id: areaId });
+
+    return richnessNos.query()
+      .whereIn('id_region', regionIdQuery)
+      .andWhere({ geofence_type: areaTypeKeys(areaType) })
+      .min(
+        {
+          min_inferred: infColumn,
+          min_observed: obsColumn,
+        },
+      )
+      .max(
+        {
+          max_inferred: infColumn,
+          max_observed: obsColumn,
+        },
+      )
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      });
   },
 
   /**

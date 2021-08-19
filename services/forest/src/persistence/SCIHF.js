@@ -12,19 +12,16 @@ module.exports = (
    *
    * @returns {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInEA: async (areaId, year = 2018) => {
-    try {
-      return geoIntegrity.query()
-        .where({ id_ea: areaId, sci_year: year })
-        .select('hf_pers', 'sci_cat', 'binary_protected')
-        .sum('area_ha as area')
-        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
-    } catch (e) {
+  findSCIHFInEA: async (areaId, year = 2018) => geoIntegrity.query()
+    .where({ id_ea: areaId, sci_year: year })
+    .select('hf_pers', 'sci_cat', 'binary_protected')
+    .sum('area_ha as area')
+    .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+    .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+    .catch((e) => {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
-    }
-  },
+    }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -35,19 +32,16 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInState: async (areaId, year = 2018) => {
-    try {
-      return geoIntegrity.query()
-        .where({ id_state: areaId, sci_year: year })
-        .select('hf_pers', 'sci_cat', 'binary_protected')
-        .sum('area_ha as area')
-        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
-    } catch (e) {
+  findSCIHFInState: async (areaId, year = 2018) => geoIntegrity.query()
+    .where({ id_state: areaId, sci_year: year })
+    .select('hf_pers', 'sci_cat', 'binary_protected')
+    .sum('area_ha as area')
+    .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+    .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+    .catch((e) => {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
-    }
-  },
+    }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -58,19 +52,16 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInBasinSubzone: async (areaId, year = 2018) => {
-    try {
-      return geoIntegrity.query()
-        .where({ id_subzone: areaId, sci_year: year })
-        .select('hf_pers', 'sci_cat', 'binary_protected')
-        .sum('area_ha as area')
-        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
-    } catch (e) {
+  findSCIHFInBasinSubzone: async (areaId, year = 2018) => geoIntegrity.query()
+    .where({ id_subzone: areaId, sci_year: year })
+    .select('hf_pers', 'sci_cat', 'binary_protected')
+    .sum('area_ha as area')
+    .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+    .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+    .catch((e) => {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
-    }
-  },
+    }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -81,19 +72,16 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInPA: async (paCode, year = 2018) => {
-    try {
-      return geoIntegrity.query()
-        .where({ binary_protected: paCode, sci_year: year })
-        .select('hf_pers', 'sci_cat', 'binary_protected')
-        .sum('area_ha as area')
-        .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-        .orderBy('binary_protected', 'sci_cat', 'hf_pers');
-    } catch (e) {
+  findSCIHFInPA: async (paCode, year = 2018) => geoIntegrity.query()
+    .where({ binary_protected: paCode, sci_year: year })
+    .select('hf_pers', 'sci_cat', 'binary_protected')
+    .sum('area_ha as area')
+    .groupBy('binary_protected', 'sci_cat', 'hf_pers')
+    .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+    .catch((e) => {
       logger.error(e.stack || e.Error || e.message || e);
       throw new Error('Error getting data');
-    }
-  },
+    }),
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint

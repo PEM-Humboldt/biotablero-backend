@@ -19,22 +19,20 @@ module.exports = (
    *
    * @returns {Object[]} Number of total inferred and observed species.
    */
-  findTotalNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      return db('richness_nos as rn')
-        .select(
-          db.raw('coalesce(rn.total_inf, 0) as inferred'),
-          db.raw('coalesce(rn.total_obs, 0) as observed'),
-          db.raw('coalesce(rnr.total_obs, 0) as region_observed'),
-          db.raw('coalesce(rnr.total_inf, 0) as region_inferred'),
-        )
-        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findTotalNumberOfSpecies: (areaType, areaId) => (
+    db('richness_nos as rn')
+      .select(
+        db.raw('coalesce(rn.total_inf, 0) as inferred'),
+        db.raw('coalesce(rn.total_obs, 0) as observed'),
+        db.raw('coalesce(rnr.total_obs, 0) as region_observed'),
+        db.raw('coalesce(rnr.total_inf, 0) as region_inferred'),
+      )
+      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })),
 
   /**
    * Find the values for the number of endemic species in the given area
@@ -44,22 +42,20 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed endemic species.
    */
-  findEndemicNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      return db('richness_nos as rn')
-        .select(
-          db.raw('coalesce(rn.end_inf, 0) as inferred'),
-          db.raw('coalesce(rn.end_obs, 0) as observed'),
-          db.raw('coalesce(rnr.end_obs, 0) as region_observed'),
-          db.raw('coalesce(rnr.end_inf, 0) as region_inferred'),
-        )
-        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findEndemicNumberOfSpecies: (areaType, areaId) => (
+    db('richness_nos as rn')
+      .select(
+        db.raw('coalesce(rn.end_inf, 0) as inferred'),
+        db.raw('coalesce(rn.end_obs, 0) as observed'),
+        db.raw('coalesce(rnr.end_obs, 0) as region_observed'),
+        db.raw('coalesce(rnr.end_inf, 0) as region_inferred'),
+      )
+      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })),
 
   /**
    * Find the values for the number of invasive species in the given area
@@ -69,22 +65,20 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed invasive species.
    */
-  findInvasiveNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      return db('richness_nos as rn')
-        .select(
-          db.raw('coalesce(rn.inv_inf, 0) as inferred'),
-          db.raw('coalesce(rn.inv_obs, 0) as observed'),
-          db.raw('coalesce(rnr.inv_obs, 0) as region_observed'),
-          db.raw('coalesce(rnr.inv_inf, 0) as region_inferred'),
-        )
-        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findInvasiveNumberOfSpecies: (areaType, areaId) => (
+    db('richness_nos as rn')
+      .select(
+        db.raw('coalesce(rn.inv_inf, 0) as inferred'),
+        db.raw('coalesce(rn.inv_obs, 0) as observed'),
+        db.raw('coalesce(rnr.inv_obs, 0) as region_observed'),
+        db.raw('coalesce(rnr.inv_inf, 0) as region_inferred'),
+      )
+      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })),
 
   /**
    * Find the values for the number of threatened species in the given area
@@ -94,22 +88,20 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed threatened species.
    */
-  findThreatenedNumberOfSpecies: async (areaType, areaId) => {
-    try {
-      return db('richness_nos as rn')
-        .select(
-          db.raw('coalesce(rn.thr_inf, 0) as inferred'),
-          db.raw('coalesce(rn.thr_obs, 0) as observed'),
-          db.raw('coalesce(rnr.thr_obs, 0) as region_observed'),
-          db.raw('coalesce(rnr.thr_inf, 0) as region_inferred'),
-        )
-        .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-        .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId });
-    } catch (e) {
-      logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
-    }
-  },
+  findThreatenedNumberOfSpecies: (areaType, areaId) => (
+    db('richness_nos as rn')
+      .select(
+        db.raw('coalesce(rn.thr_inf, 0) as inferred'),
+        db.raw('coalesce(rn.thr_obs, 0) as observed'),
+        db.raw('coalesce(rnr.thr_obs, 0) as region_observed'),
+        db.raw('coalesce(rnr.thr_inf, 0) as region_inferred'),
+      )
+      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
+      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      })),
 
   /**
    * Get the thresholds for the number of species in a given area and group
@@ -121,7 +113,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findThresholds: async (areaType, areaId, group) => {
+  findThresholds: (areaType, areaId, group) => {
     const obsColumn = observedGroupKey(group);
     const infColumn = inferredGroupKey(group);
 
@@ -164,7 +156,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed species for the desired group.
    */
-  findNationalMax: async (areaType, group) => {
+  findNationalMax: (areaType, group) => {
     const obsColumn = observedGroupKey(group);
     const infColumn = inferredGroupKey(group);
 

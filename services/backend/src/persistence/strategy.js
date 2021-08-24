@@ -1,9 +1,6 @@
 const config = require('config');
 
-module.exports = (
-  db,
-  { geoCompensationStrategies2018 },
-) => {
+module.exports = (db, { geoCompensationStrategies2018 }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -17,9 +14,10 @@ module.exports = (
      *
      * @returns {Object} GeoJson Object with strategies as geometries from a GeometryCollection
      */
-    findGeoByBiomeSubzoneEA: (biomeId, subzoneId, envAuthorityId) => (
-      db.raw(
-        `SELECT row_to_json(fc) as collection
+    findGeoByBiomeSubzoneEA: (biomeId, subzoneId, envAuthorityId) =>
+      db
+        .raw(
+          `SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM(
@@ -37,10 +35,9 @@ module.exports = (
             AND strategies1.id_ea = ?
           ) as f
         ) as fc`,
-        [geometriesConfig.tolerance, biomeId, subzoneId, envAuthorityId],
-      )
-        .then(strategies => strategies.rows[0].collection)
-    ),
+          [geometriesConfig.tolerance, biomeId, subzoneId, envAuthorityId],
+        )
+        .then((strategies) => strategies.rows[0].collection),
 
     /**
      * Select strategies by biome, sub-basin and environmental authority
@@ -51,14 +48,13 @@ module.exports = (
      *
      * @returns {Object} GeoJson Object with strategies as geometries from a GeometryCollection
      */
-    findByBiomeSubzoneEA: (biomeId, subzoneId, envAuthorityId) => (
+    findByBiomeSubzoneEA: (biomeId, subzoneId, envAuthorityId) =>
       geoCompensationStrategies2018
         .where({ id_biome: biomeId, id_subzone: subzoneId, id_ea: envAuthorityId })
         .fetchAll({
           columns: ['gid', 'area_ha', 'id_strategy'],
-          withRelated: [{ strategy: qb => qb.column('id_strategy', 'strategy') }],
+          withRelated: [{ strategy: (qb) => qb.column('id_strategy', 'strategy') }],
         })
-        .then(results => results.toJSON())
-    ),
+        .then((results) => results.toJSON()),
   };
 };

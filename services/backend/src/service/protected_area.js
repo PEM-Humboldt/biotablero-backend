@@ -23,9 +23,8 @@ module.exports = (paPersistence, seService) => {
      *
      * @param {String[]} binaryProtected binary protected values to filter by
      */
-    getCategoriesByBinaryProtected: async binaryProtected => (
-      paPersistence.findCategoriesByBinaryProtected(binaryProtected)
-    ),
+    getCategoriesByBinaryProtected: async (binaryProtected) =>
+      paPersistence.findCategoriesByBinaryProtected(binaryProtected),
 
     /**
      * Get the binary protected value for the given category name
@@ -38,7 +37,7 @@ module.exports = (paPersistence, seService) => {
     getBinaryProtectedByCategory: async (categoryName) => {
       const binaryProtected = await paPersistence.findBinaryProtectedByCategory(categoryName);
       if (binaryProtected.length === 0) {
-        throw new Error('protected area category doesn\'t exists');
+        throw new Error("protected area category doesn't exists");
       }
       return binaryProtected[0];
     },
@@ -51,7 +50,7 @@ module.exports = (paPersistence, seService) => {
     getAreaBySE: async (categoryName) => {
       let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
       if (categoryArea.length === 0) {
-        throw new Error('protected area category doesn\'t exists');
+        throw new Error("protected area category doesn't exists");
       }
       categoryArea = categoryArea[0].area;
       const areas = await seService.getAreasByPACategory(categoryName);
@@ -97,7 +96,7 @@ module.exports = (paPersistence, seService) => {
     getCoverageInSE: async (categoryName, seType) => {
       const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
       const coverAreas = await seService.getSECoverageInPACategory(categoryName, seType);
-      return coverAreas.map(area => ({
+      return coverAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -112,7 +111,7 @@ module.exports = (paPersistence, seService) => {
     getPAInSE: async (categoryName, seType) => {
       const seArea = await seService.getSEAreaInPACategory(categoryName, seType);
       const paAreas = await seService.getSEPAInPACategory(categoryName, seType);
-      const result = paAreas.map(area => ({
+      const result = paAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -130,7 +129,7 @@ module.exports = (paPersistence, seService) => {
     getAreaByPA: async (categoryName) => {
       let categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
       if (!categoryArea || categoryArea[0].area === null) {
-        throw new Error('protected area category doesn\'t exists');
+        throw new Error("protected area category doesn't exists");
       }
       categoryArea = categoryArea[0].area;
       const areas = await paPersistence.findAreaByPA(categoryName);
@@ -161,7 +160,7 @@ module.exports = (paPersistence, seService) => {
       let categoryArea = await protectedArea.getTotalArea(categoryName);
       categoryArea = categoryArea.total_area;
       const areas = await paPersistence.findAreaByCoverage(categoryName);
-      const result = areas.map(cover => ({
+      const result = areas.map((cover) => ({
         ...cover,
         percentage: cover.area / categoryArea,
       }));
@@ -178,7 +177,7 @@ module.exports = (paPersistence, seService) => {
     getTotalArea: async (categoryName) => {
       const categoryArea = await paPersistence.getTotalAreaByCategory(categoryName);
       if (categoryArea[0].area === null) {
-        throw new Error('protected area category doesn\'t exists');
+        throw new Error("protected area category doesn't exists");
       }
       return { total_area: categoryArea[0].area };
     },
@@ -197,7 +196,7 @@ module.exports = (paPersistence, seService) => {
       const values = await paPersistence.findAreaByHFCategory(categoryName);
       return values
         .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / paArea,
@@ -213,7 +212,7 @@ module.exports = (paPersistence, seService) => {
     getCurrentHFValue: async (categoryName) => {
       const value = await paPersistence.findCurrentHFValue(categoryName);
       if (value[0].CurrentHFValue === null) {
-        throw new Error('protected area category doesn\'t exists');
+        throw new Error("protected area category doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,
@@ -222,19 +221,19 @@ module.exports = (paPersistence, seService) => {
     },
 
     /**
-      * Get the information about the persistence of human footprint in the given protected area
-      * category
-      * @param {String} categoryName protected area category
-      *
-      * @returns {Object[]} Array of persistence values with their respective percentage.
-      */
+     * Get the information about the persistence of human footprint in the given protected area
+     * category
+     * @param {String} categoryName protected area category
+     *
+     * @returns {Object[]} Array of persistence values with their respective percentage.
+     */
     getAreaByHFPersistence: async (categoryName) => {
       let paArea = await protectedArea.getTotalArea(categoryName);
       paArea = paArea.total_area;
       const values = await paPersistence.findHFPersistenceAreas(categoryName);
       return values
         .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / paArea,
@@ -251,7 +250,7 @@ module.exports = (paPersistence, seService) => {
       const values = await paPersistence.findTotalHFTimeLine(categoryName);
       return {
         key: 'aTotal',
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -270,7 +269,7 @@ module.exports = (paPersistence, seService) => {
       const values = await seService.getSEHFTimelineInPA(categoryName, seType);
       return {
         key: SEKeys(seType),
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -295,11 +294,16 @@ module.exports = (paPersistence, seService) => {
      */
     getEcoChangeLPLayer: async (categoryName, period) => {
       switch (period) {
-        case '2016-2019': return forestLPLayer20162019;
-        case '2011-2015': return forestLPLayer20112015;
-        case '2006-2010': return forestLPLayer20062010;
-        case '2000-2005': return forestLPLayer20002005;
-        default: return {};
+        case '2016-2019':
+          return forestLPLayer20162019;
+        case '2011-2015':
+          return forestLPLayer20112015;
+        case '2006-2010':
+          return forestLPLayer20062010;
+        case '2000-2005':
+          return forestLPLayer20002005;
+        default:
+          return {};
       }
     },
 
@@ -347,7 +351,7 @@ module.exports = (paPersistence, seService) => {
     getHFCategoriesLayerByPACategory: async (categoryName) => {
       const geom = await paPersistence.findHFCategoriesLayerByPACategory(categoryName);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,
@@ -369,7 +373,7 @@ module.exports = (paPersistence, seService) => {
     getHFPersistenceLayerById: async (categoryName) => {
       const geom = await paPersistence.findHFPersistenceLayerById(categoryName);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,

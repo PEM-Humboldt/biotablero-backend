@@ -1,6 +1,6 @@
 const groupObjects = require('../util/groupObjects');
 
-module.exports = biomePersistence => ({
+module.exports = (biomePersistence) => ({
   /**
    * Bulk create a set of project impacted biomes
    *
@@ -8,7 +8,7 @@ module.exports = biomePersistence => ({
    *
    * @returns {Object[]} created objects with id
    */
-  bulkAddImpacted: async biomes => biomePersistence.bulkCreateProjectImpacted(biomes),
+  bulkAddImpacted: async (biomes) => biomePersistence.bulkCreateProjectImpacted(biomes),
 
   /**
    * Get all biomes

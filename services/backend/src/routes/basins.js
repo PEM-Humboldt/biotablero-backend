@@ -19,13 +19,15 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    *  /basinAreas
    * @apiUse getAllBasinAreasExample
    */
-  router.get('/basinAreas', errorHandler((req, res, next) => (
-    basinAreaService.getAll()
-      .then((result) => {
+  router.get(
+    '/basinAreas',
+    errorHandler((req, res, next) =>
+      basinAreaService.getAll().then((result) => {
         res.send(result);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_bs
@@ -44,13 +46,15 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    *  /basinZones
    * @apiUse getAllBasinZonesExample
    */
-  router.get('/basinZones', errorHandler((req, res, next) => (
-    basinZoneService.getAll()
-      .then((result) => {
+  router.get(
+    '/basinZones',
+    errorHandler((req, res, next) =>
+      basinZoneService.getAll().then((result) => {
         res.send(result);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

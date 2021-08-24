@@ -34,13 +34,15 @@ module.exports = (errorHandler, seService) => {
    *  /se
    * @apiUse listAllExample
    */
-  router.get('/se', errorHandler((req, res, next) => {
-    seService.getAll()
-      .then((se) => {
+  router.get(
+    '/se',
+    errorHandler((req, res, next) => {
+      seService.getAll().then((se) => {
         res.send(se);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup geofence_se
@@ -57,13 +59,15 @@ module.exports = (errorHandler, seService) => {
    *  /se/primary
    * @apiUse listPrimarySEExample
    */
-  router.get('/se/primary', errorHandler((req, res, next) => {
-    seService.getPrimary()
-      .then((result) => {
+  router.get(
+    '/se/primary',
+    errorHandler((req, res, next) => {
+      seService.getPrimary().then((result) => {
         res.send(result);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup geofence_se
@@ -86,13 +90,15 @@ module.exports = (errorHandler, seService) => {
    *  /se/Páramo/national
    * @apiUse SEDetailExample
    */
-  router.get('/se/:ecosystem/national', errorHandler((req, res, next) => {
-    seService.getEcosystemNatInfo(req.params.ecosystem)
-      .then((result) => {
+  router.get(
+    '/se/:ecosystem/national',
+    errorHandler((req, res, next) => {
+      seService.getEcosystemNatInfo(req.params.ecosystem).then((result) => {
         res.send(result);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -115,13 +121,15 @@ module.exports = (errorHandler, seService) => {
    *  /se/Páramo/coverage
    * @apiUse CoverageInGeofenceExample
    */
-  router.get('/se/:ecosystem/coverage', errorHandler((req, res, next) => {
-    seService.getSEByCoverage(req.params.ecosystem)
-      .then((result) => {
+  router.get(
+    '/se/:ecosystem/coverage',
+    errorHandler((req, res, next) => {
+      seService.getSEByCoverage(req.params.ecosystem).then((result) => {
         res.send(result);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -144,13 +152,15 @@ module.exports = (errorHandler, seService) => {
    *  /se/Páramo/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get('/se/:ecosystem/pa', errorHandler((req, res, next) => {
-    seService.getSEByPA(req.params.ecosystem)
-      .then((result) => {
+  router.get(
+    '/se/:ecosystem/pa',
+    errorHandler((req, res, next) => {
+      seService.getSEByPA(req.params.ecosystem).then((result) => {
         res.send(result);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup geofence_se
@@ -170,13 +180,15 @@ module.exports = (errorHandler, seService) => {
    *  /se/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get('/se/layers/national', errorHandler((req, res, next) => (
-    seService.getNationalLayer()
-      .then((geometry) => {
+  router.get(
+    '/se/layers/national',
+    errorHandler((req, res, next) =>
+      seService.getNationalLayer().then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

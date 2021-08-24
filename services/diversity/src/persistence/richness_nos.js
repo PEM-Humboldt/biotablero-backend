@@ -1,16 +1,6 @@
-const {
-  areaTypeKeys,
-  observedGroupKey,
-  inferredGroupKey,
-} = require('../util/appropriate_keys');
+const { areaTypeKeys, observedGroupKey, inferredGroupKey } = require('../util/appropriate_keys');
 
-module.exports = (
-  db,
-  {
-    richnessNos,
-  },
-  logger,
-) => ({
+module.exports = (db, { richnessNos }, logger) => ({
   /**
    * Find the values for the total number of species in the given area
    *
@@ -19,7 +9,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of total inferred and observed species.
    */
-  findTotalNumberOfSpecies: (areaType, areaId) => (
+  findTotalNumberOfSpecies: (areaType, areaId) =>
     db('richness_nos as rn')
       .select(
         db.raw('coalesce(rn.total_inf, 0) as inferred'),
@@ -32,7 +22,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values for the number of endemic species in the given area
@@ -42,7 +32,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed endemic species.
    */
-  findEndemicNumberOfSpecies: (areaType, areaId) => (
+  findEndemicNumberOfSpecies: (areaType, areaId) =>
     db('richness_nos as rn')
       .select(
         db.raw('coalesce(rn.end_inf, 0) as inferred'),
@@ -55,7 +45,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values for the number of invasive species in the given area
@@ -65,7 +55,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed invasive species.
    */
-  findInvasiveNumberOfSpecies: (areaType, areaId) => (
+  findInvasiveNumberOfSpecies: (areaType, areaId) =>
     db('richness_nos as rn')
       .select(
         db.raw('coalesce(rn.inv_inf, 0) as inferred'),
@@ -78,7 +68,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values for the number of threatened species in the given area
@@ -88,7 +78,7 @@ module.exports = (
    *
    * @returns {Object[]} Number of inferred and observed threatened species.
    */
-  findThreatenedNumberOfSpecies: (areaType, areaId) => (
+  findThreatenedNumberOfSpecies: (areaType, areaId) =>
     db('richness_nos as rn')
       .select(
         db.raw('coalesce(rn.thr_inf, 0) as inferred'),
@@ -101,7 +91,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Get the thresholds for the number of species in a given area and group
@@ -126,21 +116,18 @@ module.exports = (
       .select('id_region')
       .where({ geofence_type: areaTypeKeys(areaType), geofence_id: areaId });
 
-    return richnessNos.query()
+    return richnessNos
+      .query()
       .whereIn('id_region', regionIdQuery)
       .andWhere({ geofence_type: areaTypeKeys(areaType) })
-      .min(
-        {
-          min_inferred: infColumn,
-          min_observed: obsColumn,
-        },
-      )
-      .max(
-        {
-          max_inferred: infColumn,
-          max_observed: obsColumn,
-        },
-      )
+      .min({
+        min_inferred: infColumn,
+        min_observed: obsColumn,
+      })
+      .max({
+        max_inferred: infColumn,
+        max_observed: obsColumn,
+      })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
@@ -165,14 +152,13 @@ module.exports = (
       throw new Error('Error getting data');
     }
 
-    return richnessNos.query()
+    return richnessNos
+      .query()
       .where({ geofence_type: areaTypeKeys(areaType) })
-      .max(
-        {
-          max_inferred: infColumn,
-          max_observed: obsColumn,
-        },
-      )
+      .max({
+        max_inferred: infColumn,
+        max_observed: obsColumn,
+      })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
@@ -189,9 +175,10 @@ module.exports = (
    *
    * @returns {Binary} Image with the geometry
    */
-  getAreaLayer: (geometry, filename) => (
-    db.raw(
-      `
+  getAreaLayer: (geometry, filename) =>
+    db
+      .raw(
+        `
       SELECT ST_AsPNG(
         ST_ColorMap(
           ST_Clip(
@@ -210,14 +197,13 @@ module.exports = (
         )
       ) as image;
       `,
-      [filename, geometry, geometry],
-    )
-      .then(rast => rast.rows[0].image)
+        [filename, geometry, geometry],
+      )
+      .then((rast) => rast.rows[0].image)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-  ),
+      }),
 
   /**
    * Find the min and max value of the layer for the number of species in the given area
@@ -230,9 +216,10 @@ module.exports = (
    *
    * @returns {Object} Object with min and max value
    */
-  getAreaLayerThresholds: (geometry, filename) => (
-    db.raw(
-      `
+  getAreaLayerThresholds: (geometry, filename) =>
+    db
+      .raw(
+        `
       SELECT (stats).min as min, (stats).max as max
       FROM (
         SELECT
@@ -250,9 +237,8 @@ module.exports = (
           ) as stats
         ) as thresholds;
       `,
-      [filename, geometry, geometry],
-    )
-      .then(rast => rast.rows[0])
-      .catch()
-  ),
+        [filename, geometry, geometry],
+      )
+      .then((rast) => rast.rows[0])
+      .catch(),
 });

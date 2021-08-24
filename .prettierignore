@@ -1,0 +1,12 @@
+docs/
+logs/
+node_modules/
+.eslintrc
+.github
+.yarn
+
+services/*/docs
+services/*/logs
+services/*/node_modules
+services/*/.eslintrc
+services/*/.yarn

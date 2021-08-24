@@ -6,7 +6,8 @@
   "scripts": {
     "g:lint": "cd $INIT_CWD && eslint",
     "g:docs": "cd $INIT_CWD && apidoc",
-    "all_docs": "apidoc -i services/ -e node_modules -e docs -o docs/"
+    "all_docs": "apidoc -i services/ -e node_modules -e docs -o docs/",
+    "check-format": "prettier --check ."
   },
   "license": "MIT",
   "devDependencies": {

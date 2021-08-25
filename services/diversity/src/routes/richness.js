@@ -26,6 +26,7 @@ module.exports = (errorHandler, Richness) => {
    * area belongs to
    * @apiSuccess {Number} result.region_inferred number of inferred species in the region the
    * area belongs to
+   * @apiSuccess {String} result.region_name name of the region the area belongs to
    *
    * @apiExample {curl} Example usage:
    *  /richness/number-species?areaType=ea&areaId=CARDER&group=all

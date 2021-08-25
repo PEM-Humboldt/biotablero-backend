@@ -2,96 +2,39 @@ const { areaTypeKeys, observedGroupKey, inferredGroupKey } = require('../util/ap
 
 module.exports = (db, { richnessNos }, logger) => ({
   /**
-   * Find the values for the total number of species in the given area
+   * Find number of species values in the given area and group
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
+   * @param {String} group group to filter data (default to all), options are: 'all', 'total',
+   * 'endemic', 'invasive', 'threatened'.
    *
    * @returns {Object[]} Number of total inferred and observed species.
    */
-  findTotalNumberOfSpecies: (areaType, areaId) =>
-    db('richness_nos as rn')
-      .select(
-        db.raw('coalesce(rn.total_inf, 0) as inferred'),
-        db.raw('coalesce(rn.total_obs, 0) as observed'),
-        db.raw('coalesce(rnr.total_obs, 0) as region_observed'),
-        db.raw('coalesce(rnr.total_inf, 0) as region_inferred'),
-      )
-      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
-      .catch((e) => {
-        logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
-      }),
+  findNumberOfSpecies: (areaType, areaId, group) => {
+    const obsColumn = observedGroupKey(group);
+    const infColumn = inferredGroupKey(group);
 
-  /**
-   * Find the values for the number of endemic species in the given area
-   *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed endemic species.
-   */
-  findEndemicNumberOfSpecies: (areaType, areaId) =>
-    db('richness_nos as rn')
-      .select(
-        db.raw('coalesce(rn.end_inf, 0) as inferred'),
-        db.raw('coalesce(rn.end_obs, 0) as observed'),
-        db.raw('coalesce(rnr.end_obs, 0) as region_observed'),
-        db.raw('coalesce(rnr.end_inf, 0) as region_inferred'),
-      )
-      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
-      .catch((e) => {
-        logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
-      }),
+    if (obsColumn === null || infColumn === null) {
+      logger.error(`Undefined group ${group} in database`);
+      throw new Error('Error getting data');
+    }
 
-  /**
-   * Find the values for the number of invasive species in the given area
-   *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed invasive species.
-   */
-  findInvasiveNumberOfSpecies: (areaType, areaId) =>
-    db('richness_nos as rn')
+    return db('richness_nos as rn')
       .select(
-        db.raw('coalesce(rn.inv_inf, 0) as inferred'),
-        db.raw('coalesce(rn.inv_obs, 0) as observed'),
-        db.raw('coalesce(rnr.inv_obs, 0) as region_observed'),
-        db.raw('coalesce(rnr.inv_inf, 0) as region_inferred'),
+        db.raw(`coalesce(rn.${infColumn}, 0) as inferred`),
+        db.raw(`coalesce(rn.${obsColumn}, 0) as observed`),
+        db.raw(`coalesce(rnr.${obsColumn}, 0) as region_observed`),
+        db.raw(`coalesce(rnr.${infColumn}, 0) as region_inferred`),
+        'rnr.region_name'
       )
       .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
       .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      }),
-
-  /**
-   * Find the values for the number of threatened species in the given area
-   *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   *
-   * @returns {Object[]} Number of inferred and observed threatened species.
-   */
-  findThreatenedNumberOfSpecies: (areaType, areaId) =>
-    db('richness_nos as rn')
-      .select(
-        db.raw('coalesce(rn.thr_inf, 0) as inferred'),
-        db.raw('coalesce(rn.thr_obs, 0) as observed'),
-        db.raw('coalesce(rnr.thr_obs, 0) as region_observed'),
-        db.raw('coalesce(rnr.thr_inf, 0) as region_inferred'),
-      )
-      .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
-      .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
-      .catch((e) => {
-        logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
-      }),
+      })
+    },
 
   /**
    * Get the thresholds for the number of species in a given area and group

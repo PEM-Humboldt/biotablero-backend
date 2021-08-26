@@ -26,15 +26,15 @@ module.exports = (db, { richnessNos }, logger) => ({
         db.raw(`coalesce(rn.${obsColumn}, 0) as observed`),
         db.raw(`coalesce(rnr.${obsColumn}, 0) as region_observed`),
         db.raw(`coalesce(rnr.${infColumn}, 0) as region_inferred`),
-        'rnr.region_name'
+        'rnr.region_name',
       )
       .leftJoin('richness_nos_regions as rnr', 'rn.id_region', 'rnr.id_region')
       .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-    },
+      });
+  },
 
   /**
    * Get the thresholds for the number of species in a given area and group

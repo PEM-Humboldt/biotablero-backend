@@ -8619,13 +8619,20 @@
             "optional": false,
             "field": "result.region_inferred",
             "description": "<p>number of inferred species in the region the area belongs to</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.region_name",
+            "description": "<p>name of the region the area belongs to</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    id: \"total\",\n    inferred: 30,\n    observed: 40,\n    region: 100\n  },\n  {\n    id: \"endemic\",\n    inferred: 20,\n    observed: 25,\n    region: 100\n  },\n  {\n    id: \"invasive\",\n    inferred: 10,\n    observed: 20,\n    region: 100\n  },\n  {\n    id: \"threatened\",\n    inferred: 15,\n    observed: 20,\n    region: 100\n  }\n]",
+          "content": "[\n  {\n    id: \"total\",\n    inferred: 30,\n    observed: 40,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"endemic\",\n    inferred: 20,\n    observed: 25,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"invasive\",\n    inferred: 10,\n    observed: 20,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"threatened\",\n    inferred: 15,\n    observed: 20,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  }\n]",
           "type": "json"
         }
       ]

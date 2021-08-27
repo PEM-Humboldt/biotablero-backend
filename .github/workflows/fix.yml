@@ -1,12 +1,12 @@
-name: CI for features
+name: CI for fixes against release branches
 
 on:
   push:
     branches:
-      - feature/*
+      - fix/*
 
 jobs:
-  dev:
+  fix:
     runs-on: ubuntu-latest
 
     steps:
@@ -26,8 +26,3 @@ jobs:
       run: yarn run check-format
       env:
         CI: true
-    - name: verify docs were not updated
-      run: |
-        git checkout develop
-        git checkout -
-        git diff develop HEAD --exit-code --quiet -- docs

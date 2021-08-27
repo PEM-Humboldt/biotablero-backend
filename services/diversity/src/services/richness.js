@@ -36,7 +36,7 @@ module.exports = (RichnessPersistence, restAPI) => {
           );
           break;
         default:
-          throw new Error('Data doesn\'t exist for the given group');
+          throw new Error("Data doesn't exist for the given group");
       }
       return Promise.all(promises)
         .then((response) => {
@@ -49,10 +49,14 @@ module.exports = (RichnessPersistence, restAPI) => {
             if (item.length === 0) return [];
             return { id, ...item[0] };
           });
-          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+          return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+          throw new Error({
+            code: 500,
+            stack: e.stack,
+            message: 'Error retrieving NOS thresholds data',
+          });
         });
     },
 
@@ -75,9 +79,7 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'endemic':
         case 'invasive':
         case 'threatened':
-          promises.unshift(
-            RichnessPersistence.findThresholds(areaType, areaId, group),
-          );
+          promises.unshift(RichnessPersistence.findThresholds(areaType, areaId, group));
           break;
         case 'all':
           promises.unshift(
@@ -88,7 +90,7 @@ module.exports = (RichnessPersistence, restAPI) => {
           );
           break;
         default:
-          throw new Error('Data doesn\'t exist for the given group');
+          throw new Error("Data doesn't exist for the given group");
       }
       return Promise.all(promises)
         .then((response) => {
@@ -98,13 +100,17 @@ module.exports = (RichnessPersistence, restAPI) => {
             if (group === 'all') {
               id = ids[i];
             }
-            if (Object.values(item[0]).some(element => element === null)) return [];
+            if (Object.values(item[0]).some((element) => element === null)) return [];
             return { id, ...item[0] };
           });
-          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+          return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+          throw new Error({
+            code: 500,
+            stack: e.stack,
+            message: 'Error retrieving NOS thresholds data',
+          });
         });
     },
 
@@ -125,9 +131,7 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'endemic':
         case 'invasive':
         case 'threatened':
-          promises.unshift(
-            RichnessPersistence.findNationalMax(areaType, group),
-          );
+          promises.unshift(RichnessPersistence.findNationalMax(areaType, group));
           break;
         case 'all':
           promises.unshift(
@@ -138,7 +142,7 @@ module.exports = (RichnessPersistence, restAPI) => {
           );
           break;
         default:
-          throw new Error('Data doesn\'t exist for the given group');
+          throw new Error("Data doesn't exist for the given group");
       }
       return Promise.all(promises)
         .then((response) => {
@@ -148,13 +152,17 @@ module.exports = (RichnessPersistence, restAPI) => {
             if (group === 'all') {
               id = ids[i];
             }
-            if (Object.values(item[0]).some(element => element === null)) return [];
+            if (Object.values(item[0]).some((element) => element === null)) return [];
             return { id, ...item[0] };
           });
-          return result.some(elem => Array.isArray(elem) && elem.length === 0) ? [] : result;
+          return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({ code: 500, stack: e.stack, message: 'Error retrieving NOS thresholds data' });
+          throw new Error({
+            code: 500,
+            stack: e.stack,
+            message: 'Error retrieving NOS thresholds data',
+          });
         });
     },
 

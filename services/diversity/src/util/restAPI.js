@@ -3,7 +3,7 @@ const config = require('config');
 
 const backendURL = config.services.backend;
 
-const makeGetRequest = endpoint => (
+const makeGetRequest = (endpoint) =>
   fetch(`${backendURL}/${endpoint}`)
     .then((response) => {
       if (response.status === 200) {
@@ -17,11 +17,8 @@ const makeGetRequest = endpoint => (
     .catch((e) => {
       const error = { stack: e.stack, message: 'Error communicating with other services' };
       throw error;
-    })
-);
+    });
 
 module.exports = {
-  requestAreaGeometry: async (areaType, areaId) => (
-    makeGetRequest(`${areaType}/layers/${areaId}`)
-  ),
+  requestAreaGeometry: async (areaType, areaId) => makeGetRequest(`${areaType}/layers/${areaId}`),
 };

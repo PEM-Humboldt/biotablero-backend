@@ -458,7 +458,9 @@ __metadata:
     apidoc: 0.26.0
     eslint: 5.5.0
     eslint-config-airbnb-base: 13.1.0
+    eslint-config-prettier: ^8.3.0
     eslint-plugin-import: 2.14.0
+    prettier: 2.3.2
   languageName: unknown
   linkType: soft
 
@@ -1240,6 +1242,7 @@ __metadata:
     bottlejs: ^2.0.0
     config: ^3.3.6
     knex: ^0.95.4
+    node-fetch: ^2.6.1
     nodemon: ^2.0.7
     pg: ^8.6.0
     restify: ^8.5.1
@@ -1466,6 +1469,17 @@ __metadata:
     eslint: ^4.19.1 || ^5.3.0
     eslint-plugin-import: ^2.14.0
   checksum: 36fa9c4be350f7d10cdde1c94f1d5bb2686cdcf5a0c8e70f6bdcd01393756e3568076a814db8459347e0adf2b1bb5b74d77c4e990a8665ab17acdc1389f050a7
+  languageName: node
+  linkType: hard
+
+"eslint-config-prettier@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "eslint-config-prettier@npm:8.3.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 94ccbb50fb67e5e47e8ba6cfa257b5cbf53619990ab13f46b99518cfe9b900394b93bdf6ffedbde1a8e2997d301b0fbd73a6b4202146bc53475dfb30a8c812f2
   languageName: node
   linkType: hard
 
@@ -4303,6 +4317,15 @@ fsevents@~2.3.1:
   version: 2.0.0
   resolution: "prepend-http@npm:2.0.0"
   checksum: d39325775adce38e18213fd19656af4abd7672ef6b1e330437079bb237de011d49a70bfb56b35037603d30ef279cceddb33794f70168582d50845c2ade29968e
+  languageName: node
+  linkType: hard
+
+"prettier@npm:2.3.2":
+  version: 2.3.2
+  resolution: "prettier@npm:2.3.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 4fd89a7f6a12b13456d359fba2b1dd0fc0a17cf33f8f15953ab9f43b21ea9b09b5a2861d63b558ca0577274ce606d390e70628cf93e26d19d6cb7f19c9eebc31
   languageName: node
   linkType: hard
 

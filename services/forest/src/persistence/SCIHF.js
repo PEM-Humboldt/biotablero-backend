@@ -1,8 +1,4 @@
-module.exports = (
-  db,
-  { geoIntegrity },
-  logger,
-) => ({
+module.exports = (db, { geoIntegrity }, logger) => ({
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
    * in the given environmental authority
@@ -12,8 +8,9 @@ module.exports = (
    *
    * @returns {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInEA: (areaId, year = 2018) => (
-    geoIntegrity.query()
+  findSCIHFInEA: (areaId, year = 2018) =>
+    geoIntegrity
+      .query()
       .where({ id_ea: areaId, sci_year: year })
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
@@ -22,7 +19,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -33,8 +30,9 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInState: (areaId, year = 2018) => (
-    geoIntegrity.query()
+  findSCIHFInState: (areaId, year = 2018) =>
+    geoIntegrity
+      .query()
       .where({ id_state: areaId, sci_year: year })
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
@@ -43,7 +41,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -54,8 +52,9 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInBasinSubzone: (areaId, year = 2018) => (
-    geoIntegrity.query()
+  findSCIHFInBasinSubzone: (areaId, year = 2018) =>
+    geoIntegrity
+      .query()
       .where({ id_subzone: areaId, sci_year: year })
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
@@ -64,7 +63,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -75,8 +74,9 @@ module.exports = (
    *
    * @return {Object[]} Array of areas grouped by SCI, HF persistence and PA categories
    */
-  findSCIHFInPA: (paCode, year = 2018) => (
-    geoIntegrity.query()
+  findSCIHFInPA: (paCode, year = 2018) =>
+    geoIntegrity
+      .query()
       .where({ binary_protected: paCode, sci_year: year })
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
@@ -85,7 +85,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -96,9 +96,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInEA: (areaId, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFLayerInEA: (areaId, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -130,13 +131,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -147,9 +148,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInState: (areaId, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFLayerInState: (areaId, year = 2018) =>
+    db
+      .raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -181,13 +183,13 @@ module.exports = (
         ) as f
       ) as fc;
       `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -198,9 +200,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInBasinSubzone: (areaId, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFLayerInBasinSubzone: (areaId, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -232,13 +235,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [areaId, year, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of the forest structural condition index crossed with human footprint
@@ -249,9 +252,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFLayerInPA: (paCode, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFLayerInPA: (paCode, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -283,13 +287,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [paCode, paCode, year, paCode, paCode, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [paCode, paCode, year, paCode, paCode, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -303,9 +307,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInEA: (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFPALayerInEA: (areaId, sciCat, hfPers, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -340,13 +345,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -359,9 +364,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInState: (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFPALayerInState: (areaId, sciCat, hfPers, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -396,13 +402,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -415,9 +421,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInBasinSubzone: (areaId, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFPALayerInBasinSubzone: (areaId, sciCat, hfPers, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -452,13 +459,13 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, year, sciCat, hfPers, areaId, year, sciCat, hfPers],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layer of one combination of forest structural condition index category and a human
@@ -471,9 +478,10 @@ module.exports = (
    *
    * @return {Object} Geojson object with the geometry
    */
-  findSCIHFPALayerInPA: (paCode, sciCat, hfPers, year = 2018) => (
-    db.raw(
-      `
+  findSCIHFPALayerInPA: (paCode, sciCat, hfPers, year = 2018) =>
+    db
+      .raw(
+        `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -508,11 +516,11 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-      [paCode, paCode, year, sciCat, hfPers, paCode, paCode, year, sciCat, hfPers],
-    )
-      .then(layers => layers.rows[0].collection)
+        [paCode, paCode, year, sciCat, hfPers, paCode, paCode, year, sciCat, hfPers],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 });

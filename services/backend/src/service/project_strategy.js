@@ -1,4 +1,4 @@
-module.exports = strategyPersistence => ({
+module.exports = (strategyPersistence) => ({
   /**
    * Create a new project strategy
    *
@@ -25,9 +25,8 @@ module.exports = strategyPersistence => ({
    *
    * @returns {Object[]} list of project strategies
    */
-  listStrategies: async (userId, projectId) => (
-    strategyPersistence.findByUserAndProject(userId, projectId)
-  ),
+  listStrategies: async (userId, projectId) =>
+    strategyPersistence.findByUserAndProject(userId, projectId),
 
   /**
    * Get all geometries belonging to selected strategies for a given project

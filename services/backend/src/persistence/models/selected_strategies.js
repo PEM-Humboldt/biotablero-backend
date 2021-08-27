@@ -1,5 +1,12 @@
-const requiredFields = ['id_biome', 'id_ea', 'id_subzone', 'id_strategy', 'area', 'id_project',
-  'id_user'];
+const requiredFields = [
+  'id_biome',
+  'id_ea',
+  'id_subzone',
+  'id_strategy',
+  'area',
+  'id_project',
+  'id_user',
+];
 
 /**
  * Create a model for the selected_strategies table
@@ -15,7 +22,7 @@ module.exports = (bookshelf, { saving }) => {
     constructor: function constructor(...args) {
       bookshelf.Model.apply(this, args);
       // See note on http://bookshelfjs.org/index.html#Model-event-saving
-      this.on('saving', model => saving(requiredFields, model.changed));
+      this.on('saving', (model) => saving(requiredFields, model.changed));
     },
   });
 

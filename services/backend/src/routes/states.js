@@ -24,13 +24,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states
    * @apiUse getAllStatesExample
    */
-  router.get('/states', errorHandler((req, res, next) => (
-    stateService.getAll()
-      .then((states) => {
+  router.get(
+    '/states',
+    errorHandler((req, res, next) =>
+      stateService.getAll().then((states) => {
         res.send(states);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_states
@@ -49,13 +51,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/1
    * @apiUse GeofenceDetailsExample
    */
-  router.get('/states/:state_id', errorHandler((req, res, next) => (
-    stateService.getTotalArea(req.params.state_id)
-      .then((details) => {
+  router.get(
+    '/states/:state_id',
+    errorHandler((req, res, next) =>
+      stateService.getTotalArea(req.params.state_id).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_states
@@ -75,13 +79,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/municipalities
    * @apiUse MunicipalitiesInStateExample
    */
-  router.get('/states/:state_id/municipalities', errorHandler((req, res, next) => (
-    stateService.getMunicipalities(req.params.state_id)
-      .then((municipalities) => {
+  router.get(
+    '/states/:state_id/municipalities',
+    errorHandler((req, res, next) =>
+      stateService.getMunicipalities(req.params.state_id).then((municipalities) => {
         res.send(municipalities);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -105,13 +111,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se
    * @apiUse SEInGeofenceExample
    */
-  router.get('/states/:state_id/se', errorHandler((req, res, next) => (
-    stateService.getAreaBySE(req.params.state_id)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/se',
+    errorHandler((req, res, next) =>
+      stateService.getAreaBySE(req.params.state_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -133,13 +141,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se/Páramo
    * @apiUse SEInGeofenceDetailExample
    */
-  router.get('/states/:state_id/se/:se_type', errorHandler((req, res, next) => (
-    stateService.getSEDetails(req.params.state_id, req.params.se_type)
-      .then((details) => {
+  router.get(
+    '/states/:state_id/se/:se_type',
+    errorHandler((req, res, next) =>
+      stateService.getSEDetails(req.params.state_id, req.params.se_type).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -165,13 +175,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se/Páramo/coverage
    * @apiUse SECoverageInGeofenceExample
    */
-  router.get('/states/:state_id/se/:se_type/coverage', errorHandler((req, res, next) => (
-    stateService.getCoverageInSE(req.params.state_id, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/se/:se_type/coverage',
+    errorHandler((req, res, next) =>
+      stateService.getCoverageInSE(req.params.state_id, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -198,13 +210,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se/Páramo/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get('/states/:state_id/se/:se_type/pa', errorHandler((req, res, next) => (
-    stateService.getPAInSE(req.params.state_id, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/se/:se_type/pa',
+    errorHandler((req, res, next) =>
+      stateService.getPAInSE(req.params.state_id, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -228,13 +242,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get('/states/:state_id/pa', errorHandler((req, res, next) => (
-    stateService.getAreaByPA(req.params.state_id)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/pa',
+    errorHandler((req, res, next) =>
+      stateService.getAreaByPA(req.params.state_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -258,13 +274,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/coverage
    * @apiUse CoverageInGeofenceExample
    */
-  router.get('/states/:state_id/coverage', errorHandler((req, res, next) => (
-    stateService.getAreaByCoverage(req.params.state_id)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/coverage',
+    errorHandler((req, res, next) =>
+      stateService.getAreaByCoverage(req.params.state_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -288,13 +306,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/states/:state_id/hf/current/categories', errorHandler((req, res, next) => (
-    stateService.getAreaByHFCategory(req.params.state_id)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/hf/current/categories',
+    errorHandler((req, res, next) =>
+      stateService.getAreaByHFCategory(req.params.state_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -318,13 +338,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/states/:state_id/hf/current/value', errorHandler((req, res, next) => (
-    stateService.getCurrentHFValue(req.params.state_id)
-      .then((value) => {
+  router.get(
+    '/states/:state_id/hf/current/value',
+    errorHandler((req, res, next) =>
+      stateService.getCurrentHFValue(req.params.state_id).then((value) => {
         res.send(value);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -349,13 +371,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/persistence
    * @apiUse PersistenceInGeofenceExample
    */
-  router.get('/states/:state_id/hf/persistence', errorHandler((req, res, next) => (
-    stateService.getAreaByHFPersistence(req.params.state_id)
-      .then((areas) => {
+  router.get(
+    '/states/:state_id/hf/persistence',
+    errorHandler((req, res, next) =>
+      stateService.getAreaByHFPersistence(req.params.state_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -377,13 +401,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/timeline
    * @apiUse TimelineInGeofenceExample
    */
-  router.get('/states/:state_id/hf/timeline', errorHandler((req, res, next) => (
-    stateService.getTotalHFTimeLine(req.params.state_id)
-      .then((values) => {
+  router.get(
+    '/states/:state_id/hf/timeline',
+    errorHandler((req, res, next) =>
+      stateService.getTotalHFTimeLine(req.params.state_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -405,13 +431,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/86/ecoChange/lp/categories
    * @apiUse ForestLPExample
    */
-  router.get('/states/:state_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    stateService.getEcoChangeLP(req.params.state_id)
-      .then((values) => {
+  router.get(
+    '/states/:state_id/ecoChange/lp/categories',
+    errorHandler((req, res, next) =>
+      stateService.getEcoChangeLP(req.params.state_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -432,13 +460,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/86/ecoChange/persistence
    * @apiUse PersistenceAreaExample
    */
-  router.get('/states/:state_id/ecoChange/persistence', errorHandler((req, res, next) => (
-    stateService.getEcoChangePersistenceValue(req.params.state_id)
-      .then((values) => {
+  router.get(
+    '/states/:state_id/ecoChange/persistence',
+    errorHandler((req, res, next) =>
+      stateService.getEcoChangePersistenceValue(req.params.state_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -462,13 +492,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se/Páramo/hf/timeline
    * @apiUse SETimelineInGeofenceExample
    */
-  router.get('/states/:state_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
-    stateService.getSEHFTimeline(req.params.state_id, req.params.se_type)
-      .then((values) => {
+  router.get(
+    '/states/:state_id/se/:se_type/hf/timeline',
+    errorHandler((req, res, next) =>
+      stateService.getSEHFTimeline(req.params.state_id, req.params.se_type).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_states
@@ -488,13 +520,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get('/states/layers/national', errorHandler((req, res, next) => (
-    stateService.getNationalLayer()
-      .then((geometry) => {
+  router.get(
+    '/states/layers/national',
+    errorHandler((req, res, next) =>
+      stateService.getNationalLayer().then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_states
@@ -512,13 +546,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/layers/44
    * @apiUse SpecificLayerExample
    */
-  router.get('/states/layers/:state_id', errorHandler((req, res, next) => (
-    stateService.getLayer(req.params.state_id)
-      .then((geometry) => {
+  router.get(
+    '/states/layers/:state_id',
+    errorHandler((req, res, next) =>
+      stateService.getLayer(req.params.state_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -539,13 +575,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/se/layers/Páramo
    * @apiUse SpecificLayerExample
    */
-  router.get('/states/:state_id/se/layers/:se_type', errorHandler((req, res, next) => (
-    stateService.getSELayer(req.params.state_id, req.params.se_type)
-      .then((geometry) => {
+  router.get(
+    '/states/:state_id/se/layers/:se_type',
+    errorHandler((req, res, next) =>
+      stateService.getSELayer(req.params.state_id, req.params.se_type).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -566,13 +604,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/states/:state_id/hf/layers/current/categories', errorHandler((req, res, next) => (
-    stateService.getHFCategoriesLayerById(req.params.state_id)
-      .then((geometry) => {
+  router.get(
+    '/states/:state_id/hf/layers/current/categories',
+    errorHandler((req, res, next) =>
+      stateService.getHFCategoriesLayerById(req.params.state_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -593,13 +633,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/44/hf/layers/persistence
    * @apiUse PersistenceLayerInGeofenceExample
    */
-  router.get('/states/:state_id/hf/layers/persistence', errorHandler((req, res, next) => (
-    stateService.getHFPersistenceLayerById(req.params.state_id)
-      .then((geometry) => {
+  router.get(
+    '/states/:state_id/hf/layers/persistence',
+    errorHandler((req, res, next) =>
+      stateService.getHFPersistenceLayerById(req.params.state_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -624,15 +666,15 @@ module.exports = (errorHandler, stateService) => {
    *  /states/86/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/states/:state_id/ecoChange/layers/lp/period/:period/categories/', errorHandler(
-    (req, res, next) => (
-      stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-        .then((values) => {
-          res.send(values);
-          next();
-        })
+  router.get(
+    '/states/:state_id/ecoChange/layers/lp/period/:period/categories/',
+    errorHandler((req, res, next) =>
+      stateService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
+        res.send(values);
+        next();
+      }),
     ),
-  ));
+  );
 
   return router;
 };

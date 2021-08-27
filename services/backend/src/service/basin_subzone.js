@@ -24,7 +24,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getAreaBySE: async (subzoneId) => {
       let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
       if (subzoneArea.length === 0) {
-        throw new Error('basin subzone doesn\'t exists');
+        throw new Error("basin subzone doesn't exists");
       }
       subzoneArea = subzoneArea[0].area;
       const areas = await seService.getAreasBySubzone(subzoneId);
@@ -70,7 +70,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getCoverageInSE: async (subzoneId, seType) => {
       const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
       const coverAreas = await seService.getSECoverageInSubzone(subzoneId, seType);
-      return coverAreas.map(area => ({
+      return coverAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -86,7 +86,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
       const paAreas = await seService.getSEPAInSubzone(subzoneId, seType);
 
-      const result = paAreas.map(area => ({
+      const result = paAreas.map((area) => ({
         ...area,
         percentage: parseFloat(area.area) / parseFloat(seArea.area),
       }));
@@ -104,7 +104,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getAreaByPA: async (subzoneId) => {
       let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
       if (subzoneArea[0].area === null) {
-        throw new Error('basin subzone doesn\'t exists');
+        throw new Error("basin subzone doesn't exists");
       }
       subzoneArea = subzoneArea[0].area;
       const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
@@ -138,7 +138,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
       subzoneArea = subzoneArea.total_area;
       const areas = await basinSubzonePersistence.findAreaByCoverage(subzoneId);
-      const result = areas.map(cover => ({
+      const result = areas.map((cover) => ({
         ...cover,
         percentage: cover.area / subzoneArea,
       }));
@@ -155,7 +155,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getTotalArea: async (subzoneId) => {
       const subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
       if (subzoneArea[0].area === null) {
-        throw new Error('basin subzone doesn\'t exists');
+        throw new Error("basin subzone doesn't exists");
       }
       return { total_area: subzoneArea[0].area };
     },
@@ -174,7 +174,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const values = await basinSubzonePersistence.findAreaByHFCategory(subzoneId);
       return values
         .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / subzoneArea,
@@ -190,7 +190,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getCurrentHFValue: async (subzoneId) => {
       const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error('basin subzone doesn\'t exists');
+        throw new Error("basin subzone doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,
@@ -210,7 +210,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const values = await basinSubzonePersistence.findHFPersistenceAreas(subzoneId);
       return values
         .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / subzoneArea,
@@ -227,7 +227,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const values = await basinSubzonePersistence.findTotalHFTimeLine(subzoneId);
       return {
         key: 'aTotal',
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -245,7 +245,7 @@ module.exports = (basinSubzonePersistence, seService) => {
       const values = await seService.getSEHFTimelineInGeofence('subzones', subzoneId, seType);
       return {
         key: SEKeys(seType),
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -270,11 +270,16 @@ module.exports = (basinSubzonePersistence, seService) => {
      */
     getEcoChangeLPLayer: async (subzoneId, period) => {
       switch (period) {
-        case '2016-2019': return forestLPLayer20162019;
-        case '2011-2015': return forestLPLayer20112015;
-        case '2006-2010': return forestLPLayer20062010;
-        case '2000-2005': return forestLPLayer20002005;
-        default: return {};
+        case '2016-2019':
+          return forestLPLayer20162019;
+        case '2011-2015':
+          return forestLPLayer20112015;
+        case '2006-2010':
+          return forestLPLayer20062010;
+        case '2000-2005':
+          return forestLPLayer20002005;
+        default:
+          return {};
       }
     },
 
@@ -310,9 +315,8 @@ module.exports = (basinSubzonePersistence, seService) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-    getSELayer: async (subzoneId, seType) => seService.getSELayerInGeofence(
-      'subzones', subzoneId, seType,
-    ),
+    getSELayer: async (subzoneId, seType) =>
+      seService.getSELayerInGeofence('subzones', subzoneId, seType),
 
     /**
      * Get the current human footprint layer divided by categories in a given basin subzone
@@ -323,7 +327,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getHFCategoriesLayerById: async (subzoneId) => {
       const geom = await basinSubzonePersistence.findHFCategoriesLayerById(subzoneId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,
@@ -344,7 +348,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getHFPersistenceLayerById: async (subzoneId) => {
       const geom = await basinSubzonePersistence.findHFPersistenceLayerById(subzoneId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,

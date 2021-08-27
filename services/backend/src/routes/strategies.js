@@ -76,13 +76,17 @@ module.exports = (errorHandler, strategiesService) => {
    * @apiUse listStrategiesByBiomeEASubzoneExampleUsage
    * @apiUse listStrategiesByBiomeEASubzoneExampleResponse
    */
-  router.post('/strategies/biomeSubzoneEA', errorHandler((req, res, next) => (
-    strategiesService.getByBiomeSubzoneEA(req.body.id_biome, req.body.id_subzone, req.body.id_ea)
-      .then((strategies) => {
-        res.send(strategies);
-        next();
-      })
-  )));
+  router.post(
+    '/strategies/biomeSubzoneEA',
+    errorHandler((req, res, next) =>
+      strategiesService
+        .getByBiomeSubzoneEA(req.body.id_biome, req.body.id_subzone, req.body.id_ea)
+        .then((strategies) => {
+          res.send(strategies);
+          next();
+        }),
+    ),
+  );
 
   return router;
 };

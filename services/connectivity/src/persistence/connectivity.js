@@ -2,12 +2,7 @@ const { areaTypeDBKeys, dpcDBKeys, dpcCategoriesDBKeys } = require('../util/appr
 
 module.exports = (
   db,
-  {
-    connectivity,
-    geoConnParamo,
-    geoConnTropicalDryForest,
-    geoConnWetland,
-  },
+  { connectivity, geoConnParamo, geoConnTropicalDryForest, geoConnWetland },
   logger,
 ) => ({
   /**
@@ -20,14 +15,15 @@ module.exports = (
    * @returns {Object[]} Values of area distribution for each category of protected area
    * connectivity
    */
-  findCurrentPAConnectivity: (areaType, areaId, year = 2020) => (
-    connectivity.query()
+  findCurrentPAConnectivity: (areaType, areaId, year = 2020) =>
+    connectivity
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values of connectivity for the protected areas with higher dPC value in a
@@ -40,7 +36,7 @@ module.exports = (
    * @returns {Object[]} Values of connectivity for the protected areas with higher dPC value
    * in a given area
    */
-  findPADPC: (areaType, areaId, paNumber) => (
+  findPADPC: (areaType, areaId, paNumber) =>
     db('connectivity_dpc as dpc')
       .select(
         'pa.pa_id as id',
@@ -67,7 +63,7 @@ module.exports = (
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values through time of protected area connectivity index in a given area
@@ -78,15 +74,16 @@ module.exports = (
    * @returns {Object[]} Values through time of protected area connectivity index in a given area
    *
    */
-  findTimelinePAConnectivityProt: (areaType, areaId) => (
-    connectivity.query()
+  findTimelinePAConnectivityProt: (areaType, areaId) =>
+    connectivity
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId })
       .select('prot', 'prot_year')
       .orderBy('prot_year', 'asc')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the values through time of protected connected area connectivity index in a given area
@@ -98,15 +95,16 @@ module.exports = (
    * a given area
    *
    */
-  findTimelinePAConnectivityProtConn: (areaType, areaId) => (
-    connectivity.query()
+  findTimelinePAConnectivityProtConn: (areaType, areaId) =>
+    connectivity
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId })
       .select('protconn', 'prot_year')
       .orderBy('prot_year', 'asc')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area distribution for each category of protected area connectivity in Paramo
@@ -119,14 +117,15 @@ module.exports = (
    * @returns {Object[]} Values of the area distribution for each category of protected area
    * connectivity
    */
-  findCurrentPAConnectivityInParamo: (areaType, areaId, year = 2020) => (
-    geoConnParamo.query()
+  findCurrentPAConnectivityInParamo: (areaType, areaId, year = 2020) =>
+    geoConnParamo
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area distribution for each category of protected area connectivity in
@@ -139,14 +138,15 @@ module.exports = (
    * @returns {Object[]} Values of the area distribution for each category of protected area
    * connectivity
    */
-  findCurrentPAConnectivityInDryForest: (areaType, areaId, year = 2020) => (
-    geoConnTropicalDryForest.query()
+  findCurrentPAConnectivityInDryForest: (areaType, areaId, year = 2020) =>
+    geoConnTropicalDryForest
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the area distribution for each category of protected area connectivity in Wetland
@@ -158,14 +158,15 @@ module.exports = (
    * @returns {Object[]} Values of the area distribution for each category of protected area
    * connectivity
    */
-  findCurrentPAConnectivityInWetland: (areaType, areaId, year = 2020) => (
-    geoConnWetland.query()
+  findCurrentPAConnectivityInWetland: (areaType, areaId, year = 2020) =>
+    geoConnWetland
+      .query()
       .where({ geofence_type: areaType, geofence_id: areaId, prot_year: year })
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })),
+      }),
 
   /**
    * Find the layers of the protected areas with higher dPC value in a given area. If paNumber
@@ -177,9 +178,10 @@ module.exports = (
    *
    * @returns {Object} Geojson object with the geometry
    */
-  findPAConnectivityLayers: (areaType, areaId, paNumber) => (
-    db.raw(
-      `
+  findPAConnectivityLayers: (areaType, areaId, paNumber) =>
+    db
+      .raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -214,14 +216,13 @@ module.exports = (
         ) as f
       ) as fc;
       `,
-      [areaId, paNumber],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaId, paNumber],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-  ),
+      }),
 
   /**
    * Find the layer of Paramo strategic ecosystem in a given area
@@ -232,9 +233,10 @@ module.exports = (
    *
    * @returns {Object} Geojson object with the geometry
    */
-  findSELayerInParamo: (areaType, areaId, year = 2020) => (
-    db.raw(
-      `
+  findSELayerInParamo: (areaType, areaId, year = 2020) =>
+    db
+      .raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -255,14 +257,13 @@ module.exports = (
         ) as f
       ) as fc;
     `,
-      [areaType, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaType, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-  ),
+      }),
 
   /**
    * Find the layer of Tropical Dry Forest strategic ecosystem in a given area
@@ -273,9 +274,10 @@ module.exports = (
    *
    * @returns {Object} Geojson object with the geometry
    */
-  findSELayerInDryForest: (areaType, areaId, year = 2020) => (
-    db.raw(
-      `
+  findSELayerInDryForest: (areaType, areaId, year = 2020) =>
+    db
+      .raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -296,14 +298,13 @@ module.exports = (
         ) as f
       ) as fc;
     `,
-      [areaType, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaType, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-  ),
+      }),
 
   /**
    * Find the layer of Wetland strategic ecosystem in a given area
@@ -314,9 +315,10 @@ module.exports = (
    *
    * @returns {Object} Geojson object with the geometry
    */
-  findSELayerInWetland: (areaType, areaId, year = 2020) => (
-    db.raw(
-      `
+  findSELayerInWetland: (areaType, areaId, year = 2020) =>
+    db
+      .raw(
+        `
       SELECT row_to_json(fc) AS collection
       FROM (
         SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -337,12 +339,11 @@ module.exports = (
         ) as f
       ) as fc;
     `,
-      [areaType, areaId, year],
-    )
-      .then(layers => layers.rows[0].collection)
+        [areaType, areaId, year],
+      )
+      .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      })
-  ),
+      }),
 });

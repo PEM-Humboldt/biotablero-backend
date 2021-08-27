@@ -6,7 +6,7 @@
     "password": "password",
     "database": "database"
   },
-  "server" : {
+  "server": {
     "port": 4002,
     "origins": ["*"]
   },

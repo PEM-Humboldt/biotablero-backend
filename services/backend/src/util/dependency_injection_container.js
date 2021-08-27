@@ -51,86 +51,82 @@ const SERoutes = require('../routes/strategic_ecosystems');
 const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
-bottle.factory('errorHandler', container => ErrorHandler(container.logger));
+bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 
-bottle.factory('biomePersistence', () => (
-  BiomePersistence(bookshelfModels.db, bookshelfModels.models, bookshelfModels.collections)
-));
-bottle.factory('projectPersistence', () => (
-  ProjectPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('projectStrategyPersistence', () => (
-  ProjectStrategyPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('strategyPersistence', () => (
-  StrategyPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('eaPersistence', () => (
-  EAPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('statePersistence', () => (
-  StatePersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('municipalityPersistence', () => (
-  MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('paPersistence', () => (
-  PAPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('basinAreaPersistence', () => (
-  BasinAreaPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('basinZonePersistence', () => (
-  BasinZonePersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('basinSubzonePersistence', () => (
-  BasinSubzonePersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('sePersistence', () => (
-  SEPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('paramoPersistence', () => (
-  ParamoPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('tropicalDryForestPersistence', () => (
-  TropicalDryForestPersistence(bookshelfModels.db, bookshelfModels.models)
-));
-bottle.factory('wetlandPersistence', () => (
-  WetlandPersistence(bookshelfModels.db, bookshelfModels.models)
-));
+bottle.factory('biomePersistence', () =>
+  BiomePersistence(bookshelfModels.db, bookshelfModels.models, bookshelfModels.collections),
+);
+bottle.factory('projectPersistence', () =>
+  ProjectPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('projectStrategyPersistence', () =>
+  ProjectStrategyPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('strategyPersistence', () =>
+  StrategyPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('eaPersistence', () => EAPersistence(bookshelfModels.db, bookshelfModels.models));
+bottle.factory('statePersistence', () =>
+  StatePersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('municipalityPersistence', () =>
+  MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('paPersistence', () => PAPersistence(bookshelfModels.db, bookshelfModels.models));
+bottle.factory('basinAreaPersistence', () =>
+  BasinAreaPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('basinZonePersistence', () =>
+  BasinZonePersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('basinSubzonePersistence', () =>
+  BasinSubzonePersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('sePersistence', () => SEPersistence(bookshelfModels.db, bookshelfModels.models));
+bottle.factory('paramoPersistence', () =>
+  ParamoPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('tropicalDryForestPersistence', () =>
+  TropicalDryForestPersistence(bookshelfModels.db, bookshelfModels.models),
+);
+bottle.factory('wetlandPersistence', () =>
+  WetlandPersistence(bookshelfModels.db, bookshelfModels.models),
+);
 
-bottle.factory('biomeService', container => BiomeService(container.biomePersistence));
-bottle.factory('projectService', container => (
-  ProjectService(container.projectPersistence, container.biomeService)
-));
-bottle.factory('projectStrategyService',
-  container => ProjectStrategyService(container.projectStrategyPersistence));
-bottle.factory('strategyService',
-  container => StrategyService(container.strategyPersistence, container.logger));
-bottle.factory('eaService',
-  container => EAService(container.eaPersistence, container.seService));
+bottle.factory('biomeService', (container) => BiomeService(container.biomePersistence));
+bottle.factory('projectService', (container) =>
+  ProjectService(container.projectPersistence, container.biomeService),
+);
+bottle.factory('projectStrategyService', (container) =>
+  ProjectStrategyService(container.projectStrategyPersistence),
+);
+bottle.factory('strategyService', (container) =>
+  StrategyService(container.strategyPersistence, container.logger),
+);
+bottle.factory('eaService', (container) => EAService(container.eaPersistence, container.seService));
 bottle.factory('userService', () => UserService());
-bottle.factory('stateService',
-  container => StateService(
-    container.statePersistence, container.municipalityService, container.seService,
-  ));
-bottle.factory('municipalityService',
-  container => MunicipalityService(container.municipalityPersistence));
-bottle.factory('paService',
-  container => PAService(container.paPersistence, container.seService));
-bottle.factory('basinAreaService',
-  container => BasinAreaService(container.basinAreaPersistence));
-bottle.factory('basinZoneService',
-  container => BasinZoneService(container.basinZonePersistence));
-bottle.factory('basinSubzoneService',
-  container => BasinSubzoneService(container.basinSubzonePersistence, container.seService));
-bottle.factory('seService',
-  container => SEService(
-    container.sePersistence, container.paramoPersistence, container.tropicalDryForestPersistence,
+bottle.factory('stateService', (container) =>
+  StateService(container.statePersistence, container.municipalityService, container.seService),
+);
+bottle.factory('municipalityService', (container) =>
+  MunicipalityService(container.municipalityPersistence),
+);
+bottle.factory('paService', (container) => PAService(container.paPersistence, container.seService));
+bottle.factory('basinAreaService', (container) => BasinAreaService(container.basinAreaPersistence));
+bottle.factory('basinZoneService', (container) => BasinZoneService(container.basinZonePersistence));
+bottle.factory('basinSubzoneService', (container) =>
+  BasinSubzoneService(container.basinSubzonePersistence, container.seService),
+);
+bottle.factory('seService', (container) =>
+  SEService(
+    container.sePersistence,
+    container.paramoPersistence,
+    container.tropicalDryForestPersistence,
     container.wetlandPersistence,
-  ));
+  ),
+);
 
-bottle.factory('routes', container => ([
+bottle.factory('routes', (container) => [
   BiomesRoutes(container.errorHandler, container.biomeService),
   ProjectsRoutes(container.errorHandler, container.projectService),
   ProjectStrategiesRoutes(container.errorHandler, container.projectStrategyService),
@@ -143,7 +139,6 @@ bottle.factory('routes', container => ([
   BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
   BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
   SERoutes(container.errorHandler, container.seService),
-]));
-
+]);
 
 module.exports = bottle.container;

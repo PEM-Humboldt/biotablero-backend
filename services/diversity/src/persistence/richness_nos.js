@@ -135,7 +135,7 @@ module.exports = (db, { richnessNos }, logger) => ({
           ),
           '100% 0 125 143 180
           0% 255 181 108 180
-          nv 0 0 0 0
+          nv 255 181 108 180
           '
         )
       ) as image;

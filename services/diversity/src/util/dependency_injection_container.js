@@ -17,21 +17,21 @@ const FunctionalRoute = require('../routes/functional');
 const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
-bottle.factory('errorHandler', container => ErrorHandler(container.logger));
+bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 bottle.factory('restAPI', () => restAPI);
 
-bottle.factory('RichnessPersistence', () => RichnessPresistence(
-  bookshelfModels.db, bookshelfModels.models, logger,
-));
+bottle.factory('RichnessPersistence', () =>
+  RichnessPresistence(bookshelfModels.db, bookshelfModels.models, logger),
+);
 
-bottle.factory('RichnessService', container => RichnessService(
-  container.RichnessPersistence, container.restAPI,
-));
+bottle.factory('RichnessService', (container) =>
+  RichnessService(container.RichnessPersistence, container.restAPI),
+);
 bottle.factory('FunctionalService', () => FunctionalService());
 
-bottle.factory('routes', container => ([
+bottle.factory('routes', (container) => [
   RichnessRoute(container.errorHandler, container.RichnessService),
   FunctionalRoute(container.errorHandler, container.FunctionalService),
-]));
+]);
 
 module.exports = bottle.container;

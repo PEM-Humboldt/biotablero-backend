@@ -19,13 +19,15 @@ module.exports = (errorHandler, municipalityService) => {
    *  /municipalities
    * @apiUse getAllMunicipalitiesExample
    */
-  router.get('/municipalities', errorHandler((req, res, next) => (
-    municipalityService.getAll()
-      .then((municipalities) => {
+  router.get(
+    '/municipalities',
+    errorHandler((req, res, next) =>
+      municipalityService.getAll().then((municipalities) => {
         res.send(municipalities);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

@@ -8,25 +8,26 @@ const groupObjects = require('../util/groupObjects');
  *
  * @return {String} the transformed phrase
  */
-const prettyLabel = phrase => phrase
-  .split(/ |-/)
-  .map(word => `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`)
-  .join(' ');
+const prettyLabel = (phrase) =>
+  phrase
+    .split(/ |-/)
+    .map((word) => `${word.charAt(0).toUpperCase()}${word.slice(1).toLowerCase()}`)
+    .join(' ');
 
 module.exports = (projectPersistence, biomeService) => ({
   /**
-     * Get projects by a given company, optionally, group those pjects by a list of their properties
-     *
-     * @param {String} companyId company id
-     * @param {Array} groupProps list of properties to group results by.
-     *
-     * @return {(Array|Object)} list of projects or an object with projects grouped by groupProps
-     * @throws {ReferenceError} When a property to group by isn't a project property
-     */
+   * Get projects by a given company, optionally, group those pjects by a list of their properties
+   *
+   * @param {String} companyId company id
+   * @param {Array} groupProps list of properties to group results by.
+   *
+   * @return {(Array|Object)} list of projects or an object with projects grouped by groupProps
+   * @throws {ReferenceError} When a property to group by isn't a project property
+   */
   getProjectsByCompany: async (companyId, groupProps) => {
     const projects = await projectPersistence.findProjectsByCompany(companyId);
     if (!groupProps) {
-      return projects.map(project => ({
+      return projects.map((project) => ({
         ...project,
         label: prettyLabel(project.name),
       }));
@@ -34,7 +35,7 @@ module.exports = (projectPersistence, biomeService) => ({
 
     if (projects.length <= 0) return {};
 
-    const noProjectProp = groupProps.filter(prop => !(prop in projects[0]));
+    const noProjectProp = groupProps.filter((prop) => !(prop in projects[0]));
     if (noProjectProp.length !== 0) {
       throw new ReferenceError(`Some of ${groupProps} are not project properties`);
     }
@@ -70,7 +71,7 @@ module.exports = (projectPersistence, biomeService) => ({
    *
    * @returns {Object} created object with its id
    */
-  createProject: async project => projectPersistence.createProject(project),
+  createProject: async (project) => projectPersistence.createProject(project),
 
   /**
    * Associate a set of biomes with a given project. Additionally, the associated project total area
@@ -90,7 +91,7 @@ module.exports = (projectPersistence, biomeService) => ({
     }
 
     const addedBiomes = await biomeService.bulkAddImpacted(
-      biomes.map(biome => ({
+      biomes.map((biome) => ({
         ...biome,
         id_project: pId,
       })),

@@ -1,4 +1,4 @@
-module.exports = basinAreaPersistence => ({
+module.exports = (basinAreaPersistence) => ({
   /**
    * Get a list with states information
    */

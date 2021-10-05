@@ -28,7 +28,7 @@ module.exports = (eaPersistence, seService) => {
         let fc = parseFloat(area.fc_valor);
         const fcDiff = fc - parseInt(fc, 10);
         if (fcDiff !== 0 && fcDiff !== 0.5) fc += 0.25;
-        const key = keys.findIndex(e => e === fc);
+        const key = keys.findIndex((e) => e === fc);
         if (key === -1) {
           keys.push(fc);
           values.push(area.sum);
@@ -47,7 +47,8 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each biotic unit
      */
-    getAreaByBioticUnit: async envAuthorityId => eaPersistence.findAreaByBioticUnit(envAuthorityId),
+    getAreaByBioticUnit: async (envAuthorityId) =>
+      eaPersistence.findAreaByBioticUnit(envAuthorityId),
 
     /**
      * Get total area grouped by biome for a given environmental authority
@@ -56,7 +57,7 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each biome
      */
-    getAreaByBiome: async envAuthorityId => eaPersistence.findAreaByBiome(envAuthorityId),
+    getAreaByBiome: async (envAuthorityId) => eaPersistence.findAreaByBiome(envAuthorityId),
 
     /**
      * Get total area grouped by sub-basin given environmental authority filtered by a biome
@@ -66,9 +67,8 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each sub-basin
      */
-    getBiomeAreaBySubzone: async (envAuthorityId, biomeName) => (
-      eaPersistence.findBiomeAreaBySubzone(envAuthorityId, biomeName)
-    ),
+    getBiomeAreaBySubzone: async (envAuthorityId, biomeName) =>
+      eaPersistence.findBiomeAreaBySubzone(envAuthorityId, biomeName),
 
     /**
      * Get a list with all environmental authorities information
@@ -83,7 +83,7 @@ module.exports = (eaPersistence, seService) => {
     getAreaBySE: async (envAuthorityId) => {
       let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
       if (eaArea.length === 0) {
-        throw new Error('environmental authority doesn\'t exists');
+        throw new Error("environmental authority doesn't exists");
       }
       eaArea = eaArea[0].area;
       const areas = await seService.getAreasByEA(envAuthorityId);
@@ -129,7 +129,7 @@ module.exports = (eaPersistence, seService) => {
     getCoverageInSE: async (envAuthorityId, seType) => {
       const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
       const coverAreas = await seService.getSECoverageInEA(envAuthorityId, seType);
-      return coverAreas.map(area => ({
+      return coverAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -144,7 +144,7 @@ module.exports = (eaPersistence, seService) => {
     getPAInSE: async (envAuthorityId, seType) => {
       const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
       const paAreas = await seService.getSEPAInEA(envAuthorityId, seType);
-      const result = paAreas.map(area => ({
+      const result = paAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -162,7 +162,7 @@ module.exports = (eaPersistence, seService) => {
     getAreaByPA: async (envAuthorityId) => {
       let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
       if (eaArea[0].area === null) {
-        throw new Error('environmental authority doesn\'t exists');
+        throw new Error("environmental authority doesn't exists");
       }
       eaArea = eaArea[0].area;
       const areas = await eaPersistence.findAreaByPA(envAuthorityId);
@@ -197,7 +197,7 @@ module.exports = (eaPersistence, seService) => {
       let eaArea = await envAuth.getTotalArea(envAuthorityId);
       eaArea = eaArea.total_area;
       const areas = await eaPersistence.findAreaByCoverage(envAuthorityId);
-      const result = areas.map(cover => ({
+      const result = areas.map((cover) => ({
         ...cover,
         percentage: cover.area / eaArea,
       }));
@@ -214,7 +214,7 @@ module.exports = (eaPersistence, seService) => {
     getTotalArea: async (enAuthorityId) => {
       const eaArea = await eaPersistence.getTotalAreaByEA(enAuthorityId);
       if (eaArea[0].area === null) {
-        throw new Error('environmental authority doesn\'t exists');
+        throw new Error("environmental authority doesn't exists");
       }
       return { total_area: eaArea[0].area };
     },
@@ -233,7 +233,7 @@ module.exports = (eaPersistence, seService) => {
       const values = await eaPersistence.findAreaByHFCategory(eaId);
       return values
         .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / eaArea,
@@ -249,7 +249,7 @@ module.exports = (eaPersistence, seService) => {
     getCurrentHFValue: async (eaId) => {
       const value = await eaPersistence.findCurrentHFValue(eaId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error('environmental authority doesn\'t exists');
+        throw new Error("environmental authority doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,
@@ -270,7 +270,7 @@ module.exports = (eaPersistence, seService) => {
       const values = await eaPersistence.findHFPersistenceAreas(eaId);
       return values
         .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / eaArea,
@@ -287,7 +287,7 @@ module.exports = (eaPersistence, seService) => {
       const values = await eaPersistence.findTotalHFTimeLine(eaId);
       return {
         key: 'aTotal',
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -306,7 +306,7 @@ module.exports = (eaPersistence, seService) => {
       const values = await seService.getSEHFTimelineInGeofence('ea', eaId, seType);
       return {
         key: SEKeys(seType),
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -331,11 +331,16 @@ module.exports = (eaPersistence, seService) => {
      */
     getEcoChangeLPLayer: async (eaId, period) => {
       switch (period) {
-        case '2016-2019': return forestLPLayer20162019;
-        case '2011-2015': return forestLPLayer20112015;
-        case '2006-2010': return forestLPLayer20062010;
-        case '2000-2005': return forestLPLayer20002005;
-        default: return {};
+        case '2016-2019':
+          return forestLPLayer20162019;
+        case '2011-2015':
+          return forestLPLayer20112015;
+        case '2006-2010':
+          return forestLPLayer20062010;
+        case '2000-2005':
+          return forestLPLayer20002005;
+        default:
+          return {};
       }
     },
 
@@ -383,7 +388,7 @@ module.exports = (eaPersistence, seService) => {
     getHFCategoriesLayerById: async (eaId) => {
       const geom = await eaPersistence.findHFCategoriesLayerById(eaId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,
@@ -405,7 +410,7 @@ module.exports = (eaPersistence, seService) => {
     getHFPersistenceLayerById: async (eaId) => {
       const geom = await eaPersistence.findHFPersistenceLayerById(eaId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,

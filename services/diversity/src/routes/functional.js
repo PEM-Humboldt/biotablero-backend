@@ -23,17 +23,21 @@ module.exports = (errorHandler, FunctionalService) => {
    *  /functional-diversity/dry-forest/values?areaType=ea&areaId=CARDER
    * @apiUse DryForestValuesExample
    */
-  router.get('/functional-diversity/dry-forest/values', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId are required' };
-      throw error;
-    }
-    return FunctionalService.getDryForestValues(req.params.areaType, req.params.areaId)
-      .then((value) => {
-        res.send(value);
-        next();
-      });
-  }));
+  router.get(
+    '/functional-diversity/dry-forest/values',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId are required' };
+        throw error;
+      }
+      return FunctionalService.getDryForestValues(req.params.areaType, req.params.areaId).then(
+        (value) => {
+          res.send(value);
+          next();
+        },
+      );
+    }),
+  );
 
   /**
    * @apiGroup s_functional_diversity
@@ -57,17 +61,21 @@ module.exports = (errorHandler, FunctionalService) => {
    *  /functional-diversity/dry-forest/features?areaType=ea&areaId=CARDER
    * @apiUse DryForestFeaturesExample
    */
-  router.get('/functional-diversity/dry-forest/features', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId are required' };
-      throw error;
-    }
-    return FunctionalService.getDryForestFeatures(req.params.areaType, req.params.areaId)
-      .then((value) => {
-        res.send(value);
-        next();
-      });
-  }));
+  router.get(
+    '/functional-diversity/dry-forest/features',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId are required' };
+        throw error;
+      }
+      return FunctionalService.getDryForestFeatures(req.params.areaType, req.params.areaId).then(
+        (value) => {
+          res.send(value);
+          next();
+        },
+      );
+    }),
+  );
 
   return router;
 };

@@ -24,9 +24,9 @@ bottle.factory('RichnessPersistence', () =>
   RichnessPresistence(bookshelfModels.db, bookshelfModels.models, logger),
 );
 
-bottle.factory('RichnessService', container => RichnessService(
-  container.RichnessPersistence, container.restAPI,
-));
+bottle.factory('RichnessService', (container) =>
+  RichnessService(container.RichnessPersistence, container.restAPI),
+);
 bottle.factory('FunctionalService', () => FunctionalService());
 
 bottle.factory('routes', (container) => [

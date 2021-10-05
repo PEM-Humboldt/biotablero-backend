@@ -254,7 +254,7 @@ module.exports = (errorHandler, Richness) => {
    * @apiName NOSLayerThresholds
    * @apiVersion 1.0.0
    * @apiDescription
-   * Min and max value inside the layer of a specific group for richness - number of species
+   * Min and max value inside the layer of a specific group for richness (number of species)
    * in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.
    *
    * @apiParam (Query params) {String} areaType area type

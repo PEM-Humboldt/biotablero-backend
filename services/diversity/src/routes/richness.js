@@ -239,7 +239,7 @@ module.exports = (errorHandler, Richness) => {
         const error = { code: 400, message: 'areaType, areaId and group are required' };
         throw error;
       }
-      return Richness.NOSLayer(req.params.areaType, req.params.areaId, req.params.group).then(
+      return Richness.getNOSLayer(req.params.areaType, req.params.areaId, req.params.group).then(
         (value) => {
           res.sendRaw(200, value, { 'Content-Type': 'image/png' });
           next();
@@ -277,7 +277,7 @@ module.exports = (errorHandler, Richness) => {
         const error = { code: 400, message: 'areaType, areaId and group are required' };
         throw error;
       }
-      return Richness.NOSLayerThresholds(
+      return Richness.getNOSLayerThresholds(
         req.params.areaType,
         req.params.areaId,
         req.params.group,

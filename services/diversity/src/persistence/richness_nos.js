@@ -118,7 +118,7 @@ module.exports = (db, { richnessNos }, logger) => ({
    *
    * @returns {Binary} Image with the geometry
    */
-  getAreaLayer: (geometry, filename) =>
+  findNOSLayer: (geometry, filename) =>
     db
       .raw(
         `
@@ -159,7 +159,7 @@ module.exports = (db, { richnessNos }, logger) => ({
    *
    * @returns {Object} Object with min and max value
    */
-  getAreaLayerThresholds: (geometry, filename) =>
+  findNOSLayerThresholds: (geometry, filename) =>
     db
       .raw(
         `

@@ -210,10 +210,10 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Binary} Image with the geometry
      */
-    NOSLayer: async (areaType, areaId, group) => {
+    getNOSLayer: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessPersistence.getAreaLayer(
+        return RichnessPersistence.findNOSLayer(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
         );
@@ -238,10 +238,10 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Object} Object with min and max value
      */
-    NOSLayerThresholds: async (areaType, areaId, group) => {
+     getNOSLayerThresholds: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessPersistence.getAreaLayerThresholds(
+        return RichnessPersistence.findNOSLayerThresholds(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
         );

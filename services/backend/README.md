@@ -1,25 +1,30 @@
 # Biotablero main service
+
 Main service for BioTablero backend.
 
 ## Getting Started
+
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. See deployment for notes on how to deploy the project on a live system.
 
 ### Prerequisites
+
 You'll need nodejs v14.15+ and yarn to run the project.
 
 ### Install dependencies
+
 After cloning the project, install its dependencies running: `yarn install`
 
 ### Setup
+
 Copy the [config file](config/default.json) with the name of the environment you're running, this name needs to be the same as the env var **NODE_CONFIG_ENV**.
 
-By default **NODE_CONFIG_ENV** is *develop*, so you'll need to create *config/develop.json* and set minimum the "db" parameters.
+By default **NODE_CONFIG_ENV** is _develop_, so you'll need to create _config/develop.json_ and set minimum the "db" parameters.
 
 #### Temporary note
 
 The users administration in the current version is very limited and acts just as a mockup. So, in the config file you'll have to add a new property:
 
-``` json
+```json
 "users": [
   {
     "username": "admin",
@@ -33,11 +38,12 @@ The users administration in the current version is very limited and acts just as
 ]
 ```
 
-The property users is an array of objects, each one has a *username* and *password* properties at least and they will be used to login the users you'll want to enable.
+The property users is an array of objects, each one has a _username_ and _password_ properties at least and they will be used to login the users you'll want to enable.
 
 **This property isn't present in the default config file, if you don't provide it in your custom configuration all endpoints related with users will not work**
 
 ### Run
+
 Run `yarn start` to start the server, this will launch nodemon ready to watch your changes.
 
 ## Deployment
@@ -54,7 +60,7 @@ It is recommended to use the [current release](https://github.com/PEM-Humboldt/b
 
 After you've built the image, create a copy of the [config](config/default.json) file with your configuration values.
 
-**NOTE**: *If you change the server port in the configuration (4000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image*
+**NOTE**: _If you change the server port in the configuration (4000 by default), you'll need to change the exposed port in the Dockerfile and rebuild the image_
 
 ### Deploy
 
@@ -67,10 +73,12 @@ In the file [docker-compose.yml](docker-compose.yml):
 Then run: `docker-compose up -d`
 
 ## Tests
+
 There are no tests currently.
 
 ## Documentation
-You can generate the API documentation with `yarn run docs`, it will generate them under the */docs* folder
+
+You can generate the API documentation with `yarn run docs`, it will generate them under the _/docs_ folder
 
 ## Contributing
 
@@ -78,22 +86,23 @@ There are no guidelines for contribution currently.
 
 ### Folder Structure
 
-| folder/file path | description |
-| ---------------- | ----------- |
-| config | config files. |
-| docs | generated api doc. |
-| src |  |
-| src.persistence | Database access layer. |
-| src.persistence.models | Map for each database table, filename must match the table name. |
-| src.persistence.models.util | utilities functions for models, contains event handlers functions for now. |
-| src.persistence.connection.js | Database connection file. |
-| src.persistence.*.js | Other .js files correspond to model accessors. One file for main "object", for example, all queries were projects are created, listed, filter by some criteria, etc. are grouped under *project.js*. This is because we can't control the database design, so the model accessors will be like our entities according to the app logic. Filename must be in singular. |
-| src.routes | Endpoint handlers. Each file groups endpoints related with a "main" object, for example, projects.js has endpoints that should create, list or search projects, even if the endpoints are not related. **This organization is on trial and should be reviewed when the endpoints increase.** Filename must be in plural. |
-| src.service | Logic layer, most of the time these will be just a connection between endpoints handlers and the entity they want to consume. But if there are transformation or events that affect other entities (more than just queries or joins) it should be done between services. Filename must be in singular. |
-| src.util | Utilities |
-| src.util.dependency_injection_container.js | Connects the dependencies. |
-| src.util.errorHandler.js | Wrapper to handle uncaught errors, and to log all of them. |
-| src.util.logger.js | Logger object, it logs to console and error and info files. |
+| folder/file path                           | description                                                                                                                                                                                                                                                                                                                                                           |
+| ------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| config                                     | config files.                                                                                                                                                                                                                                                                                                                                                         |
+| docs                                       | generated api doc.                                                                                                                                                                                                                                                                                                                                                    |
+| src                                        |                                                                                                                                                                                                                                                                                                                                                                       |
+| src.persistence                            | Database access layer.                                                                                                                                                                                                                                                                                                                                                |
+| src.persistence.models                     | Map for each database table, filename must match the table name.                                                                                                                                                                                                                                                                                                      |
+| src.persistence.models.util                | utilities functions for models, contains event handlers functions for now.                                                                                                                                                                                                                                                                                            |
+| src.persistence.connection.js              | Database connection file.                                                                                                                                                                                                                                                                                                                                             |
+| src.persistence.\*.js                      | Other .js files correspond to model accessors. One file for main "object", for example, all queries were projects are created, listed, filter by some criteria, etc. are grouped under _project.js_. This is because we can't control the database design, so the model accessors will be like our entities according to the app logic. Filename must be in singular. |
+| src.routes                                 | Endpoint handlers. Each file groups endpoints related with a "main" object, for example, projects.js has endpoints that should create, list or search projects, even if the endpoints are not related. **This organization is on trial and should be reviewed when the endpoints increase.** Filename must be in plural.                                              |
+| src.service                                | Logic layer, most of the time these will be just a connection between endpoints handlers and the entity they want to consume. But if there are transformation or events that affect other entities (more than just queries or joins) it should be done between services. Filename must be in singular.                                                                |
+| src.util                                   | Utilities                                                                                                                                                                                                                                                                                                                                                             |
+| src.util.dependency_injection_container.js | Connects the dependencies.                                                                                                                                                                                                                                                                                                                                            |
+| src.util.errorHandler.js                   | Wrapper to handle uncaught errors, and to log all of them.                                                                                                                                                                                                                                                                                                            |
+| src.util.logger.js                         | Logger object, it logs to console and error and info files.                                                                                                                                                                                                                                                                                                           |
 
 ## License
+
 This project is licensed under the MIT License.

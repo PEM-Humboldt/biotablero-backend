@@ -11,25 +11,33 @@
  *     id: "total",
  *     inferred: 30,
  *     observed: 40,
- *     region: 100
+ *     region_inferred: 80,
+ *     region_observed: 100,
+ *     region_name: Andes
  *   },
  *   {
  *     id: "endemic",
  *     inferred: 20,
  *     observed: 25,
- *     region: 100
+ *     region_inferred: 80,
+ *     region_observed: 100,
+ *     region_name: Andes
  *   },
  *   {
  *     id: "invasive",
  *     inferred: 10,
  *     observed: 20,
- *     region: 100
+ *     region_inferred: 80,
+ *     region_observed: 100,
+ *     region_name: Andes
  *   },
  *   {
  *     id: "threatened",
  *     inferred: 15,
  *     observed: 20,
- *     region: 100
+ *     region_inferred: 80,
+ *     region_observed: 100,
+ *     region_name: Andes
  *   }
  * ]
  */
@@ -42,6 +50,18 @@
  *     id: "total",
  *     min_inferred: 3,
  *     min_observed: 5,
+ *     max_inferred: 100,
+ *     max_observed: 110
+ *   }
+ * ]
+ */
+
+/**
+ * @apiDefine NOSNationalMaxExample
+ * @apiSuccessExample {json} Success-Example:
+ * [
+ *   {
+ *     id: "total",
  *     max_inferred: 100,
  *     max_observed: 110
  *   }

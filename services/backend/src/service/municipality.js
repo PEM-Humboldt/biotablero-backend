@@ -1,4 +1,4 @@
-module.exports = municipalityPersistence => ({
+module.exports = (municipalityPersistence) => ({
   /**
    * Get a list with all municipalities information
    */
@@ -9,5 +9,5 @@ module.exports = municipalityPersistence => ({
    *
    * @param stateId state Id to filter by
    */
-  getByState: async stateId => municipalityPersistence.findByState(stateId),
+  getByState: async (stateId) => municipalityPersistence.findByState(stateId),
 });

@@ -6,7 +6,7 @@ module.exports = (db, { selectedStrategies }) => ({
    *
    * @returns {Object} created object with its id
    */
-  createStrategy: strategy => selectedStrategies.forge(strategy).save(),
+  createStrategy: (strategy) => selectedStrategies.forge(strategy).save(),
 
   /**
    * Find all selected strategies with the given user id and project id
@@ -16,19 +16,18 @@ module.exports = (db, { selectedStrategies }) => ({
    *
    * @returns {Object[]} List of selected strategies
    */
-  findByUserAndProject: (userId, projectId) => (
+  findByUserAndProject: (userId, projectId) =>
     selectedStrategies
       .where({ id_user: userId, id_project: projectId })
       .fetchAll({
         withRelated: [
-          { biome: qb => qb.column('id_biome', 'name') },
+          { biome: (qb) => qb.column('id_biome', 'name') },
           'ea',
-          { szh: qb => qb.column('id_subzone', 'name_subzone') },
+          { szh: (qb) => qb.column('id_subzone', 'name_subzone') },
           'strategy',
         ],
       })
-      .then(results => results.toJSON())
-  ),
+      .then((results) => results.toJSON()),
 
   /**
    * Find all geometries belonging to selected strategies for a given project
@@ -37,9 +36,10 @@ module.exports = (db, { selectedStrategies }) => ({
    *
    * @returns {Object} GeoJson object with all geometries
    */
-  findSelectedStrategiesGeoJson: projectId => (
-    db.raw(
-      `SELECT row_to_json(fc) as collection
+  findSelectedStrategiesGeoJson: (projectId) =>
+    db
+      .raw(
+        `SELECT row_to_json(fc) as collection
       FROM (
         SELECT 'FeatureCollection' As type, array_to_json(array_agg(f)) As features
         FROM(
@@ -72,8 +72,7 @@ module.exports = (db, { selectedStrategies }) => ({
           where str2.project_id = ?
         ) as f
       ) as fc`,
-      projectId,
-    )
-      .then(biomes => biomes.rows[0].collection)
-  ),
+        projectId,
+      )
+      .then((biomes) => biomes.rows[0].collection),
 });

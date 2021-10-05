@@ -27,17 +27,19 @@ module.exports = (errorHandler, SCIHFService) => {
    *  /sci/hf?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFExample
    */
-  router.get('/sci/hf', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId required' };
-      throw error;
-    }
-    return SCIHFService.getSCIHF(req.params.areaType, req.params.areaId)
-      .then((value) => {
+  router.get(
+    '/sci/hf',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId required' };
+        throw error;
+      }
+      return SCIHFService.getSCIHF(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup s_sci_hf
@@ -61,17 +63,19 @@ module.exports = (errorHandler, SCIHFService) => {
    *  /sci/hf/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFLayerExample
    */
-  router.get('/sci/hf/layer', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId required' };
-      throw error;
-    }
-    return SCIHFService.getSCIHFLayer(req.params.areaType, req.params.areaId)
-      .then((value) => {
+  router.get(
+    '/sci/hf/layer',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId required' };
+        throw error;
+      }
+      return SCIHFService.getSCIHFLayer(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-  }));
+    }),
+  );
 
   /**
    * @apiGroup s_sci_hf
@@ -98,22 +102,24 @@ module.exports = (errorHandler, SCIHFService) => {
    *  /sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFPALayerExample
    */
-  router.get('/sci/:sciCat/hf/:hfPers/layer', errorHandler((req, res, next) => {
-    if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId required' };
-      throw error;
-    }
-    return SCIHFService.getSCIHFPALayer(
-      req.params.sciCat,
-      req.params.hfPers,
-      req.params.areaType,
-      req.params.areaId,
-    )
-      .then((value) => {
+  router.get(
+    '/sci/:sciCat/hf/:hfPers/layer',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId required' };
+        throw error;
+      }
+      return SCIHFService.getSCIHFPALayer(
+        req.params.sciCat,
+        req.params.hfPers,
+        req.params.areaType,
+        req.params.areaId,
+      ).then((value) => {
         res.send(value);
         next();
       });
-  }));
+    }),
+  );
 
   return router;
 };

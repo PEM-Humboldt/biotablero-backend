@@ -33,19 +33,19 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error('Data for SCIHF doesn\'t exists in the selected area id and area type');
+        throw new Error("Data for SCIHF doesn't exists in the selected area id and area type");
       }
 
       try {
-        const binaryProtectedValues = [
-          ...new Set(data.map(b => (b.binary_protected))),
-        ].join(';');
+        const binaryProtectedValues = [...new Set(data.map((b) => b.binary_protected))].join(';');
         const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
           binaryProtectedValues,
         );
 
         return data.map((item) => {
-          const { label } = categoriesPA.find(bp => bp.binary_protected === item.binary_protected);
+          const { label } = categoriesPA.find(
+            (bp) => bp.binary_protected === item.binary_protected,
+          );
           return {
             hf_pers: item.hf_pers,
             sci_cat: item.sci_cat,
@@ -96,7 +96,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
 
       if (!data) {
         throw new Error(
-          'Data layer for SCIHF doesn\'t exists in the selected area id and area type',
+          "Data layer for SCIHF doesn't exists in the selected area id and area type",
         );
       }
 
@@ -142,13 +142,13 @@ module.exports = (SCIHFPersistence, restAPI) => {
 
       if (!data || !data.features) {
         throw new Error(
-          'Data layer for SCIHF PA doesn\'t exists in the selected area id and area type',
+          "Data layer for SCIHF PA doesn't exists in the selected area id and area type",
         );
       }
 
       try {
         const binaryProtectedValues = [
-          ...new Set(data.features.map(b => (b.properties.binary_protected))),
+          ...new Set(data.features.map((b) => b.properties.binary_protected)),
         ].join(';');
         const categoriesPA = await restAPI.requestCategoriesByBinaryProtected(
           binaryProtectedValues,
@@ -156,7 +156,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
 
         const newFeatures = data.features.map((item) => {
           const { label } = categoriesPA.find(
-            bp => bp.binary_protected === item.properties.binary_protected,
+            (bp) => bp.binary_protected === item.properties.binary_protected,
           );
           return {
             ...item,

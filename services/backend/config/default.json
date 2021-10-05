@@ -6,7 +6,7 @@
     "password": "password",
     "database": "database"
   },
-  "server" : {
+  "server": {
     "port": 4000,
     "origins": ["*"]
   },
@@ -14,7 +14,7 @@
     "dir": "logs"
   },
   "geometries": {
-    "tolerance" : 0.001,
+    "tolerance": 0.001,
     "tolerance_heavy": 0.003
   }
 }

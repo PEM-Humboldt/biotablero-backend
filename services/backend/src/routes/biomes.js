@@ -40,13 +40,15 @@ module.exports = (errorHandler, biomeService) => {
    *  /biomes
    * @apiUse getAllBiomesByEAExample
    */
-  router.get('/biomes', errorHandler((req, res, next) => (
-    biomeService.getAll()
-      .then((biomes) => {
+  router.get(
+    '/biomes',
+    errorHandler((req, res, next) =>
+      biomeService.getAll().then((biomes) => {
         res.send(biomes);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

@@ -8012,6 +8012,643 @@ define({ "api": [
     "groupDescription": "<p>Information related to protected areas inside geofences and in strategic ecosystems inside geofences</p>"
   },
   {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/concentration",
+    "title": "Concentration",
+    "name": "Concentration",
+    "version": "1.0.0",
+    "description": "<p>Average, minimun and máximun value of species richness concentration for a given area. Also, lowest and highest values at nacional level.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.avg",
+            "description": "<p>average value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min",
+            "description": "<p>lowest value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max",
+            "description": "<p>highest value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min_threshold",
+            "description": "<p>lowest value among national areas of the same type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_threshold",
+            "description": "<p>highest value among national areas of the same type</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: 'concentration',\n    avg: 0.3,\n    min: 0.2,\n    max: 0.6,\n    min_threshold: 0.1,\n    max_threshold: 1,\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/concentration?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/gaps",
+    "title": "Gaps",
+    "name": "Gaps",
+    "version": "1.0.0",
+    "description": "<p>Average, lowest and highest value of species richness gaps for a given area. Also, lowest and highest values among national areas of the same type.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.avg",
+            "description": "<p>average value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min",
+            "description": "<p>lowest value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max",
+            "description": "<p>highest value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min_threshold",
+            "description": "<p>lowest value among national areas of the same type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_threshold",
+            "description": "<p>highest value among national areas of the same type</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: 'gaps',\n    avg: 0.34,\n    min: 0.4,\n    max: 0.8,\n    min_threshold: 0.15,\n    max_threshold: 0.95,\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/gaps?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species/layer",
+    "title": "NOSLayer",
+    "name": "NOSLayer",
+    "version": "1.0.0",
+    "description": "<p>Layer of a specific group for richness - number of species in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "group",
+            "description": "<p>group to select the proper layer. Options are: total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Binary",
+            "optional": false,
+            "field": "result",
+            "description": "<p>image with the geometry</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "image/png",
+          "type": "binary"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species/layer?areaType=ea&areaId=CARDER&group=total",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species/layer/thresholds",
+    "title": "NOSLayerThresholds",
+    "name": "NOSLayerThresholds",
+    "version": "1.0.0",
+    "description": "<p>Min and max value inside the layer of a specific group for richness - number of species in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "group",
+            "description": "<p>group to select the proper layer. Options are: total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min",
+            "description": "<p>min value inside the layer</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max",
+            "description": "<p>max value inside the layer</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  min: 0,\n  max: 2192,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species/layer/thresholds?areaType=ea&areaId=CARDER&group=total",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species/nationalMax",
+    "title": "NOSNationalMax",
+    "name": "NOSNationalMax",
+    "version": "1.0.0",
+    "description": "<p>Highest values for the number of species among national areas of the same type. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": true,
+            "field": "group",
+            "description": "<p>group to filter results. Options are: all, total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_inferred",
+            "description": "<p>maximum number of inferred species at a national level (according to BioModelos)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_observed",
+            "description": "<p>maximum number of observed species at a national level (according to I2D)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: \"total\",\n    max_inferred: 100,\n    max_observed: 110\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species/nationalMax?areaType=ea&group=total",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species/thresholds",
+    "title": "NOSThresholds",
+    "name": "NOSThresholds",
+    "version": "1.0.0",
+    "description": "<p>Lowest and highest values for the number of species among areas of the same type inside the same biotic region. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": true,
+            "field": "group",
+            "description": "<p>group to filter results. Options are: all, total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min_inferred",
+            "description": "<p>minimum number of inferred species (according to BioModelos)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min_observed",
+            "description": "<p>minimum number of observed species (according to I2D)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_inferred",
+            "description": "<p>maximum number of inferred species (according to BioModelos)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_observed",
+            "description": "<p>maximum number of observed species (according to I2D)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: \"total\",\n    min_inferred: 3,\n    min_observed: 5,\n    max_inferred: 100,\n    max_observed: 110\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species/thresholds?areaType=ea&areaId=CARDER&group=total",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/number-species",
+    "title": "NumberOfSpecies",
+    "name": "NumberOfSpecies",
+    "version": "1.0.0",
+    "description": "<p>Number of observed and inferred species for a given area, and number of species in the region the area is in. Can be filtered by group: total, endemic, invasive and threatened, or get all of them.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": true,
+            "field": "group",
+            "description": "<p>group to filter results. Options are: all, total, endemic, invasive and threatened.</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>group id related to the results</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.inferred",
+            "description": "<p>inferred number of species (according to BioModelos)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.observed",
+            "description": "<p>observed number of species (according to I2D)</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.region_observed",
+            "description": "<p>number of observed species in the region the area belongs to</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.region_inferred",
+            "description": "<p>number of inferred species in the region the area belongs to</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.region_name",
+            "description": "<p>name of the region the area belongs to</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n    id: \"total\",\n    inferred: 30,\n    observed: 40,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"endemic\",\n    inferred: 20,\n    observed: 25,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"invasive\",\n    inferred: 10,\n    observed: 20,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  },\n  {\n    id: \"threatened\",\n    inferred: 15,\n    observed: 20,\n    region_inferred: 80,\n    region_observed: 100,\n    region_name: Andes\n  }\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/number-species?areaType=ea&areaId=CARDER&group=all",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
     "group": "s_sci_hf",
     "type": "get",
     "url": "/sci/hf",

@@ -6,11 +6,11 @@
     "password": "password",
     "database": "database"
   },
-  "server" : {
+  "server": {
     "port": 4001,
     "origins": ["*"]
   },
-  "services" : {
+  "services": {
     "backend": "http://localhost:4000"
   },
   "logs": {

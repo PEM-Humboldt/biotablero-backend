@@ -1,6 +1,6 @@
 const { rasterNOSKeys } = require('../util/appropriate_keys');
 
-module.exports = (RichnessNOSPersistence, restAPI) => {
+module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
   const Richness = {
     /**
      * Get values for the number of species in the given area of the given group
@@ -201,7 +201,7 @@ module.exports = (RichnessNOSPersistence, restAPI) => {
     },
 
     /**
-     * Get layer for the number of species in the given area of the given group
+     * Get the layer for the number of species in the given area of the given group
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
@@ -244,6 +244,56 @@ module.exports = (RichnessNOSPersistence, restAPI) => {
         return RichnessNOSPersistence.findNOSLayerThresholds(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+    },
+
+    /**
+     * Get the layer for the gaps section in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Binary} Image with the geometry
+     */
+     getGapsLayer: async (areaType, areaId) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessGapsPersistence.findGapsLayer(
+          areaGeom.features[0].geometry,
+          'GAPS_INDICE_GSI_2020.tif',
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+    },
+
+    /**
+     * Get the min and max value of the layer for the gaps section in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Object} Object with min and max value
+     */
+     getGapsLayerThresholds: async (areaType, areaId) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessGapsPersistence.findGapsLayerThresholds(
+          areaGeom.features[0].geometry,
+          'GAPS_INDICE_GSI_2020.tif',
         );
       } catch (e) {
         const error = {

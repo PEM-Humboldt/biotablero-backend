@@ -218,7 +218,7 @@ module.exports = (errorHandler, Richness) => {
    * @apiName NOSLayer
    * @apiVersion 1.0.0
    * @apiDescription
-   * Layer of a specific group for richness - number of species in a given area. Parameter group
+   * Layer of a specific group for richness (number of species) in a given area. Parameter group
    * may be selected from: total, endemic, invasive and threatened.
    *
    * @apiParam (Query params) {String} areaType area type
@@ -285,6 +285,74 @@ module.exports = (errorHandler, Richness) => {
         res.send(value);
         next();
       });
+    }),
+  );
+
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/gaps/layer GapsLayer
+   * @apiName GapsLayer
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Layer for gaps section of richness in the given area
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   *
+   * @apiSuccess {Binary} result image with the geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/gaps/layer?areaType=ea&areaId=CARDER
+   * @apiUse GapsLayerExample
+   */
+   router.get(
+    '/richness/gaps/layer',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId are required' };
+        throw error;
+      }
+      return Richness.getGapsLayer(req.params.areaType, req.params.areaId).then(
+        (value) => {
+          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+          next();
+        },
+      );
+    }),
+  );
+
+  /**
+   * @apiGroup s_richness
+   * @api {get} /richness/gaps/layer/thresholds GapsLayerThresholds
+   * @apiName GapsLayerThresholds
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Min and max value inside the layer for gaps section of richness in a given area.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   *
+   * @apiSuccess {Object} result
+   * @apiSuccess {Number} result.min min value inside the layer
+   * @apiSuccess {Number} result.max max value inside the layer
+   *
+   * @apiExample {curl} Example usage:
+   *  /richness/gaps/layer/thresholds?areaType=ea&areaId=CARDER
+   * @apiUse GapsLayerThresholdsExample
+   */
+  router.get(
+    '/richness/gaps/layer/thresholds',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId are required' };
+        throw error;
+      }
+      return Richness.getGapsLayerThresholds(req.params.areaType, req.params.areaId).then(
+        (value) => {
+          res.send(value);
+          next();
+        },
+      );
     }),
   );
 

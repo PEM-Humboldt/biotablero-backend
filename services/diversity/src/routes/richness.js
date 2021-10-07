@@ -305,19 +305,17 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/gaps/layer?areaType=ea&areaId=CARDER
    * @apiUse GapsLayerExample
    */
-   router.get(
+  router.get(
     '/richness/gaps/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId are required' };
         throw error;
       }
-      return Richness.getGapsLayer(req.params.areaType, req.params.areaId).then(
-        (value) => {
-          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-          next();
-        },
-      );
+      return Richness.getGapsLayer(req.params.areaType, req.params.areaId).then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
     }),
   );
 

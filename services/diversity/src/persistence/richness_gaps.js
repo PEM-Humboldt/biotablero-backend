@@ -3,7 +3,7 @@ module.exports = (db, logger) => ({
    * Find the layer for gaps section in the given area
    *
    * @param {json} geometry geometry of the selected area
-   * @param {String} filename filename which corrensponds to the proper layer, options are: 
+   * @param {String} filename filename which corrensponds to the proper layer, options are:
    * 'GAPS_INDICE_GSI_2020.tif'.
    *
    * @returns {Binary} Image with the geometry
@@ -43,7 +43,7 @@ module.exports = (db, logger) => ({
    * Find the min and max value of the layer for gaps section in the given area
    *
    * @param {json} geometry geometry of the selected area
-   * @param {String} filename filename which corrensponds to the proper layer, options are: 
+   * @param {String} filename filename which corrensponds to the proper layer, options are:
    * 'GAPS_INDICE_GSI_2020.tif'.
    *
    * @returns {Object} Object with min and max value

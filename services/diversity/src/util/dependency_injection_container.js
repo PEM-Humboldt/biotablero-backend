@@ -25,14 +25,15 @@ bottle.factory('RichnessNOSPersistence', () =>
   RichnessNOSPersistence(bookshelfModels.db, bookshelfModels.models, logger),
 );
 bottle.factory('RichnessGapsPersistence', () =>
-RichnessGapsPersistence(bookshelfModels.db, logger),
+  RichnessGapsPersistence(bookshelfModels.db, logger),
 );
 
 bottle.factory('RichnessService', (container) =>
   RichnessService(
     container.RichnessNOSPersistence,
     container.RichnessGapsPersistence,
-    container.restAPI),
+    container.restAPI,
+  ),
 );
 bottle.factory('FunctionalService', () => FunctionalService());
 

@@ -238,7 +238,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
      *
      * @returns {Object} Object with min and max value
      */
-     getNOSLayerThresholds: async (areaType, areaId, group) => {
+    getNOSLayerThresholds: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return RichnessNOSPersistence.findNOSLayerThresholds(
@@ -263,7 +263,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
      *
      * @returns {Binary} Image with the geometry
      */
-     getGapsLayer: async (areaType, areaId) => {
+    getGapsLayer: async (areaType, areaId) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return RichnessGapsPersistence.findGapsLayer(
@@ -288,7 +288,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
      *
      * @returns {Object} Object with min and max value
      */
-     getGapsLayerThresholds: async (areaType, areaId) => {
+    getGapsLayerThresholds: async (areaType, areaId) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return RichnessGapsPersistence.findGapsLayerThresholds(

@@ -111,14 +111,13 @@ module.exports = (db, { richnessNos }, logger) => ({
   /**
    * Find the layer for the number of species in the given area of the given group
    *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   * @param {String} group group to select the proper layer, options are: 'total', 'endemic',
-   * 'invasive', 'threatened'.
+   * @param {json} geometry geometry of the selected area
+   * @param {String} filename filename which corrensponds to the proper layer according to group,
+   * options are: 'total_inf.tif', 'end_inf.tif', 'inv_inf.tif', 'thr_inf.tif'.
    *
    * @returns {Binary} Image with the geometry
    */
-  getAreaLayer: (geometry, filename) =>
+  findNOSLayer: (geometry, filename) =>
     db
       .raw(
         `
@@ -152,14 +151,13 @@ module.exports = (db, { richnessNos }, logger) => ({
    * Find the min and max value of the layer for the number of species in the given area
    * of the given group
    *
-   * @param {String} areaType area type
-   * @param {String | Number} areaId area id
-   * @param {String} group group to select the proper layer, options are: 'total', 'endemic',
-   * 'invasive', 'threatened'.
+   * @param {json} geometry geometry of the selected area
+   * @param {String} filename filename which corrensponds to the proper layer according to group,
+   * options are: 'total_inf.tif', 'end_inf.tif', 'inv_inf.tif', 'thr_inf.tif'.
    *
    * @returns {Object} Object with min and max value
    */
-  getAreaLayerThresholds: (geometry, filename) =>
+  findNOSLayerThresholds: (geometry, filename) =>
     db
       .raw(
         `

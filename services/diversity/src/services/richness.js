@@ -1,6 +1,6 @@
 const { rasterNOSKeys } = require('../util/appropriate_keys');
 
-module.exports = (RichnessPersistence, restAPI) => {
+module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
   const Richness = {
     /**
      * Get values for the number of species in the given area of the given group
@@ -19,14 +19,14 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'endemic':
         case 'invasive':
         case 'threatened':
-          promises.unshift(RichnessPersistence.findNumberOfSpecies(areaType, areaId, group));
+          promises.unshift(RichnessNOSPersistence.findNumberOfSpecies(areaType, areaId, group));
           break;
         case 'all':
           promises.unshift(
-            RichnessPersistence.findNumberOfSpecies(areaType, areaId, 'total'),
-            RichnessPersistence.findNumberOfSpecies(areaType, areaId, 'endemic'),
-            RichnessPersistence.findNumberOfSpecies(areaType, areaId, 'invasive'),
-            RichnessPersistence.findNumberOfSpecies(areaType, areaId, 'threatened'),
+            RichnessNOSPersistence.findNumberOfSpecies(areaType, areaId, 'total'),
+            RichnessNOSPersistence.findNumberOfSpecies(areaType, areaId, 'endemic'),
+            RichnessNOSPersistence.findNumberOfSpecies(areaType, areaId, 'invasive'),
+            RichnessNOSPersistence.findNumberOfSpecies(areaType, areaId, 'threatened'),
           );
           break;
         default:
@@ -73,14 +73,14 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'endemic':
         case 'invasive':
         case 'threatened':
-          promises.unshift(RichnessPersistence.findThresholds(areaType, areaId, group));
+          promises.unshift(RichnessNOSPersistence.findThresholds(areaType, areaId, group));
           break;
         case 'all':
           promises.unshift(
-            RichnessPersistence.findThresholds(areaType, areaId, 'total'),
-            RichnessPersistence.findThresholds(areaType, areaId, 'endemic'),
-            RichnessPersistence.findThresholds(areaType, areaId, 'invasive'),
-            RichnessPersistence.findThresholds(areaType, areaId, 'threatened'),
+            RichnessNOSPersistence.findThresholds(areaType, areaId, 'total'),
+            RichnessNOSPersistence.findThresholds(areaType, areaId, 'endemic'),
+            RichnessNOSPersistence.findThresholds(areaType, areaId, 'invasive'),
+            RichnessNOSPersistence.findThresholds(areaType, areaId, 'threatened'),
           );
           break;
         default:
@@ -125,14 +125,14 @@ module.exports = (RichnessPersistence, restAPI) => {
         case 'endemic':
         case 'invasive':
         case 'threatened':
-          promises.unshift(RichnessPersistence.findNationalMax(areaType, group));
+          promises.unshift(RichnessNOSPersistence.findNationalMax(areaType, group));
           break;
         case 'all':
           promises.unshift(
-            RichnessPersistence.findNationalMax(areaType, 'total'),
-            RichnessPersistence.findNationalMax(areaType, 'endemic'),
-            RichnessPersistence.findNationalMax(areaType, 'invasive'),
-            RichnessPersistence.findNationalMax(areaType, 'threatened'),
+            RichnessNOSPersistence.findNationalMax(areaType, 'total'),
+            RichnessNOSPersistence.findNationalMax(areaType, 'endemic'),
+            RichnessNOSPersistence.findNationalMax(areaType, 'invasive'),
+            RichnessNOSPersistence.findNationalMax(areaType, 'threatened'),
           );
           break;
         default:
@@ -201,7 +201,7 @@ module.exports = (RichnessPersistence, restAPI) => {
     },
 
     /**
-     * Get layer for the number of species in the given area of the given group
+     * Get the layer for the number of species in the given area of the given group
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
@@ -210,10 +210,10 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Binary} Image with the geometry
      */
-    NOSLayer: async (areaType, areaId, group) => {
+    getNOSLayer: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessPersistence.getAreaLayer(
+        return RichnessNOSPersistence.findNOSLayer(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
         );
@@ -238,12 +238,62 @@ module.exports = (RichnessPersistence, restAPI) => {
      *
      * @returns {Object} Object with min and max value
      */
-    NOSLayerThresholds: async (areaType, areaId, group) => {
+    getNOSLayerThresholds: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessPersistence.getAreaLayerThresholds(
+        return RichnessNOSPersistence.findNOSLayerThresholds(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+    },
+
+    /**
+     * Get the layer for the gaps section in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Binary} Image with the geometry
+     */
+    getGapsLayer: async (areaType, areaId) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessGapsPersistence.findGapsLayer(
+          areaGeom.features[0].geometry,
+          'GAPS_INDICE_GSI_2020.tif',
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+    },
+
+    /**
+     * Get the min and max value of the layer for the gaps section in the given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Object} Object with min and max value
+     */
+    getGapsLayerThresholds: async (areaType, areaId) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return RichnessGapsPersistence.findGapsLayerThresholds(
+          areaGeom.features[0].geometry,
+          'GAPS_INDICE_GSI_2020.tif',
         );
       } catch (e) {
         const error = {

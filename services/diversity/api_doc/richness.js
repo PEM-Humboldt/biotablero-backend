@@ -112,3 +112,18 @@
  *   max: 2192,
  * }
  */
+
+/**
+ * @apiDefine GapsLayerExample
+ * @apiSuccessExample {binary} Success-Example:
+ * image/png
+ */
+
+/**
+ * @apiDefine GapsLayerThresholdsExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *   min: 0.158548156,
+ *   max: 0.658754684,
+ * }
+ */

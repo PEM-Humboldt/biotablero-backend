@@ -7,7 +7,7 @@ const restAPI = require('./restAPI');
 
 const bookshelfModels = require('../persistence/models/setup');
 const RichnessNOSPersistence = require('../persistence/richness_nos');
-const RichnessGapsPersistence = require('../persistence/richness_nos');
+const RichnessGapsPersistence = require('../persistence/richness_gaps');
 
 const RichnessService = require('../services/richness');
 const FunctionalService = require('../services/functional');

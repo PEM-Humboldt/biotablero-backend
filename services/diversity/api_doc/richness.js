@@ -77,6 +77,8 @@
  *     avg: 0.34,
  *     min: 0.4,
  *     max: 0.8,
+ *     min_region: 0.45,
+ *     max_region: 0.99,
  *     min_threshold: 0.15,
  *     max_threshold: 0.95,
  *   }
@@ -92,6 +94,8 @@
  *     avg: 0.3,
  *     min: 0.2,
  *     max: 0.6,
+ *     min_region: 0.45,
+ *     max_region: 0.99,
  *     min_threshold: 0.1,
  *     max_threshold: 1,
  *   }

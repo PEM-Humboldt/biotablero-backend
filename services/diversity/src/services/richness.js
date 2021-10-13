@@ -168,17 +168,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
      *
      * @returns {Object} Values of richness species gaps
      */
-    getGaps: async () => {
-      const data = {
-        id: 'gaps',
-        avg: 0.34,
-        min: 0.4,
-        max: 0.8,
-        min_threshold: 0.15,
-        max_threshold: 0.95,
-      };
-      return data;
-    },
+    getGaps: (areaType, areaId) => RichnessGapsPersistence.findGaps(areaType, areaId),
 
     /**
      * Get values for richness species concentration in the given area
@@ -196,8 +186,10 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
         max: 0.6,
         min_threshold: 0.1,
         max_threshold: 1,
+        min_region: 0.45,
+        max_region: 0.99,
       };
-      return data;
+      return [data];
     },
 
     /**

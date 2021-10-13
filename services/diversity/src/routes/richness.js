@@ -153,6 +153,8 @@ module.exports = (errorHandler, Richness) => {
    * @apiSuccess {Number} result.avg average value inside the given area
    * @apiSuccess {Number} result.min lowest value inside the given area
    * @apiSuccess {Number} result.max highest value inside the given area
+   * @apiSuccess {Number} result.min_region lowest value inside the natural region
+   * @apiSuccess {Number} result.max_region highest value inside the natural region
    * @apiSuccess {Number} result.min_threshold lowest value among national areas of the same type
    * @apiSuccess {Number} result.max_threshold highest value among national areas of the same type
    *
@@ -191,6 +193,8 @@ module.exports = (errorHandler, Richness) => {
    * @apiSuccess {Number} result.avg average value inside the given area
    * @apiSuccess {Number} result.min lowest value inside the given area
    * @apiSuccess {Number} result.max highest value inside the given area
+   * @apiSuccess {Number} result.min_region lowest value inside the natural region
+   * @apiSuccess {Number} result.max_region highest value inside the natural region
    * @apiSuccess {Number} result.min_threshold lowest value among national areas of the same type
    * @apiSuccess {Number} result.max_threshold highest value among national areas of the same type
    *

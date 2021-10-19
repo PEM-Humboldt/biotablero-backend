@@ -1,4 +1,4 @@
-module.exports = () => {
+module.exports = (FunctionalDryForestPersistence) => {
   const Functional = {
     /**
      * Get values of functional diversity in the dry forest in a given area
@@ -8,14 +8,8 @@ module.exports = () => {
      *
      * @returns {Object} Values of functional diversity in the dry forest
      */
-    getDryForestValues: async () => {
-      const data = {
-        richness: 27.12,
-        uniformity: 0.36,
-        divergence: 0.47,
-      };
-      return data;
-    },
+    getDryForestValues: async (areaType, areaId) => 
+      FunctionalDryForestPersistence.findDryForestValues(areaType, areaId),
 
     /**
      * Get values of functional features in the dry forest in a given area. The features are:
@@ -26,43 +20,52 @@ module.exports = () => {
      *
      * @returns {Object[]} Get values of functional diversity features.
      */
-    getDryForestFeatures: async () => {
+    getDryForestFeatures: async (areaType, areaId) => {
+      const rawData = await FunctionalDryForestPersistence.findDryForestFeatures(areaType,areaId);
+
+      const featuresData = rawData[0] ? rawData[0] : null;
+      if (!featuresData) {
+        throw new Error(
+          "Data for functional features in the dry forest doesn't exists in the selected area id and area type",
+        );
+      }
+
       const data = [
         {
           id: 'leaf_area',
-          min: 9.5,
-          max: 163655.67,
-          value: 157,
+          min: featuresData.leaf_area_min,
+          max: featuresData.leaf_area_max,
+          value: featuresData.leaf_area_value,
         },
         {
           id: 'leaf_nitrogen',
-          min: 8.97,
-          max: 67.09,
-          value: 15,
+          min: featuresData.leaf_nitrogen_min,
+          max: featuresData.leaf_nitrogen_max,
+          value: featuresData.leaf_nitrogen_value,
         },
         {
           id: 'maximun_height',
-          min: 0.74,
-          max: 50.96,
-          value: 25.85,
+          min: featuresData.maximun_height_min,
+          max: featuresData.maximun_height_max,
+          value: featuresData.maximun_height_value,
         },
         {
           id: 'specific_leaf_area',
-          min: 2.01,
-          max: 71.35,
-          value: 25.4,
+          min: featuresData.specific_leaf_area_min,
+          max: featuresData.specific_leaf_area_max,
+          value: featuresData.specific_leaf_area_value,
         },
         {
           id: 'wood_density',
-          min: 0.14,
-          max: 1.14,
-          value: 0.77,
+          min: featuresData.wood_density_min,
+          max: featuresData.wood_density_max,
+          value: featuresData.wood_density_value,
         },
         {
           id: 'seed_mass',
-          min: 0.02,
-          max: 51319.58,
-          value: 41258,
+          min: featuresData.seed_mass_min,
+          max: featuresData.seed_mass_max,
+          value: featuresData.seed_mass_value,
         },
       ];
       return data;

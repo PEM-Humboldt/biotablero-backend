@@ -29,7 +29,7 @@ bottle.factory('RichnessGapsPersistence', () =>
   RichnessGapsPersistence(bookshelfModels.db, logger),
 );
 bottle.factory('FunctionalDryForestPersistence', () =>
-FunctionalDryForestPersistence(bookshelfModels.db, logger),
+  FunctionalDryForestPersistence(bookshelfModels.db, logger),
 );
 
 bottle.factory('RichnessService', (container) =>
@@ -39,10 +39,8 @@ bottle.factory('RichnessService', (container) =>
     container.restAPI,
   ),
 );
-bottle.factory('FunctionalService', (container) => 
-  FunctionalService(
-    container.FunctionalDryForestPersistence,
-  ),
+bottle.factory('FunctionalService', (container) =>
+  FunctionalService(container.FunctionalDryForestPersistence),
 );
 
 bottle.factory('routes', (container) => [

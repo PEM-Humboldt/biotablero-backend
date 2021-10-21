@@ -54,11 +54,11 @@ module.exports = (db, logger) => ({
         'ff.sm as seed_mass_value',
         db('functional_dry_forest_features').min('sm').as('seed_mass_min'),
         db('functional_dry_forest_features').max('sm').as('seed_mass_max'),
-     )
-     .distinct()
-     .where({ 'ff.geofence_type': areaTypeKeys(areaType), 'ff.geofence_id': areaId })
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+      )
+      .distinct()
+      .where({ 'ff.geofence_type': areaTypeKeys(areaType), 'ff.geofence_id': areaId })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 });

@@ -29,7 +29,7 @@ module.exports = (FunctionalDryForestPersistence) => {
      * @returns {Object[]} Get values of functional diversity features.
      */
     getDryForestFeatures: async (areaType, areaId) => {
-      const rawData = await FunctionalDryForestPersistence.findDryForestFeatures(areaType,areaId);
+      const rawData = await FunctionalDryForestPersistence.findDryForestFeatures(areaType, areaId);
 
       const features = rawData[0] ? rawData[0] : null;
       if (!features) {

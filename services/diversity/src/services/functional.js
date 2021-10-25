@@ -9,23 +9,14 @@ module.exports = (FunctionalDryForestPersistence) => {
      * @returns {Object} Values of functional diversity in the dry forest
      */
     getDryForestValues: async (areaType, areaId) => {
-      try {
-        const rawData = await FunctionalDryForestPersistence.findDryForestValues(areaType, areaId);
-        const values = rawData[0] ? rawData[0] : null;
-        if (!values) {
-          throw new Error(
-            "Data for functional values in the dry forest doesn't exists in the selected area id and area type",
-          );
-        }
-        return values;
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving data of functional diversity in the dry forest values',
-        };
-        throw error;
+      const rawData = await FunctionalDryForestPersistence.findDryForestValues(areaType, areaId);
+      const values = rawData[0] ? rawData[0] : null;
+      if (!values) {
+        throw new Error(
+          "Data for functional values in the dry forest doesn't exists in the selected area id and area type",
+        );
       }
+      return values;
     },
 
     /**
@@ -38,64 +29,53 @@ module.exports = (FunctionalDryForestPersistence) => {
      * @returns {Object[]} Get values of functional diversity features.
      */
     getDryForestFeatures: async (areaType, areaId) => {
-      try {
-        const rawData = await FunctionalDryForestPersistence.findDryForestFeatures(
-          areaType,
-          areaId,
-        );
-        const features = rawData[0] ? rawData[0] : null;
-        if (!features) {
-          throw new Error(
-            "Data for functional features in the dry forest doesn't exists in the selected area id and area type",
-          );
-        }
+      const rawData = await FunctionalDryForestPersistence.findDryForestFeatures(areaType, areaId);
 
-        return [
-          {
-            id: 'leaf_area',
-            min: features.leaf_area_min,
-            max: features.leaf_area_max,
-            value: features.leaf_area_value,
-          },
-          {
-            id: 'leaf_nitrogen',
-            min: features.leaf_nitrogen_min,
-            max: features.leaf_nitrogen_max,
-            value: features.leaf_nitrogen_value,
-          },
-          {
-            id: 'maximun_height',
-            min: features.maximun_height_min,
-            max: features.maximun_height_max,
-            value: features.maximun_height_value,
-          },
-          {
-            id: 'specific_leaf_area',
-            min: features.specific_leaf_area_min,
-            max: features.specific_leaf_area_max,
-            value: features.specific_leaf_area_value,
-          },
-          {
-            id: 'wood_density',
-            min: features.wood_density_min,
-            max: features.wood_density_max,
-            value: features.wood_density_value,
-          },
-          {
-            id: 'seed_mass',
-            min: features.seed_mass_min,
-            max: features.seed_mass_max,
-            value: features.seed_mass_value,
-          },
-        ];
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving data of functional diversity in the dry forest features',
-        };
-        throw error;
+      const features = rawData[0] ? rawData[0] : null;
+      if (!features) {
+        throw new Error(
+          "Data for functional features in the dry forest doesn't exists in the selected area id and area type",
+        );
       }
+
+      return [
+        {
+          id: 'leaf_area',
+          min: features.leaf_area_min,
+          max: features.leaf_area_max,
+          value: features.leaf_area_value,
+        },
+        {
+          id: 'leaf_nitrogen',
+          min: features.leaf_nitrogen_min,
+          max: features.leaf_nitrogen_max,
+          value: features.leaf_nitrogen_value,
+        },
+        {
+          id: 'maximun_height',
+          min: features.maximun_height_min,
+          max: features.maximun_height_max,
+          value: features.maximun_height_value,
+        },
+        {
+          id: 'specific_leaf_area',
+          min: features.specific_leaf_area_min,
+          max: features.specific_leaf_area_max,
+          value: features.specific_leaf_area_value,
+        },
+        {
+          id: 'wood_density',
+          min: features.wood_density_min,
+          max: features.wood_density_max,
+          value: features.wood_density_value,
+        },
+        {
+          id: 'seed_mass',
+          min: features.seed_mass_min,
+          max: features.seed_mass_max,
+          value: features.seed_mass_value,
+        },
+      ];
     },
   };
 

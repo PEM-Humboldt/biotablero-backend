@@ -23,7 +23,7 @@ module.exports = (db, logger) => ({
       .where({ 'fv.geofence_type': areaTypeKeys(areaType), 'fv.geofence_id': areaId })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new Error('Error getting data of functional values in the dry forest');
       }),
   /**
    * Find functional diversity in the dry forest features in the given area
@@ -59,6 +59,6 @@ module.exports = (db, logger) => ({
       .where({ 'ff.geofence_type': areaTypeKeys(areaType), 'ff.geofence_id': areaId })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new Error('Error getting data of functional features in the dry forest');
       }),
 });

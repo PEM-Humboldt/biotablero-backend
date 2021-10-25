@@ -8,6 +8,7 @@ const restAPI = require('./restAPI');
 const bookshelfModels = require('../persistence/models/setup');
 const RichnessNOSPersistence = require('../persistence/richness_nos');
 const RichnessGapsPersistence = require('../persistence/richness_gaps');
+const FunctionalDryForestPersistence = require('../persistence/functional_dry_forest');
 
 const RichnessService = require('../services/richness');
 const FunctionalService = require('../services/functional');
@@ -27,6 +28,9 @@ bottle.factory('RichnessNOSPersistence', () =>
 bottle.factory('RichnessGapsPersistence', () =>
   RichnessGapsPersistence(bookshelfModels.db, logger),
 );
+bottle.factory('FunctionalDryForestPersistence', () =>
+  FunctionalDryForestPersistence(bookshelfModels.db, logger),
+);
 
 bottle.factory('RichnessService', (container) =>
   RichnessService(
@@ -35,7 +39,9 @@ bottle.factory('RichnessService', (container) =>
     container.restAPI,
   ),
 );
-bottle.factory('FunctionalService', () => FunctionalService());
+bottle.factory('FunctionalService', (container) =>
+  FunctionalService(container.FunctionalDryForestPersistence),
+);
 
 bottle.factory('routes', (container) => [
   RichnessRoute(container.errorHandler, container.RichnessService),

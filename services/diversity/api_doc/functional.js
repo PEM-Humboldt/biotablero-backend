@@ -10,6 +10,9 @@
  *    richness: 27.12,
  *    uniformity: 0.36,
  *    divergence: 0.47,
+ *    richness_nal: 56.12,
+ *    uniformity_nal: 0.77,
+ *    divergence_nal: 0.63,
  * }
  */
 

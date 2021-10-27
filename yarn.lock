@@ -458,7 +458,9 @@ __metadata:
     apidoc: 0.26.0
     eslint: 5.5.0
     eslint-config-airbnb-base: 13.1.0
+    eslint-config-prettier: ^8.3.0
     eslint-plugin-import: 2.14.0
+    prettier: 2.3.2
   languageName: unknown
   linkType: soft
 
@@ -1232,6 +1234,24 @@ __metadata:
   languageName: node
   linkType: hard
 
+"diversity@workspace:services/diversity":
+  version: 0.0.0-use.local
+  resolution: "diversity@workspace:services/diversity"
+  dependencies:
+    bookshelf: ^1.2.0
+    bottlejs: ^2.0.0
+    config: ^3.3.6
+    knex: ^0.95.4
+    node-fetch: ^2.6.1
+    nodemon: ^2.0.7
+    pg: ^8.6.0
+    restify: ^8.5.1
+    restify-cors-middleware: ^1.1.1
+    restify-router: ^0.6.2
+    winston: ^3.3.3
+  languageName: unknown
+  linkType: soft
+
 "doctrine@npm:1.5.0":
   version: 1.5.0
   resolution: "doctrine@npm:1.5.0"
@@ -1449,6 +1469,17 @@ __metadata:
     eslint: ^4.19.1 || ^5.3.0
     eslint-plugin-import: ^2.14.0
   checksum: 36fa9c4be350f7d10cdde1c94f1d5bb2686cdcf5a0c8e70f6bdcd01393756e3568076a814db8459347e0adf2b1bb5b74d77c4e990a8665ab17acdc1389f050a7
+  languageName: node
+  linkType: hard
+
+"eslint-config-prettier@npm:^8.3.0":
+  version: 8.3.0
+  resolution: "eslint-config-prettier@npm:8.3.0"
+  peerDependencies:
+    eslint: ">=7.0.0"
+  bin:
+    eslint-config-prettier: bin/cli.js
+  checksum: 94ccbb50fb67e5e47e8ba6cfa257b5cbf53619990ab13f46b99518cfe9b900394b93bdf6ffedbde1a8e2997d301b0fbd73a6b4202146bc53475dfb30a8c812f2
   languageName: node
   linkType: hard
 
@@ -3135,6 +3166,46 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"knex@npm:^0.95.4":
+  version: 0.95.4
+  resolution: "knex@npm:0.95.4"
+  dependencies:
+    colorette: 1.2.1
+    commander: ^7.1.0
+    debug: 4.3.1
+    escalade: ^3.1.1
+    esm: ^3.2.25
+    getopts: 2.2.5
+    interpret: ^2.2.0
+    lodash: ^4.17.21
+    pg-connection-string: 2.4.0
+    rechoir: ^0.7.0
+    resolve-from: ^5.0.0
+    tarn: ^3.0.1
+    tildify: 2.0.0
+  peerDependencies:
+    mysql: ^2.18.1
+    mysql2: ^2.2.5
+    pg: ^8.5.1
+    sqlite3: ^5.0.0
+    tedious: ^11.0.5
+  peerDependenciesMeta:
+    mysql:
+      optional: true
+    mysql2:
+      optional: true
+    pg:
+      optional: true
+    sqlite3:
+      optional: true
+    tedious:
+      optional: true
+  bin:
+    knex: bin/cli.js
+  checksum: a9805bcfc105384affb057c17ed5dc55b765c5736f20af2421d583ee9aa036f23c031af291d8cda3e4830dc1f952c1b884d33a46473fa96ed2dfd73711ab853c
+  languageName: node
+  linkType: hard
+
 "kuler@npm:1.0.x":
   version: 1.0.1
   resolution: "kuler@npm:1.0.1"
@@ -4051,6 +4122,13 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"pg-connection-string@npm:^2.5.0":
+  version: 2.5.0
+  resolution: "pg-connection-string@npm:2.5.0"
+  checksum: 504f288e5e361a903f8b426efe9d00fc289e1d55e16fcca8e4f70f89c29e3429b60291bdec65636ca9c56496319bea878eb32ea60a0d4949ef6df3d748250818
+  languageName: node
+  linkType: hard
+
 "pg-int8@npm:1.0.1":
   version: 1.0.1
   resolution: "pg-int8@npm:1.0.1"
@@ -4067,10 +4145,26 @@ fsevents@~2.3.1:
   languageName: node
   linkType: hard
 
+"pg-pool@npm:^3.3.0":
+  version: 3.3.0
+  resolution: "pg-pool@npm:3.3.0"
+  peerDependencies:
+    pg: ">=8.0"
+  checksum: 25f528a9b72ebe00678bbafe8a196e95c73b6843388619a8fda30878044b45b38ffbaaf69e485354d73c7452ac81f62ea6aa9705014855b60d71f6ef256cfe45
+  languageName: node
+  linkType: hard
+
 "pg-protocol@npm:^1.4.0":
   version: 1.4.0
   resolution: "pg-protocol@npm:1.4.0"
   checksum: 2b5ebfccd014a4a9127a04e34a423a9e7fe6f6b96c32698929e0860e32c453e64438c935068405ee923ab99788345b9591a6dbaa30bba70e724d7fc4d5f5d21e
+  languageName: node
+  linkType: hard
+
+"pg-protocol@npm:^1.5.0":
+  version: 1.5.0
+  resolution: "pg-protocol@npm:1.5.0"
+  checksum: 270e72d38aaed3ee23ec35802899c707b91e176f94373ce571c45b604ee9c5fbe60f629bec0a05bb607d23d0c016c23e4e318ec3c391f83467f705284190970c
   languageName: node
   linkType: hard
 
@@ -4104,6 +4198,26 @@ fsevents@~2.3.1:
     pg-native:
       optional: true
   checksum: b8eed3cd3831ea8cce051fcc58a56f39e7c24545c18466c89e64e4f90c8c2d386e3c51c33e22b0d2e39bf51156bdd4d5ade16c6e0edad1fbff97bd89f2bd86f2
+  languageName: node
+  linkType: hard
+
+"pg@npm:^8.6.0":
+  version: 8.6.0
+  resolution: "pg@npm:8.6.0"
+  dependencies:
+    buffer-writer: 2.0.0
+    packet-reader: 1.0.0
+    pg-connection-string: ^2.5.0
+    pg-pool: ^3.3.0
+    pg-protocol: ^1.5.0
+    pg-types: ^2.1.0
+    pgpass: 1.x
+  peerDependencies:
+    pg-native: ">=2.0.0"
+  peerDependenciesMeta:
+    pg-native:
+      optional: true
+  checksum: 06bec69854081161b3563f2bc0a3b09a20ebbff87e137914816de0970d70a0a4b282917434783f99841ec650a0650c0919fade96cb25e636d1b4a0cebb672922
   languageName: node
   linkType: hard
 
@@ -4203,6 +4317,15 @@ fsevents@~2.3.1:
   version: 2.0.0
   resolution: "prepend-http@npm:2.0.0"
   checksum: d39325775adce38e18213fd19656af4abd7672ef6b1e330437079bb237de011d49a70bfb56b35037603d30ef279cceddb33794f70168582d50845c2ade29968e
+  languageName: node
+  linkType: hard
+
+"prettier@npm:2.3.2":
+  version: 2.3.2
+  resolution: "prettier@npm:2.3.2"
+  bin:
+    prettier: bin-prettier.js
+  checksum: 4fd89a7f6a12b13456d359fba2b1dd0fc0a17cf33f8f15953ab9f43b21ea9b09b5a2861d63b558ca0577274ce606d390e70628cf93e26d19d6cb7f19c9eebc31
   languageName: node
   linkType: hard
 

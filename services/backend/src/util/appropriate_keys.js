@@ -1,27 +1,40 @@
 module.exports = {
   persistenceKeysOrder: (val) => {
     switch (val) {
-      case 'estable_natural': return 1;
-      case 'dinamica': return 2;
-      case 'estable_alta': return 3;
-      default: return val;
+      case 'estable_natural':
+        return 1;
+      case 'dinamica':
+        return 2;
+      case 'estable_alta':
+        return 3;
+      default:
+        return val;
     }
   },
   HFCategoriesKeysOrder: (val) => {
     switch (val) {
-      case 'natural': return 1;
-      case 'baja': return 2;
-      case 'media': return 3;
-      case 'alta': return 4;
-      default: return val;
+      case 'natural':
+        return 1;
+      case 'baja':
+        return 2;
+      case 'media':
+        return 3;
+      case 'alta':
+        return 4;
+      default:
+        return val;
     }
   },
   SEKeys: (val) => {
     switch (val) {
-      case 'Páramo': return 'paramo';
-      case 'Humedal': return 'wetland';
-      case 'Bosque Seco Tropical': return 'dryForest';
-      default: return val;
+      case 'Páramo':
+        return 'paramo';
+      case 'Humedal':
+        return 'wetland';
+      case 'Bosque Seco Tropical':
+        return 'dryForest';
+      default:
+        return val;
     }
   },
   HFCategoriesRangeKeys: (val) => {
@@ -34,7 +47,8 @@ module.exports = {
         return 'media';
       case val > 60 && val <= 100:
         return 'alta';
-      default: return val;
+      default:
+        return val;
     }
   },
 };

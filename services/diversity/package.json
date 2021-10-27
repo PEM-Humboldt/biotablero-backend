@@ -1,0 +1,33 @@
+{
+  "name": "diversity",
+  "version": "1.0.0",
+  "description": "Service for species diversity data",
+  "main": "src/app.js",
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  },
+  "scripts": {
+    "start": "nodemon --watch src --watch config",
+    "start-prod": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "yarn g:lint src",
+    "docs": "yarn g:docs -i api_doc/ -i src/ -o docs/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bookshelf": "^1.2.0",
+    "bottlejs": "^2.0.0",
+    "config": "^3.3.6",
+    "knex": "^0.95.4",
+    "node-fetch": "^2.6.1",
+    "pg": "^8.6.0",
+    "restify": "^8.5.1",
+    "restify-cors-middleware": "^1.1.1",
+    "restify-router": "^0.6.2",
+    "winston": "^3.3.3"
+  },
+  "apidoc": {
+    "name": "Service for species diversity data",
+    "version": "1.0.0"
+  }
+}

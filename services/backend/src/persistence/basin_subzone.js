@@ -1,25 +1,17 @@
 const config = require('config');
 
-module.exports = (
-  db,
-  {
-    geoBasinSubzones,
-    colombiaCoverageDetails,
-    geoHFPersistence,
-    geoHF,
-  },
-) => {
+module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersistence, geoHF }) => {
   const geometriesConfig = config.geometries;
 
   return {
     /**
      * Get all basin zones
      */
-    findAll: () => (
-      geoBasinSubzones.query()
+    findAll: () =>
+      geoBasinSubzones
+        .query()
         .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
-        .orderBy('name')
-    ),
+        .orderBy('name'),
 
     /**
      * Get the total area for the given subzone
@@ -27,11 +19,11 @@ module.exports = (
      * @param {String} subzoneId subzone id
      * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaBySubzone: (subzoneId, year = 2012) => (
-      colombiaCoverageDetails.query()
+    getTotalAreaBySubzone: (subzoneId, year = 2012) =>
+      colombiaCoverageDetails
+        .query()
         .where({ id_subzone: subzoneId, year_cover: year })
-        .sum('area_ha as area')
-    ),
+        .sum('area_ha as area'),
 
     /**
      * Get the protected area distribution inside the given basin subzone
@@ -39,14 +31,21 @@ module.exports = (
      * @param {String} subzoneId subzone id
      * @param {Number} year optional year to filter data, 2012 by default
      */
-    findAreaByPA: async (subzoneId, year = 2012) => (
+    findAreaByPA: async (subzoneId, year = 2012) =>
       db('colombia_coverage_details as cc')
-        .innerJoin('global_binary_protected_areas as gbpa', 'cc.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'cc.binary_protected',
+          'gbpa.binary_protected',
+        )
         .where({ 'cc.id_subzone': subzoneId, 'cc.year_cover': year })
         .groupBy('gbpa.label', 'gbpa.binary_protected')
         .orderBy('gbpa.binary_protected', 'desc')
-        .select(db.raw('coalesce(SUM(cc.area_ha), 0) as area'), 'gbpa.label as type', 'gbpa.binary_protected as bp')
-    ),
+        .select(
+          db.raw('coalesce(SUM(cc.area_ha), 0) as area'),
+          'gbpa.label as type',
+          'gbpa.binary_protected as bp',
+        ),
 
     /**
      * Get the coverage area distribution inside the given basin subzone
@@ -54,14 +53,14 @@ module.exports = (
      * @param {Number} subzoneId basin subzone id
      * @param {Number} year optional year to filter data, 2012 by default
      */
-    findAreaByCoverage: async (subzoneId, year = 2012) => (
-      colombiaCoverageDetails.query()
+    findAreaByCoverage: async (subzoneId, year = 2012) =>
+      colombiaCoverageDetails
+        .query()
         .where({ id_subzone: subzoneId, year_cover: year })
         .groupBy('area_type')
         .sum('area_ha as area')
         .select('area_type as type')
-        .orderBy('type')
-    ),
+        .orderBy('type'),
 
     /**
      * Find the current area distribution for each human footprint category in the
@@ -71,14 +70,14 @@ module.exports = (
      *
      * @returns {Object[]} Array of areas by human footprint category
      */
-    findAreaByHFCategory: async (subzoneId, year = 2018) => (
-      geoHF.query()
+    findAreaByHFCategory: async (subzoneId, year = 2018) =>
+      geoHF
+        .query()
         .where({ id_subzone: subzoneId, hf_year: year })
         .groupBy('hf_cat')
         .sum('area_ha as area')
         .select('hf_cat as key')
-        .orderBy('key')
-    ),
+        .orderBy('key'),
 
     /**
      * Find the current value of human footprint in the given basin subzone
@@ -87,12 +86,12 @@ module.exports = (
      *
      * @returns {Object} Object of current human footprint value.
      */
-    findCurrentHFValue: async (subzoneId, year = 2018) => (
-      geoHF.query()
+    findCurrentHFValue: async (subzoneId, year = 2018) =>
+      geoHF
+        .query()
         .where({ id_subzone: subzoneId, hf_year: year })
         .whereNot({ hf_avg: -9999 })
-        .avg('hf_avg as CurrentHFValue')
-    ),
+        .avg('hf_avg as CurrentHFValue'),
 
     /**
      * Find the persistence of human footprint areas in the given basin subzone
@@ -100,14 +99,14 @@ module.exports = (
      *
      * @returns {Object[]} Array of persistence values.
      */
-    findHFPersistenceAreas: async subzoneId => (
-      geoHFPersistence.query()
+    findHFPersistenceAreas: async (subzoneId) =>
+      geoHFPersistence
+        .query()
         .where({ id_subzone: subzoneId })
         .groupBy('hf_pers')
         .sum('area_ha as area')
         .select('hf_pers as key')
-        .orderBy('key')
-    ),
+        .orderBy('key'),
 
     /**
      * Find the human footprint value through time in the given basin subzone
@@ -115,22 +114,23 @@ module.exports = (
      *
      * @returns {Object} Object of HF values through time
      */
-    findTotalHFTimeLine: async subzoneId => (
-      geoHF.query()
+    findTotalHFTimeLine: async (subzoneId) =>
+      geoHF
+        .query()
         .select('hf_year as year')
         .avg('hf_avg as avg')
         .where({ id_subzone: subzoneId })
         .whereNot({ hf_avg: -9999 })
         .groupBy('year')
-        .orderBy('year')
-    ),
+        .orderBy('year'),
 
     /**
      * Get GeoJson layer with basin subzones at national level
      */
-    findNationalLayer: () => (
-      db.raw(
-        `
+    findNationalLayer: () =>
+      db
+        .raw(
+          `
         SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
@@ -146,10 +146,9 @@ module.exports = (
           ) as f
         ) as fc
         `,
-        geometriesConfig.tolerance_heavy,
-      )
-        .then(layers => layers.rows[0].collection)
-    ),
+          geometriesConfig.tolerance_heavy,
+        )
+        .then((layers) => layers.rows[0].collection),
 
     /**
      * Get the geometry for a given basin subzone
@@ -157,16 +156,17 @@ module.exports = (
      *
      * @return {Object} Geojson object with the geometry
      */
-    findLayerById: subzoneId => (
-      db.raw(
-        `
+    findLayerById: (subzoneId) =>
+      db
+        .raw(
+          `
         SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM (
             SELECT 'Feature' as type,
               row_to_json(sz2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_basin_subzones as sz1
             INNER JOIN (
               SELECT gid as id, name_subzone as key
@@ -176,10 +176,9 @@ module.exports = (
           ) as f
         ) as fc
         `,
-        [geometriesConfig.tolerance_heavy, subzoneId],
-      )
-        .then(layers => layers.rows[0].collection)
-    ),
+          [geometriesConfig.tolerance_heavy, subzoneId],
+        )
+        .then((layers) => layers.rows[0].collection),
 
     /**
      * Get the current human footprint layer divided by categories in a given basin subzone
@@ -188,19 +187,20 @@ module.exports = (
      *
      * @return {Object} Geojson object with the geometry
      */
-    findHFCategoriesLayerById: (subzoneId, year = 2018) => (
-      db.raw(
-        `
+    findHFCategoriesLayerById: (subzoneId, year = 2018) =>
+      db
+        .raw(
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_cat AS key
               FROM geo_hf
@@ -209,7 +209,7 @@ module.exports = (
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_cat AS key,
                   sum(area_ha) AS area
                 FROM geo_hf
@@ -221,10 +221,9 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [subzoneId, year, subzoneId, year],
-      )
-        .then(layers => layers.rows[0].collection)
-    ),
+          [subzoneId, year, subzoneId, year],
+        )
+        .then((layers) => layers.rows[0].collection),
 
     /**
      * Get the persistence human footprint layer divided by categories in a given basin subzone
@@ -232,19 +231,20 @@ module.exports = (
      *
      * @return {Object} Geojson object with the geometry
      */
-    findHFPersistenceLayerById: subzoneId => (
-      db.raw(
-        `
+    findHFPersistenceLayerById: (subzoneId) =>
+      db
+        .raw(
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_pers AS key
               FROM geo_hf_persistence
@@ -252,7 +252,7 @@ module.exports = (
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_pers AS key,
                   sum(area_ha) AS area
                 FROM geo_hf_persistence
@@ -263,9 +263,8 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [subzoneId, subzoneId],
-      )
-        .then(layers => layers.rows[0].collection)
-    ),
+          [subzoneId, subzoneId],
+        )
+        .then((layers) => layers.rows[0].collection),
   };
 };

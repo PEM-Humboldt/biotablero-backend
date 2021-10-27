@@ -8,3 +8,5 @@ logs/*
 !.yarn/plugins
 !.yarn/versions
 .pnp.*
+
+services/**/yarn.lock

@@ -37,35 +37,35 @@
  */
 
 /**
-* @apiDefine ForestLPLayerExample
-* @apiSuccessExample {json} Success-Example:
-* {
-*      "type": "FeatureCollection",
-*      "features": [
-*          {
-*           "type": "Feature",
-*           "properties": {
-*              "key": "persistencia",
-*              "area": 4257.699441612134
-*          },
-*          "geometry": {
-*               "type": "GeometryCollection",
-*               "geometries": [
-*                   {
-*                   "type": "Polygon",
-*                   "coordinates": [
-*                       [
-*                           [
-*                               -75.5104086779181,
-*                               10.4307384992824
-*                           ],
-*                       ]
-*                   }
-*               ]
-*           },
-*       ]
-*   }
-*/
+ * @apiDefine ForestLPLayerExample
+ * @apiSuccessExample {json} Success-Example:
+ * {
+ *      "type": "FeatureCollection",
+ *      "features": [
+ *          {
+ *           "type": "Feature",
+ *           "properties": {
+ *              "key": "persistencia",
+ *              "area": 4257.699441612134
+ *          },
+ *          "geometry": {
+ *               "type": "GeometryCollection",
+ *               "geometries": [
+ *                   {
+ *                   "type": "Polygon",
+ *                   "coordinates": [
+ *                       [
+ *                           [
+ *                               -75.5104086779181,
+ *                               10.4307384992824
+ *                           ],
+ *                       ]
+ *                   }
+ *               ]
+ *           },
+ *       ]
+ *   }
+ */
 
 /**
  * @apiDefine PersistenceAreaExample

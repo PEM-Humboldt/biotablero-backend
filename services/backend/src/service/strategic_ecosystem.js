@@ -1,5 +1,8 @@
 module.exports = (
-  sePersistence, paramoPersistence, tropicalDryForestPersistence, wetlandPersistence,
+  sePersistence,
+  paramoPersistence,
+  tropicalDryForestPersistence,
+  wetlandPersistence,
 ) => ({
   /**
    * Get all strategic ecosystems
@@ -477,7 +480,7 @@ module.exports = (
       default:
         return {};
     }
-    return coverageAreas.map(area => ({
+    return coverageAreas.map((area) => ({
       ...area,
       percentage: area.area / national[0].area,
     }));
@@ -510,7 +513,7 @@ module.exports = (
       default:
         return {};
     }
-    return protectedAreas.map(area => ({
+    return protectedAreas.map((area) => ({
       ...area,
       percentage: area.area / national[0].area,
     }));
@@ -708,7 +711,8 @@ module.exports = (
         properties: {
           AREA: 180336000000,
           IDCAR: 'CORALINA',
-          NOMCAR: 'Corporacion para el Desarrollo Sostenible del Archipielago de San Andres, Providencia y Santa Catalina',
+          NOMCAR:
+            'Corporacion para el Desarrollo Sostenible del Archipielago de San Andres, Providencia y Santa Catalina',
         },
       },
     ],

@@ -19,13 +19,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea
    * @apiUse getAllEAExample
    */
-  router.get('/ea', errorHandler((req, res, next) => (
-    eaService.getAll()
-      .then((ea) => {
+  router.get(
+    '/ea',
+    errorHandler((req, res, next) =>
+      eaService.getAll().then((ea) => {
         res.send(ea);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_ea
@@ -44,13 +46,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/AMVA
    * @apiUse GeofenceDetailsExample
    */
-  router.get('/ea/:ea_id', errorHandler((req, res, next) => (
-    eaService.getTotalArea(req.params.ea_id)
-      .then((details) => {
+  router.get(
+    '/ea/:ea_id',
+    errorHandler((req, res, next) =>
+      eaService.getTotalArea(req.params.ea_id).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_compensation_factor
@@ -70,13 +74,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/compensationFactor
    * @apiUse CompensationFactorInEAExample
    */
-  router.get('/ea/:ea_id/compensationFactor', errorHandler((req, res, next) => (
-    eaService.getAreaByCF(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/compensationFactor',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByCF(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_biotic_unit
@@ -96,13 +102,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/bioticUnit
    * @apiUse BioticUnitInEAExample
    */
-  router.get('/ea/:ea_id/bioticUnit', errorHandler((req, res, next) => (
-    eaService.getAreaByBioticUnit(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/bioticUnit',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByBioticUnit(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_general_biome
@@ -122,13 +130,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/generalBiome
    * @apiUse GeneralBiomeInEAExample
    */
-  router.get('/ea/:ea_id/generalBiome', errorHandler((req, res, next) => (
-    eaService.getAreaByBiome(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/generalBiome',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByBiome(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_ea
@@ -149,13 +159,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/biome/Orobioma Subandino Guane-Yariguíes/subzone
    * @apiUse SubzoneInBiomeInEAExample
    */
-  router.get('/ea/:ea_id/biome/:name_biome/subzone', errorHandler((req, res, next) => (
-    eaService.getBiomeAreaBySubzone(req.params.ea_id, req.params.name_biome)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/biome/:name_biome/subzone',
+    errorHandler((req, res, next) =>
+      eaService.getBiomeAreaBySubzone(req.params.ea_id, req.params.name_biome).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -180,13 +192,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/se
    * @apiUse SEInGeofenceExample
    */
-  router.get('/ea/:ea_id/se', errorHandler((req, res, next) => (
-    eaService.getAreaBySE(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/se',
+    errorHandler((req, res, next) =>
+      eaService.getAreaBySE(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -208,13 +222,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/se/Páramo
    * @apiUse SEInGeofenceDetailExample
    */
-  router.get('/ea/:ea_id/se/:se_type', errorHandler((req, res, next) => (
-    eaService.getSEDetails(req.params.ea_id, req.params.se_type)
-      .then((details) => {
+  router.get(
+    '/ea/:ea_id/se/:se_type',
+    errorHandler((req, res, next) =>
+      eaService.getSEDetails(req.params.ea_id, req.params.se_type).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -240,13 +256,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/se/Páramo/coverage
    * @apiUse SECoverageInGeofenceExample
    */
-  router.get('/ea/:ea_id/se/:se_type/coverage', errorHandler((req, res, next) => (
-    eaService.getCoverageInSE(req.params.ea_id, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/se/:se_type/coverage',
+    errorHandler((req, res, next) =>
+      eaService.getCoverageInSE(req.params.ea_id, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -273,13 +291,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/se/Páramo/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get('/ea/:ea_id/se/:se_type/pa', errorHandler((req, res, next) => (
-    eaService.getPAInSE(req.params.ea_id, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/se/:se_type/pa',
+    errorHandler((req, res, next) =>
+      eaService.getPAInSE(req.params.ea_id, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -305,13 +325,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get('/ea/:ea_id/pa', errorHandler((req, res, next) => (
-    eaService.getAreaByPA(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/pa',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByPA(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -335,13 +357,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/coverage
    * @apiUse CoverageInGeofenceExample
    */
-  router.get('/ea/:ea_id/coverage', errorHandler((req, res, next) => (
-    eaService.getAreaByCoverage(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/coverage',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByCoverage(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -365,13 +389,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CRQ/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/current/categories', errorHandler((req, res, next) => (
-    eaService.getAreaByHFCategory(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/hf/current/categories',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByHFCategory(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -395,13 +421,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CRQ/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/current/value', errorHandler((req, res, next) => (
-    eaService.getCurrentHFValue(req.params.ea_id)
-      .then((value) => {
+  router.get(
+    '/ea/:ea_id/hf/current/value',
+    errorHandler((req, res, next) =>
+      eaService.getCurrentHFValue(req.params.ea_id).then((value) => {
         res.send(value);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -427,13 +455,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CRQ/hf/persistence
    * @apiUse PersistenceInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/persistence', errorHandler((req, res, next) => (
-    eaService.getAreaByHFPersistence(req.params.ea_id)
-      .then((areas) => {
+  router.get(
+    '/ea/:ea_id/hf/persistence',
+    errorHandler((req, res, next) =>
+      eaService.getAreaByHFPersistence(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -455,13 +485,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CDMB/hf/timeline
    * @apiUse TimelineInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/timeline', errorHandler((req, res, next) => (
-    eaService.getTotalHFTimeLine(req.params.ea_id)
-      .then((values) => {
+  router.get(
+    '/ea/:ea_id/hf/timeline',
+    errorHandler((req, res, next) =>
+      eaService.getTotalHFTimeLine(req.params.ea_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -485,13 +517,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CDMB/se/Páramo/hf/timeline
    * @apiUse SETimelineInGeofenceExample
    */
-  router.get('/ea/:ea_id/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
-    eaService.getSEHFTimeline(req.params.ea_id, req.params.se_type)
-      .then((values) => {
+  router.get(
+    '/ea/:ea_id/se/:se_type/hf/timeline',
+    errorHandler((req, res, next) =>
+      eaService.getSEHFTimeline(req.params.ea_id, req.params.se_type).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -513,13 +547,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CDMB/ecoChange/lp/categories
    * @apiUse ForestLPExample
    */
-  router.get('/ea/:ea_id/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    eaService.getEcoChangeLP(req.params.ea_id)
-      .then((values) => {
+  router.get(
+    '/ea/:ea_id/ecoChange/lp/categories',
+    errorHandler((req, res, next) =>
+      eaService.getEcoChangeLP(req.params.ea_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -540,13 +576,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CDMB/ecoChange/persistence
    * @apiUse PersistenceAreaExample
    */
-  router.get('/ea/:ea_id/ecoChange/persistence', errorHandler((req, res, next) => (
-    eaService.getEcoChangePersistenceValue(req.params.ea_id)
-      .then((values) => {
+  router.get(
+    '/ea/:ea_id/ecoChange/persistence',
+    errorHandler((req, res, next) =>
+      eaService.getEcoChangePersistenceValue(req.params.ea_id).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_ea
@@ -566,13 +604,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get('/ea/layers/national', errorHandler((req, res, next) => (
-    eaService.getNationalLayer()
-      .then((geometry) => {
+  router.get(
+    '/ea/layers/national',
+    errorHandler((req, res, next) =>
+      eaService.getNationalLayer().then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_ea
@@ -590,13 +630,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/layers/CRQ
    * @apiUse SpecificLayerExample
    */
-  router.get('/ea/layers/:ea_id', errorHandler((req, res, next) => (
-    eaService.getLayer(req.params.ea_id)
-      .then((geometry) => {
+  router.get(
+    '/ea/layers/:ea_id',
+    errorHandler((req, res, next) =>
+      eaService.getLayer(req.params.ea_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -617,13 +659,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CRQ/se/layers/Páramo
    * @apiUse SpecificLayerExample
    */
-  router.get('/ea/:ea_id/se/layers/:se_type', errorHandler((req, res, next) => (
-    eaService.getSELayer(req.params.ea_id, req.params.se_type)
-      .then((geometry) => {
+  router.get(
+    '/ea/:ea_id/se/layers/:se_type',
+    errorHandler((req, res, next) =>
+      eaService.getSELayer(req.params.ea_id, req.params.se_type).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -645,13 +689,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/EPA/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/layers/current/categories', errorHandler((req, res, next) => (
-    eaService.getHFCategoriesLayerById(req.params.ea_id)
-      .then((geometry) => {
+  router.get(
+    '/ea/:ea_id/hf/layers/current/categories',
+    errorHandler((req, res, next) =>
+      eaService.getHFCategoriesLayerById(req.params.ea_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -673,13 +719,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/EPA/hf/layers/persistence
    * @apiUse PersistenceLayerInGeofenceExample
    */
-  router.get('/ea/:ea_id/hf/layers/persistence', errorHandler((req, res, next) => (
-    eaService.getHFPersistenceLayerById(req.params.ea_id)
-      .then((geometry) => {
+  router.get(
+    '/ea/:ea_id/hf/layers/persistence',
+    errorHandler((req, res, next) =>
+      eaService.getHFPersistenceLayerById(req.params.ea_id).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_ea
@@ -702,13 +750,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/layers/CORPOBOYACA/biomes
    * @apiUse BiomesLayerInEAExample
    */
-  router.get('/ea/layers/:ea_id/biomes', errorHandler((req, res, next) => (
-    eaService.getBiomesLayer(req.params.ea_id)
-      .then((biomes) => {
+  router.get(
+    '/ea/layers/:ea_id/biomes',
+    errorHandler((req, res, next) =>
+      eaService.getBiomesLayer(req.params.ea_id).then((biomes) => {
         res.send(biomes);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -732,13 +782,15 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CARDER/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
+  router.get(
+    '/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/',
+    errorHandler((req, res, next) =>
+      eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

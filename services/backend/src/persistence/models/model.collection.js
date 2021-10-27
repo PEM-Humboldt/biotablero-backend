@@ -1,5 +1,4 @@
-module.exports = (bookshelf, model) => (
+module.exports = (bookshelf, model) =>
   bookshelf.Collection.extend({
     model,
-  })
-);
+  });

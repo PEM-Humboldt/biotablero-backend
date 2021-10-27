@@ -23,7 +23,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      *
      * @param stateId state Id to filter by
      */
-    getMunicipalities: async stateId => municipalityService.getByState(stateId),
+    getMunicipalities: async (stateId) => municipalityService.getByState(stateId),
 
     /**
      * Get state total area divided by strategic ecosystem type
@@ -31,7 +31,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getAreaBySE: async (stateId) => {
       let stateArea = await statePersistence.getTotalAreaByState(stateId);
       if (stateArea.length === 0) {
-        throw new Error('state doesn\'t exists');
+        throw new Error("state doesn't exists");
       }
       stateArea = stateArea[0].area;
       const areas = await seService.getAreasByState(stateId);
@@ -77,7 +77,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getCoverageInSE: async (stateId, seType) => {
       const seArea = await seService.getSEAreaInState(stateId, seType);
       const coverAreas = await seService.getSECoverageInState(stateId, seType);
-      return coverAreas.map(area => ({
+      return coverAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -92,7 +92,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getPAInSE: async (stateId, seType) => {
       const seArea = await seService.getSEAreaInState(stateId, seType);
       const paAreas = await seService.getSEPAInState(stateId, seType);
-      const result = paAreas.map(area => ({
+      const result = paAreas.map((area) => ({
         ...area,
         percentage: area.area / seArea.area,
       }));
@@ -110,7 +110,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getAreaByPA: async (stateId) => {
       let stateArea = await statePersistence.getTotalAreaByState(stateId);
       if (stateArea[0].area === null) {
-        throw new Error('state doesn\'t exists');
+        throw new Error("state doesn't exists");
       }
       stateArea = stateArea[0].area;
       const areas = await statePersistence.findAreaByPA(stateId);
@@ -144,7 +144,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       let stateArea = await state.getTotalArea(stateId);
       stateArea = stateArea.total_area;
       const areas = await statePersistence.findAreaByCoverage(stateId);
-      const result = areas.map(cover => ({
+      const result = areas.map((cover) => ({
         ...cover,
         percentage: cover.area / stateArea,
       }));
@@ -161,7 +161,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getTotalArea: async (stateId) => {
       const stateArea = await statePersistence.getTotalAreaByState(stateId);
       if (stateArea[0].area === null) {
-        throw new Error('state doesn\'t exists');
+        throw new Error("state doesn't exists");
       }
       return { total_area: stateArea[0].area };
     },
@@ -180,7 +180,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       const values = await statePersistence.findAreaByHFCategory(stateId);
       return values
         .sort((a, b) => HFCategoriesKeysOrder(a.key) - HFCategoriesKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / stateArea,
@@ -196,7 +196,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getCurrentHFValue: async (stateId) => {
       const value = await statePersistence.findCurrentHFValue(stateId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error('state doesn\'t exists');
+        throw new Error("state doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,
@@ -216,7 +216,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       const values = await statePersistence.findHFPersistenceAreas(stateId);
       return values
         .sort((a, b) => persistenceKeysOrder(a.key) - persistenceKeysOrder(b.key))
-        .map(value => ({
+        .map((value) => ({
           area: Number(value.area),
           key: value.key,
           percentage: value.area / stateArea,
@@ -233,7 +233,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       const values = await statePersistence.findTotalHFTimeLine(stateId);
       return {
         key: 'aTotal',
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -252,7 +252,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
       const values = await seService.getSEHFTimelineInGeofence('states', stateId, seType);
       return {
         key: SEKeys(seType),
-        data: values.map(value => ({
+        data: values.map((value) => ({
           x: String(value.year),
           y: Number(value.avg),
         })),
@@ -277,11 +277,16 @@ module.exports = (statePersistence, municipalityService, seService) => {
      */
     getEcoChangeLPLayer: async (stateId, period) => {
       switch (period) {
-        case '2016-2019': return forestLPLayer20162019;
-        case '2011-2015': return forestLPLayer20112015;
-        case '2006-2010': return forestLPLayer20062010;
-        case '2000-2005': return forestLPLayer20002005;
-        default: return {};
+        case '2016-2019':
+          return forestLPLayer20162019;
+        case '2011-2015':
+          return forestLPLayer20112015;
+        case '2006-2010':
+          return forestLPLayer20062010;
+        case '2000-2005':
+          return forestLPLayer20002005;
+        default:
+          return {};
       }
     },
 
@@ -317,9 +322,8 @@ module.exports = (statePersistence, municipalityService, seService) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-    getSELayer: async (stateId, seType) => seService.getSELayerInGeofence(
-      'states', stateId, seType,
-    ),
+    getSELayer: async (stateId, seType) =>
+      seService.getSELayerInGeofence('states', stateId, seType),
 
     /**
      * Get the current human footprint layer divided by categories in a given state
@@ -330,7 +334,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getHFCategoriesLayerById: async (stateId) => {
       const geom = await statePersistence.findHFCategoriesLayerById(stateId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,
@@ -352,7 +356,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getHFPersistenceLayerById: async (stateId) => {
       const geom = await statePersistence.findHFPersistenceLayerById(stateId);
       if (geom && geom.features) {
-        geom.features = geom.features.map(feature => ({
+        geom.features = geom.features.map((feature) => ({
           ...feature,
           properties: {
             ...feature.properties,

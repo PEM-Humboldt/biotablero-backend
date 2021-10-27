@@ -7,24 +7,24 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     /**
      * Get all protected area categories
      */
-    findCategories: () => (
-      globalBinaryProtectedAreas.query()
+    findCategories: () =>
+      globalBinaryProtectedAreas
+        .query()
         .select('label as name')
         .where(db.raw("trim(both '0' from binary_protected::varchar) = '1'"))
-        .orderBy('name')
-    ),
+        .orderBy('name'),
 
     /**
      * Get the protected area categories for the given set of binary protected values
      *
      * @param {String[]} binaryProtected binary protected values to filter by
      */
-    findCategoriesByBinaryProtected: binaryProtected => (
-      globalBinaryProtectedAreas.query()
+    findCategoriesByBinaryProtected: (binaryProtected) =>
+      globalBinaryProtectedAreas
+        .query()
         .whereIn('binary_protected', binaryProtected)
         .orderBy('binary_protected')
-        .select('binary_protected', 'label')
-    ),
+        .select('binary_protected', 'label'),
 
     /**
      * Get the binary protected value for the given category name
@@ -34,11 +34,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @returns {Object} binary protected value
      *
      */
-    findBinaryProtectedByCategory: categoryName => (
-      globalBinaryProtectedAreas.query()
-        .where('label', categoryName)
-        .select('binary_protected')
-    ),
+    findBinaryProtectedByCategory: (categoryName) =>
+      globalBinaryProtectedAreas.query().where('label', categoryName).select('binary_protected'),
 
     /**
      * Get the total area for the given category
@@ -47,7 +44,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     getTotalAreaByCategory: async (categoryName, year = 2012) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       if (!bitMask || bitMask.length < 1) return null;
@@ -65,7 +63,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByCoverage: async (categoryName, year = 2012) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
@@ -84,12 +83,17 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @param {Number} year optional year to filter data, 2012 by default
      */
     findAreaByPA: async (categoryName, year = 2012) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
       return db('colombia_coverage_details as ccd')
-        .innerJoin('global_binary_protected_areas as gbpa', 'ccd.binary_protected', 'gbpa.binary_protected')
+        .innerJoin(
+          'global_binary_protected_areas as gbpa',
+          'ccd.binary_protected',
+          'gbpa.binary_protected',
+        )
         .select(db.raw('coalesce(SUM(ccd.area_ha), 0) as area'), 'gbpa.label')
         .where('year_cover', year)
         .andWhere(db.raw('(gbpa.binary_protected & ?) = ?', [bitMask, bitMask]))
@@ -105,7 +109,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @returns {Object[]} Array of areas by human footprint category
      */
     findAreaByHFCategory: async (categoryName, year = 2018) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
@@ -126,7 +131,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @returns {Object} Object of current human footprint value.
      */
     findCurrentHFValue: async (categoryName, year = 2018) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
@@ -144,7 +150,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @returns {Object[]} Array of persistence values.
      */
     findHFPersistenceAreas: async (categoryName) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
@@ -162,7 +169,8 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @returns {Object} Object of HF values through time
      */
     findTotalHFTimeLine: async (categoryName) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
@@ -181,16 +189,17 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-    findLayerByCategory: categoryName => (
-      db.raw(
-        `
+    findLayerByCategory: (categoryName) =>
+      db
+        .raw(
+          `
         SELECT row_to_json(fc) as collection
         FROM (
           SELECT 'FeatureCollection' as type, array_to_json(array_agg(f)) as features
           FROM (
             SELECT 'Feature' as type,
               row_to_json(pa2) as properties,
-              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
+              ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_protected_areas as pa1
             INNER JOIN (
               SELECT gid as id, name as key
@@ -200,11 +209,9 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           ) as f
         ) as fc
         `,
-        [geometriesConfig.tolerance_heavy, categoryName],
-      )
-        .then(layers => layers.rows[0].collection)
-
-    ),
+          [geometriesConfig.tolerance_heavy, categoryName],
+        )
+        .then((layers) => layers.rows[0].collection),
 
     /**
      * Get the current human footprint layer divided by categories in a given
@@ -215,22 +222,24 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @return {Object} Geojson object with the geometry
      */
     findHFCategoriesLayerByPACategory: async (categoryName, year = 2018) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
-      return db.raw(
-        `
+      return db
+        .raw(
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_cat AS key
               FROM geo_hf
@@ -239,7 +248,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_cat AS key,
                   sum(area_ha) AS area
                 FROM geo_hf
@@ -251,16 +260,9 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           ) as f
         ) as fc;
         `,
-        [
-          bitMask,
-          bitMask,
-          year,
-          bitMask,
-          bitMask,
-          year,
-        ],
-      )
-        .then(layers => layers.rows[0].collection);
+          [bitMask, bitMask, year, bitMask, bitMask, year],
+        )
+        .then((layers) => layers.rows[0].collection);
     },
 
     /**
@@ -271,22 +273,24 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      * @return {Object} Geojson object with the geometry
      */
     findHFPersistenceLayerById: async (categoryName) => {
-      let bitMask = await globalBinaryProtectedAreas.query()
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
         .where({ label: categoryName })
         .select('binary_protected as mask');
       bitMask = bitMask[0].mask;
-      return db.raw(
-        `
+      return db
+        .raw(
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
           FROM (
-            SELECT 
+            SELECT
               'Feature' AS TYPE,
               row_to_json(prop) AS properties,
               ST_AsGeoJSON(geom)::json AS geometry
             FROM (
-              SELECT 
+              SELECT
                 ST_Collect(geom) AS geom,
                 hf_pers AS key
               FROM geo_hf_persistence
@@ -294,7 +298,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
               GROUP BY key
               ) AS geo
               INNER JOIN (
-                SELECT 
+                SELECT
                   hf_pers AS key,
                   sum(area_ha) AS area
                 FROM geo_hf_persistence
@@ -305,14 +309,9 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
           ) as f
         ) as fc;
         `,
-        [
-          bitMask,
-          bitMask,
-          bitMask,
-          bitMask,
-        ],
-      )
-        .then(layers => layers.rows[0].collection);
+          [bitMask, bitMask, bitMask, bitMask],
+        )
+        .then((layers) => layers.rows[0].collection);
     },
   };
 };

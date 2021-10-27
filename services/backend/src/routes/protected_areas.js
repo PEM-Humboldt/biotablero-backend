@@ -18,13 +18,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/categories
    * @apiUse PACategoriesExample
    */
-  router.get('/pa/categories', errorHandler((req, res, next) => (
-    paService.getCategories()
-      .then((categories) => {
+  router.get(
+    '/pa/categories',
+    errorHandler((req, res, next) =>
+      paService.getCategories().then((categories) => {
         res.send(categories);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_pa
@@ -46,13 +48,17 @@ module.exports = (errorHandler, paService) => {
    *  /pa/categories/binary_protected?binary_protected=000001000000000;010100000000000
    * @apiUse PACategoriesByBinaryProtectedExample
    */
-  router.get('/pa/categories/binary_protected', errorHandler((req, res, next) => (
-    paService.getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
-      .then((categories) => {
-        res.send(categories);
-        next();
-      })
-  )));
+  router.get(
+    '/pa/categories/binary_protected',
+    errorHandler((req, res, next) =>
+      paService
+        .getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
+        .then((categories) => {
+          res.send(categories);
+          next();
+        }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_pa
@@ -71,13 +77,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/binary_protected
    * @apiUse BinaryProtectedByCategoryExample
    */
-  router.get('/pa/:category/binary_protected', errorHandler((req, res, next) => (
-    paService.getBinaryProtectedByCategory(req.params.category)
-      .then((binaryProtected) => {
+  router.get(
+    '/pa/:category/binary_protected',
+    errorHandler((req, res, next) =>
+      paService.getBinaryProtectedByCategory(req.params.category).then((binaryProtected) => {
         res.send(binaryProtected);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_pa
@@ -96,13 +104,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales
    * @apiUse GeofenceDetailsExample
    */
-  router.get('/pa/:category', errorHandler((req, res, next) => (
-    paService.getTotalArea(req.params.category)
-      .then((details) => {
+  router.get(
+    '/pa/:category',
+    errorHandler((req, res, next) =>
+      paService.getTotalArea(req.params.category).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -127,13 +137,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/se
    * @apiUse SEInGeofenceExample
    */
-  router.get('/pa/:category/se', errorHandler((req, res, next) => (
-    paService.getAreaBySE(req.params.category)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/se',
+    errorHandler((req, res, next) =>
+      paService.getAreaBySE(req.params.category).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -155,13 +167,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/se/Páramo
    * @apiUse SEInGeofenceDetailExample
    */
-  router.get('/pa/:category/se/:se_type', errorHandler((req, res, next) => (
-    paService.getSEDetails(req.params.category, req.params.se_type)
-      .then((details) => {
+  router.get(
+    '/pa/:category/se/:se_type',
+    errorHandler((req, res, next) =>
+      paService.getSEDetails(req.params.category, req.params.se_type).then((details) => {
         res.send(details);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -187,13 +201,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/se/Páramo/coverage
    * @apiUse SECoverageInGeofenceExample
    */
-  router.get('/pa/:category/se/:se_type/coverage', errorHandler((req, res, next) => (
-    paService.getCoverageInSE(req.params.category, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/se/:se_type/coverage',
+    errorHandler((req, res, next) =>
+      paService.getCoverageInSE(req.params.category, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -219,13 +235,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/se/Páramo/pa
    * @apiUse SEPAInPAExample
    */
-  router.get('/pa/:category/se/:se_type/pa', errorHandler((req, res, next) => (
-    paService.getPAInSE(req.params.category, req.params.se_type)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/se/:se_type/pa',
+    errorHandler((req, res, next) =>
+      paService.getPAInSE(req.params.category, req.params.se_type).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_protected_areas
@@ -250,13 +268,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/pa
    * @apiUse PAInPAExample
    */
-  router.get('/pa/:category/pa', errorHandler((req, res, next) => (
-    paService.getAreaByPA(req.params.category)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/pa',
+    errorHandler((req, res, next) =>
+      paService.getAreaByPA(req.params.category).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_coverages
@@ -280,13 +300,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/coverage
    * @apiUse CoverageInGeofenceExample
    */
-  router.get('/pa/:category/coverage', errorHandler((req, res, next) => (
-    paService.getAreaByCoverage(req.params.category)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/coverage',
+    errorHandler((req, res, next) =>
+      paService.getAreaByCoverage(req.params.category).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -310,13 +332,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get('/pa/:category/hf/current/categories', errorHandler((req, res, next) => (
-    paService.getAreaByHFCategory(req.params.category)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/hf/current/categories',
+    errorHandler((req, res, next) =>
+      paService.getAreaByHFCategory(req.params.category).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -340,13 +364,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get('/pa/:category/hf/current/value', errorHandler((req, res, next) => (
-    paService.getCurrentHFValue(req.params.category)
-      .then((value) => {
+  router.get(
+    '/pa/:category/hf/current/value',
+    errorHandler((req, res, next) =>
+      paService.getCurrentHFValue(req.params.category).then((value) => {
         res.send(value);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -371,13 +397,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/hf/persistence
    * @apiUse PersistenceInGeofenceExample
    */
-  router.get('/pa/:category/hf/persistence', errorHandler((req, res, next) => (
-    paService.getAreaByHFPersistence(req.params.category)
-      .then((areas) => {
+  router.get(
+    '/pa/:category/hf/persistence',
+    errorHandler((req, res, next) =>
+      paService.getAreaByHFPersistence(req.params.category).then((areas) => {
         res.send(areas);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -399,13 +427,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/hf/timeline
    * @apiUse TimelineInGeofenceExample
    */
-  router.get('/pa/:category/hf/timeline', errorHandler((req, res, next) => (
-    paService.getTotalHFTimeLine(req.params.category)
-      .then((values) => {
+  router.get(
+    '/pa/:category/hf/timeline',
+    errorHandler((req, res, next) =>
+      paService.getTotalHFTimeLine(req.params.category).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -429,13 +459,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/se/Páramo/hf/timeline
    * @apiUse SETimelineInGeofenceExample
    */
-  router.get('/pa/:category/se/:se_type/hf/timeline', errorHandler((req, res, next) => (
-    paService.getSEHFTimeline(req.params.category, req.params.se_type)
-      .then((values) => {
+  router.get(
+    '/pa/:category/se/:se_type/hf/timeline',
+    errorHandler((req, res, next) =>
+      paService.getSEHFTimeline(req.params.category, req.params.se_type).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -457,13 +489,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/ecoChange/lp/categories
    * @apiUse ForestLPExample
    */
-  router.get('/pa/:category/ecoChange/lp/categories', errorHandler((req, res, next) => (
-    paService.getEcoChangeLP(req.params.category)
-      .then((values) => {
+  router.get(
+    '/pa/:category/ecoChange/lp/categories',
+    errorHandler((req, res, next) =>
+      paService.getEcoChangeLP(req.params.category).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -484,13 +518,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/ecoChange/persistence
    * @apiUse PersistenceAreaExample
    */
-  router.get('/pa/:category/ecoChange/persistence', errorHandler((req, res, next) => (
-    paService.getEcoChangePersistenceValue(req.params.category)
-      .then((values) => {
+  router.get(
+    '/pa/:category/ecoChange/persistence',
+    errorHandler((req, res, next) =>
+      paService.getEcoChangePersistenceValue(req.params.category).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_pa
@@ -510,13 +546,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get('/pa/layers/national', errorHandler((req, res, next) => (
-    paService.getNationalLayer()
-      .then((geometry) => {
+  router.get(
+    '/pa/layers/national',
+    errorHandler((req, res, next) =>
+      paService.getNationalLayer().then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup geofence_pa
@@ -536,13 +574,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/layers/Parque Nacional Natural
    * @apiUse PALayerExample
    */
-  router.get('/pa/layers/:category', errorHandler((req, res, next) => (
-    paService.getLayer(req.params.category)
-      .then((geometry) => {
+  router.get(
+    '/pa/layers/:category',
+    errorHandler((req, res, next) =>
+      paService.getLayer(req.params.category).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_strategic_ecosystems
@@ -563,13 +603,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parque Nacional Natural/se/layers/Páramo
    * @apiUse SpecificLayerExample
    */
-  router.get('/pa/:category/se/layers/:se_type', errorHandler((req, res, next) => (
-    paService.getSELayer(req.params.category, req.params.se_type)
-      .then((geometry) => {
+  router.get(
+    '/pa/:category/se/layers/:se_type',
+    errorHandler((req, res, next) =>
+      paService.getSELayer(req.params.category, req.params.se_type).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -591,13 +633,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get('/pa/:category/hf/layers/current/categories', errorHandler((req, res, next) => (
-    paService.getHFCategoriesLayerByPACategory(req.params.category)
-      .then((geometry) => {
+  router.get(
+    '/pa/:category/hf/layers/current/categories',
+    errorHandler((req, res, next) =>
+      paService.getHFCategoriesLayerByPACategory(req.params.category).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_hf
@@ -619,13 +663,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parque Nacional Natural y Parques Naturales Regionales/hf/layers/persistence
    * @apiUse PersistenceLayerInGeofenceExample
    */
-  router.get('/pa/:category/hf/layers/persistence', errorHandler((req, res, next) => (
-    paService.getHFPersistenceLayerById(req.params.category)
-      .then((geometry) => {
+  router.get(
+    '/pa/:category/hf/layers/persistence',
+    errorHandler((req, res, next) =>
+      paService.getHFPersistenceLayerById(req.params.category).then((geometry) => {
         res.send(geometry);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   /**
    * @apiGroup s_ecoChange
@@ -650,13 +696,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/
    * @apiUse ForestLPLayerExample
    */
-  router.get('/pa/:category/ecoChange/layers/lp/period/:period/categories/', errorHandler((req, res, next) => (
-    paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period)
-      .then((values) => {
+  router.get(
+    '/pa/:category/ecoChange/layers/lp/period/:period/categories/',
+    errorHandler((req, res, next) =>
+      paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
         res.send(values);
         next();
-      })
-  )));
+      }),
+    ),
+  );
 
   return router;
 };

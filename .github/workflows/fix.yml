@@ -1,0 +1,28 @@
+name: CI for fixes against release branches
+
+on:
+  push:
+    branches:
+      - fix/*
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14.15
+    - run: |
+        npm install -g yarn
+        yarn install
+    - name: Run linter
+      run: yarn workspaces foreach run lint
+      env:
+        CI: true
+    - name: Run prettier
+      run: yarn run check-format
+      env:
+        CI: true

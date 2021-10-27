@@ -5,7 +5,7 @@
       {
         "area": 70000,
         "key": "persistencia",
-        "percentage": 0.50
+        "percentage": 0.5
       },
       {
         "area": 5000,
@@ -20,7 +20,7 @@
       {
         "area": 5000,
         "key": "no_bosque",
-        "percentage": 0.10
+        "percentage": 0.1
       }
     ]
   },
@@ -30,7 +30,7 @@
       {
         "area": 25000,
         "key": "persistencia",
-        "percentage": 0.50
+        "percentage": 0.5
       },
       {
         "area": 25000,
@@ -45,7 +45,7 @@
       {
         "area": 25000,
         "key": "no_bosque",
-        "percentage": 0.10
+        "percentage": 0.1
       }
     ]
   },
@@ -55,7 +55,7 @@
       {
         "area": 10000,
         "key": "persistencia",
-        "percentage": 0.50
+        "percentage": 0.5
       },
       {
         "area": 10000,
@@ -70,7 +70,7 @@
       {
         "area": 10000,
         "key": "no_bosque",
-        "percentage": 0.10
+        "percentage": 0.1
       }
     ]
   },
@@ -80,7 +80,7 @@
       {
         "area": 50000,
         "key": "persistencia",
-        "percentage": 0.50
+        "percentage": 0.5
       },
       {
         "area": 15000,
@@ -95,7 +95,7 @@
       {
         "area": 10000,
         "key": "no_bosque",
-        "percentage": 0.10
+        "percentage": 0.1
       }
     ]
   }

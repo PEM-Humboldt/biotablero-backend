@@ -13,7 +13,7 @@ module.exports = (bookshelf, { saving }) => {
     constructor: function constructor(...args) {
       bookshelf.Model.apply(this, args);
       // See note on http://bookshelfjs.org/index.html#Model-event-saving
-      this.on('saving', model => saving(requiredFields, model.attributes));
+      this.on('saving', (model) => saving(requiredFields, model.attributes));
     },
   });
 
@@ -25,7 +25,12 @@ module.exports = (bookshelf, { saving }) => {
   obj.setRelations = (models) => {
     /* eslint-disable no-param-reassign */
     models.geoCompanyProjects.prototype.biomes = function biomes() {
-      return this.belongsToMany(models.geoBiomes, 'project_impacted_biomes', 'id_project', 'id_biome');
+      return this.belongsToMany(
+        models.geoBiomes,
+        'project_impacted_biomes',
+        'id_project',
+        'id_biome',
+      );
     };
   };
   /* eslint-enable no-param-reassign */

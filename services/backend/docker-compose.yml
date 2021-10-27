@@ -8,5 +8,5 @@ services:
     volumes:
       - ./config/develop.json:/home/node/app/config/production.json
     ports:
-      - "4500:4000"
+      - '4500:4000'
     restart: always

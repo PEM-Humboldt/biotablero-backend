@@ -13,9 +13,10 @@ module.exports = () => {
      * @returns {Object} authenticated user
      */
     login: (username, password) => {
-      const user = usersConfig.find(({ username: userSaved, password: passwordSaved }) => (
-        username === userSaved && password === passwordSaved
-      ));
+      const user = usersConfig.find(
+        ({ username: userSaved, password: passwordSaved }) =>
+          username === userSaved && password === passwordSaved,
+      );
 
       if (!user) {
         const error = new Error('Invalid username or password');

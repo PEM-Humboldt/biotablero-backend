@@ -27,7 +27,7 @@ server.on('NotFound', (req, res, err, cb) => {
   cb();
 });
 
-diContainer.routes.forEach(router => router.applyRoutes(server));
+diContainer.routes.forEach((router) => router.applyRoutes(server));
 
 server.listen(serverConfig.port, () => {
   diContainer.logger.info(`${server.name} listening at ${server.url}`);

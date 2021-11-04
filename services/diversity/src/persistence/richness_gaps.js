@@ -17,11 +17,11 @@ module.exports = (db, logger) => ({
         'rg.gaps_mean as avg',
         'rg.gaps_max as max',
         db('richness_gaps')
-          .min('gaps_mean')
+          .min('gaps_min')
           .where({ geofence_type: areaTypeKeys(areaType) })
           .as('min_threshold'),
         db('richness_gaps')
-          .max('gaps_mean')
+          .max('gaps_max')
           .where({ geofence_type: areaTypeKeys(areaType) })
           .as('max_threshold'),
         'rgr.gaps_min as min_region',

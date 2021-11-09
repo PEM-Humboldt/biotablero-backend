@@ -18,19 +18,20 @@ module.exports = (db, logger) => ({
       const thresholds = await db('richness_gaps as rg')
         .min({ min_threshold: 'gaps_min' })
         .max({ max_threshold: 'gaps_max' })
-        .where({ geofence_type: areaTypeKeys(areaType), id_region: regionIdQuery })
+        .where({ geofence_type: areaTypeKeys(areaType), id_region: regionIdQuery });
 
       const values = await db('richness_gaps as rg')
-        .select(db.raw(`'gaps' as id`),
+        .select(
+          db.raw(`'gaps' as id`),
           'rg.gaps_min as min',
           'rg.gaps_mean as avg',
           'rg.gaps_max as max',
           'rgr.gaps_min as min_region',
           'rgr.gaps_max as max_region',
-          'rgr.region_name'
+          'rgr.region_name',
         )
         .innerJoin('richness_gaps_regions as rgr', 'rg.id_region', 'rgr.id_region')
-        .where({ 'rg.geofence_type': areaTypeKeys(areaType), 'rg.geofence_id': areaId })
+        .where({ 'rg.geofence_type': areaTypeKeys(areaType), 'rg.geofence_id': areaId });
       return [{ ...thresholds[0], ...values[0] }];
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);

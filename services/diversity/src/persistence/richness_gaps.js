@@ -26,6 +26,7 @@ module.exports = (db, logger) => ({
           .as('max_threshold'),
         'rgr.gaps_min as min_region',
         'rgr.gaps_max as max_region',
+        'rgr.region_name'
       )
       .leftJoin('richness_gaps_regions as rgr', 'rg.id_region', 'rgr.id_region')
       .where({ 'rg.geofence_type': areaTypeKeys(areaType), 'rg.geofence_id': areaId })

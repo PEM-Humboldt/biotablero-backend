@@ -157,6 +157,7 @@ module.exports = (errorHandler, Richness) => {
    * @apiSuccess {Number} result.max_region highest value inside the natural region
    * @apiSuccess {Number} result.min_threshold lowest value among national areas of the same type
    * @apiSuccess {Number} result.max_threshold highest value among national areas of the same type
+   * @apiSuccess {String} result.region_name name of the region the area belongs to
    *
    * @apiExample {curl} Example usage:
    *  /richness/gaps?areaType=ea&areaId=CARDER

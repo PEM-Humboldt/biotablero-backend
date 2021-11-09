@@ -81,6 +81,7 @@
  *     max_region: 0.99,
  *     min_threshold: 0.15,
  *     max_threshold: 0.95,
+ *     region_name: Andes
  *   }
  * ]
  */

@@ -10,3 +10,4 @@ logs/*
 .pnp.*
 
 services/**/yarn.lock
+.vscode

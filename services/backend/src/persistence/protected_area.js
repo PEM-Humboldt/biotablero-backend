@@ -281,6 +281,54 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
       return db
         .raw(
           `
+          SELECT row_to_json(fc) AS collection
+          FROM (
+            SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+            FROM (
+              SELECT
+                'Feature' AS TYPE,
+                row_to_json(prop) AS properties,
+                ST_AsGeoJSON(geom)::json AS geometry
+              FROM (
+                SELECT
+                  ST_Collect(geom) AS geom,
+                  hf_pers AS key
+                FROM geo_hf_persistence
+                WHERE (binary_protected & ?) = ?
+                GROUP BY key
+                ) AS geo
+                INNER JOIN (
+                  SELECT
+                    hf_pers AS key,
+                    sum(area_ha) AS area
+                  FROM geo_hf_persistence
+                  WHERE (binary_protected & ?) = ?
+                  GROUP BY key
+                ) AS prop
+                ON geo.key = prop.key
+            ) as f
+          ) as fc;
+        `,
+          [bitMask, bitMask, bitMask, bitMask],
+        )
+        .then((layers) => layers.rows[0].collection);
+    },
+
+    /**
+     * Get the coverage layer divided by categories in a given protected area category
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findCoverageLayer: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db
+        .raw(
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -292,16 +340,16 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
             FROM (
               SELECT
                 ST_Collect(geom) AS geom,
-                hf_pers AS key
-              FROM geo_hf_persistence
+                area_type AS key
+              FROM geo_coverages
               WHERE (binary_protected & ?) = ?
               GROUP BY key
               ) AS geo
               INNER JOIN (
                 SELECT
-                  hf_pers AS key,
+                  area_type AS key,
                   sum(area_ha) AS area
-                FROM geo_hf_persistence
+                FROM geo_coverages
                 WHERE (binary_protected & ?) = ?
                 GROUP BY key
               ) AS prop

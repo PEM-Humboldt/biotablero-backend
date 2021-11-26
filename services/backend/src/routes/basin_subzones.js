@@ -654,5 +654,34 @@ module.exports = (errorHandler, basinSubzoneService) => {
     ),
   );
 
+  /**
+   * @apiGroup s_coverages
+   * @api {get} /basinSubzones/:subzone_id/coverage/layer CoverageLayerInSubzone
+   * @apiName CoverageLayerInSubzone
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the coverage layer divided by categories in a given basin subzone
+   *
+   * @apiParam (Path params) {Number} subzone_id basin subzone id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /basinSubzones/3701/coverage/layer
+   * @apiUse CoverageLayerInSubzoneExample
+   */
+   router.get(
+    '/basinSubzones/:subzone_id/coverage/layer',
+    errorHandler((req, res, next) =>
+    basinSubzoneService.getCoverageLayer(req.params.subzone_id).then((geometry) => {
+        res.send(geometry);
+        next();
+      }),
+    ),
+  );
+
   return router;
 };

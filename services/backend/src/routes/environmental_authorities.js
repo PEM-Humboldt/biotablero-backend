@@ -792,5 +792,34 @@ module.exports = (errorHandler, eaService) => {
     ),
   );
 
+  /**
+   * @apiGroup s_coverages
+   * @api {get} /ea/:ea_id/coverage/layer CoverageLayerInEA
+   * @apiName CoverageLayerInEA
+   * @apiVersion 0.1.0
+   * @apiDescription
+   * Get the coverage layer divided by categories in a given environmental authority
+   *
+   * @apiParam (Path params) {String} ea_id environmental authority id
+   *
+   * @apiSuccess (geojson) {Object[]} result
+   * @apiSuccess (geojson) {String} result.type The geometry type
+   * @apiSuccess (geojson) {Object[]} result.features features information
+   * (type, properties, geometry)
+   *
+   * @apiExample {curl} Example usage:
+   *  /ea/CORPOBOYACA/coverage/layer
+   * @apiUse CoverageLayerInEAExample
+   */
+   router.get(
+    '/ea/:ea_id/coverage/layer',
+    errorHandler((req, res, next) =>
+      eaService.getCoverageLayer(req.params.ea_id).then((geometry) => {
+        res.send(geometry);
+        next();
+      }),
+    ),
+  );
+
   return router;
 };

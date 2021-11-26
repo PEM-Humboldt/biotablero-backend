@@ -280,7 +280,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
       bitMask = bitMask[0].mask;
       return db
         .raw(
-        `
+          `
           SELECT row_to_json(fc) AS collection
           FROM (
             SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features

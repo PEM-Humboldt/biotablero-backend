@@ -231,7 +231,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
     findHFPersistenceLayerById: (stateId) =>
       db
         .raw(
-        `
+          `
           SELECT row_to_json(fc) AS collection
           FROM (
             SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features

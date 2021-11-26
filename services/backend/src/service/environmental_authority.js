@@ -434,6 +434,28 @@ module.exports = (eaPersistence, seService) => {
       if (geometry === null || geometry.features === null) geometry = null;
       return geometry;
     },
+
+    /**
+     * Get the coverage layer divided by categories in a given environmental authority
+     *
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+     getCoverageLayer: async (eaId) => {
+      const geom = await eaPersistence.findCoverageLayer(eaId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map((feature) => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: feature.properties.key,
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return envAuth;

@@ -359,6 +359,28 @@ module.exports = (basinSubzonePersistence, seService) => {
       }
       return {};
     },
+
+    /**
+     * Get the coverage layer divided by categories in a given basin subzone
+     *
+     * @param {Number} subzoneId basin subzone id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+     getCoverageLayer: async (eaId) => {
+      const geom = await basinSubzonePersistence.findCoverageLayer(eaId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map((feature) => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: feature.properties.key,
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return basinSubzone;

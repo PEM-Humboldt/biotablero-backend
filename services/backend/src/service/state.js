@@ -367,6 +367,28 @@ module.exports = (statePersistence, municipalityService, seService) => {
       }
       return {};
     },
+
+    /**
+     * Get the coverage layer divided by categories in a given state
+     *
+     * @param {Number} stateId state id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+     getCoverageLayer: async (eaId) => {
+      const geom = await statePersistence.findCoverageLayer(eaId);
+      if (geom && geom.features) {
+        geom.features = geom.features.map((feature) => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: feature.properties.key,
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return state;

@@ -384,6 +384,28 @@ module.exports = (paPersistence, seService) => {
       }
       return {};
     },
+
+    /**
+     * Get the coverage layer divided by categories in a given protected area category
+     *
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+     getCoverageLayer: async (categoryName) => {
+      const geom = await paPersistence.findCoverageLayer(categoryName);
+      if (geom && geom.features) {
+        geom.features = geom.features.map((feature) => ({
+          ...feature,
+          properties: {
+            ...feature.properties,
+            key: feature.properties.key,
+          },
+        }));
+        return geom;
+      }
+      return {};
+    },
   };
 
   return protectedArea;

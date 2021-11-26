@@ -370,5 +370,47 @@ module.exports = (
           [geometriesConfig.tolerance, envAuthority],
         )
         .then((biomes) => biomes.rows[0].collection),
+    
+    /**
+     * Get the coverage layer divided by categories in a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findCoverageLayer: (eaId) =>
+      db
+        .raw(
+        `
+        SELECT row_to_json(fc) AS collection
+        FROM (
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          FROM (
+            SELECT
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
+              SELECT
+                ST_Collect(geom) AS geom,
+                area_type AS key
+              FROM geo_coverages
+              WHERE id_ea = ?
+              GROUP BY key
+              ) AS geo
+              INNER JOIN (
+                SELECT
+                  area_type AS key,
+                  sum(area_ha) AS area
+                FROM geo_coverages
+                WHERE id_ea = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
+          ) as f
+        ) as fc;
+        `,
+        [eaId, eaId],
+        )
+        .then((layers) => layers.rows[0].collection),
   };
 };

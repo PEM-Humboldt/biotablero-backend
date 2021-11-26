@@ -811,7 +811,7 @@ module.exports = (errorHandler, eaService) => {
    *  /ea/CORPOBOYACA/coverage/layer
    * @apiUse CoverageLayerInEAExample
    */
-   router.get(
+  router.get(
     '/ea/:ea_id/coverage/layer',
     errorHandler((req, res, next) =>
       eaService.getCoverageLayer(req.params.ea_id).then((geometry) => {

@@ -375,7 +375,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-     getCoverageLayer: async (eaId) => {
+    getCoverageLayer: async (eaId) => {
       const geom = await statePersistence.findCoverageLayer(eaId);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({

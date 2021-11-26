@@ -370,7 +370,7 @@ module.exports = (
           [geometriesConfig.tolerance, envAuthority],
         )
         .then((biomes) => biomes.rows[0].collection),
-    
+
     /**
      * Get the coverage layer divided by categories in a given environmental authority
      * @param {String} eaId environmental authority id
@@ -380,7 +380,7 @@ module.exports = (
     findCoverageLayer: (eaId) =>
       db
         .raw(
-        `
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -409,7 +409,7 @@ module.exports = (
           ) as f
         ) as fc;
         `,
-        [eaId, eaId],
+          [eaId, eaId],
         )
         .then((layers) => layers.rows[0].collection),
   };

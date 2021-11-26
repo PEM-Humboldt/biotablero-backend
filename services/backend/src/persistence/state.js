@@ -263,7 +263,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
           [stateId, stateId],
         )
         .then((layers) => layers.rows[0].collection),
-    
+
     /**
      * Get the coverage layer divided by categories in a given state
      * @param {Number} stateId state id
@@ -273,7 +273,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
     findCoverageLayer: (stateId) =>
       db
         .raw(
-        `
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -302,9 +302,8 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
           ) as f
         ) as fc;
         `,
-        [stateId, stateId],
+          [stateId, stateId],
         )
         .then((layers) => layers.rows[0].collection),
-    
   };
 };

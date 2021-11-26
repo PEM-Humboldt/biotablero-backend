@@ -695,10 +695,10 @@ module.exports = (errorHandler, stateService) => {
    *  /states/86/coverage/layer
    * @apiUse CoverageLayerInStateExample
    */
-   router.get(
+  router.get(
     '/states/:state_id/coverage/layer',
     errorHandler((req, res, next) =>
-    stateService.getCoverageLayer(req.params.state_id).then((geometry) => {
+      stateService.getCoverageLayer(req.params.state_id).then((geometry) => {
         res.send(geometry);
         next();
       }),

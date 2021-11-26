@@ -392,7 +392,7 @@ module.exports = (paPersistence, seService) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-     getCoverageLayer: async (categoryName) => {
+    getCoverageLayer: async (categoryName) => {
       const geom = await paPersistence.findCoverageLayer(categoryName);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({

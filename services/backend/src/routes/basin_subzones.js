@@ -673,10 +673,10 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3701/coverage/layer
    * @apiUse CoverageLayerInSubzoneExample
    */
-   router.get(
+  router.get(
     '/basinSubzones/:subzone_id/coverage/layer',
     errorHandler((req, res, next) =>
-    basinSubzoneService.getCoverageLayer(req.params.subzone_id).then((geometry) => {
+      basinSubzoneService.getCoverageLayer(req.params.subzone_id).then((geometry) => {
         res.send(geometry);
         next();
       }),

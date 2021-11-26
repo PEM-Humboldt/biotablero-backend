@@ -725,16 +725,15 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/coverage/layer
    * @apiUse CoverageLayerInPAExample
    */
-   router.get(
+  router.get(
     '/pa/:category/coverage/layer',
     errorHandler((req, res, next) =>
-    paService.getCoverageLayer(req.params.category).then((geometry) => {
+      paService.getCoverageLayer(req.params.category).then((geometry) => {
         res.send(geometry);
         next();
       }),
     ),
   );
-
 
   return router;
 };

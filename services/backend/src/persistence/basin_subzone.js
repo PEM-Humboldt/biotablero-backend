@@ -266,7 +266,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
           [subzoneId, subzoneId],
         )
         .then((layers) => layers.rows[0].collection),
-    
+
     /**
      * Get the coverage layer divided by categories in a given basin subzone
      * @param {Number} subzoneId basin subzone id
@@ -276,7 +276,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
     findCoverageLayer: (subzoneId) =>
       db
         .raw(
-        `
+          `
         SELECT row_to_json(fc) AS collection
         FROM (
           SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
@@ -305,7 +305,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
           ) as f
         ) as fc;
         `,
-        [subzoneId, subzoneId],
+          [subzoneId, subzoneId],
         )
         .then((layers) => layers.rows[0].collection),
   };

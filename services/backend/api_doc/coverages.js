@@ -39,7 +39,7 @@
  */
 
 /**
- * @apiDefine CoverageLayerInEAExample
+ * @apiDefine CoverageLayerInGeofenceExample
  * @apiSuccessExample {json} Success-Example:
  * {
  *      "type": "FeatureCollection",

@@ -671,7 +671,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/3701/coverage/layer
-   * @apiUse CoverageLayerInSubzoneExample
+   * @apiUse CoverageLayerInGeofenceExample
    */
   router.get(
     '/basinSubzones/:subzone_id/coverage/layer',

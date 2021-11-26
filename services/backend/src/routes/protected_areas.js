@@ -723,7 +723,7 @@ module.exports = (errorHandler, paService) => {
    *
    * @apiExample {curl} Example usage:
    *  /pa/Parques Naturales Regionales/coverage/layer
-   * @apiUse CoverageLayerInPAExample
+   * @apiUse CoverageLayerInGeofenceExample
    */
   router.get(
     '/pa/:category/coverage/layer',

@@ -809,7 +809,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/CORPOBOYACA/coverage/layer
-   * @apiUse CoverageLayerInEAExample
+   * @apiUse CoverageLayerInGeofenceExample
    */
   router.get(
     '/ea/:ea_id/coverage/layer',

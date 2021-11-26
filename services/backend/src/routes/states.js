@@ -693,7 +693,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/86/coverage/layer
-   * @apiUse CoverageLayerInStateExample
+   * @apiUse CoverageLayerInGeofenceExample
    */
   router.get(
     '/states/:state_id/coverage/layer',

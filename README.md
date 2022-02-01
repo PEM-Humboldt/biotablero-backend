@@ -40,6 +40,7 @@ Arquitectura informática y manejo de datos - Programa de Evaluación y Monitore
 
 - **Erika Suárez** - [Erikasv](https://github.com/erikasv)
 - **Camilo Zapata** - [cazapatamar](https://github.com/cazapatamar)
+- **Angela Checa** - [Trjegul84](https://github.com/Trjegul84)
 
 See also the list of [contributors](https://github.com/PEM-Humboldt/biotablero-backend/graphs/contributors) who participated in this project.
 

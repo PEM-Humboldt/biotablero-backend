@@ -3339,6 +3339,270 @@ define({ "api": [
   {
     "group": "s_coverages",
     "type": "get",
+    "url": "/ea/:ea_id/coverage/layer",
+    "title": "CoverageLayerInEA",
+    "name": "CoverageLayerInEA",
+    "version": "0.1.0",
+    "description": "<p>Get the coverage layer divided by categories in a given environmental authority</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "ea_id",
+            "description": "<p>environmental authority id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"N\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/ea/CORPOBOYACA/coverage/layer",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/environmental_authorities.js",
+    "groupTitle": "Search > Coverages",
+    "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
+  },
+  {
+    "group": "s_coverages",
+    "type": "get",
+    "url": "/pa/:category/coverage/layer",
+    "title": "CoverageLayerInPA",
+    "name": "CoverageLayerInPA",
+    "version": "0.1.0",
+    "description": "<p>Get the coverage layer divided by categories in a given protected area category</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "String",
+            "optional": false,
+            "field": "category",
+            "description": "<p>protected area category</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"N\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/pa/Parques Naturales Regionales/coverage/layer",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/protected_areas.js",
+    "groupTitle": "Search > Coverages",
+    "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
+  },
+  {
+    "group": "s_coverages",
+    "type": "get",
+    "url": "/states/:state_id/coverage/layer",
+    "title": "CoverageLayerInState",
+    "name": "CoverageLayerInState",
+    "version": "0.1.0",
+    "description": "<p>Get the coverage layer divided by categories in a given state</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "state_id",
+            "description": "<p>state id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"N\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/states/86/coverage/layer",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/states.js",
+    "groupTitle": "Search > Coverages",
+    "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
+  },
+  {
+    "group": "s_coverages",
+    "type": "get",
+    "url": "/basinSubzones/:subzone_id/coverage/layer",
+    "title": "CoverageLayerInSubzone",
+    "name": "CoverageLayerInSubzone",
+    "version": "0.1.0",
+    "description": "<p>Get the coverage layer divided by categories in a given basin subzone</p>",
+    "parameter": {
+      "fields": {
+        "Path params": [
+          {
+            "group": "Path params",
+            "type": "Number",
+            "optional": false,
+            "field": "subzone_id",
+            "description": "<p>basin subzone id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200: GeoJson object": [
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "geojson",
+            "type": "String",
+            "optional": false,
+            "field": "result.type",
+            "description": "<p>The geometry type</p>"
+          },
+          {
+            "group": "geojson",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result.features",
+            "description": "<p>features information (type, properties, geometry)</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n     \"type\": \"FeatureCollection\",\n     \"features\": [\n         {\n          \"type\": \"Feature\",\n          \"properties\": {\n             \"key\": \"N\",\n             \"area\": 4257.699441612134\n         },\n         \"geometry\": {\n              \"type\": \"GeometryCollection\",\n              \"geometries\": [\n                  {\n                  \"type\": \"Polygon\",\n                  \"coordinates\": [\n                      [\n                          [\n                              -75.5104086779181,\n                              10.4307384992824\n                          ],\n                      ]\n                  }\n              ]\n          },\n      ]\n  }",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/basinSubzones/3701/coverage/layer",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/backend/src/routes/basin_subzones.js",
+    "groupTitle": "Search > Coverages",
+    "groupDescription": "<p>Information related to coverages in a given geofence or in a given strategic ecosystem inside a geofence.</p>"
+  },
+  {
+    "group": "s_coverages",
+    "type": "get",
     "url": "/ea/:ea_id/coverage",
     "title": "CoverageInEA",
     "name": "EAByCoverage",
@@ -4812,6 +5076,173 @@ define({ "api": [
     "filename": "services/backend/src/routes/basin_subzones.js",
     "groupTitle": "Search > Forest",
     "groupDescription": "<p>Information related to forest in a given geofence.</p>"
+  },
+  {
+    "group": "s_functional_diversity",
+    "type": "get",
+    "url": "/functional-diversity/dry-forest/features",
+    "title": "DryForestFeatures",
+    "name": "DryForestFeatures",
+    "version": "1.0.0",
+    "description": "<p>Values of functional features in the dry forest in a given area. Features are: Leaf Area, Leaf Nitrogen, Maximun Height, Specific Leaf Area, Wood Density and Seed Mass.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object[]",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.id",
+            "description": "<p>feature id</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min",
+            "description": "<p>lowest value for the specific feature in the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max",
+            "description": "<p>highest value for the specific feature in the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.value",
+            "description": "<p>value for the specific feature in the given area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "[\n  {\n     id: 'leaf_area',\n     min: 9.5,\n     max: 163655.67,\n     value: 157,\n  },\n  {\n     id: 'leaf_nitrogen',\n     min: 8.97,\n     max: 67.09,\n     value: 15,\n  },\n  {\n     id: 'maximun_height',\n     min: 0.74,\n     max: 50.96,\n     value: 25.85,\n   },\n   {\n     id: 'specific_leaf_area',\n     min: 2.01,\n     max: 71.35,\n     value: 25.4,\n   },\n   {\n     id: 'wood_density',\n     min: 0.14,\n     max: 1.14,\n     value: 0.77,\n   },\n   {\n     id: 'seed_mass',\n     min: 0.02,\n     max: 51319.58,\n     value: 41258,\n   },\n]",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/functional-diversity/dry-forest/features?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/functional.js",
+    "groupTitle": "Search > Functional diversity",
+    "groupDescription": "<p>Information related to the functional diversity section.</p>"
+  },
+  {
+    "group": "s_functional_diversity",
+    "type": "get",
+    "url": "/functional-diversity/dry-forest/values",
+    "title": "DryForestValues",
+    "name": "DryForestValues",
+    "version": "1.0.0",
+    "description": "<p>Values of functional diversity in the dry forest in a given area.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.richness",
+            "description": "<p>richness value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.uniformity",
+            "description": "<p>uniformity value inside the given area</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.divergence",
+            "description": "<p>divergence value inside the given area</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n   richness: 27.12,\n   uniformity: 0.36,\n   divergence: 0.47,\n   richness_nal: 56.12,\n   uniformity_nal: 0.77,\n   divergence_nal: 0.63,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/functional-diversity/dry-forest/values?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/functional.js",
+    "groupTitle": "Search > Functional diversity",
+    "groupDescription": "<p>Information related to the functional diversity section.</p>"
   },
   {
     "group": "s_general_biome",
@@ -8081,6 +8512,20 @@ define({ "api": [
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "result.min_region",
+            "description": "<p>lowest value inside the natural region</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_region",
+            "description": "<p>highest value inside the natural region</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "result.min_threshold",
             "description": "<p>lowest value among national areas of the same type</p>"
           },
@@ -8096,7 +8541,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    id: 'concentration',\n    avg: 0.3,\n    min: 0.2,\n    max: 0.6,\n    min_threshold: 0.1,\n    max_threshold: 1,\n  }\n]",
+          "content": "[\n  {\n    id: 'concentration',\n    avg: 0.3,\n    min: 0.2,\n    max: 0.6,\n    min_region: 0.45,\n    max_region: 0.99,\n    min_threshold: 0.1,\n    max_threshold: 1,\n  }\n]",
           "type": "json"
         }
       ]
@@ -8182,6 +8627,20 @@ define({ "api": [
             "group": "Success 200",
             "type": "Number",
             "optional": false,
+            "field": "result.min_region",
+            "description": "<p>lowest value inside the natural region</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max_region",
+            "description": "<p>highest value inside the natural region</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
             "field": "result.min_threshold",
             "description": "<p>lowest value among national areas of the same type</p>"
           },
@@ -8191,13 +8650,20 @@ define({ "api": [
             "optional": false,
             "field": "result.max_threshold",
             "description": "<p>highest value among national areas of the same type</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "result.region_name",
+            "description": "<p>name of the region the area belongs to</p>"
           }
         ]
       },
       "examples": [
         {
           "title": "Success-Example:",
-          "content": "[\n  {\n    id: 'gaps',\n    avg: 0.34,\n    min: 0.4,\n    max: 0.8,\n    min_threshold: 0.15,\n    max_threshold: 0.95,\n  }\n]",
+          "content": "[\n  {\n    id: 'gaps',\n    avg: 0.34,\n    min: 0.4,\n    max: 0.8,\n    min_region: 0.45,\n    max_region: 0.99,\n    min_threshold: 0.15,\n    max_threshold: 0.95,\n    region_name: Andes\n  }\n]",
           "type": "json"
         }
       ]
@@ -8216,11 +8682,143 @@ define({ "api": [
   {
     "group": "s_richness",
     "type": "get",
+    "url": "/richness/gaps/layer",
+    "title": "GapsLayer",
+    "name": "GapsLayer",
+    "version": "1.0.0",
+    "description": "<p>Layer for gaps section of richness in the given area</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Binary",
+            "optional": false,
+            "field": "result",
+            "description": "<p>image with the geometry</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "image/png",
+          "type": "binary"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/gaps/layer?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
+    "url": "/richness/gaps/layer/thresholds",
+    "title": "GapsLayerThresholds",
+    "name": "GapsLayerThresholds",
+    "version": "1.0.0",
+    "description": "<p>Min and max value inside the layer for gaps section of richness in a given area.</p>",
+    "parameter": {
+      "fields": {
+        "Query params": [
+          {
+            "group": "Query params",
+            "type": "String",
+            "optional": false,
+            "field": "areaType",
+            "description": "<p>area type</p>"
+          },
+          {
+            "group": "Query params",
+            "type": "String|Number",
+            "optional": false,
+            "field": "areaId",
+            "description": "<p>area id</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "type": "Object",
+            "optional": false,
+            "field": "result",
+            "description": ""
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.min",
+            "description": "<p>min value inside the layer</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "Number",
+            "optional": false,
+            "field": "result.max",
+            "description": "<p>max value inside the layer</p>"
+          }
+        ]
+      },
+      "examples": [
+        {
+          "title": "Success-Example:",
+          "content": "{\n  min: 0.158548156,\n  max: 0.658754684,\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "examples": [
+      {
+        "title": "Example usage:",
+        "content": "/richness/gaps/layer/thresholds?areaType=ea&areaId=CARDER",
+        "type": "curl"
+      }
+    ],
+    "filename": "services/diversity/src/routes/richness.js",
+    "groupTitle": "Search > Species richness",
+    "groupDescription": "<p>Information related to the species richness in a given area.</p>"
+  },
+  {
+    "group": "s_richness",
+    "type": "get",
     "url": "/richness/number-species/layer",
     "title": "NOSLayer",
     "name": "NOSLayer",
     "version": "1.0.0",
-    "description": "<p>Layer of a specific group for richness - number of species in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
+    "description": "<p>Layer of a specific group for richness (number of species) in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
     "parameter": {
       "fields": {
         "Query params": [
@@ -8286,7 +8884,7 @@ define({ "api": [
     "title": "NOSLayerThresholds",
     "name": "NOSLayerThresholds",
     "version": "1.0.0",
-    "description": "<p>Min and max value inside the layer of a specific group for richness - number of species in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
+    "description": "<p>Min and max value inside the layer of a specific group for richness (number of species) in a given area. Parameter group may be selected from: total, endemic, invasive and threatened.</p>",
     "parameter": {
       "fields": {
         "Query params": [

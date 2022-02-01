@@ -309,33 +309,33 @@ module.exports = (
       db
         .raw(
           `
-        SELECT row_to_json(fc) AS collection
-        FROM (
-          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          SELECT row_to_json(fc) AS collection
           FROM (
-            SELECT
-              'Feature' AS TYPE,
-              row_to_json(prop) AS properties,
-              ST_AsGeoJSON(geom)::json AS geometry
+            SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
             FROM (
               SELECT
-                ST_Collect(geom) AS geom,
-                hf_pers AS key
-              FROM geo_hf_persistence
-              WHERE id_ea = ?
-              GROUP BY key
-              ) AS geo
-              INNER JOIN (
+                'Feature' AS TYPE,
+                row_to_json(prop) AS properties,
+                ST_AsGeoJSON(geom)::json AS geometry
+              FROM (
                 SELECT
-                  hf_pers AS key,
-                  sum(area_ha) AS area
+                  ST_Collect(geom) AS geom,
+                  hf_pers AS key
                 FROM geo_hf_persistence
                 WHERE id_ea = ?
                 GROUP BY key
-              ) AS prop
-              ON geo.key = prop.key
-          ) as f
-        ) as fc;
+                ) AS geo
+                INNER JOIN (
+                  SELECT
+                    hf_pers AS key,
+                    sum(area_ha) AS area
+                  FROM geo_hf_persistence
+                  WHERE id_ea = ?
+                  GROUP BY key
+                ) AS prop
+                ON geo.key = prop.key
+            ) as f
+          ) as fc;
         `,
           [eaId, eaId],
         )
@@ -370,5 +370,47 @@ module.exports = (
           [geometriesConfig.tolerance, envAuthority],
         )
         .then((biomes) => biomes.rows[0].collection),
+
+    /**
+     * Get the coverage layer divided by categories in a given environmental authority
+     * @param {String} eaId environmental authority id
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+    findCoverageLayer: (eaId) =>
+      db
+        .raw(
+          `
+        SELECT row_to_json(fc) AS collection
+        FROM (
+          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+          FROM (
+            SELECT
+              'Feature' AS TYPE,
+              row_to_json(prop) AS properties,
+              ST_AsGeoJSON(geom)::json AS geometry
+            FROM (
+              SELECT
+                ST_Collect(geom) AS geom,
+                area_type AS key
+              FROM geo_coverages
+              WHERE id_ea = ?
+              GROUP BY key
+              ) AS geo
+              INNER JOIN (
+                SELECT
+                  area_type AS key,
+                  sum(area_ha) AS area
+                FROM geo_coverages
+                WHERE id_ea = ?
+                GROUP BY key
+              ) AS prop
+              ON geo.key = prop.key
+          ) as f
+        ) as fc;
+        `,
+          [eaId, eaId],
+        )
+        .then((layers) => layers.rows[0].collection),
   };
 };

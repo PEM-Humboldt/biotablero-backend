@@ -11,7 +11,7 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "apidoc": "0.26.0",
+    "apidoc": "0.50.4",
     "eslint": "5.5.0",
     "eslint-config-airbnb-base": "13.1.0",
     "eslint-config-prettier": "^8.3.0",

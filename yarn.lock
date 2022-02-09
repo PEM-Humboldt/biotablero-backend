@@ -710,7 +710,7 @@ __metadata:
   dependencies:
     bookshelf: ^1.2.0
     bottlejs: 1.7.1
-    config: 2.0.1
+    config: 2.0.2
     knex: ^0.21.16
     nodemon: ^2.0.15
     pg: ^8.7.3
@@ -1277,30 +1277,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"config@npm:2.0.1":
-  version: 2.0.1
-  resolution: "config@npm:2.0.1"
+"config@npm:2.0.2":
+  version: 2.0.2
+  resolution: "config@npm:2.0.2"
   dependencies:
     json5: ^1.0.1
-  checksum: 20e39eb82c3a59e1dc5aa0fe05e9369e970047a1b4b1b22292d774e24afab3fbfd11284dd886dcf1c468815d205de2111d041eed5d3a0c83956ff009e60dd2c1
+  checksum: eb3e830b9b86615ea04740c3092bc8cb6310110e46d4ef5210824be51ee0ec2d88d3de4e6dd739e3008b86c75a68b82d3790004450f9021af58393791410fe18
   languageName: node
   linkType: hard
 
-"config@npm:^3.3.3":
-  version: 3.3.3
-  resolution: "config@npm:3.3.3"
+"config@npm:^3.3.7":
+  version: 3.3.7
+  resolution: "config@npm:3.3.7"
   dependencies:
     json5: ^2.1.1
-  checksum: c79401b718577662c1b3b53e0fbb1e7dbf7ca66b1b8c129e96b6f97579f3fbf4b71fcd3c45b72672eb643cc676ef41add7e75a2771e94de2392113cfb54170a1
-  languageName: node
-  linkType: hard
-
-"config@npm:^3.3.6":
-  version: 3.3.6
-  resolution: "config@npm:3.3.6"
-  dependencies:
-    json5: ^2.1.1
-  checksum: 53684cae0d1c9fa2fe6db41fa85201aa5ab92dcbe7596d63381e7e48f0cb3dea45bee812dc18ee91a3daf887ec0f3c57bf4acc555629ba7608d5a3b932e61c8e
+  checksum: 53b68dbf303a262b16ee376bb8ee08a9f1f4d09ea5d35a45cd9a47a47591a0817c00d5d10f0d53328221f2a927c98ef8eb921679ad9722c80400df6839c40861
   languageName: node
   linkType: hard
 
@@ -1331,7 +1322,7 @@ __metadata:
   dependencies:
     bookshelf: ^1.2.0
     bottlejs: ^2.0.0
-    config: ^3.3.6
+    config: ^3.3.7
     knex: ^0.95.2
     nodemon: ^2.0.15
     pg: ^8.7.3
@@ -1626,7 +1617,7 @@ __metadata:
   dependencies:
     bookshelf: ^1.2.0
     bottlejs: ^2.0.0
-    config: ^3.3.6
+    config: ^3.3.7
     knex: ^0.95.4
     node-fetch: ^2.6.7
     nodemon: ^2.0.15
@@ -2625,7 +2616,7 @@ __metadata:
   dependencies:
     bookshelf: ^1.2.0
     bottlejs: ^2.0.0
-    config: ^3.3.3
+    config: ^3.3.7
     knex: ^0.21.17
     node-fetch: ^2.6.7
     nodemon: ^2.0.15

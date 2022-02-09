@@ -17,7 +17,7 @@
   "dependencies": {
     "bookshelf": "^1.2.0",
     "bottlejs": "^2.0.0",
-    "config": "^3.3.6",
+    "config": "^3.3.7",
     "knex": "^0.95.4",
     "node-fetch": "^2.6.7",
     "pg": "^8.7.3",

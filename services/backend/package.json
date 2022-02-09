@@ -13,7 +13,7 @@
   "license": "MIT",
   "dependencies": {
     "bookshelf": "^1.2.0",
-    "bottlejs": "1.7.1",
+    "bottlejs": "1.7.2",
     "config": "3.3.7",
     "knex": "^0.21.21",
     "pg": "^8.7.3",

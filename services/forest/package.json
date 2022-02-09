@@ -4,7 +4,7 @@
   "description": "Service for forest data",
   "main": "src/app.js",
   "devDependencies": {
-    "nodemon": "^2.0.15"
+    "nodemon": "~2.0.15"
   },
   "scripts": {
     "start": "nodemon --watch src --watch config",
@@ -15,16 +15,16 @@
   },
   "license": "MIT",
   "dependencies": {
-    "bookshelf": "^1.2.0",
-    "bottlejs": "^2.0.0",
-    "config": "^3.3.7",
-    "knex": "^0.21.21",
-    "node-fetch": "^2.6.7",
-    "pg": "^8.7.3",
-    "restify": "^8.6.0",
-    "restify-cors-middleware": "^1.1.1",
-    "restify-router": "^0.6.2",
-    "winston": "^3.5.1"
+    "bookshelf": "~1.2.0",
+    "bottlejs": "~2.0.0",
+    "config": "~3.3.7",
+    "knex": "~0.21.21",
+    "node-fetch": "~2.6.7",
+    "pg": "~8.7.3",
+    "restify": "~8.6.0",
+    "restify-cors-middleware": "~1.1.1",
+    "restify-router": "~0.6.2",
+    "winston": "~3.5.1"
   },
   "apidoc": {
     "name": "Service for forest data",

@@ -4,7 +4,7 @@
   "description": "Service for species diversity data",
   "main": "src/app.js",
   "devDependencies": {
-    "nodemon": "^2.0.7"
+    "nodemon": "^2.0.15"
   },
   "scripts": {
     "start": "nodemon --watch src --watch config",

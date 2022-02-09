@@ -710,7 +710,7 @@ __metadata:
   dependencies:
     bookshelf: ^1.2.0
     bottlejs: 1.7.1
-    config: 2.0.2
+    config: 3.3.7
     knex: ^0.21.16
     nodemon: ^2.0.15
     pg: ^8.7.3
@@ -1277,16 +1277,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"config@npm:2.0.2":
-  version: 2.0.2
-  resolution: "config@npm:2.0.2"
-  dependencies:
-    json5: ^1.0.1
-  checksum: eb3e830b9b86615ea04740c3092bc8cb6310110e46d4ef5210824be51ee0ec2d88d3de4e6dd739e3008b86c75a68b82d3790004450f9021af58393791410fe18
-  languageName: node
-  linkType: hard
-
-"config@npm:^3.3.7":
+"config@npm:3.3.7, config@npm:^3.3.7":
   version: 3.3.7
   resolution: "config@npm:3.3.7"
   dependencies:

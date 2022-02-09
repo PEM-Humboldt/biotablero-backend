@@ -16,7 +16,7 @@
     "eslint-config-airbnb-base": "13.2.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-import": "2.25.4",
-    "prettier": "2.3.2"
+    "prettier": "2.5.1"
   },
   "private": true,
   "workspaces": [

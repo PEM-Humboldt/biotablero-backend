@@ -651,7 +651,7 @@ __metadata:
   resolution: "backend@workspace:services/backend"
   dependencies:
     bookshelf: ~1.2.0
-    bottlejs: ~1.7.2
+    bottlejs: ~2.0.0
     config: ~3.3.7
     knex: ~0.95.15
     nodemon: ~2.0.15
@@ -731,13 +731,6 @@ __metadata:
   version: 3.4.1
   resolution: "bootstrap@npm:3.4.1"
   checksum: 5742035e8c541cd525780542771e7d56f63e5d4b2d902427bf182d3383e74a17c9074b6809f50d7f3de0585377e673339628b97cfdcde597ad69ecb1d2b562a6
-  languageName: node
-  linkType: hard
-
-"bottlejs@npm:~1.7.2":
-  version: 1.7.2
-  resolution: "bottlejs@npm:1.7.2"
-  checksum: ef155bacbef448af98417fd8883bc70daed77ba335ea1b72f6aec33106a9e8be9cd8ded5859fef75cc2d5345e63488ab92318f151afd14dc9f3a43addc44eca6
   languageName: node
   linkType: hard
 

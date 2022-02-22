@@ -9,10 +9,8 @@ const bookshelfModels = require('../persistence/models/setup');
 const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
-bottle.factory('errorHandler', container => ErrorHandler(container.logger));
+bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 
-bottle.factory('routes', () => ([
-
-]));
+bottle.factory('routes', () => []);
 
 module.exports = bottle.container;

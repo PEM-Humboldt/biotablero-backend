@@ -24,4 +24,4 @@ const uploadFile = (geojson) =>
     });
   });
 
-  module.exports = { uploadFile };
+module.exports = { uploadFile };

@@ -34,23 +34,23 @@ module.exports = (db, { coverages }, logger) => ({
     db
       .raw(
         `
-      SELECT ST_AsPNG(
-        ST_ColorMap(
-          ST_Clip(
-            (SELECT ST_union(rast)
-              FROM geo_raster
-              WHERE filename = ?
-              AND ST_Intersects(rast, ST_GeomFromGeoJSON(?))
+        SELECT ST_AsPNG(
+          ST_ColorMap(
+            ST_Clip(
+              (SELECT ST_union(rast)
+                FROM geo_raster
+                WHERE filename = ?
+                AND ST_Intersects(rast, ST_GeomFromGeoJSON(?))
+              ),
+              ST_GeomFromGeoJSON(?),
+              TRUE
             ),
-            ST_GeomFromGeoJSON(?),
-            TRUE
-          ),
-          '1 '|| ? || ' '|| ? || ' '|| ? || ' 255
-          nv 255 255 255 0
-          '
-        )
-      ) as image;
-      `,
+            '1 '|| ? || ' '|| ? || ' '|| ? || ' 255
+            nv 255 255 255 0
+            '
+          )
+        ) as image;
+        `,
         [filename, geometry, geometry, ...color],
       )
       .then((rast) => rast.rows[0].image)

@@ -1,5 +1,5 @@
 /**
- * @apiDefine s_coverages Search > Coverages
+ * @apiDefine s_coverage Search > Coverage
  * Information related to coverages in a given area.
  */
 

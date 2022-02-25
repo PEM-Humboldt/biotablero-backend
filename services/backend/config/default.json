@@ -16,5 +16,10 @@
   "geometries": {
     "tolerance": 0.001,
     "tolerance_heavy": 0.003
+  },
+  "AWS_S3": {
+    "id": "id",
+    "secret": "secret",
+    "bucket_name": "bucket-name"
   }
 }

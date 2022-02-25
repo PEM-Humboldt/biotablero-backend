@@ -45,8 +45,8 @@ module.exports = (errorHandler, coverageService) => {
    * @apiName CoverageLayer
    * @apiVersion 1.0.0
    * @apiDescription
-   * Layer of a specific group for coverage in a given area. Parameter group
-   * may be selected from: natural, secundary, and transformed.
+   * Layer of a specific coverage type within a given area. Parameter type could be:
+   * N (Natural), S(Secundaria), T(Transformada).
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id

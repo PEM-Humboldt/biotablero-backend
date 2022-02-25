@@ -1,3 +1,5 @@
+const uploadFile = require('../util/AWS');
+
 module.exports = (strategyPersistence) => ({
   /**
    * Create a new project strategy
@@ -42,7 +44,7 @@ module.exports = (strategyPersistence) => ({
       error.code = 400;
       throw error;
     }
-
-    return strategyPersistence.findSelectedStrategiesGeoJson(pId);
+    const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
+    return uploadFile(selectedStrategies);
   },
 });

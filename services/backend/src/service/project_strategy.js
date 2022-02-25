@@ -1,4 +1,4 @@
-const uploadFile = require('../util/AWS');
+const { uploadFile } = require('../util/AWS');
 
 module.exports = (strategyPersistence) => ({
   /**

@@ -1,5 +1,5 @@
 module.exports = {
-  setColor: (type) => {
+  colorSet: (type) => {
     let color = [];
     switch (type) {
       case 'N':

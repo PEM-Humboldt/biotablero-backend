@@ -1,12 +1,12 @@
 module.exports = (db, { coverages }, logger) => ({
   /**
-   * Find the area distribution for each type of coverage in a given area
+   * Find the area distribution for each coverage type in a given area
    *
    * @param {String} areaType area type
    * @param {String | Number} areaId area id
    * @param {Number} year optional year to filter data, 2018 by default
    *
-   * @returns {Object[]} Values of area distribution for each category of protected area
+   * @returns {Object[]} Values of area distribution for each coverage type
    * connectivity
    */
   findCoverage: (areaType, areaId, year = 2018) =>
@@ -26,13 +26,12 @@ module.exports = (db, { coverages }, logger) => ({
    * @param {String} filename filename which corresponds to the proper layer according to type,
    * options are: 'coverage_2018_N.tif, coverage_2018_S.tif, coverage_2018_T.tif'.
    * @param {Object[]} color color is an array with RGB numbers for color assignment according to
-   * the type of coverage, options are: N (Natural), S(Secundaria), T(Transformada).
+   * the coverage type, options are: N (Natural), S(Secundaria), T(Transformada).
    *
    * @returns {Binary} Image with the geometry
    */
-  findCoverageLayer: (geometry, filename, color) => {
-    const colorSet = color.join(' ');
-    return db
+  findCoverageLayer: (geometry, filename, color) =>
+    db
       .raw(
         `
       SELECT ST_AsPNG(
@@ -46,18 +45,17 @@ module.exports = (db, { coverages }, logger) => ({
             ST_GeomFromGeoJSON(?),
             TRUE
           ),
-          '1 ${colorSet} 255
+          '1 '|| ? || ' '|| ? || ' '|| ? || ' 255
           nv 255 255 255 0
           '
         )
       ) as image;
       `,
-        [filename, geometry, geometry],
+        [filename, geometry, geometry, ...color],
       )
       .then((rast) => rast.rows[0].image)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
-      });
-  },
+      }),
 });

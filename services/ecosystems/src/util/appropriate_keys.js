@@ -8,7 +8,7 @@ module.exports = {
       case 'T':
         return 'coverage_2018_T.tif';
       default:
-        return val;
+        return '';
     }
   },
   areaTypeKeys: (val) => {

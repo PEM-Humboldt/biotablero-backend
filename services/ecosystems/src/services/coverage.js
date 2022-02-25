@@ -1,5 +1,5 @@
 const { rasterCoverageKeys, areaTypeKeys } = require('../util/appropriate_keys');
-const { setColor } = require('../util/setColor');
+const { colorSet } = require('../util/colorSet');
 
 module.exports = (CoveragePersistence, restAPI) => {
   const Coverage = {
@@ -44,7 +44,7 @@ module.exports = (CoveragePersistence, restAPI) => {
         return CoveragePersistence.findCoverageLayer(
           areaGeom.features[0].geometry,
           rasterCoverageKeys(type),
-          setColor(type),
+          colorSet(type),
         );
       } catch (e) {
         const error = {

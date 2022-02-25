@@ -3,6 +3,7 @@ const bookshelf = require('bookshelf');
 const config = require('config');
 
 // Models
+const coverages = require('./coverages');
 
 const dbConfig = config.get('db');
 let conn = null;
@@ -27,9 +28,10 @@ let models = null;
 
 const setupModels = () => {
   if (models !== null) return models;
-
   const dbConn = connect();
-  models = {};
+  models = {
+    coverages: coverages(dbConn),
+  };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);
   });

@@ -7,7 +7,7 @@
     "database": "database"
   },
   "server": {
-    "port": 4002,
+    "port": 4004,
     "origins": ["*"]
   },
   "services": {

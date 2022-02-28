@@ -112,7 +112,7 @@ module.exports = (db, { richnessNos }, logger) => ({
    * Find the layer for the number of species in the given area of the given group
    *
    * @param {json} geometry geometry of the selected area
-   * @param {String} filename filename which corrensponds to the proper layer according to group,
+   * @param {String} filename filename which corresponds to the proper layer according to group,
    * options are: 'total_inf.tif', 'end_inf.tif', 'inv_inf.tif', 'thr_inf.tif'.
    *
    * @returns {Binary} Image with the geometry

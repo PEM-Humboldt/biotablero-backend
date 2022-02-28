@@ -32,6 +32,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@colors/colors@npm:1.5.0":
+  version: 1.5.0
+  resolution: "@colors/colors@npm:1.5.0"
+  checksum: d64d5260bed1d5012ae3fc617d38d1afc0329fec05342f4e6b838f46998855ba56e0a73833f4a80fa8378c84810da254f76a8a19c39d038260dc06dc4e007425
+  languageName: node
+  linkType: hard
+
 "@dabh/diagnostics@npm:^2.0.2":
   version: 2.0.2
   resolution: "@dabh/diagnostics@npm:2.0.2"
@@ -1433,16 +1440,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:^3.2.7":
-  version: 3.2.7
-  resolution: "debug@npm:3.2.7"
-  dependencies:
-    ms: ^2.1.1
-  checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
-  languageName: node
-  linkType: hard
-
-"debug@npm:^4.0.1":
+"debug@npm:4.3.3, debug@npm:^4.0.1":
   version: 4.3.3
   resolution: "debug@npm:4.3.3"
   dependencies:
@@ -1451,6 +1449,15 @@ __metadata:
     supports-color:
       optional: true
   checksum: 14472d56fe4a94dbcfaa6dbed2dd3849f1d72ba78104a1a328047bb564643ca49df0224c3a17fa63533fd11dd3d4c8636cd861191232a2c6735af00cc2d4de16
+  languageName: node
+  linkType: hard
+
+"debug@npm:^3.2.7":
+  version: 3.2.7
+  resolution: "debug@npm:3.2.7"
+  dependencies:
+    ms: ^2.1.1
+  checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
   languageName: node
   linkType: hard
 
@@ -1622,6 +1629,24 @@ __metadata:
   checksum: 22fef4b6203e5f31d425f5b711eb389e4c6c2723402e389af394f8411b76a488fa414d309d866e2b577ce3e8462d344205545c88a8143cc21752a5172818888a
   languageName: node
   linkType: hard
+
+"ecosystems@workspace:services/ecosystems":
+  version: 0.0.0-use.local
+  resolution: "ecosystems@workspace:services/ecosystems"
+  dependencies:
+    bookshelf: ~1.2.0
+    bottlejs: ~2.0.0
+    config: ~3.3.7
+    knex: ~1.0.3
+    node-fetch: ~2.6.7
+    nodemon: ~2.0.15
+    pg: ~8.7.3
+    restify: ~8.6.1
+    restify-cors-middleware: ~1.1.1
+    restify-router: ~0.6.2
+    winston: ~3.6.0
+  languageName: unknown
+  linkType: soft
 
 "ee-first@npm:1.1.1":
   version: 1.1.1
@@ -2669,6 +2694,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"getopts@npm:2.3.0":
+  version: 2.3.0
+  resolution: "getopts@npm:2.3.0"
+  checksum: bbb5fcef8d4a8582cf4499ea3fc492d95322df2184e65d550ddacede04871e7ba33194c7abd06a6c5d540de3b70112a16f988787e236e1c66b89521032b398ce
+  languageName: node
+  linkType: hard
+
 "getpass@npm:^0.1.1":
   version: 0.1.7
   resolution: "getpass@npm:0.1.7"
@@ -3656,6 +3688,44 @@ __metadata:
   languageName: node
   linkType: hard
 
+"knex@npm:~1.0.3":
+  version: 1.0.3
+  resolution: "knex@npm:1.0.3"
+  dependencies:
+    colorette: 2.0.16
+    commander: ^8.3.0
+    debug: 4.3.3
+    escalade: ^3.1.1
+    esm: ^3.2.25
+    getopts: 2.3.0
+    interpret: ^2.2.0
+    lodash: ^4.17.21
+    pg-connection-string: 2.5.0
+    rechoir: ^0.8.0
+    resolve-from: ^5.0.0
+    tarn: ^3.0.2
+    tildify: 2.0.0
+  peerDependenciesMeta:
+    "@vscode/sqlite3":
+      optional: true
+    better-sqlite3:
+      optional: true
+    mysql:
+      optional: true
+    mysql2:
+      optional: true
+    pg:
+      optional: true
+    pg-native:
+      optional: true
+    tedious:
+      optional: true
+  bin:
+    knex: bin/cli.js
+  checksum: 351bdb6f9a420c3b087dd7208029b99fe4e279eedcc2a4bf8f99b8ee45185425f0dbeb0c52853bb4b1cee458f61d0802ee7945929d13ba6e9c35becf01e53f2d
+  languageName: node
+  linkType: hard
+
 "kuler@npm:^2.0.0":
   version: 2.0.0
   resolution: "kuler@npm:2.0.0"
@@ -3781,6 +3851,19 @@ __metadata:
     safe-stable-stringify: ^1.1.0
     triple-beam: ^1.3.0
   checksum: e4ccf22a1355c6f03b635d6b7905d5ac2d75fca8e6d5bf33a801793c654764138d584fec03411b13bffecaafa0003a70e6cf4f2f0af62d0e324d62622921405a
+  languageName: node
+  linkType: hard
+
+"logform@npm:^2.4.0":
+  version: 2.4.0
+  resolution: "logform@npm:2.4.0"
+  dependencies:
+    "@colors/colors": 1.5.0
+    fecha: ^4.2.0
+    ms: ^2.1.1
+    safe-stable-stringify: ^2.3.1
+    triple-beam: ^1.3.0
+  checksum: e75ccccc1a2664612ade3c7f3d3185787198b4028e54ea2795df87901f28b3881eddd8d7e73ce03f4420dca638a1cbe6d42254179685ab2075e4ac38a71ffb6c
   languageName: node
   linkType: hard
 
@@ -4914,6 +4997,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"rechoir@npm:^0.8.0":
+  version: 0.8.0
+  resolution: "rechoir@npm:0.8.0"
+  dependencies:
+    resolve: ^1.20.0
+  checksum: ad3caed8afdefbc33fbc30e6d22b86c35b3d51c2005546f4e79bcc03c074df804b3640ad18945e6bef9ed12caedc035655ec1082f64a5e94c849ff939dc0a788
+  languageName: node
+  linkType: hard
+
 "regexpp@npm:^2.0.1":
   version: 2.0.1
   resolution: "regexpp@npm:2.0.1"
@@ -5119,6 +5211,41 @@ resolve@^1.9.0:
   bin:
     report-latency: bin/report-latency
   checksum: 15dede2d90a1e81aef7c827911a7d3a66daf8c6ae12ac620618784f72eccba660b8d0255a1caa25e8d7bf4b5bdbc230ae2f96c41a6a4a0d4effe5889af51eefb
+  languageName: node
+  linkType: hard
+
+"restify@npm:~8.6.1":
+  version: 8.6.1
+  resolution: "restify@npm:8.6.1"
+  dependencies:
+    assert-plus: ^1.0.0
+    bunyan: ^1.8.12
+    csv: ^5.1.1
+    dtrace-provider: ^0.8.1
+    escape-regexp-component: ^1.0.2
+    ewma: ^2.0.1
+    find-my-way: ^2.0.1
+    formidable: ^1.2.1
+    http-signature: ^1.2.0
+    lodash: ^4.17.11
+    lru-cache: ^5.1.1
+    mime: ^2.4.3
+    negotiator: ^0.6.2
+    once: ^1.4.0
+    pidusage: ^2.0.17
+    qs: ^6.7.0
+    restify-errors: ^8.0.2
+    semver: ^6.1.1
+    send: ^0.16.2
+    spdy: ^4.0.0
+    uuid: ^3.3.2
+    vasync: ^2.2.0
+  dependenciesMeta:
+    dtrace-provider:
+      optional: true
+  bin:
+    report-latency: bin/report-latency
+  checksum: 253f48aebafe6347105e30dad68504c46c21055f604db41f237c233c1d934f1db05de3837987b244dcbe3b594aad70cb2d891756833338cb21e5c85a252bd99c
   languageName: node
   linkType: hard
 
@@ -5858,6 +5985,13 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
+"tarn@npm:^3.0.2":
+  version: 3.0.2
+  resolution: "tarn@npm:3.0.2"
+  checksum: 27a69658f02504979c5b02e500522e78ec12ef893b90cb00fdef794f9d847a92ed78f6c0ad12e82b8919519bded6a8d6d0000442cd0c6d6ea83cd9b7297729af
+  languageName: node
+  linkType: hard
+
 "terser-webpack-plugin@npm:^5.1.3":
   version: 5.3.1
   resolution: "terser-webpack-plugin@npm:5.3.1"
@@ -6393,7 +6527,7 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
-"winston-transport@npm:^4.4.2":
+"winston-transport@npm:^4.4.2, winston-transport@npm:^4.5.0":
   version: 4.5.0
   resolution: "winston-transport@npm:4.5.0"
   dependencies:
@@ -6436,6 +6570,24 @@ resolve@^1.9.0:
     triple-beam: ^1.3.0
     winston-transport: ^4.4.2
   checksum: 12253f1644c46f90b36b8e675f397b29f862778c6a76cce11ad901c35d7a9b556fe371bfd0c22e180f6aa2e23d7a726a6f4ec1eec637dac3fe76390a0cd5ed09
+  languageName: node
+  linkType: hard
+
+"winston@npm:~3.6.0":
+  version: 3.6.0
+  resolution: "winston@npm:3.6.0"
+  dependencies:
+    "@dabh/diagnostics": ^2.0.2
+    async: ^3.2.3
+    is-stream: ^2.0.0
+    logform: ^2.4.0
+    one-time: ^1.0.0
+    readable-stream: ^3.4.0
+    safe-stable-stringify: ^2.3.1
+    stack-trace: 0.0.x
+    triple-beam: ^1.3.0
+    winston-transport: ^4.5.0
+  checksum: 5641837781046a2f73111dfb2af500e88f4350521d01de184d33ac8ee60c28047a8897bd2ab7b438b3812fc31a88bbbee13fd9ed617d60bd16a56d0143e423dc
   languageName: node
   linkType: hard
 

@@ -1,0 +1,33 @@
+{
+  "name": "ecosystems",
+  "version": "1.0.0",
+  "description": "Service for ecosystems data",
+  "main": "src/app.js",
+  "devDependencies": {
+    "nodemon": "~2.0.15"
+  },
+  "scripts": {
+    "start": "nodemon --watch src --watch config",
+    "start-prod": "node src/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "yarn g:lint src",
+    "docs": "yarn g:docs -i api_doc/ -i src/ -o docs/"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "bookshelf": "~1.2.0",
+    "bottlejs": "~2.0.0",
+    "config": "~3.3.7",
+    "knex": "~1.0.3",
+    "node-fetch": "~2.6.7",
+    "pg": "~8.7.3",
+    "restify": "~8.6.1",
+    "restify-cors-middleware": "~1.1.1",
+    "restify-router": "~0.6.2",
+    "winston": "~3.6.0"
+  },
+  "apidoc": {
+    "name": "Service for ecosystems data",
+    "version": "1.0.0"
+  }
+}

@@ -10,6 +10,9 @@
     "port": 4002,
     "origins": ["*"]
   },
+  "services": {
+    "backend": "http://localhost:4000"
+  },
   "logs": {
     "dir": "logs"
   }

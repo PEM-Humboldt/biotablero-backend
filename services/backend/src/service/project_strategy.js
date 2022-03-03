@@ -45,8 +45,7 @@ module.exports = (strategyPersistence) => ({
       throw error;
     }
     const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
-    const url = uploadFile(selectedStrategies)
-    .catch((e) => {
+    const url = uploadFile(selectedStrategies).catch((e) => {
       const error = {
         code: 500,
         stack: e.stack,

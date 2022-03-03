@@ -45,7 +45,7 @@ module.exports = (strategyPersistence) => ({
       throw error;
     }
     const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
-    if(selectedStrategies && selectedStrategies.features) {
+    if (selectedStrategies && selectedStrategies.features) {
       return uploadFile(selectedStrategies).catch((e) => {
         const error = {
           code: 500,
@@ -54,12 +54,11 @@ module.exports = (strategyPersistence) => ({
         };
         throw error;
       });
-    } 
+    }
     const error = {
       code: 500,
       message: 'Error getting project',
     };
     throw error;
-    
   },
 });

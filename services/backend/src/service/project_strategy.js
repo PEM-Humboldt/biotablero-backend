@@ -44,7 +44,19 @@ module.exports = (strategyPersistence) => ({
       error.code = 400;
       throw error;
     }
-    const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
+
+    let selectedStrategies;
+    try {
+      selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
+    } catch (e) {
+      const error = {
+        code: 500,
+        stack: e.stack,
+        message: 'Error retrieving layer',
+      };
+      throw error;
+    }
+
     if (selectedStrategies && selectedStrategies.features) {
       return uploadFile(selectedStrategies).catch((e) => {
         const error = {

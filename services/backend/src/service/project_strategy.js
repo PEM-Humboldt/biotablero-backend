@@ -45,14 +45,21 @@ module.exports = (strategyPersistence) => ({
       throw error;
     }
     const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
-    const url = uploadFile(selectedStrategies).catch((e) => {
-      const error = {
-        code: 500,
-        stack: e.stack,
-        message: 'Error connecting cloud services',
-      };
-      throw error;
-    });
-    return url;
+    if(selectedStrategies && selectedStrategies.features) {
+      return uploadFile(selectedStrategies).catch((e) => {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error connecting cloud services',
+        };
+        throw error;
+      });
+    } 
+    const error = {
+      code: 500,
+      message: 'Error getting project',
+    };
+    throw error;
+    
   },
 });

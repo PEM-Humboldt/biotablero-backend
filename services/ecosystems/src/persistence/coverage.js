@@ -45,7 +45,7 @@ module.exports = (db, { coverages }, logger) => ({
               ST_GeomFromGeoJSON(?),
               TRUE
             ),
-            '1 '|| ? || ' '|| ? || ' '|| ? || ' 255
+            '1 '|| ? || ' '|| ? || ' '|| ? || ' 230
             nv 255 255 255 0
             '
           )

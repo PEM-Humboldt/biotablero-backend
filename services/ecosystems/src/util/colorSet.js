@@ -3,13 +3,13 @@ module.exports = {
     let color = [];
     switch (type) {
       case 'N':
-        color = [12, 45, 66];
+        color = [22, 79, 116];
         break;
       case 'S':
-        color = [54, 106, 120];
+        color = [96, 187, 212];
         break;
       case 'T':
-        color = [51, 92, 84];
+        color = [90, 163, 148];
         break;
       default:
         break;

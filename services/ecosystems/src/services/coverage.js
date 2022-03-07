@@ -10,7 +10,6 @@ module.exports = (CoveragePersistence, restAPI) => {
      * @param {String | Number} areaId area id
      *
      * @returns {Object[]} Values of area distribution and percentage by coverage type
-     * connectivity
      */
     getCoverage: async (areaType, areaId) => {
       const rawData = await CoveragePersistence.findCoverage(areaTypeKeys(areaType), areaId);

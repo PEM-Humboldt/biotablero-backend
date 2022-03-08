@@ -14,6 +14,7 @@ const uploadFile = (geojson) =>
       Key: `${randomFileName}.geojson`,
       Body: JSON.stringify(geojson),
       ContentDisposition: 'attachment; filename=strategies.geojson',
+      ContentType: 'application/json',
     };
 
     s3.upload(params, (err, data) => {

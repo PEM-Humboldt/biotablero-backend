@@ -1,6 +1,4 @@
-const { uploadFile } = require('../util/AWS');
-
-module.exports = (strategyPersistence) => ({
+module.exports = (strategyPersistence, { uploadFile }) => ({
   /**
    * Create a new project strategy
    *
@@ -58,14 +56,16 @@ module.exports = (strategyPersistence) => ({
     }
 
     if (selectedStrategies && selectedStrategies.features) {
-      return uploadFile(selectedStrategies).catch((e) => {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error connecting cloud services',
-        };
-        throw error;
-      });
+      return uploadFile(selectedStrategies)
+        .then((url) => ({ url }))
+        .catch((e) => {
+          const error = {
+            code: 500,
+            stack: e.stack,
+            message: 'Error connecting cloud services',
+          };
+          throw error;
+        });
     }
     const error = {
       code: 500,

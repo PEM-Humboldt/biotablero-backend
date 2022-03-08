@@ -11,9 +11,8 @@ const uploadFile = (geojson) =>
     const randomFileName = Math.random().toString(36).slice(2);
     const params = {
       Bucket: config.AWS_S3.bucket_name,
-      Key: `${randomFileName}.json`,
+      Key: `${randomFileName}.geojson`,
       Body: JSON.stringify(geojson),
-      ContentType: 'application/json',
     };
 
     s3.upload(params, (err, data) => {

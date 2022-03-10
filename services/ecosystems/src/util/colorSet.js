@@ -1,15 +1,15 @@
 module.exports = {
-  colorSet: (type) => {
+  coveragesColorSet: (type) => {
     let color = [];
     switch (type) {
       case 'N':
-        color = [22, 79, 116];
+        color = [38, 186, 164];
         break;
       case 'S':
-        color = [96, 187, 212];
+        color = [89, 61, 113];
         break;
       case 'T':
-        color = [90, 163, 148];
+        color = [22, 79, 116];
         break;
       default:
         break;

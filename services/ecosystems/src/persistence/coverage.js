@@ -7,13 +7,13 @@ module.exports = (db, { coverages }, logger) => ({
    * @param {Number} year optional year to filter data, 2018 by default
    *
    * @returns {Object[]} Values of area distribution for each coverage type
-   * connectivity
    */
   findCoverage: (areaType, areaId, year = 2018) =>
     coverages
       .query()
-      .where({ geofence_type: areaType, geofence_id: areaId, year_cover: year })
       .select('area_type', 'area_ha')
+      .where({ geofence_type: areaType, geofence_id: areaId, year_cover: year })
+      .orderBy('area_type')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');

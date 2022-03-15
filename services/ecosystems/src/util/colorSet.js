@@ -11,6 +11,9 @@ module.exports = {
       case 'T':
         color = [22, 79, 116];
         break;
+      case 'X':
+        color = [255, 255, 0];
+        break;
       default:
         break;
     }

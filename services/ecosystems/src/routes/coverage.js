@@ -46,12 +46,12 @@ module.exports = (errorHandler, coverageService) => {
    * @apiVersion 1.0.0
    * @apiDescription
    * Layer of a specific coverage type within a given area. Parameter type could be:
-   * N (Natural), S(Secundaria), T(Transformada).
+   * N (Natural), S(Secundaria), T(Transformada), and X(clouds).
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
    * @apiParam (Query params) {String} type to select the proper type of coverage. Options are:
-   * N (Natural), S(Secundaria), T(Transformada).
+   * N (Natural), S(Secundaria), T(Transformada) and X(Clouds).
    *
    * @apiSuccess {Binary} result image with the geometry
    *

@@ -33,7 +33,7 @@ module.exports = (CoveragePersistence, restAPI) => {
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
-     * @param {String} type type to select the proper layer, options are: 'N', 'S' and 'T'
+     * @param {String} type type to select the proper layer, options are: 'N', 'S', 'T' and 'X'
      *
      * @returns {Binary} Image with the geometry
      */

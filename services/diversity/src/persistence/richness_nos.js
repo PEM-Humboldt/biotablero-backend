@@ -132,9 +132,9 @@ module.exports = (db, { richnessNos }, logger) => ({
             ST_GeomFromGeoJSON(?),
             TRUE
           ),
-          '100% 0 125 143 180
-          0% 255 181 108 180
-          nv 255 181 108 180
+          '100% 0 125 143 255
+          0% 255 181 108 255
+          nv 255 181 108 255
           '
         )
       ) as image;

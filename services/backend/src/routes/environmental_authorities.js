@@ -311,7 +311,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * The result is the list of protected area types with area and percentage inside the
    * environmental authority and two extra elements: the total protected area inside the
-   * environmental authority and the non protected area
+   * environmental authority and the non protected areas
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
@@ -329,38 +329,6 @@ module.exports = (errorHandler, eaService) => {
     '/ea/:ea_id/pa',
     errorHandler((req, res, next) =>
       eaService.getAreaByPA(req.params.ea_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/coverage CoverageInEA
-   * @apiName EAByCoverage
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the environmental authority total area by coverage type.
-   *
-   * The result is the list of cover types with area and percentage inside the environmental
-   * authority and an extra element with the total environmental authority area.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
-   * @apiSuccess {Number} result.area Area of the specified coverage in the environmental authority
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/coverage
-   * @apiUse CoverageInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/coverage',
-    errorHandler((req, res, next) =>
-      eaService.getAreaByCoverage(req.params.ea_id).then((areas) => {
         res.send(areas);
         next();
       }),
@@ -787,35 +755,6 @@ module.exports = (errorHandler, eaService) => {
     errorHandler((req, res, next) =>
       eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
         res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/coverage/layer CoverageLayerInEA
-   * @apiName CoverageLayerInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the coverage layer divided by categories in a given environmental authority
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/coverage/layer
-   * @apiUse CoverageLayerInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/coverage/layer',
-    errorHandler((req, res, next) =>
-      eaService.getCoverageLayer(req.params.ea_id).then((geometry) => {
-        res.send(geometry);
         next();
       }),
     ),

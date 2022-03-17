@@ -705,35 +705,5 @@ module.exports = (errorHandler, paService) => {
       }),
     ),
   );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /pa/:category/coverage/layer CoverageLayerInPA
-   * @apiName CoverageLayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the coverage layer divided by categories in a given protected area category
-   *
-   * @apiParam (Path params) {String} category protected area category
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/coverage/layer
-   * @apiUse CoverageLayerInGeofenceExample
-   */
-  router.get(
-    '/pa/:category/coverage/layer',
-    errorHandler((req, res, next) =>
-      paService.getCoverageLayer(req.params.category).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
-  );
-
   return router;
 };

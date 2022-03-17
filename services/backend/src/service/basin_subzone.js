@@ -128,24 +128,6 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
-     * Get subzone total area divided by protected area type
-     *
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the basin subzone
-     */
-    getAreaByCoverage: async (subzoneId) => {
-      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
-      subzoneArea = subzoneArea.total_area;
-      const areas = await basinSubzonePersistence.findAreaByCoverage(subzoneId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / subzoneArea,
-      }));
-      return result;
-    },
-
-    /**
      * Get the total area for the given subzone
      *
      * @param {Number} subzoneId basin subzone id
@@ -347,28 +329,6 @@ module.exports = (basinSubzonePersistence, seService) => {
      */
     getHFPersistenceLayerById: async (subzoneId) => {
       const geom = await basinSubzonePersistence.findHFPersistenceLayerById(subzoneId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given basin subzone
-     *
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await basinSubzonePersistence.findCoverageLayer(eaId);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({
           ...feature,

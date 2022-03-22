@@ -250,6 +250,6 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
         `,
           [subzoneId, subzoneId],
         )
-        .then((layers) => layers.rows[0].collection)
+        .then((layers) => layers.rows[0].collection),
   };
 };

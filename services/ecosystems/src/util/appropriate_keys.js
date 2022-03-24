@@ -46,7 +46,7 @@ module.exports = {
         return 'coverage_2018_T.tif';
       case seType === 'Bosque Seco Tropical' && coverageType === 'X':
       case seType === 'Páramo' && coverageType === 'X':
-      case seType === 'Humedal' && coverageType === '':
+      case seType === 'Humedal' && coverageType === 'X':
       default:
         return '';
     }

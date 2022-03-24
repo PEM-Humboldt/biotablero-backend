@@ -5,7 +5,7 @@ const config = require('config');
 // Models
 const coverages = require('./coverages');
 const coverageDryForest = require('./coverage_dry_forest');
-const coverageParamos = require('./coverage_paramos');
+const coverageParamo = require('./coverage_paramo');
 const coverageWetland = require('./coverage_wetland');
 
 const dbConfig = config.get('db');
@@ -35,7 +35,7 @@ const setupModels = () => {
   models = {
     coverages: coverages(dbConn),
     coverageDryForest: coverageDryForest(dbConn),
-    coverageParamos: coverageParamos(dbConn),
+    coverageParamo: coverageParamo(dbConn),
     coverageWetland: coverageWetland(dbConn),
   };
   Object.keys(models).forEach((key) => {

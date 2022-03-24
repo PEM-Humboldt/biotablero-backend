@@ -252,7 +252,7 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
      *
      * @return {Object} Geojson object with the geometry
      */
-     findHFPersistenceLayerById: async (categoryName) => {
+    findHFPersistenceLayerById: async (categoryName) => {
       let bitMask = await globalBinaryProtectedAreas
         .query()
         .where({ label: categoryName })

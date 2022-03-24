@@ -25,7 +25,9 @@ module.exports = (errorHandler, coverageService) => {
    *  /coverage?areaType=ea&areaId=DAGMA
    * @apiUse CoverageExample
    */
-  router.get('/coverage', errorHandler((req, res, next) => {
+  router.get(
+    '/coverage',
+    errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };
         throw error;
@@ -57,7 +59,9 @@ module.exports = (errorHandler, coverageService) => {
    *  /coverage/layer?areaType=ea&areaId=CARDER&type=T
    * @apiUse CoverageLayerExample
    */
-  router.get('/coverage/layer', errorHandler((req, res, next) => {
+  router.get(
+    '/coverage/layer',
+    errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.type)) {
         const error = { code: 400, message: 'areaType, areaId and type are required' };
         throw error;
@@ -92,12 +96,14 @@ module.exports = (errorHandler, coverageService) => {
    *  /se?areaType=ea&areaId=DAGMA
    * @apiUse SEAreasExample
    */
-  router.get('/se', errorHandler((req, res, next) => {
+  router.get(
+    '/se',
+    errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required'};
+        const error = { code: 400, message: 'areaType and areaId required' };
         throw error;
       }
-      return coverageService.getSEAreas(req.params.areaType,req.params.areaId).then((value) => {
+      return coverageService.getSEAreas(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
@@ -127,19 +133,19 @@ module.exports = (errorHandler, coverageService) => {
    *  /coverage/se?areaType=ea&areaId=DAGMA&seType=Páramo
    * @apiUse CoverageSEExample
    */
-   router.get('/coverage/se',errorHandler((req, res, next) => {
+  router.get(
+    '/coverage/se',
+    errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-        const error = { code: 400, message: 'areaType, areaId and seType required'};
+        const error = { code: 400, message: 'areaType, areaId and seType required' };
         throw error;
       }
-      return coverageService.getCoverageSE(
-        req.params.areaType,
-        req.params.areaId,
-        req.params.seType
-      ).then((value) => {
-        res.send(value);
-        next();
-      });
+      return coverageService
+        .getCoverageSE(req.params.areaType, req.params.areaId, req.params.seType)
+        .then((value) => {
+          res.send(value);
+          next();
+        });
     }),
   );
 
@@ -150,14 +156,14 @@ module.exports = (errorHandler, coverageService) => {
    * @apiVersion 1.0.0
    * @apiDescription
    * Layer of a specific coverage type and se type within a given area. Options for coverageType:
-   * N (Natural), S(Secundaria), T(Transformada), and X(Nubes). Options for seType: Páramo, 
+   * N (Natural), S(Secundaria), T(Transformada), and X(Nubes). Options for seType: Páramo,
    * Bosque Seco Tropical and Humedal.
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} coverageType to select the proper type of coverage. 
+   * @apiParam (Query params) {String} coverageType to select the proper type of coverage.
    * Options are: N (Natural), S(Secundaria), T(Transformada) and X(Nubes).
-   * @apiParam (Query params) {String} seType to select the proper type of strategic ecosystem. 
+   * @apiParam (Query params) {String} seType to select the proper type of strategic ecosystem.
    * Options are: Páramo, Bosque Seco Tropical and Humedal.
    *
    * @apiSuccess {Binary} result image with the geometry
@@ -166,13 +172,12 @@ module.exports = (errorHandler, coverageService) => {
    *  /coverage/se/layer?areaType=ea&areaId=CARDER&coverageType=N&seType=Páramo
    * @apiUse CoverageSELayerExample
    */
-   router.get('/coverage/se/layer', errorHandler((req, res, next) => {
-      if (!(
-        req.params.areaType && 
-        req.params.areaId && 
-        req.params.coverageType && 
-        req.params.seType
-      )) {
+  router.get(
+    '/coverage/se/layer',
+    errorHandler((req, res, next) => {
+      if (
+        !(req.params.areaType && req.params.areaId && req.params.coverageType && req.params.seType)
+      ) {
         const error = { code: 400, message: 'areaType, areaId and type are required' };
         throw error;
       }
@@ -181,8 +186,9 @@ module.exports = (errorHandler, coverageService) => {
           req.params.areaType,
           req.params.areaId,
           req.params.coverageType,
-          req.params.seType
-        ).then((value) => {
+          req.params.seType,
+        )
+        .then((value) => {
           res.sendRaw(200, value, { 'Content-Type': 'image/png' });
           next();
         });

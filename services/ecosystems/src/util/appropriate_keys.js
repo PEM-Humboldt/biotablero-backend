@@ -26,27 +26,27 @@ module.exports = {
   },
   rasterCoverageSEKeys: (seType, coverageType) => {
     switch (true) {
-      case (seType === 'Bosque Seco Tropical') && (coverageType === 'N') :
+      case seType === 'Bosque Seco Tropical' && coverageType === 'N':
         return 'coverage_2018_N.tif';
-      case (seType === 'Bosque Seco Tropical') && (coverageType === 'S') :
+      case seType === 'Bosque Seco Tropical' && coverageType === 'S':
         return 'coverage_2018_S.tif';
-      case (seType === 'Bosque Seco Tropical') && (coverageType === 'T') :
+      case seType === 'Bosque Seco Tropical' && coverageType === 'T':
         return 'coverage_2018_T.tif';
-      case (seType === 'Páramo') && (coverageType === 'N') :
+      case seType === 'Páramo' && coverageType === 'N':
         return 'coverage_2018_N.tif';
-      case (seType === 'Páramo') && (coverageType === 'S') :
+      case seType === 'Páramo' && coverageType === 'S':
         return 'coverage_2018_S.tif';
-      case (seType === 'Páramo') && (coverageType === 'T') :
+      case seType === 'Páramo' && coverageType === 'T':
         return 'coverage_2018_T.tif';
-      case (seType === 'Humedal') && (coverageType === 'N') :
+      case seType === 'Humedal' && coverageType === 'N':
         return 'coverage_2018_N.tif';
-      case (seType === 'Humedal') && (coverageType === 'S') :
+      case seType === 'Humedal' && coverageType === 'S':
         return 'coverage_2018_S.tif';
-      case (seType === 'Humedal') && (coverageType === 'T') :
+      case seType === 'Humedal' && coverageType === 'T':
         return 'coverage_2018_T.tif';
-      case (seType === 'Bosque Seco Tropical') && (coverageType === 'X') :
-      case (seType === 'Páramo') && (coverageType === 'X') :
-      case (seType === 'Humedal') && (coverageType === '') :
+      case seType === 'Bosque Seco Tropical' && coverageType === 'X':
+      case seType === 'Páramo' && coverageType === 'X':
+      case seType === 'Humedal' && coverageType === '':
       default:
         return '';
     }

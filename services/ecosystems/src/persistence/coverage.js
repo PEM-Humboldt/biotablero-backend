@@ -1,9 +1,8 @@
-module.exports = (db, { 
-    coverages,
-    coverageDryForest,
-    coverageParamo,
-    coverageWetland
-  }, logger) => ({
+module.exports = (
+  db,
+  { coverages, coverageDryForest, coverageParamo, coverageWetland },
+  logger,
+) => ({
   /**
    * Find the area distribution for each coverage type in a given area
    *
@@ -63,7 +62,7 @@ module.exports = (db, {
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
       }),
-  
+
   /**
    * Find the area distribution for each coverage type in SE Dry Forest in a given area
    *
@@ -73,16 +72,16 @@ module.exports = (db, {
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-   findCoverageSEDryForest: (areaType, areaId, year = 2018) =>
-   coverageDryForest
-     .query()
-     .select('area_type', 'area_ha')
-     .where({ geofence_type: areaType, geofence_id: areaId, year })
-     .orderBy('area_type')
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+  findCoverageSEDryForest: (areaType, areaId, year = 2018) =>
+    coverageDryForest
+      .query()
+      .select('area_type', 'area_ha')
+      .where({ geofence_type: areaType, geofence_id: areaId, year })
+      .orderBy('area_type')
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 
   /**
    * Find the area distribution for each coverage type in SE Paramo in a given area
@@ -93,16 +92,16 @@ module.exports = (db, {
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-   findCoverageSEParamo: (areaType, areaId, year = 2018) =>
-   coverageParamo
-     .query()
-     .select('area_type', 'area_ha')
-     .where({ geofence_type: areaType, geofence_id: areaId, year })
-     .orderBy('area_type')
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+  findCoverageSEParamo: (areaType, areaId, year = 2018) =>
+    coverageParamo
+      .query()
+      .select('area_type', 'area_ha')
+      .where({ geofence_type: areaType, geofence_id: areaId, year })
+      .orderBy('area_type')
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 
   /**
    * Find the area distribution for each coverage type in SE Wetland in a given area
@@ -113,14 +112,14 @@ module.exports = (db, {
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-   findCoverageSEWetland: (areaType, areaId, year = 2018) =>
-   coverageWetland
-     .query()
-     .select('area_type', 'area_ha')
-     .where({ geofence_type: areaType, geofence_id: areaId, year })
-     .orderBy('area_type')
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+  findCoverageSEWetland: (areaType, areaId, year = 2018) =>
+    coverageWetland
+      .query()
+      .select('area_type', 'area_ha')
+      .where({ geofence_type: areaType, geofence_id: areaId, year })
+      .orderBy('area_type')
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 });

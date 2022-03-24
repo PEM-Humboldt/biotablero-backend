@@ -1,4 +1,4 @@
-const { 
+const {
   areaTypeKeys,
   rasterCoverageKeys,
   rasterCoverageSEKeys,
@@ -73,7 +73,7 @@ module.exports = (CoveragePersistence, restAPI) => {
 
       const rawDataP = await CoveragePersistence.findCoverageSEParamo(
         areaTypeKeys(areaType),
-        areaId
+        areaId,
       );
       data.push({
         area: rawDataP.map((i) => i.area_ha).reduce((prev, next) => prev + next),
@@ -82,7 +82,7 @@ module.exports = (CoveragePersistence, restAPI) => {
 
       const rawDataDF = await CoveragePersistence.findCoverageSEDryForest(
         areaTypeKeys(areaType),
-        areaId
+        areaId,
       );
       data.push({
         area: rawDataDF.map((i) => i.area_ha).reduce((prev, next) => prev + next),
@@ -91,7 +91,7 @@ module.exports = (CoveragePersistence, restAPI) => {
 
       const rawDataW = await CoveragePersistence.findCoverageSEWetland(
         areaTypeKeys(areaType),
-        areaId
+        areaId,
       );
       data.push({
         area: rawDataW.map((i) => i.area_ha).reduce((prev, next) => prev + next),
@@ -127,28 +127,24 @@ module.exports = (CoveragePersistence, restAPI) => {
         case 'Bosque Seco Tropical':
           rawData = await CoveragePersistence.findCoverageSEDryForest(
             areaTypeKeys(areaType),
-            areaId
+            areaId,
           );
-        break;
+          break;
         case 'Páramo':
-          rawData = await CoveragePersistence.findCoverageSEParamo(
-            areaTypeKeys(areaType),
-            areaId
-          );
-        break;
+          rawData = await CoveragePersistence.findCoverageSEParamo(areaTypeKeys(areaType), areaId);
+          break;
         case 'Humedal':
-          rawData = await CoveragePersistence.findCoverageSEWetland(
-            areaTypeKeys(areaType),
-            areaId
-          );
-        break;
+          rawData = await CoveragePersistence.findCoverageSEWetland(areaTypeKeys(areaType), areaId);
+          break;
         default:
           throw new Error("Data doesn't exist for the given se type");
       }
 
       const noCoverageData = rawData.every((item) => Object.values(item).length === 0);
       if (noCoverageData) {
-        throw new Error("Data for coverage doesn't exists in the selected area id, area type and se type");
+        throw new Error(
+          "Data for coverage doesn't exists in the selected area id, area type and se type",
+        );
       }
 
       const totalArea = rawData.map((i) => i.area_ha).reduce((prev, next) => prev + next);
@@ -160,7 +156,7 @@ module.exports = (CoveragePersistence, restAPI) => {
       const invalidValues = data.filter((obj) => !obj.area || obj.area === 0);
       return invalidValues.length === data.length ? [] : data;
     },
-  
+
     /**
      * Get the coverage layer according to its type in a given area
      *

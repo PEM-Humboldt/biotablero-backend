@@ -8,7 +8,6 @@ module.exports = {
       case 'T':
         return 'coverage_2018_T.tif';
       case 'X':
-        return 'coverage_2018_X.tif';
       default:
         return '';
     }

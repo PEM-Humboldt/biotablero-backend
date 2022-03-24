@@ -57,26 +57,6 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
     },
 
     /**
-     * Get the coverage area distribution inside the given protected area category
-     *
-     * @param {String} categoryName protected area category name
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByCoverage: async (categoryName, year = 2012) => {
-      let bitMask = await globalBinaryProtectedAreas
-        .query()
-        .where({ label: categoryName })
-        .select('binary_protected as mask');
-      bitMask = bitMask[0].mask;
-      return db('colombia_coverage_details')
-        .select(db.raw('coalesce(SUM(area_ha), 0) as area'), 'area_type as type')
-        .where('year_cover', year)
-        .andWhere(db.raw('(binary_protected & ?) = ?', [bitMask, bitMask]))
-        .groupBy('area_type')
-        .orderBy('type');
-    },
-
-    /**
      * Find areas grouped by protected area category inside the given protected area category
      *
      * @param {String} categoryName protected area category
@@ -261,6 +241,55 @@ module.exports = (db, { globalBinaryProtectedAreas }) => {
         ) as fc;
         `,
           [bitMask, bitMask, year, bitMask, bitMask, year],
+        )
+        .then((layers) => layers.rows[0].collection);
+    },
+
+    /**
+     * Get the persistence human footprint layer divided by categories in a given
+     * protected area
+     * @param {String} categoryName protected area category
+     *
+     * @return {Object} Geojson object with the geometry
+     */
+     findHFPersistenceLayerById: async (categoryName) => {
+      let bitMask = await globalBinaryProtectedAreas
+        .query()
+        .where({ label: categoryName })
+        .select('binary_protected as mask');
+      bitMask = bitMask[0].mask;
+      return db
+        .raw(
+          `
+          SELECT row_to_json(fc) AS collection
+          FROM (
+            SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
+            FROM (
+              SELECT
+                'Feature' AS TYPE,
+                row_to_json(prop) AS properties,
+                ST_AsGeoJSON(geom)::json AS geometry
+              FROM (
+                SELECT
+                  ST_Collect(geom) AS geom,
+                  hf_pers AS key
+                FROM geo_hf_persistence
+                WHERE (binary_protected & ?) = ?
+                GROUP BY key
+                ) AS geo
+                INNER JOIN (
+                  SELECT
+                    hf_pers AS key,
+                    sum(area_ha) AS area
+                  FROM geo_hf_persistence
+                  WHERE (binary_protected & ?) = ?
+                  GROUP BY key
+                ) AS prop
+                ON geo.key = prop.key
+            ) as f
+          ) as fc;
+        `,
+          [bitMask, bitMask, bitMask, bitMask],
         )
         .then((layers) => layers.rows[0].collection);
     },

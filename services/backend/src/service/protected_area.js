@@ -150,24 +150,6 @@ module.exports = (paPersistence, seService) => {
     },
 
     /**
-     * Get protected area divided by protected area type
-     *
-     * @param {String} categoryName protected area category
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the category
-     */
-    getAreaByCoverage: async (categoryName) => {
-      let categoryArea = await protectedArea.getTotalArea(categoryName);
-      categoryArea = categoryArea.total_area;
-      const areas = await paPersistence.findAreaByCoverage(categoryName);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / categoryArea,
-      }));
-      return result;
-    },
-
-    /**
      * Get the total area for the protected area category
      *
      * @param {String} categoryName protected area category

@@ -120,21 +120,6 @@ module.exports = (
         ),
 
     /**
-     * Get the coverage area distribution inside the given environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByCoverage: async (envAuthorityId, year = 2012) =>
-      colombiaCoverageDetails
-        .query()
-        .where({ id_ea: envAuthorityId, year_cover: year })
-        .groupBy('area_type')
-        .sum('area_ha as area')
-        .select('area_type as type')
-        .orderBy('type'),
-
-    /**
      * Find the current area distribution for each human footprint category in the
      * given environmental authority
      * @param {String} eaId environmental authority id

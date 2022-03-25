@@ -50,8 +50,8 @@ module.exports = (errorHandler, EcosystemsService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} type to select the proper type of coverage. Options are:
-   * N (Natural), S(Secundaria), T(Transformada) and X(Nubes).
+   * @apiParam (Query params) {String} type coverage type. Options are: N (Natural), S(Secundaria),
+   * T(Transformada) and X(Nubes).
    *
    * @apiSuccess {Binary} result image with the geometry
    *
@@ -124,7 +124,8 @@ module.exports = (errorHandler, EcosystemsService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} seType strategic ecosystem type
+   * @apiParam (Query params) {String} seType strategic ecosystem type. Options are: Páramo,
+   * Bosque Seco Tropical and Humedal.
    *
    * @apiSuccess {Object[]} result
    * @apiSuccess {Number} result.area area of the specified coverage type
@@ -165,10 +166,10 @@ module.exports = (errorHandler, EcosystemsService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} coverageType to select the proper type of coverage.
-   * Options are: N (Natural), S(Secundaria), T(Transformada) and X(Nubes).
-   * @apiParam (Query params) {String} seType to select the proper type of strategic ecosystem.
-   * Options are: Páramo, Bosque Seco Tropical and Humedal.
+   * @apiParam (Query params) {String} coverageType coverage type. Options are: N (Natural),
+   * S(Secundaria), T(Transformada) and X(Nubes).
+   * @apiParam (Query params) {String} seType strategic ecosystem type. Options are: Páramo,
+   * Bosque Seco Tropical and Humedal.
    *
    * @apiSuccess {Binary} result image with the geometry
    *

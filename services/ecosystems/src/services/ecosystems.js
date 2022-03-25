@@ -5,7 +5,13 @@ const {
 } = require('../util/appropriate_keys');
 const { coveragesColorSet } = require('../util/colorSet');
 
-module.exports = (CoveragePersistence, restAPI) => {
+module.exports = (
+  CoveragePersistence,
+  CoverageDryForestPersistence,
+  CoverageParamoPersistence,
+  CoverageWetlandPersistence,
+  restAPI,
+) => {
   const Coverage = {
     /**
      * Area distribution for each coverage type and its percentage within a given area
@@ -71,7 +77,7 @@ module.exports = (CoveragePersistence, restAPI) => {
     getSEAreas: async (areaType, areaId) => {
       const data = [];
 
-      const rawDataP = await CoveragePersistence.findCoverageSEParamo(
+      const rawDataP = await CoverageParamoPersistence.findCoverageSEParamo(
         areaTypeKeys(areaType),
         areaId,
       );
@@ -80,7 +86,7 @@ module.exports = (CoveragePersistence, restAPI) => {
         type: 'Páramo',
       });
 
-      const rawDataDF = await CoveragePersistence.findCoverageSEDryForest(
+      const rawDataDF = await CoverageDryForestPersistence.findCoverageSEDryForest(
         areaTypeKeys(areaType),
         areaId,
       );
@@ -89,7 +95,7 @@ module.exports = (CoveragePersistence, restAPI) => {
         type: 'Bosque Seco Tropical',
       });
 
-      const rawDataW = await CoveragePersistence.findCoverageSEWetland(
+      const rawDataW = await CoverageWetlandPersistence.findCoverageSEWetland(
         areaTypeKeys(areaType),
         areaId,
       );
@@ -125,16 +131,22 @@ module.exports = (CoveragePersistence, restAPI) => {
       let rawData = null;
       switch (seType) {
         case 'Bosque Seco Tropical':
-          rawData = await CoveragePersistence.findCoverageSEDryForest(
+          rawData = await CoverageDryForestPersistence.findCoverageSEDryForest(
             areaTypeKeys(areaType),
             areaId,
           );
           break;
         case 'Páramo':
-          rawData = await CoveragePersistence.findCoverageSEParamo(areaTypeKeys(areaType), areaId);
+          rawData = await CoverageParamoPersistence.findCoverageSEParamo(
+            areaTypeKeys(areaType),
+            areaId,
+          );
           break;
         case 'Humedal':
-          rawData = await CoveragePersistence.findCoverageSEWetland(areaTypeKeys(areaType), areaId);
+          rawData = await CoverageWetlandPersistence.findCoverageSEWetland(
+            areaTypeKeys(areaType),
+            areaId,
+          );
           break;
         default:
           throw new Error("Data doesn't exist for the given se type");

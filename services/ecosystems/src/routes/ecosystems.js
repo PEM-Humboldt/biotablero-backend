@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, coverageService) => {
+module.exports = (errorHandler, EcosystemsService) => {
   const router = new Router();
 
   /**
@@ -26,13 +26,13 @@ module.exports = (errorHandler, coverageService) => {
    * @apiUse CoverageExample
    */
   router.get(
-    '/coverage',
+    '/ecosystems/coverage',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };
         throw error;
       }
-      return coverageService.getCoverage(req.params.areaType, req.params.areaId).then((value) => {
+      return EcosystemsService.getCoverage(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
@@ -60,18 +60,20 @@ module.exports = (errorHandler, coverageService) => {
    * @apiUse CoverageLayerExample
    */
   router.get(
-    '/coverage/layer',
+    '/ecosystems/coverage/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.type)) {
         const error = { code: 400, message: 'areaType, areaId and type are required' };
         throw error;
       }
-      return coverageService
-        .getCoverageLayer(req.params.areaType, req.params.areaId, req.params.type)
-        .then((value) => {
-          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-          next();
-        });
+      return EcosystemsService.getCoverageLayer(
+        req.params.areaType,
+        req.params.areaId,
+        req.params.type,
+      ).then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
     }),
   );
 
@@ -97,13 +99,13 @@ module.exports = (errorHandler, coverageService) => {
    * @apiUse SEAreasExample
    */
   router.get(
-    '/se',
+    '/ecosystems/se',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };
         throw error;
       }
-      return coverageService.getSEAreas(req.params.areaType, req.params.areaId).then((value) => {
+      return EcosystemsService.getSEAreas(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
@@ -134,18 +136,20 @@ module.exports = (errorHandler, coverageService) => {
    * @apiUse CoverageSEExample
    */
   router.get(
-    '/coverage/se',
+    '/ecosystems/coverage/se',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
         const error = { code: 400, message: 'areaType, areaId and seType required' };
         throw error;
       }
-      return coverageService
-        .getCoverageSE(req.params.areaType, req.params.areaId, req.params.seType)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
+      return EcosystemsService.getCoverageSE(
+        req.params.areaType,
+        req.params.areaId,
+        req.params.seType,
+      ).then((value) => {
+        res.send(value);
+        next();
+      });
     }),
   );
 
@@ -173,7 +177,7 @@ module.exports = (errorHandler, coverageService) => {
    * @apiUse CoverageSELayerExample
    */
   router.get(
-    '/coverage/se/layer',
+    '/ecosystems/coverage/se/layer',
     errorHandler((req, res, next) => {
       if (
         !(req.params.areaType && req.params.areaId && req.params.coverageType && req.params.seType)
@@ -181,17 +185,15 @@ module.exports = (errorHandler, coverageService) => {
         const error = { code: 400, message: 'areaType, areaId and type are required' };
         throw error;
       }
-      return coverageService
-        .getCoverageSELayer(
-          req.params.areaType,
-          req.params.areaId,
-          req.params.coverageType,
-          req.params.seType,
-        )
-        .then((value) => {
-          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-          next();
-        });
+      return EcosystemsService.getCoverageSELayer(
+        req.params.areaType,
+        req.params.areaId,
+        req.params.coverageType,
+        req.params.seType,
+      ).then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
     }),
   );
 

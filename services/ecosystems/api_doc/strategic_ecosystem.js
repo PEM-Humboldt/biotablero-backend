@@ -4,7 +4,7 @@
  */
 
 /**
- * @apiDefine SEAreas
+ * @apiDefine SEAreasExample
  * @apiSuccessExample {json} Success-Example:
  *  [
  *    {

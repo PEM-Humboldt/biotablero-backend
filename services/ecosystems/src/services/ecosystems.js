@@ -77,32 +77,23 @@ module.exports = (
     getSEAreas: async (areaType, areaId) => {
       const data = [];
 
-      const rawDataP = await CoverageParamoPersistence.findCoverageSEParamo(
+      const areaParamo = await CoverageParamoPersistence.findCoverageSEParamoAreas(
         areaTypeKeys(areaType),
         areaId,
       );
-      data.push({
-        area: rawDataP.map((i) => i.area_ha).reduce((prev, next) => prev + next),
-        type: 'Páramo',
-      });
+      data.push({ area: areaParamo ? areaParamo[0].area : 0, type: 'Páramo' });
 
-      const rawDataDF = await CoverageDryForestPersistence.findCoverageSEDryForest(
+      const areaDryForest = await CoverageDryForestPersistence.findCoverageSEDryForestAreas(
         areaTypeKeys(areaType),
         areaId,
       );
-      data.push({
-        area: rawDataDF.map((i) => i.area_ha).reduce((prev, next) => prev + next),
-        type: 'Bosque Seco Tropical',
-      });
+      data.push({ area: areaDryForest ? areaDryForest[0].area : 0, type: 'Bosque Seco Tropical' });
 
-      const rawDataW = await CoverageWetlandPersistence.findCoverageSEWetland(
+      const areaWetland = await CoverageWetlandPersistence.findCoverageSEWetlandAreas(
         areaTypeKeys(areaType),
         areaId,
       );
-      data.push({
-        area: rawDataW.map((i) => i.area_ha).reduce((prev, next) => prev + next),
-        type: 'Humedal',
-      });
+      data.push({ area: areaWetland ? areaWetland[0].area : 0, type: 'Humedal' });
 
       const noSEData = data.every((item) => Object.values(item).length === 0);
       if (noSEData) {

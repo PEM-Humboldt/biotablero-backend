@@ -28,13 +28,13 @@ module.exports = (db, { coverageWetland }, logger) => ({
    *
    * @returns {Object[]} Value of area of wetland
    */
-   findCoverageSEWetlandAreas: (areaType, areaId, year = 2018) =>
-   coverageWetland
-     .query()
-     .sum('area_ha as area')
-     .where({ geofence_type: areaType, geofence_id: areaId, year })
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+  findCoverageSEWetlandAreas: (areaType, areaId, year = 2018) =>
+    coverageWetland
+      .query()
+      .sum('area_ha as area')
+      .where({ geofence_type: areaType, geofence_id: areaId, year })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 });

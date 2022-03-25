@@ -18,7 +18,7 @@ module.exports = (db, { coverageDryForest }, logger) => ({
         logger.error(e.stack || e.Error || e.message || e);
         throw new Error('Error getting data');
       }),
-  
+
   /**
    * Find the area of dry forest in a given area
    *
@@ -28,13 +28,13 @@ module.exports = (db, { coverageDryForest }, logger) => ({
    *
    * @returns {Object[]} Value of area of dry forest
    */
-   findCoverageSEDryForestAreas: (areaType, areaId, year = 2018) =>
-   coverageDryForest
-     .query()
-     .sum('area_ha as area')
-     .where({ geofence_type: areaType, geofence_id: areaId, year })
-     .catch((e) => {
-       logger.error(e.stack || e.Error || e.message || e);
-       throw new Error('Error getting data');
-     }),
+  findCoverageSEDryForestAreas: (areaType, areaId, year = 2018) =>
+    coverageDryForest
+      .query()
+      .sum('area_ha as area')
+      .where({ geofence_type: areaType, geofence_id: areaId, year })
+      .catch((e) => {
+        logger.error(e.stack || e.Error || e.message || e);
+        throw new Error('Error getting data');
+      }),
 });

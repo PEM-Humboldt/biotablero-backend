@@ -39,33 +39,6 @@ module.exports = (
     },
 
     /**
-     * Get the coverage layer according to its type in a given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @param {String} type type to select the proper layer, options are: 'N', 'S', 'T' and 'X'
-     *
-     * @returns {Binary} Image with the geometry
-     */
-    getCoverageLayer: async (areaType, areaId, type) => {
-      try {
-        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return CoveragePersistence.findCoverageLayer(
-          areaGeom.features[0].geometry,
-          rasterCoverageKeys(type),
-          coveragesColorSet(type),
-        );
-      } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
-      }
-    },
-
-    /**
      * Get area distribution for each SE type and total SE area within a given area
      *
      * @param {String} areaType area type
@@ -73,23 +46,22 @@ module.exports = (
      *
      * @returns {Object[]} Values of area distribution for each SE type and total SE area
      */
-
     getSEAreas: async (areaType, areaId) => {
       const data = [];
 
-      const areaParamo = await CoverageParamoPersistence.findCoverageSEParamoAreas(
+      const areaParamo = await CoverageParamoPersistence.findTotalArea(
         areaTypeKeys(areaType),
         areaId,
       );
       data.push({ area: areaParamo ? areaParamo[0].area : 0, type: 'Páramo' });
 
-      const areaDryForest = await CoverageDryForestPersistence.findCoverageSEDryForestAreas(
+      const areaDryForest = await CoverageDryForestPersistence.findTotalArea(
         areaTypeKeys(areaType),
         areaId,
       );
       data.push({ area: areaDryForest ? areaDryForest[0].area : 0, type: 'Bosque Seco Tropical' });
 
-      const areaWetland = await CoverageWetlandPersistence.findCoverageSEWetlandAreas(
+      const areaWetland = await CoverageWetlandPersistence.findTotalArea(
         areaTypeKeys(areaType),
         areaId,
       );
@@ -122,19 +94,19 @@ module.exports = (
       let rawData = null;
       switch (seType) {
         case 'Bosque Seco Tropical':
-          rawData = await CoverageDryForestPersistence.findCoverageSEDryForest(
+          rawData = await CoverageDryForestPersistence.findCoverageDistribution(
             areaTypeKeys(areaType),
             areaId,
           );
           break;
         case 'Páramo':
-          rawData = await CoverageParamoPersistence.findCoverageSEParamo(
+          rawData = await CoverageParamoPersistence.findCoverageDistribution(
             areaTypeKeys(areaType),
             areaId,
           );
           break;
         case 'Humedal':
-          rawData = await CoverageWetlandPersistence.findCoverageSEWetland(
+          rawData = await CoverageWetlandPersistence.findCoverageDistribution(
             areaTypeKeys(areaType),
             areaId,
           );
@@ -158,6 +130,33 @@ module.exports = (
       }));
       const invalidValues = data.filter((obj) => !obj.area || obj.area === 0);
       return invalidValues.length === data.length ? [] : data;
+    },
+
+    /**
+     * Get the coverage layer according to its type in a given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @param {String} type type to select the proper layer, options are: 'N', 'S', 'T' and 'X'
+     *
+     * @returns {Binary} Image with the geometry
+     */
+     getCoverageLayer: async (areaType, areaId, type) => {
+      try {
+        const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
+        return CoveragePersistence.findCoverageLayer(
+          areaGeom.features[0].geometry,
+          rasterCoverageKeys(type),
+          coveragesColorSet(type),
+        );
+      } catch (e) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
     },
 
     /**

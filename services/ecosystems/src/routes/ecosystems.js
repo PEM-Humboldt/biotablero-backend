@@ -5,7 +5,7 @@ module.exports = (errorHandler, EcosystemsService) => {
 
   /**
    * @apiGroup s_coverage
-   * @api {get} /coverage Coverage
+   * @api {get} /ecosystems/coverage Coverage
    * @apiName Coverage
    * @apiVersion 1.0.0
    * @apiDescription
@@ -22,7 +22,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    * @apiSuccess {Number} result.percentage percentage of the specified coverage type
    *
    * @apiExample {curl} Example usage:
-   *  /coverage?areaType=ea&areaId=DAGMA
+   *  /ecosystems/coverage?areaType=ea&areaId=DAGMA
    * @apiUse CoverageExample
    */
   router.get(
@@ -40,46 +40,8 @@ module.exports = (errorHandler, EcosystemsService) => {
   );
 
   /**
-   * @apiGroup s_coverage
-   * @api {get} /coverage/layer CoverageLayer
-   * @apiName CoverageLayer
-   * @apiVersion 1.0.0
-   * @apiDescription
-   * Layer of a specific coverage type within a given area. Parameter type could be:
-   * N (Natural), S(Secundaria), T(Transformada), and X(Nubes).
-   *
-   * @apiParam (Query params) {String} areaType area type
-   * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} type coverage type. Options are: N (Natural), S(Secundaria),
-   * T(Transformada) and X(Nubes).
-   *
-   * @apiSuccess {Binary} result image with the geometry
-   *
-   * @apiExample {curl} Example usage:
-   *  /coverage/layer?areaType=ea&areaId=CARDER&type=T
-   * @apiUse CoverageLayerExample
-   */
-  router.get(
-    '/ecosystems/coverage/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.type)) {
-        const error = { code: 400, message: 'areaType, areaId and type are required' };
-        throw error;
-      }
-      return EcosystemsService.getCoverageLayer(
-        req.params.areaType,
-        req.params.areaId,
-        req.params.type,
-      ).then((value) => {
-        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-        next();
-      });
-    }),
-  );
-
-  /**
    * @apiGroup s_strategic_ecosystem
-   * @api {get} /se SEAreas
+   * @api {get} /ecosystems/se SEAreas
    * @apiName SEAreas
    * @apiVersion 1.0.0
    * @apiDescription
@@ -95,7 +57,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    * @apiSuccess {String} result.type strategic ecosystem type
    *
    * @apiExample {curl} Example usage:
-   *  /se?areaType=ea&areaId=DAGMA
+   *  /ecosystems/se?areaType=ea&areaId=DAGMA
    * @apiUse SEAreasExample
    */
   router.get(
@@ -114,7 +76,7 @@ module.exports = (errorHandler, EcosystemsService) => {
 
   /**
    * @apiGroup s_coverage
-   * @api {get} /coverage/se CoverageSE
+   * @api {get} /ecosystems/coverage/se CoverageSE
    * @apiName CoverageSE
    * @apiVersion 1.0.0
    * @apiDescription
@@ -133,7 +95,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    * @apiSuccess {Number} result.percentage percentage of the specified coverage type
    *
    * @apiExample {curl} Example usage:
-   *  /coverage/se?areaType=ea&areaId=DAGMA&seType=Páramo
+   *  /ecosystems/coverage/se?areaType=ea&areaId=DAGMA&seType=Páramo
    * @apiUse CoverageSEExample
    */
   router.get(
@@ -156,7 +118,45 @@ module.exports = (errorHandler, EcosystemsService) => {
 
   /**
    * @apiGroup s_coverage
-   * @api {get} /coverage/se/layer CoverageSELayer
+   * @api {get} /ecosystems/coverage/layer CoverageLayer
+   * @apiName CoverageLayer
+   * @apiVersion 1.0.0
+   * @apiDescription
+   * Layer of a specific coverage type within a given area. Parameter type could be:
+   * N (Natural), S(Secundaria), T(Transformada), and X(Nubes).
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} type coverage type. Options are: N (Natural), S(Secundaria),
+   * T(Transformada) and X(Nubes).
+   *
+   * @apiSuccess {Binary} result image with the geometry
+   *
+   * @apiExample {curl} Example usage:
+   *  /ecosystems/coverage/layer?areaType=ea&areaId=CARDER&type=T
+   * @apiUse CoverageLayerExample
+   */
+   router.get(
+    '/ecosystems/coverage/layer',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId && req.params.type)) {
+        const error = { code: 400, message: 'areaType, areaId and type are required' };
+        throw error;
+      }
+      return EcosystemsService.getCoverageLayer(
+        req.params.areaType,
+        req.params.areaId,
+        req.params.type,
+      ).then((value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      });
+    }),
+  );
+
+  /**
+   * @apiGroup s_coverage
+   * @api {get} /ecosystems/coverage/se/layer CoverageSELayer
    * @apiName CoverageSELayer
    * @apiVersion 1.0.0
    * @apiDescription
@@ -174,7 +174,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    * @apiSuccess {Binary} result image with the geometry
    *
    * @apiExample {curl} Example usage:
-   *  /coverage/se/layer?areaType=ea&areaId=CARDER&coverageType=N&seType=Páramo
+   *  /ecosystems/coverage/se/layer?areaType=ea&areaId=CARDER&coverageType=N&seType=Páramo
    * @apiUse CoverageSELayerExample
    */
   router.get(

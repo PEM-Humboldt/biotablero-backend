@@ -141,7 +141,7 @@ module.exports = (
      *
      * @returns {Binary} Image with the geometry
      */
-     getCoverageLayer: async (areaType, areaId, type) => {
+    getCoverageLayer: async (areaType, areaId, type) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return CoveragePersistence.findCoverageLayer(

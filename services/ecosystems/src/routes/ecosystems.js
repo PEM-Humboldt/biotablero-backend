@@ -136,7 +136,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    *  /ecosystems/coverage/layer?areaType=ea&areaId=CARDER&type=T
    * @apiUse CoverageLayerExample
    */
-   router.get(
+  router.get(
     '/ecosystems/coverage/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.type)) {

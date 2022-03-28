@@ -8,7 +8,7 @@ module.exports = (db, { coverageParamo }, logger) => ({
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-  findCoverageSEParamo: (areaType, areaId, year = 2018) =>
+  findCoverageDistribution: (areaType, areaId, year = 2018) =>
     coverageParamo
       .query()
       .select('area_type', 'area_ha')
@@ -28,7 +28,7 @@ module.exports = (db, { coverageParamo }, logger) => ({
    *
    * @returns {Object[]} Value of area of paramo
    */
-  findCoverageSEParamoAreas: (areaType, areaId, year = 2018) =>
+  findTotalArea: (areaType, areaId, year = 2018) =>
     coverageParamo
       .query()
       .sum('area_ha as area')

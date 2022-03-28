@@ -8,7 +8,7 @@ module.exports = (db, { coverageWetland }, logger) => ({
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-  findCoverageSEWetland: (areaType, areaId, year = 2018) =>
+  findCoverageDistribution: (areaType, areaId, year = 2018) =>
     coverageWetland
       .query()
       .select('area_type', 'area_ha')
@@ -28,7 +28,7 @@ module.exports = (db, { coverageWetland }, logger) => ({
    *
    * @returns {Object[]} Value of area of wetland
    */
-  findCoverageSEWetlandAreas: (areaType, areaId, year = 2018) =>
+  findTotalArea: (areaType, areaId, year = 2018) =>
     coverageWetland
       .query()
       .sum('area_ha as area')

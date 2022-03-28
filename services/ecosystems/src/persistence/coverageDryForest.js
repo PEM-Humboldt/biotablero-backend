@@ -8,7 +8,7 @@ module.exports = (db, { coverageDryForest }, logger) => ({
    *
    * @returns {Object[]} Values of area distribution for each coverage type
    */
-  findCoverageSEDryForest: (areaType, areaId, year = 2018) =>
+  findCoverageDistribution: (areaType, areaId, year = 2018) =>
     coverageDryForest
       .query()
       .select('area_type', 'area_ha')
@@ -28,7 +28,7 @@ module.exports = (db, { coverageDryForest }, logger) => ({
    *
    * @returns {Object[]} Value of area of dry forest
    */
-  findCoverageSEDryForestAreas: (areaType, areaId, year = 2018) =>
+  findTotalArea: (areaType, areaId, year = 2018) =>
     coverageDryForest
       .query()
       .sum('area_ha as area')

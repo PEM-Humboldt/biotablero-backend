@@ -127,7 +127,7 @@ module.exports = (errorHandler, EcosystemsService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} coverageType coverage type. Options are: N (Natural), 
+   * @apiParam (Query params) {String} coverageType coverage type. Options are: N (Natural),
    * S(Secundaria), T(Transformada) and X(Nubes).
    *
    * @apiSuccess {Binary} result image with the geometry

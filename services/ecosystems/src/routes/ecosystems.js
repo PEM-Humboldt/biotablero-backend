@@ -183,7 +183,7 @@ module.exports = (errorHandler, EcosystemsService) => {
       if (
         !(req.params.areaType && req.params.areaId && req.params.coverageType && req.params.seType)
       ) {
-        const error = { code: 400, message: 'areaType, areaId and coverageType are required' };
+        const error = { code: 400, message: 'areaType, areaId, coverageType and seType are required' };
         throw error;
       }
       return EcosystemsService.getCoverageSELayer(

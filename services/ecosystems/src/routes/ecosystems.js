@@ -127,26 +127,26 @@ module.exports = (errorHandler, EcosystemsService) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {String} type coverage type. Options are: N (Natural), S(Secundaria),
-   * T(Transformada) and X(Nubes).
+   * @apiParam (Query params) {String} coverageType coverage type. Options are: N (Natural), 
+   * S(Secundaria), T(Transformada) and X(Nubes).
    *
    * @apiSuccess {Binary} result image with the geometry
    *
    * @apiExample {curl} Example usage:
-   *  /ecosystems/coverage/layer?areaType=ea&areaId=CARDER&type=T
+   *  /ecosystems/coverage/layer?areaType=ea&areaId=CARDER&coverageType=T
    * @apiUse CoverageLayerExample
    */
   router.get(
     '/ecosystems/coverage/layer',
     errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.type)) {
-        const error = { code: 400, message: 'areaType, areaId and type are required' };
+      if (!(req.params.areaType && req.params.areaId && req.params.coverageType)) {
+        const error = { code: 400, message: 'areaType, areaId and coverageType are required' };
         throw error;
       }
       return EcosystemsService.getCoverageLayer(
         req.params.areaType,
         req.params.areaId,
-        req.params.type,
+        req.params.coverageType,
       ).then((value) => {
         res.sendRaw(200, value, { 'Content-Type': 'image/png' });
         next();
@@ -183,7 +183,7 @@ module.exports = (errorHandler, EcosystemsService) => {
       if (
         !(req.params.areaType && req.params.areaId && req.params.coverageType && req.params.seType)
       ) {
-        const error = { code: 400, message: 'areaType, areaId and type are required' };
+        const error = { code: 400, message: 'areaType, areaId and coverageType are required' };
         throw error;
       }
       return EcosystemsService.getCoverageSELayer(

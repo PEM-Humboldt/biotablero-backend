@@ -160,26 +160,19 @@ module.exports = (eaPersistence, seService) => {
      * percentage) and non protected area (and percentage)
      */
     getAreaByPA: async (envAuthorityId) => {
-      let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-      if (eaArea[0].area === null) {
-        throw new Error("environmental authority doesn't exists");
-      }
-      eaArea = eaArea[0].area;
       const areas = await eaPersistence.findAreaByPA(envAuthorityId);
       let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
+      const result = areas.map(({ area, ...cats }) => {
+        totalProtected += parseFloat(area);
         return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / eaArea,
+          area,
+          type: Object.values(cats)
+            .filter((c) => c !== null)
+            .join(' y '),
         };
       });
       result.unshift({
         area: totalProtected,
-        percentage: totalProtected / eaArea,
         type: 'Total',
       });
       return result;

@@ -72,7 +72,9 @@ bottle.factory('statePersistence', () =>
 bottle.factory('municipalityPersistence', () =>
   MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models),
 );
-bottle.factory('paPersistence', () => PAPersistence(bookshelfModels.db, bookshelfModels.models));
+bottle.factory('paPersistence', (container) =>
+  PAPersistence(bookshelfModels.db, bookshelfModels.models, container.logger),
+);
 bottle.factory('basinAreaPersistence', () =>
   BasinAreaPersistence(bookshelfModels.db, bookshelfModels.models),
 );

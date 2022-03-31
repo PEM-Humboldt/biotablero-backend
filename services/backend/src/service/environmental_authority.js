@@ -11,7 +11,7 @@ const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
 const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
 const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
-module.exports = (eaPersistence, seService) => {
+module.exports = (eaPersistence, seService, globalProtectedAreaService) => {
   const envAuth = {
     /**
      * Get total area grouped by compensation factor for a given environmental authority
@@ -141,15 +141,8 @@ module.exports = (eaPersistence, seService) => {
      * @param {String} envAuthorityId environmental authority id
      * @param {String} seType strategic ecosystem type
      */
-    getPAInSE: async (envAuthorityId, seType) => {
-      const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
-      const paAreas = await seService.getSEPAInEA(envAuthorityId, seType);
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-      return result;
-    },
+    getPAInSE: async (envAuthorityId, seType) =>
+      globalProtectedAreaService.getPAAreas('ea', envAuthorityId, seType),
 
     /**
      * Get EA total area divided by protected area type
@@ -159,31 +152,8 @@ module.exports = (eaPersistence, seService) => {
      * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
      * percentage) and non protected area (and percentage)
      */
-    getAreaByPA: async (envAuthorityId) => {
-      let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-      if (eaArea[0].area === null) {
-        throw new Error("environmental authority doesn't exists");
-      }
-      eaArea = eaArea[0].area;
-      const areas = await eaPersistence.findAreaByPA(envAuthorityId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / eaArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / eaArea,
-        type: 'Total',
-      });
-      return result;
-    },
+    getAreaByPA: async (envAuthorityId) =>
+      globalProtectedAreaService.getPAAreas('ea', envAuthorityId),
 
     /**
      * Get the total area for the given environmental authority

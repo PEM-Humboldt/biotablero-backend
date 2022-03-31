@@ -20,6 +20,7 @@ const SEPersistence = require('../persistence/strategyc_ecosystem');
 const ParamoPersistence = require('../persistence/paramo');
 const TropicalDryForestPersistence = require('../persistence/tropicalDryForest');
 const WetlandPersistence = require('../persistence/wetland');
+const GlobalProtectedAreaPersistence = require('../persistence/global_protected_area');
 
 const BiomeService = require('../service/biome');
 const ProjectService = require('../service/project');
@@ -34,6 +35,7 @@ const BasinAreaService = require('../service/basin_area');
 const BasinZoneService = require('../service/basin_zone');
 const BasinSubzoneService = require('../service/basin_subzone');
 const SEService = require('../service/strategic_ecosystem');
+const GlobalProtectedAreaService = require('../service/global_protected_area');
 
 const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
@@ -92,6 +94,9 @@ bottle.factory('tropicalDryForestPersistence', () =>
 bottle.factory('wetlandPersistence', () =>
   WetlandPersistence(bookshelfModels.db, bookshelfModels.models),
 );
+bottle.factory('globalProtectedAreaPersistence', (container) =>
+  GlobalProtectedAreaPersistence(bookshelfModels.db, bookshelfModels.models, container.logger),
+);
 
 bottle.factory('biomeService', (container) => BiomeService(container.biomePersistence));
 bottle.factory('projectService', (container) =>
@@ -103,7 +108,9 @@ bottle.factory('projectStrategyService', (container) =>
 bottle.factory('strategyService', (container) =>
   StrategyService(container.strategyPersistence, container.logger),
 );
-bottle.factory('eaService', (container) => EAService(container.eaPersistence, container.seService));
+bottle.factory('eaService', (container) =>
+  EAService(container.eaPersistence, container.seService, container.globalProtectedAreaService),
+);
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService', (container) =>
   StateService(container.statePersistence, container.municipalityService, container.seService),
@@ -124,6 +131,9 @@ bottle.factory('seService', (container) =>
     container.tropicalDryForestPersistence,
     container.wetlandPersistence,
   ),
+);
+bottle.factory('globalProtectedAreaService', (container) =>
+  GlobalProtectedAreaService(container.globalProtectedAreaPersistence),
 );
 
 bottle.factory('routes', (container) => [

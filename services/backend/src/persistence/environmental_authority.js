@@ -98,28 +98,6 @@ module.exports = (
         .sum('area_ha as area'),
 
     /**
-     * Get the protected area distribution inside the given environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByPA: async (envAuthorityId, year = 2012) =>
-      db('colombia_coverage_details as ccd')
-        .innerJoin(
-          'global_binary_protected_areas as gbpa',
-          'ccd.binary_protected',
-          'gbpa.binary_protected',
-        )
-        .where({ 'ccd.id_ea': envAuthorityId, 'ccd.year_cover': year })
-        .groupBy('gbpa.label', 'gbpa.binary_protected')
-        .orderBy('gbpa.binary_protected', 'desc')
-        .select(
-          db.raw('coalesce(SUM(ccd.area_ha), 0) as area'),
-          'gbpa.label as type',
-          'gbpa.binary_protected as bp',
-        ),
-
-    /**
      * Find the current area distribution for each human footprint category in the
      * given environmental authority
      * @param {String} eaId environmental authority id

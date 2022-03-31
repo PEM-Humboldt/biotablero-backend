@@ -95,24 +95,6 @@ module.exports = (
       .orderBy('type'),
 
   /**
-   * Find areas grouped by protected area category inside the given environmental authority
-   *
-   * @param {String} eaId environmental authority id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findPAInEA: async (eaId, year = 2012) =>
-    db('geo_paramo_details as gpd')
-      .innerJoin(
-        'global_binary_protected_areas as gbpa',
-        'gpd.binary_protected',
-        'gbpa.binary_protected',
-      )
-      .where({ 'gpd.id_ea': eaId, 'gpd.year_cover': year })
-      .groupBy('gbpa.label', 'gbpa.binary_protected')
-      .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
-      .orderBy('gbpa.binary_protected', 'desc'),
-
-  /**
    * Find areas grouped by cover type inside the given protected area category
    *
    * @param {String} categoryName protected area category

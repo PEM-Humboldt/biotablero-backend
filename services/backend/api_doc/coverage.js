@@ -37,34 +37,3 @@
  *    }
  *  ]
  */
-
-/**
- * @apiDefine CoverageLayerInGeofenceExample
- * @apiSuccessExample {json} Success-Example:
- * {
- *      "type": "FeatureCollection",
- *      "features": [
- *          {
- *           "type": "Feature",
- *           "properties": {
- *              "key": "N",
- *              "area": 4257.699441612134
- *          },
- *          "geometry": {
- *               "type": "GeometryCollection",
- *               "geometries": [
- *                   {
- *                   "type": "Polygon",
- *                   "coordinates": [
- *                       [
- *                           [
- *                               -75.5104086779181,
- *                               10.4307384992824
- *                           ],
- *                       ]
- *                   }
- *               ]
- *           },
- *       ]
- *   }
- */

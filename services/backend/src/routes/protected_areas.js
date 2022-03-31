@@ -279,38 +279,6 @@ module.exports = (errorHandler, paService) => {
   );
 
   /**
-   * @apiGroup s_coverages
-   * @api {get} /pa/:category/coverage CoverageInPA
-   * @apiName PAByCoverage
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the protected area by coverage type.
-   *
-   * The result is a list of objects (cover types) with area and percentage inside the protected
-   * area category and one extra object with the total area of the protected area.
-   *
-   * @apiParam (Path params) {String} category protected area category
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the coverage type respect to the PA.
-   * @apiSuccess {Number} result.area Area of the specified coverage in the protected area
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/coverage
-   * @apiUse CoverageInGeofenceExample
-   */
-  router.get(
-    '/pa/:category/coverage',
-    errorHandler((req, res, next) =>
-      paService.getAreaByCoverage(req.params.category).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
    * @apiGroup s_hf
    * @api {get} /pa/:category/hf/current/categories CategoriesInPA
    * @apiName CategoriesInPA
@@ -705,35 +673,5 @@ module.exports = (errorHandler, paService) => {
       }),
     ),
   );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /pa/:category/coverage/layer CoverageLayerInPA
-   * @apiName CoverageLayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the coverage layer divided by categories in a given protected area category
-   *
-   * @apiParam (Path params) {String} category protected area category
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/coverage/layer
-   * @apiUse CoverageLayerInGeofenceExample
-   */
-  router.get(
-    '/pa/:category/coverage/layer',
-    errorHandler((req, res, next) =>
-      paService.getCoverageLayer(req.params.category).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
-  );
-
   return router;
 };

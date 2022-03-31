@@ -227,38 +227,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
   );
 
   /**
-   * @apiGroup s_coverages
-   * @api {get} /basinSubzones/:subzone_id/coverage CoverageInSubzone
-   * @apiName SubzoneByCoverage
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the basin subzone total area by coverage type.
-   *
-   * The result is the list of cover types with area and percentage inside the basin subzone and an
-   * extra element with the total basin subzone area.
-   *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the coverage respect to the subzone.
-   * @apiSuccess {Number} result.area Area of the coverage area in the subzone
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/1/coverage
-   * @apiUse CoverageInGeofenceExample
-   */
-  router.get(
-    '/basinSubzones/:subzone_id/coverage',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getAreaByCoverage(req.params.subzone_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/current/categories CategoriesInSubzone
    * @apiName CategoriesInSubzone
@@ -651,35 +619,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
           res.send(values);
           next();
         }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /basinSubzones/:subzone_id/coverage/layer CoverageLayerInSubzone
-   * @apiName CoverageLayerInSubzone
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the coverage layer divided by categories in a given basin subzone
-   *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/3701/coverage/layer
-   * @apiUse CoverageLayerInGeofenceExample
-   */
-  router.get(
-    '/basinSubzones/:subzone_id/coverage/layer',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getCoverageLayer(req.params.subzone_id).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
     ),
   );
 

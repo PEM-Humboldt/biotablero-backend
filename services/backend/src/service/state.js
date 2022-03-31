@@ -134,24 +134,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
-     * Get state total area divided by protected area type
-     *
-     * @param {String} stateId state id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the state
-     */
-    getAreaByCoverage: async (stateId) => {
-      let stateArea = await state.getTotalArea(stateId);
-      stateArea = stateArea.total_area;
-      const areas = await statePersistence.findAreaByCoverage(stateId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / stateArea,
-      }));
-      return result;
-    },
-
-    /**
      * Get the total area for the state
      *
      * @param {Number} stateId state id
@@ -355,28 +337,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
      */
     getHFPersistenceLayerById: async (stateId) => {
       const geom = await statePersistence.findHFPersistenceLayerById(stateId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given state
-     *
-     * @param {Number} stateId state id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await statePersistence.findCoverageLayer(eaId);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({
           ...feature,

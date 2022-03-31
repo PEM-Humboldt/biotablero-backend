@@ -186,25 +186,6 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
-     * Get EA total area divided by coverage type
-     *
-     * @param {String} enAuthorityId environmental authority id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the environmental
-     * authority
-     */
-    getAreaByCoverage: async (envAuthorityId) => {
-      let eaArea = await envAuth.getTotalArea(envAuthorityId);
-      eaArea = eaArea.total_area;
-      const areas = await eaPersistence.findAreaByCoverage(envAuthorityId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / eaArea,
-      }));
-      return result;
-    },
-
-    /**
      * Get the total area for the given environmental authority
      *
      * @param {Number} enAuthorityId environmental authority id
@@ -433,28 +414,6 @@ module.exports = (eaPersistence, seService) => {
       let geometry = await eaPersistence.findBiomesLayerById(envAuthority);
       if (geometry === null || geometry.features === null) geometry = null;
       return geometry;
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given environmental authority
-     *
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await eaPersistence.findCoverageLayer(eaId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
     },
   };
 

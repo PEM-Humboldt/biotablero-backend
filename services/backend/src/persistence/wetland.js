@@ -91,24 +91,6 @@ module.exports = (db, { colombiaWetlandDetails, globalBinaryProtectedAreas, geoH
       .orderBy('type'),
 
   /**
-   * Find areas grouped by protected area category inside the given environmental authority
-   *
-   * @param {String} eaId environmental authority id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findPAInEA: async (eaId, year = 2012) =>
-    db('colombia_wetland_details as cwd')
-      .innerJoin(
-        'global_binary_protected_areas as gbpa',
-        'cwd.binary_protected',
-        'gbpa.binary_protected',
-      )
-      .where({ 'cwd.id_ea': eaId, 'cwd.year_cover': year })
-      .groupBy('gbpa.label', 'gbpa.binary_protected')
-      .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
-      .orderBy('gbpa.binary_protected', 'desc'),
-
-  /**
    * Find areas grouped by cover type inside the given protected area category
    *
    * @param {String} categoryName protected area category

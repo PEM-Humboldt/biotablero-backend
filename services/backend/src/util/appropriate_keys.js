@@ -51,4 +51,28 @@ module.exports = {
         return val;
     }
   },
+  globalPAAreaTypes: (val) => {
+    switch (val) {
+      case 'ea':
+        return 'id_ea';
+      case 'basinSubzones':
+        return 'id_subzone';
+      case 'states':
+        return 'id_state';
+      default:
+        return null;
+    }
+  },
+  globalPASEKeys: (val) => {
+    switch (val) {
+      case 'Páramo':
+        return 'paramo';
+      case 'Humedal':
+        return 'wetlands';
+      case 'Bosque Seco Tropical':
+        return 'tropical_dry_forest';
+      default:
+        return null;
+    }
+  },
 };

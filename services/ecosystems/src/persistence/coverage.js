@@ -33,15 +33,15 @@ module.exports = (db, { coverages }, logger) => {
       db
         .raw(
           `SELECT ST_Clip(
-          (SELECT ST_union(rast)
-            FROM geo_raster
-            WHERE filename = ?
-            AND ST_Intersects(rast, ST_GeomFromGeoJSON(?))
-          ),
-          ST_GeomFromGeoJSON(?),
-          TRUE
-        ) as clip
-        `,
+            (SELECT ST_union(rast)
+              FROM geo_raster
+              WHERE filename = ?
+              AND ST_Intersects(rast, ST_GeomFromGeoJSON(?))
+            ),
+            ST_GeomFromGeoJSON(?),
+            TRUE
+          ) as clip
+          `,
           [filename, geometry, geometry],
         )
         .then((res) => res.rows[0].clip)

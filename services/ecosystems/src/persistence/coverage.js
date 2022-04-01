@@ -27,7 +27,7 @@ module.exports = (db, { coverages }, logger) => {
      * @param {String} filename filename which corresponds to the proper layer according to type,
      * options are: 'coverage_2018_N.tif, coverage_2018_S.tif, coverage_2018_T.tif'.
      *
-     * @returns {String} raster data
+     * @returns {Promise<String>} raster data
      */
     clipRaster: (geometry, filename) =>
       db
@@ -55,7 +55,7 @@ module.exports = (db, { coverages }, logger) => {
      *
      * @param {Strin} clip raster to check
      *
-     * @returns {Boolean} Whether the raster is empty or not
+     * @returns {Promise<Boolean>} Whether the raster is empty or not
      */
     isRasterEmpty: (clip) =>
       db

@@ -29,7 +29,7 @@ module.exports = (db, { coverages }, logger) => {
      *
      * @returns {String} raster data
      */
-    clipArea: (geometry, filename) =>
+    clipRaster: (geometry, filename) =>
       db
         .raw(
           `SELECT ST_Clip(
@@ -57,7 +57,7 @@ module.exports = (db, { coverages }, logger) => {
      *
      * @returns {Boolean} Whether the raster is empty or not
      */
-    checkRaster: (clip) =>
+    isRasterEmpty: (clip) =>
       db
         .raw(`SELECT ST_BandIsNoData(?) as isempty`, [clip])
         .then((res) => res.rows[0].isempty)
@@ -78,8 +78,8 @@ module.exports = (db, { coverages }, logger) => {
      * @returns {Binary} Image with the geometry
      */
     findCoverageLayer: async (geometry, filename, color) => {
-      const clip = await coveragePersistence.clipArea(geometry, filename);
-      const isEmpty = await coveragePersistence.checkRaster(clip);
+      const clip = await coveragePersistence.clipRaster(geometry, filename);
+      const isEmpty = await coveragePersistence.isRasterEmpty(clip);
       if (isEmpty) {
         const error = {
           code: 404,

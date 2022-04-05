@@ -30,36 +30,3 @@
  *    }...
  *  ]
  */
-
-// PAInPA and SEPAInPA are special cases
-/**
- * @apiDefine PAInPAExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "area": 108607,
- *      "percentage": 1,
- *      "type": "Total"
- *    },
- *    {
- *      "percentage": 0,
- *      "type": "Santuario de Fauna y Flora"
- *    },
- *    {
- *      "percentage": 1,
- *      "type": "Parques Naturales Regionales"
- *    }...
- *  ]
- */
-
-/**
- * @apiDefine SEPAInPAExample
- * @apiSuccessExample {json} Success-Example:
- *  [
- *    {
- *      "percentage": 1,
- *      "area": "305237.610769660272561",
- *      "type": Parques Naturales Regionales
- *    }
- *  ]
- */

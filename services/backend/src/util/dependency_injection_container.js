@@ -118,7 +118,7 @@ bottle.factory('stateService', (container) =>
 bottle.factory('municipalityService', (container) =>
   MunicipalityService(container.municipalityPersistence),
 );
-bottle.factory('paService', (container) => PAService(container.paPersistence, container.seService));
+bottle.factory('paService', (container) => PAService(container.paPersistence));
 bottle.factory('basinAreaService', (container) => BasinAreaService(container.basinAreaPersistence));
 bottle.factory('basinZoneService', (container) => BasinZoneService(container.basinZonePersistence));
 bottle.factory('basinSubzoneService', (container) =>

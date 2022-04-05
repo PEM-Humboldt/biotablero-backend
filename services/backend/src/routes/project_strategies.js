@@ -189,7 +189,6 @@ module.exports = (errorHandler, projectStrategyService) => {
     '/companies/:id_company/projects/:id_project/strategies/download',
     errorHandler((req, res, next) =>
       projectStrategyService.getSelectedStrategiesGeoJson(req.params.id_project).then((result) => {
-        res.header('Content-Disposition', 'attachment; filename=strategies.geojson');
         res.send(result);
         next();
       }),

@@ -11,12 +11,13 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "apidoc": "0.26.0",
-    "eslint": "5.5.0",
-    "eslint-config-airbnb-base": "13.1.0",
-    "eslint-config-prettier": "^8.3.0",
-    "eslint-plugin-import": "2.14.0",
-    "prettier": "2.3.2"
+    "apidoc": "~0.50.4",
+    "eslint": "~5.16.0",
+    "eslint-config-airbnb-base": "~13.2.0",
+    "eslint-config-prettier": "~8.3.0",
+    "eslint-plugin-import": "~2.25.4",
+    "prettier": "~2.5.1",
+    "yarn-audit-fix": "~9.0.11"
   },
   "private": true,
   "workspaces": [

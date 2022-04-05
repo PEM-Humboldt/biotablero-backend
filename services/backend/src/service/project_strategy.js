@@ -1,4 +1,4 @@
-module.exports = (strategyPersistence) => ({
+module.exports = (strategyPersistence, { uploadFile }) => ({
   /**
    * Create a new project strategy
    *
@@ -43,6 +43,34 @@ module.exports = (strategyPersistence) => ({
       throw error;
     }
 
-    return strategyPersistence.findSelectedStrategiesGeoJson(pId);
+    let selectedStrategies;
+    try {
+      selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
+    } catch (e) {
+      const error = {
+        code: 500,
+        stack: e.stack,
+        message: 'Error retrieving layer',
+      };
+      throw error;
+    }
+
+    if (selectedStrategies && selectedStrategies.features) {
+      return uploadFile(selectedStrategies)
+        .then((url) => ({ url }))
+        .catch((e) => {
+          const error = {
+            code: 500,
+            stack: e.stack,
+            message: 'Error connecting cloud services',
+          };
+          throw error;
+        });
+    }
+    const error = {
+      code: 500,
+      message: 'Error getting project',
+    };
+    throw error;
   },
 });

@@ -19,7 +19,7 @@ module.exports = (
    *
    * @param {String} eaId environmental authority id
    */
-  getAreasByEA: async (eaId) => {
+  /* getAreasByEA: async (eaId) => {
     const result = [];
     const paramoArea = await paramoPersistence.findAreaByEA(eaId);
     result.push({
@@ -37,7 +37,7 @@ module.exports = (
       type: 'Humedal',
     });
     return result;
-  },
+  }, */
 
   /**
    * Calculates the area for the given strategic ecosystem type inside the environmental authority
@@ -71,7 +71,7 @@ module.exports = (
    * @param {String} eaId environmental authority id
    * @param {seType} seType strategic ecosystem type
    */
-  getSECoverageInEA: async (eaId, seType) => {
+  /* getSECoverageInEA: async (eaId, seType) => {
     switch (seType) {
       case 'Páramo': {
         const areas = await paramoPersistence.findCoverAreasInEA(eaId);
@@ -88,14 +88,14 @@ module.exports = (
       default:
         return [];
     }
-  },
+  }, */
 
   /**
    * Get different strategic ecosystems areas inside the given basin subzone
    *
    * @param {String} subzoneId subzone id
    */
-  getAreasBySubzone: async (subzoneId) => {
+  /* getAreasBySubzone: async (subzoneId) => {
     const result = [];
     const paramoArea = await paramoPersistence.findAreaBySubzone(subzoneId);
     result.push({
@@ -113,7 +113,7 @@ module.exports = (
       type: 'Humedal',
     });
     return result;
-  },
+  }, */
 
   /**
    * Calculates the area for the given strategic ecosystem type inside the given basin subzone
@@ -147,7 +147,7 @@ module.exports = (
    * @param {String} subzoneId basin subzone id
    * @param {seType} seType strategic ecosystem type
    */
-  getSECoverageInSubzone: async (subzoneId, seType) => {
+  /* getSECoverageInSubzone: async (subzoneId, seType) => {
     switch (seType) {
       case 'Páramo': {
         const areas = await paramoPersistence.findCoverAreasInSubzone(subzoneId);
@@ -164,7 +164,7 @@ module.exports = (
       default:
         return {};
     }
-  },
+  }, */
 
   /**
    * Calculates the area for every protected area category in the given strategic ecosystem type
@@ -197,7 +197,7 @@ module.exports = (
    *
    * @param {String} stateId state id
    */
-  getAreasByState: async (stateId) => {
+  /* getAreasByState: async (stateId) => {
     const result = [];
     const paramoArea = await paramoPersistence.findAreaByState(stateId);
     result.push({
@@ -215,7 +215,7 @@ module.exports = (
       type: 'Humedal',
     });
     return result;
-  },
+  }, */
 
   /**
    * Calculates the area for the given strategic ecosystem type inside the given state
@@ -249,7 +249,7 @@ module.exports = (
    * @param {String} stateId state id
    * @param {seType} seType strategic ecosystem type
    */
-  getSECoverageInState: async (stateId, seType) => {
+  /* getSECoverageInState: async (stateId, seType) => {
     switch (seType) {
       case 'Páramo': {
         const areas = await paramoPersistence.findCoverAreasInState(stateId);
@@ -266,7 +266,7 @@ module.exports = (
       default:
         return {};
     }
-  },
+  }, */
 
   /**
    * Calculates the area for every protected area category in the given strategic ecosystem type

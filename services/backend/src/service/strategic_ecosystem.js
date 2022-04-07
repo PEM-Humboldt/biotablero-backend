@@ -295,108 +295,6 @@ module.exports = (
   },
 
   /**
-   * Get different strategic ecosystems areas inside all the protected areas with the given category
-   *
-   * @param {String} categoryName category
-   */
-  getAreasByPACategory: async (categoryName) => {
-    const result = [];
-    const paramoArea = await paramoPersistence.findAreaByPACategory(categoryName);
-    result.push({
-      ...paramoArea[0],
-      type: 'Páramo',
-    });
-    const dryForestArea = await tropicalDryForestPersistence.findAreaByPACategory(categoryName);
-    result.push({
-      ...dryForestArea[0],
-      type: 'Bosque Seco Tropical',
-    });
-    const wetlandArea = await wetlandPersistence.findAreaByPACategory(categoryName);
-    result.push({
-      ...wetlandArea[0],
-      type: 'Humedal',
-    });
-    return result;
-  },
-
-  /**
-   * Calculates the area for the given strategic ecosystem type inside the protected area category
-   *
-   * @param {String} categoryName protected area category
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSEAreaInPACategory: async (categoryName, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const area = await paramoPersistence.findAreaByPACategory(categoryName);
-        return area[0];
-      }
-      case 'Bosque Seco Tropical': {
-        const area = await tropicalDryForestPersistence.findAreaByPACategory(categoryName);
-        return area[0];
-      }
-      case 'Humedal': {
-        const area = await wetlandPersistence.findAreaByPACategory(categoryName);
-        return area[0];
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
-   * Calculates the area for every coverage type in the given strategic ecosystem type inside the
-   * protected area category
-   *
-   * @param {String} categoryName protected area category
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSECoverageInPACategory: async (categoryName, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findCoverAreasInPACategory(categoryName);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findCoverAreasInPACategory(categoryName);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findCoverAreasInPACategory(categoryName);
-        return areas;
-      }
-      default:
-        return [];
-    }
-  },
-
-  /**
-   * Calculates the area for every protected area category in the given strategic ecosystem type
-   * inside the protected area category
-   *
-   * @param {String} categoryName protected area category
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSEPAInPACategory: async (categoryName, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findPAInPA(categoryName);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findPAInPA(categoryName);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findPAInPA(categoryName);
-        return areas;
-      }
-      default:
-        return [];
-    }
-  },
-
-  /**
    * Get national information for the given ecosystem
    *
    * @param {String} ecosystem ecosystem type to get information
@@ -519,29 +417,6 @@ module.exports = (
   },
 
   /**
-   * Get an strategic ecosystem HF timeline data inside a protected area category
-   * @param {String} categoryName protected area category
-   * @param {String} ecosystem ecosystem to get the layer for
-   *
-   * @return {Object} Object with the desired data
-   */
-  getSEHFTimelineInPA: async (categoryName, ecosystem) => {
-    switch (ecosystem) {
-      case 'Páramo': {
-        return paramoPersistence.findSEHFTimeLineInPA(categoryName);
-      }
-      case 'Humedal': {
-        return wetlandPersistence.findSEHFTimeLineInPA(categoryName);
-      }
-      case 'Bosque Seco Tropical': {
-        return tropicalDryForestPersistence.findSEHFTimeLineInPA(categoryName);
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
    * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
    * @param {String} geofence identifier for the geofence type: ea, states, subzones
    * @param {String | Number} geofenceId geofence id
@@ -559,29 +434,6 @@ module.exports = (
       }
       case 'Bosque Seco Tropical': {
         return tropicalDryForestPersistence.findLayerInGeofence(geofence, geofenceId);
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
-   * Get an strategic ecosystem layer inside an environmental authority, state or basin subzone
-   * @param {String} categoryName protected area category
-   * @param {String} ecosystem ecosystem to get the layer for
-   *
-   * @return {Object} Geojson object with the geometry
-   */
-  getSELayerInPA: async (categoryName, ecosystem) => {
-    switch (ecosystem) {
-      case 'Páramo': {
-        return paramoPersistence.findLayerInPA(categoryName);
-      }
-      case 'Humedal': {
-        return wetlandPersistence.findLayerInPA(categoryName);
-      }
-      case 'Bosque Seco Tropical': {
-        return tropicalDryForestPersistence.findLayerInPA(categoryName);
       }
       default:
         return {};

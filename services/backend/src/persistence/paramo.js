@@ -1,5 +1,4 @@
 module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities, geoHFParamo }) => ({
-
   /**
    * Find total area
    *

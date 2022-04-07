@@ -1,5 +1,4 @@
 module.exports = (db, { geoTropicalDryForestDetails, geoHFTropicalDryForest }) => ({
-
   /**
    * Find total area
    *

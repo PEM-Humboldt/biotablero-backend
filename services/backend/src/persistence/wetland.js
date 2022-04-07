@@ -1,5 +1,4 @@
 module.exports = (db, { colombiaWetlandDetails, geoHFWetland }) => ({
-
   /**
    * Find total area
    *

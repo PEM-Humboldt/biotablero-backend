@@ -13,7 +13,7 @@ const StrategyPersistence = require('../persistence/strategy');
 const EAPersistence = require('../persistence/environmental_authority');
 const StatePersistence = require('../persistence/state');
 const MunicipalityPersistence = require('../persistence/municipality');
-const PAPersistence = require('../persistence/protected_area');
+const DPAPersistence = require('../persistence/deprecated_protected_area');
 const BasinAreaPersistence = require('../persistence/basin_area');
 const BasinZonePersistence = require('../persistence/basin_zone');
 const BasinSubzonePersistence = require('../persistence/basin_subzone');
@@ -31,7 +31,7 @@ const EAService = require('../service/environmental_authority');
 const UserService = require('../service/user');
 const StateService = require('../service/state');
 const MunicipalityService = require('../service/municipality');
-const PAService = require('../service/protected_area');
+const DPAService = require('../service/deprecated_protected_area');
 const BasinAreaService = require('../service/basin_area');
 const BasinZoneService = require('../service/basin_zone');
 const BasinSubzoneService = require('../service/basin_subzone');
@@ -46,7 +46,7 @@ const MunicipalitiesRoutes = require('../routes/municipalities');
 const UsersRoutes = require('../routes/users');
 const EARoutes = require('../routes/environmental_authorities');
 const StatesRoutes = require('../routes/states');
-const PARoutes = require('../routes/protected_areas');
+const DPARoutes = require('../routes/deprecated_protected_areas');
 const BasinsRoutes = require('../routes/basins');
 const BasinSubzonesRoutes = require('../routes/basin_subzones');
 const SERoutes = require('../routes/strategic_ecosystems');
@@ -76,7 +76,7 @@ bottle.factory('statePersistence', () =>
 bottle.factory('municipalityPersistence', () =>
   MunicipalityPersistence(bookshelfModels.db, bookshelfModels.models),
 );
-bottle.factory('paPersistence', () => PAPersistence(bookshelfModels.db, bookshelfModels.models));
+bottle.factory('dpaPersistence', () => DPAPersistence(bookshelfModels.db, bookshelfModels.models));
 bottle.factory('basinAreaPersistence', () =>
   BasinAreaPersistence(bookshelfModels.db, bookshelfModels.models),
 );
@@ -120,7 +120,7 @@ bottle.factory('stateService', (container) =>
 bottle.factory('municipalityService', (container) =>
   MunicipalityService(container.municipalityPersistence),
 );
-bottle.factory('paService', (container) => PAService(container.paPersistence));
+bottle.factory('spaService', (container) => DPAService(container.dpaPersistence));
 bottle.factory('basinAreaService', (container) => BasinAreaService(container.basinAreaPersistence));
 bottle.factory('basinZoneService', (container) => BasinZoneService(container.basinZonePersistence));
 bottle.factory('basinSubzoneService', (container) =>
@@ -147,7 +147,7 @@ bottle.factory('routes', (container) => [
   UsersRoutes(container.errorHandler, container.userService),
   EARoutes(container.errorHandler, container.eaService),
   StatesRoutes(container.errorHandler, container.stateService),
-  PARoutes(container.errorHandler, container.paService),
+  DPARoutes(container.errorHandler, container.dpaService),
   BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
   BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
   SERoutes(container.errorHandler, container.seService),

@@ -1,29 +1,30 @@
-module.exports = (paPersistence) => {
-  const protectedArea = {
-    /**
-     * Get protected areas categories by binary protected values
-     *
-     * @param {String[]} binaryProtected binary protected values to filter by
-     */
-    getCategoriesByBinaryProtected: async (binaryProtected) =>
-      paPersistence.findCategoriesByBinaryProtected(binaryProtected),
+const { globalPAAreaTypes, globalPASEKeys } = require('../util/appropriate_keys');
 
-    /**
-     * Get the binary protected value for the given category name
-     *
-     * @param {String} categoryName protected area category name
-     *
-     * @returns {Object} binary protected value
-     *
-     */
-    getBinaryProtectedByCategory: async (categoryName) => {
-      const binaryProtected = await paPersistence.findBinaryProtectedByCategory(categoryName);
-      if (binaryProtected.length === 0) {
-        throw new Error("protected area category doesn't exists");
-      }
-      return binaryProtected[0];
-    },
-  };
+module.exports = (globalProtectedAreaPersistence) => ({
+  /**
+   * Get the area distribution for each protected area category in a given area
+   *  and if applies, in the given strategic ecosystem
+   *
+   * @param {String} areaType area type
+   * @param {String} areaId area id
+   * @param {String} se strategic ecosystem
+   *
+   * @return {Object[]} Values of protected areas categories
+   */
+  getPAAreas: async (areaType, areaId, se = null) => {
+    const areaCol = globalPAAreaTypes(areaType);
+    const seCol = globalPASEKeys(se);
 
-  return protectedArea;
-};
+    const areas = await globalProtectedAreaPersistence.findAreaByPA(
+      areaCol,
+      areaId.toString(),
+      seCol,
+    );
+    return areas.map(({ area, ...cats }) => ({
+      area,
+      type: Object.values(cats)
+        .filter((c) => c !== null)
+        .join(' y '),
+    }));
+  },
+});

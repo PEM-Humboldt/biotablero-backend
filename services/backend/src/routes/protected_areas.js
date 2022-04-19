@@ -4,95 +4,74 @@ module.exports = (errorHandler, paService) => {
   const router = new Router();
 
   /**
-   * @apiGroup geofence_pa
-   * @api {get} /pa/categories/binary_protected listCategoriesByBinaryProtected
-   * @apiName listCategoriesByBinaryProtected
-   * @apiVersion 0.1.0
+   * @apiGroup s_protected_areas
+   * @api {get} /pa ProtectedAreas
+   * @apiName ProtectedAreas
+   * @apiVersion 2.0.0
    * @apiDescription
-   * List available protected area categories for the given binary protected values
+   * Area distribution values for protected area categories within a given area.
    *
-   * @apiParam (Query params) {String} binary_protected list of binary protected values
-   * separated by ;
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
    *
-   * @apiSuccess {Object[]} category list of protected area categories
-   *  for the given binary protected values
-   * @apiSuccess {String} binary_protected binary value
-   * @apiSuccess {String} label category name
+   * @apiSuccess {Object[]} list of protected area categories
+   * @apiSuccess {Number} result.area area of the specified category
+   * @apiSuccess {String} result.type protected area category
    *
    * @apiExample {curl} Example usage:
-   *  /pa/categories/binary_protected?binary_protected=000001000000000;010100000000000
-   * @apiUse PACategoriesByBinaryProtectedExample
+   *  /pa?areaType=ea&areaId=DAGMA
+   * @apiUse PAInGeofenceExample
    */
   router.get(
-    '/pa/categories/binary_protected',
-    errorHandler((req, res, next) =>
+    '/pa',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId)) {
+        const error = { code: 400, message: 'areaType and areaId required' };
+        throw error;
+      }
+      paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
+        res.send(categories);
+        next();
+      });
+    }),
+  );
+
+  /**
+   * @apiGroup s_protected_areas
+   * @api {get} /pa/se ProtectedAreasSE
+   * @apiName ProtectedAreasSE
+   * @apiVersion 2.0.0
+   * @apiDescription
+   * Area distribution values for protected area categories within a SE type and a given area.
+   *
+   * @apiParam (Query params) {String} areaType area type
+   * @apiParam (Query params) {String|Number} areaId area id
+   * @apiParam (Query params) {String} seType strategic ecosystem type. Options are: Páramo,
+   * Bosque Seco Tropical and Humedal.
+   *
+   * @apiSuccess {Object[]} list of protected area categories
+   * @apiSuccess {Number} result.area area of the specified category
+   * @apiSuccess {String} result.type protected area category
+   *
+   * @apiExample {curl} Example usage:
+   *  /pa/se?areaType=ea&areaId=DAGMA&seType=Páramo
+   * @apiUse PAInGeofenceExample
+   */
+  router.get(
+    '/pa/se',
+    errorHandler((req, res, next) => {
+      if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+        const error = { code: 400, message: 'areaType, areaId and seType required' };
+        throw error;
+      }
       paService
-        .getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
-        .then((categories) => {
-          res.send(categories);
+        .getPAAreas(req.params.areaType, req.params.areaId, req.params.seType)
+        .then((binaryProtected) => {
+          res.send(binaryProtected);
           next();
-        }),
-    ),
+        });
+    }),
   );
 
-  /**
-   * @apiGroup geofence_pa
-   * @api {get} /pa/:category/binary_protected BinaryProtectedByCategory
-   * @apiName BinaryProtectedByCategory
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the binary protected value for the given category name
-   *
-   * @apiParam (Path params) {String} category protected area category
-   *
-   * @apiSuccess {Object} result
-   * @apiSuccess {Object} result.binary_protected binary protected value
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/binary_protected
-   * @apiUse BinaryProtectedByCategoryExample
-   */
-  router.get(
-    '/pa/:category/binary_protected',
-    errorHandler((req, res, next) =>
-      paService.getBinaryProtectedByCategory(req.params.category).then((binaryProtected) => {
-        res.send(binaryProtected);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_ecoChange
-   * @api {get} /pa/:category/ecoChange/layers/lp/period/:period/categories/
-   * LPCategoriesLayerInPA
-   * @apiName LPCategoriesLayerInPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the the forest loss and persistence layer for a given period, divided by categories
-   * inside the protected area category
-   *
-   * @apiParam (Path params) {String} protected area category
-   * @apiParam (Path params) {String} period period
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type the geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /pa/Parques Naturales Regionales/ecoChange/layers/lp/period/2016-2019/categories/
-   * @apiUse ForestLPLayerExample
-   */
-  router.get(
-    '/pa/:category/ecoChange/layers/lp/period/:period/categories/',
-    errorHandler((req, res, next) =>
-      paService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
   return router;
 };

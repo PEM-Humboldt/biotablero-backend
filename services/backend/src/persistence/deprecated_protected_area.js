@@ -1,11 +1,11 @@
-module.exports = (db, { globalBinaryProtectedAreas }) => ({
+module.exports = (db, { dglobalBinaryProtectedAreas }) => ({
   /**
    * Get the protected area categories for the given set of binary protected values
    *
    * @param {String[]} binaryProtected binary protected values to filter by
    */
   findCategoriesByBinaryProtected: (binaryProtected) =>
-    globalBinaryProtectedAreas
+    dglobalBinaryProtectedAreas
       .query()
       .whereIn('binary_protected', binaryProtected)
       .orderBy('binary_protected')
@@ -20,5 +20,5 @@ module.exports = (db, { globalBinaryProtectedAreas }) => ({
    *
    */
   findBinaryProtectedByCategory: (categoryName) =>
-    globalBinaryProtectedAreas.query().where('label', categoryName).select('binary_protected'),
+    dglobalBinaryProtectedAreas.query().where('label', categoryName).select('binary_protected'),
 });

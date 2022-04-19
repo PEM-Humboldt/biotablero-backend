@@ -26,28 +26,6 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
         .sum('area_ha as area'),
 
     /**
-     * Get the protected area distribution inside the given basin subzone
-     *
-     * @param {String} subzoneId subzone id
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByPA: async (subzoneId, year = 2012) =>
-      db('colombia_coverage_details as cc')
-        .innerJoin(
-          'global_binary_protected_areas as gbpa',
-          'cc.binary_protected',
-          'gbpa.binary_protected',
-        )
-        .where({ 'cc.id_subzone': subzoneId, 'cc.year_cover': year })
-        .groupBy('gbpa.label', 'gbpa.binary_protected')
-        .orderBy('gbpa.binary_protected', 'desc')
-        .select(
-          db.raw('coalesce(SUM(cc.area_ha), 0) as area'),
-          'gbpa.label as type',
-          'gbpa.binary_protected as bp',
-        ),
-
-    /**
      * Find the current area distribution for each human footprint category in the
      * given basin subzone
      * @param {Number} subzoneId basin subzone id

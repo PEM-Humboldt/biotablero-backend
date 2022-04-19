@@ -43,56 +43,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
-     * Get protected area distribution in an strategic ecosystem in a state
-     *
-     * @param {String} stateId state id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (stateId, seType) => {
-      const seArea = await seService.getSEAreaInState(stateId, seType);
-      const paAreas = await seService.getSEPAInState(stateId, seType);
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-      return result;
-    },
-
-    /**
-     * Get state total area divided by protected area type
-     *
-     * @param {Number} stateId state id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (stateId) => {
-      let stateArea = await statePersistence.getTotalAreaByState(stateId);
-      if (stateArea[0].area === null) {
-        throw new Error("state doesn't exists");
-      }
-      stateArea = stateArea[0].area;
-      const areas = await statePersistence.findAreaByPA(stateId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / stateArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / stateArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get the total area for the state
      *
      * @param {Number} stateId state id

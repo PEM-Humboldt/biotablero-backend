@@ -36,57 +36,6 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
-     * Get protected area distribution in an strategic ecosystem in a basin subzone
-     *
-     * @param {String} subzoneId basin subzone id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (subzoneId, seType) => {
-      const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
-      const paAreas = await seService.getSEPAInSubzone(subzoneId, seType);
-
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: parseFloat(area.area) / parseFloat(seArea.area),
-      }));
-      return result;
-    },
-
-    /**
-     * Get subzone total area divided by protected area type
-     *
-     * @param {String} subzoneId basin subzone id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (subzoneId) => {
-      let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-      if (subzoneArea[0].area === null) {
-        throw new Error("basin subzone doesn't exists");
-      }
-      subzoneArea = subzoneArea[0].area;
-      const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / subzoneArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / subzoneArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get the total area for the given subzone
      *
      * @param {Number} subzoneId basin subzone id

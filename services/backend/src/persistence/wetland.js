@@ -44,42 +44,6 @@ module.exports = (db, { colombiaWetlandDetails, geoHFWetland }) => ({
     colombiaWetlandDetails.query().where('year_cover', year).sum('area_ha as area'),
 
   /**
-   * Find areas grouped by protected area category inside the given state
-   *
-   * @param {String} stateId state id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findPAInState: async (stateId, year = 2012) =>
-    db('colombia_wetland_details as cwd')
-      .innerJoin(
-        'global_binary_protected_areas as gbpa',
-        'cwd.binary_protected',
-        'gbpa.binary_protected',
-      )
-      .where({ 'cwd.id_state': stateId, 'cwd.year_cover': year })
-      .groupBy('gbpa.label', 'gbpa.binary_protected')
-      .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
-      .orderBy('gbpa.binary_protected', 'desc'),
-
-  /**
-   * Find areas grouped by protected area category inside the given subzone
-   *
-   * @param {String} subzoneId basin subzone id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findPAInSubzone: async (subzoneId, year = 2012) =>
-    db('colombia_wetland_details as cwd')
-      .innerJoin(
-        'global_binary_protected_areas as gbpa',
-        'cwd.binary_protected',
-        'gbpa.binary_protected',
-      )
-      .where({ 'cwd.id_subzone': subzoneId, 'cwd.year_cover': year })
-      .groupBy('gbpa.label', 'gbpa.binary_protected')
-      .select(db.raw('coalesce(SUM(cwd.area_ha), 0) as area'), 'gbpa.label as type')
-      .orderBy('gbpa.binary_protected', 'desc'),
-
-  /**
    * Find areas grouped by protected area category
    *
    * @param {Number} year optional year to filter data, 2012 by default

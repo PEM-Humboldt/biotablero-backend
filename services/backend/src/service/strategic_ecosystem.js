@@ -116,31 +116,6 @@ module.exports = (
   },
 
   /**
-   * Calculates the area for the given strategic ecosystem type inside the given basin subzone
-   *
-   * @param {String} subzoneId subzone id
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSEAreaInSubzone: async (subzoneId, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const area = await paramoPersistence.findAreaBySubzone(subzoneId);
-        return area[0];
-      }
-      case 'Bosque Seco Tropical': {
-        const area = await tropicalDryForestPersistence.findAreaBySubzone(subzoneId);
-        return area[0];
-      }
-      case 'Humedal': {
-        const area = await wetlandPersistence.findAreaBySubzone(subzoneId);
-        return area[0];
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
    * Calculates the area for every coverage type in the given strategic ecosystem type inside the
    * given basin subzone
    *
@@ -163,32 +138,6 @@ module.exports = (
       }
       default:
         return {};
-    }
-  },
-
-  /**
-   * Calculates the area for every protected area category in the given strategic ecosystem type
-   * inside the basin subzone
-   *
-   * @param {String} subzoneId basin subzone id
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSEPAInSubzone: async (subzoneId, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findPAInSubzone(subzoneId);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findPAInSubzone(subzoneId);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findPAInSubzone(subzoneId);
-        return areas;
-      }
-      default:
-        return [];
     }
   },
 

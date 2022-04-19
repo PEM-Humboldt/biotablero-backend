@@ -12,18 +12,6 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities, geoHFPara
       .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
 
   /**
-   * Get the area inside the given basin subzone
-   *
-   * @param {String} subzoneId basin subzone id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findAreaBySubzone: (subzoneId, year = 2012) =>
-    geoParamoDetails
-      .query()
-      .where({ id_subzone: subzoneId, year_cover: year })
-      .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
-
-  /**
    * Get the area inside the given state
    *
    * @param {String} stateId state id
@@ -119,24 +107,6 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities, geoHFPara
       .groupBy('area_type')
       .select('area_type as type')
       .orderBy('type'),
-
-  /**
-   * Find areas grouped by protected area category inside the given subzone
-   *
-   * @param {String} subzoneId basin subzone id
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findPAInSubzone: async (subzoneId, year = 2012) =>
-    db('geo_paramo_details as gpd')
-      .innerJoin(
-        'global_binary_protected_areas as gbpa',
-        'gpd.binary_protected',
-        'gbpa.binary_protected',
-      )
-      .where({ 'gpd.id_subzone': subzoneId, 'gpd.year_cover': year })
-      .groupBy('gbpa.label', 'gbpa.binary_protected')
-      .select(db.raw('coalesce(SUM(gpd.area_ha), 0) as area'), 'gbpa.label as type')
-      .orderBy('gbpa.binary_protected', 'desc'),
 
   /**
    * Find areas grouped by protected area category

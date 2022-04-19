@@ -36,7 +36,7 @@ const BasinAreaService = require('../service/basin_area');
 const BasinZoneService = require('../service/basin_zone');
 const BasinSubzoneService = require('../service/basin_subzone');
 const SEService = require('../service/strategic_ecosystem');
-const GlobalProtectedAreaService = require('../service/global_protected_area');
+const ProtectedAreaService = require('../service/protected_area');
 
 const BiomesRoutes = require('../routes/biomes');
 const ProjectsRoutes = require('../routes/projects');
@@ -50,6 +50,7 @@ const DPARoutes = require('../routes/deprecated_protected_areas');
 const BasinsRoutes = require('../routes/basins');
 const BasinSubzonesRoutes = require('../routes/basin_subzones');
 const SERoutes = require('../routes/strategic_ecosystems');
+const ProtectedAreaRoutes = require('../routes/protected_areas');
 
 const bottle = new Bottlejs();
 
@@ -111,7 +112,7 @@ bottle.factory('strategyService', (container) =>
   StrategyService(container.strategyPersistence, container.logger),
 );
 bottle.factory('eaService', (container) =>
-  EAService(container.eaPersistence, container.seService, container.globalProtectedAreaService),
+  EAService(container.eaPersistence, container.seService, container.protectedAreaService),
 );
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService', (container) =>
@@ -134,8 +135,8 @@ bottle.factory('seService', (container) =>
     container.wetlandPersistence,
   ),
 );
-bottle.factory('globalProtectedAreaService', (container) =>
-  GlobalProtectedAreaService(container.globalProtectedAreaPersistence),
+bottle.factory('protectedAreaService', (container) =>
+  ProtectedAreaService(container.globalProtectedAreaPersistence),
 );
 
 bottle.factory('routes', (container) => [
@@ -151,6 +152,7 @@ bottle.factory('routes', (container) => [
   BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
   BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
   SERoutes(container.errorHandler, container.seService),
+  ProtectedAreaRoutes(container.errorHandler, container.protectedAreaService),
 ]);
 
 module.exports = bottle.container;

@@ -8,20 +8,6 @@ module.exports = (db, { geoTropicalDryForestDetails, geoHFTropicalDryForest }) =
     geoTropicalDryForestDetails.query().where('year_cover', year).sum('area_ha as area'),
 
   /**
-   * Find areas grouped by cover type
-   *
-   * @param {Number} year optional year to filter data, 2012 by default
-   */
-  findCoverAreas: async (year = 2012) =>
-    geoTropicalDryForestDetails
-      .query()
-      .where('year_cover', year)
-      .sum('area_ha as area')
-      .groupBy('area_type')
-      .select('area_type as type')
-      .orderBy('type'),
-
-  /**
    * Find areas grouped by protected area category inside the given state
    *
    * @param {String} stateId state id

@@ -173,39 +173,6 @@ module.exports = (
   },
 
   /**
-   * Get coverage information for the given ecosystem
-   *
-   * @param {String} ecosystem ecosystem type to get information
-   */
-  getSEByCoverage: async (ecosystem) => {
-    let national = {};
-    let coverageAreas = [];
-    switch (ecosystem) {
-      case 'Páramo': {
-        national = await paramoPersistence.findTotalArea();
-        coverageAreas = await paramoPersistence.findCoverAreas();
-        break;
-      }
-      case 'Humedal': {
-        national = await wetlandPersistence.findTotalArea();
-        coverageAreas = await wetlandPersistence.findCoverAreas();
-        break;
-      }
-      case 'Bosque Seco Tropical': {
-        national = await tropicalDryForestPersistence.findTotalArea();
-        coverageAreas = await tropicalDryForestPersistence.findCoverAreas();
-        break;
-      }
-      default:
-        return {};
-    }
-    return coverageAreas.map((area) => ({
-      ...area,
-      percentage: area.area / national[0].area,
-    }));
-  },
-
-  /**
    * Get protected areas information for the given ecosystem
    *
    * @param {String} ecosystem ecosystem type to get information

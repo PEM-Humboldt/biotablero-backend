@@ -111,9 +111,7 @@ bottle.factory('projectStrategyService', (container) =>
 bottle.factory('strategyService', (container) =>
   StrategyService(container.strategyPersistence, container.logger),
 );
-bottle.factory('eaService', (container) =>
-  EAService(container.eaPersistence, container.seService, container.protectedAreaService),
-);
+bottle.factory('eaService', (container) => EAService(container.eaPersistence, container.seService));
 bottle.factory('userService', () => UserService());
 bottle.factory('stateService', (container) =>
   StateService(container.statePersistence, container.municipalityService, container.seService),

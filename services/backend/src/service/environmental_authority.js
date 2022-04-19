@@ -11,7 +11,7 @@ const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
 const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
 const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
-module.exports = (eaPersistence, seService, globalProtectedAreaService) => {
+module.exports = (eaPersistence, seService) => {
   const envAuth = {
     /**
      * Get total area grouped by compensation factor for a given environmental authority
@@ -134,26 +134,6 @@ module.exports = (eaPersistence, seService, globalProtectedAreaService) => {
         percentage: area.area / seArea.area,
       }));
     },
-
-    /**
-     * Get protected area distribution in an strategic ecosystem in an environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (envAuthorityId, seType) =>
-      globalProtectedAreaService.getPAAreas('ea', envAuthorityId, seType),
-
-    /**
-     * Get EA total area divided by protected area type
-     *
-     * @param {String} enAuthorityId environmental authority id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (envAuthorityId) =>
-      globalProtectedAreaService.getPAAreas('ea', envAuthorityId),
 
     /**
      * Get the total area for the given environmental authority

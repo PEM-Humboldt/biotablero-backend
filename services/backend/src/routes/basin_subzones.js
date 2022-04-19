@@ -60,39 +60,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
 
   /**
    * @apiGroup s_strategic_ecosystems
-   * @api {get} /basinSubzones/:subzone_id/se SEInSubzone
-   * @apiName SubzoneBySE
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the basin subzone total area by strategic ecosystems.
-   *
-   * The result is the list of strategic ecosystems with area and percentage inside the basin
-   * subzone and an extra element with the total area inside strategic ecosystems on the basin
-   * subzone.
-   *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the strategic ecosystem
-   * @apiSuccess {Number} result.area Area of the specified SE in the subzone
-   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the subzone.
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/1/se
-   * @apiUse SEInGeofenceExample
-   */
-  router.get(
-    '/basinSubzones/:subzone_id/se',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getAreaBySE(req.params.subzone_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_strategic_ecosystems
    * @api {get} /basinSubzones/:subzone_id/se/:se_type SEDetailInSubzone
    * @apiName SEDetailInSubzone
    * @apiVersion 0.1.0
@@ -118,42 +85,6 @@ module.exports = (errorHandler, basinSubzoneService) => {
         .getSEDetails(req.params.subzone_id, req.params.se_type)
         .then((details) => {
           res.send(details);
-          next();
-        }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /basinSubzones/:subzone_id/se/:se_type/coverage SECoverageInSubzone
-   * @apiName SECoverageInSubzone
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Given an strategic ecosystem type inside an specific basin subzone, get the coverage
-   * distribution in that area.
-   *
-   * The result is the list of cover types with area and percentage inside the specified strategic
-   * ecosystem in the basin subzone.
-   *
-   * @apiParam (Path params) {Number} subzone_id basin subzone id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
-   * @apiSuccess {Number} result.area Area of the specified coverage
-   *
-   * @apiExample {curl} Example usage:
-   *  /basinSubzones/1/se/Páramo/coverage
-   * @apiUse SECoverageInGeofenceExample
-   */
-  router.get(
-    '/basinSubzones/:subzone_id/se/:se_type/coverage',
-    errorHandler((req, res, next) =>
-      basinSubzoneService
-        .getCoverageInSE(req.params.subzone_id, req.params.se_type)
-        .then((areas) => {
-          res.send(areas);
           next();
         }),
     ),

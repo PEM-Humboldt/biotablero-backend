@@ -26,32 +26,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getMunicipalities: async (stateId) => municipalityService.getByState(stateId),
 
     /**
-     * Get state total area divided by strategic ecosystem type
-     */
-    getAreaBySE: async (stateId) => {
-      let stateArea = await statePersistence.getTotalAreaByState(stateId);
-      if (stateArea.length === 0) {
-        throw new Error("state doesn't exists");
-      }
-      stateArea = stateArea[0].area;
-      const areas = await seService.getAreasByState(stateId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / stateArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / stateArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get information about an strategic ecosystem in an state. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
@@ -66,21 +40,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
         national_percentage: seArea.area / seNationalArea.area,
         total_area: seArea.area,
       };
-    },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in a state
-     *
-     * @param {String} stateId state id
-     * @param {String} seType strategic ecosystem type
-     */
-    getCoverageInSE: async (stateId, seType) => {
-      const seArea = await seService.getSEAreaInState(stateId, seType);
-      const coverAreas = await seService.getSECoverageInState(stateId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
     },
 
     /**

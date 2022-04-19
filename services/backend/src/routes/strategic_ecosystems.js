@@ -101,37 +101,6 @@ module.exports = (errorHandler, seService) => {
   );
 
   /**
-   * @apiGroup s_coverages
-   * @api {get} /se/:ecosystem/coverage CoverageInSE
-   * @apiName seByCoverage
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the strategic ecosystem area separated by coverage
-   *
-   * @apiParam (Path params) {String} ecosystem ecosystem type to get. Accepted values: Páramo,
-   * Humedal, Bosque Seco Tropical (results from <a href="#api-se-listPrimarySE">listPrimarySE</a>
-   * endpoint)
-   *
-   * @apiSuccess {Object[]} result coverage information for the ecosystem
-   * @apiSuccess {Number} result.percentage coverage percentage for the ecosystem
-   * @apiSuccess {Number} result.area area for the given coverage inside the strategic ecosystem
-   * @apiSuccess {String} result.type coverage type
-   *
-   * @apiExample {curl} Example usage:
-   *  /se/Páramo/coverage
-   * @apiUse CoverageInGeofenceExample
-   */
-  router.get(
-    '/se/:ecosystem/coverage',
-    errorHandler((req, res, next) => {
-      seService.getSEByCoverage(req.params.ecosystem).then((result) => {
-        res.send(result);
-        next();
-      });
-    }),
-  );
-
-  /**
    * @apiGroup s_protected_areas
    * @api {get} /se/:ecosystem/pa PAInSE
    * @apiName seByPA

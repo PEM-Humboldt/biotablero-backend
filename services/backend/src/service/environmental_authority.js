@@ -76,34 +76,6 @@ module.exports = (eaPersistence, seService, globalProtectedAreaService) => {
     getAll: async () => eaPersistence.findAll(),
 
     /**
-     * Get EA total area divided by strategic ecosystem type
-     *
-     * @param {String} envAuthorityId environmental authority id
-     */
-    getAreaBySE: async (envAuthorityId) => {
-      let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-      if (eaArea.length === 0) {
-        throw new Error("environmental authority doesn't exists");
-      }
-      eaArea = eaArea[0].area;
-      const areas = await seService.getAreasByEA(envAuthorityId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / eaArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / eaArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get information about an strategic ecosystem in an environmental authority. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
@@ -118,21 +90,6 @@ module.exports = (eaPersistence, seService, globalProtectedAreaService) => {
         national_percentage: seArea.area / seNationalArea.area,
         total_area: seArea.area,
       };
-    },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in an environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {String} seType strategic ecosystem type
-     */
-    getCoverageInSE: async (envAuthorityId, seType) => {
-      const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
-      const coverAreas = await seService.getSECoverageInEA(envAuthorityId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
     },
 
     /**

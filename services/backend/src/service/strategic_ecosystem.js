@@ -15,31 +15,6 @@ module.exports = (
   getPrimary: async () => sePersistence.findAllPrimary(),
 
   /**
-   * Get different strategic ecosystems areas inside the given environmental authority
-   *
-   * @param {String} eaId environmental authority id
-   */
-  getAreasByEA: async (eaId) => {
-    const result = [];
-    const paramoArea = await paramoPersistence.findAreaByEA(eaId);
-    result.push({
-      ...paramoArea[0],
-      type: 'Páramo',
-    });
-    const dryForestArea = await tropicalDryForestPersistence.findAreaByEA(eaId);
-    result.push({
-      ...dryForestArea[0],
-      type: 'Bosque Seco Tropical',
-    });
-    const wetlandArea = await wetlandPersistence.findAreaByEA(eaId);
-    result.push({
-      ...wetlandArea[0],
-      type: 'Humedal',
-    });
-    return result;
-  },
-
-  /**
    * Calculates the area for the given strategic ecosystem type inside the environmental authority
    *
    * @param {String} eaId environmental authority id
@@ -65,57 +40,6 @@ module.exports = (
   },
 
   /**
-   * Calculates the area for every coverage type in the given strategic ecosystem type inside the
-   * environmental authority
-   *
-   * @param {String} eaId environmental authority id
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSECoverageInEA: async (eaId, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findCoverAreasInEA(eaId);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findCoverAreasInEA(eaId);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findCoverAreasInEA(eaId);
-        return areas;
-      }
-      default:
-        return [];
-    }
-  },
-
-  /**
-   * Get different strategic ecosystems areas inside the given basin subzone
-   *
-   * @param {String} subzoneId subzone id
-   */
-  getAreasBySubzone: async (subzoneId) => {
-    const result = [];
-    const paramoArea = await paramoPersistence.findAreaBySubzone(subzoneId);
-    result.push({
-      ...paramoArea[0],
-      type: 'Páramo',
-    });
-    const dryForestArea = await tropicalDryForestPersistence.findAreaBySubzone(subzoneId);
-    result.push({
-      ...dryForestArea[0],
-      type: 'Bosque Seco Tropical',
-    });
-    const wetlandArea = await wetlandPersistence.findAreaBySubzone(subzoneId);
-    result.push({
-      ...wetlandArea[0],
-      type: 'Humedal',
-    });
-    return result;
-  },
-
-  /**
    * Calculates the area for the given strategic ecosystem type inside the given basin subzone
    *
    * @param {String} subzoneId subzone id
@@ -134,32 +58,6 @@ module.exports = (
       case 'Humedal': {
         const area = await wetlandPersistence.findAreaBySubzone(subzoneId);
         return area[0];
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
-   * Calculates the area for every coverage type in the given strategic ecosystem type inside the
-   * given basin subzone
-   *
-   * @param {String} subzoneId basin subzone id
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSECoverageInSubzone: async (subzoneId, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findCoverAreasInSubzone(subzoneId);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findCoverAreasInSubzone(subzoneId);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findCoverAreasInSubzone(subzoneId);
-        return areas;
       }
       default:
         return {};
@@ -193,31 +91,6 @@ module.exports = (
   },
 
   /**
-   * Get different strategic ecosystems areas inside the given state
-   *
-   * @param {String} stateId state id
-   */
-  getAreasByState: async (stateId) => {
-    const result = [];
-    const paramoArea = await paramoPersistence.findAreaByState(stateId);
-    result.push({
-      ...paramoArea[0],
-      type: 'Páramo',
-    });
-    const dryForestArea = await tropicalDryForestPersistence.findAreaByState(stateId);
-    result.push({
-      ...dryForestArea[0],
-      type: 'Bosque Seco Tropical',
-    });
-    const wetlandArea = await wetlandPersistence.findAreaByState(stateId);
-    result.push({
-      ...wetlandArea[0],
-      type: 'Humedal',
-    });
-    return result;
-  },
-
-  /**
    * Calculates the area for the given strategic ecosystem type inside the given state
    *
    * @param {String} stateId state id
@@ -236,32 +109,6 @@ module.exports = (
       case 'Humedal': {
         const area = await wetlandPersistence.findAreaByState(stateId);
         return area[0];
-      }
-      default:
-        return {};
-    }
-  },
-
-  /**
-   * Calculates the area for every coverage type in the given strategic ecosystem type inside the
-   * given state
-   *
-   * @param {String} stateId state id
-   * @param {seType} seType strategic ecosystem type
-   */
-  getSECoverageInState: async (stateId, seType) => {
-    switch (seType) {
-      case 'Páramo': {
-        const areas = await paramoPersistence.findCoverAreasInState(stateId);
-        return areas;
-      }
-      case 'Bosque Seco Tropical': {
-        const areas = await tropicalDryForestPersistence.findCoverAreasInState(stateId);
-        return areas;
-      }
-      case 'Humedal': {
-        const areas = await wetlandPersistence.findCoverAreasInState(stateId);
-        return areas;
       }
       default:
         return {};
@@ -323,39 +170,6 @@ module.exports = (
       percentage: national[0].area / countryArea[0].area,
       type: ecosystem,
     };
-  },
-
-  /**
-   * Get coverage information for the given ecosystem
-   *
-   * @param {String} ecosystem ecosystem type to get information
-   */
-  getSEByCoverage: async (ecosystem) => {
-    let national = {};
-    let coverageAreas = [];
-    switch (ecosystem) {
-      case 'Páramo': {
-        national = await paramoPersistence.findTotalArea();
-        coverageAreas = await paramoPersistence.findCoverAreas();
-        break;
-      }
-      case 'Humedal': {
-        national = await wetlandPersistence.findTotalArea();
-        coverageAreas = await wetlandPersistence.findCoverAreas();
-        break;
-      }
-      case 'Bosque Seco Tropical': {
-        national = await tropicalDryForestPersistence.findTotalArea();
-        coverageAreas = await tropicalDryForestPersistence.findCoverAreas();
-        break;
-      }
-      default:
-        return {};
-    }
-    return coverageAreas.map((area) => ({
-      ...area,
-      percentage: area.area / national[0].area,
-    }));
   },
 
   /**

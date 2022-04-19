@@ -91,38 +91,6 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup s_strategic_ecosystems
-   * @api {get} /states/:state_id/se SEInState
-   * @apiName StateBySE
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the state total area by strategic ecosystems.
-   *
-   * The result is the list of strategic ecosystems with area and percentage inside the state and an
-   * extra element with the total area inside strategic ecosystems on the state.
-   *
-   * @apiParam (Path params) {Number} state_id state id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the strategic ecosystem
-   * @apiSuccess {Number} result.area Area of the specified SE in the state
-   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the state area
-   *
-   * @apiExample {curl} Example usage:
-   *  /states/44/se
-   * @apiUse SEInGeofenceExample
-   */
-  router.get(
-    '/states/:state_id/se',
-    errorHandler((req, res, next) =>
-      stateService.getAreaBySE(req.params.state_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_strategic_ecosystems
    * @api {get} /states/:state_id/se/:se_type SEDetailInState
    * @apiName SEDetailInState
    * @apiVersion 0.1.0
@@ -146,40 +114,6 @@ module.exports = (errorHandler, stateService) => {
     errorHandler((req, res, next) =>
       stateService.getSEDetails(req.params.state_id, req.params.se_type).then((details) => {
         res.send(details);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /states/:state_id/se/:se_type/coverage SECoverageInState
-   * @apiName SECoverageInState
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Given an strategic ecosystem type inside an specific state, get the coverage
-   * distribution in that area.
-   *
-   * The result is the list of cover types with area and percentage inside the specified strategic
-   * ecosystem in the state.
-   *
-   * @apiParam (Path params) {Number} state_id state id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
-   * @apiSuccess {Number} result.area Area of the specified coverage
-   *
-   * @apiExample {curl} Example usage:
-   *  /states/44/se/Páramo/coverage
-   * @apiUse SECoverageInGeofenceExample
-   */
-  router.get(
-    '/states/:state_id/se/:se_type/coverage',
-    errorHandler((req, res, next) =>
-      stateService.getCoverageInSE(req.params.state_id, req.params.se_type).then((areas) => {
-        res.send(areas);
         next();
       }),
     ),

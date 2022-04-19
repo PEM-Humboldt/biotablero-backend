@@ -171,39 +171,6 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_strategic_ecosystems
-   * @api {get} /ea/:ea_id/se SEInEA
-   * @apiName EABySE
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the environmental authority total area by strategic ecosystems.
-   *
-   * The result is the list of strategic ecosystems with area and percentage inside the
-   * environmental authority and an extra element with the total area inside strategic ecosystems on
-   * the environmental authority.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the strategic ecosystem
-   * @apiSuccess {Number} result.area Area of the specified SE in the EA
-   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the EA area.
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se
-   * @apiUse SEInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/se',
-    errorHandler((req, res, next) =>
-      eaService.getAreaBySE(req.params.ea_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_strategic_ecosystems
    * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
    * @apiName SEDetailInEA
    * @apiVersion 0.1.0
@@ -227,40 +194,6 @@ module.exports = (errorHandler, eaService) => {
     errorHandler((req, res, next) =>
       eaService.getSEDetails(req.params.ea_id, req.params.se_type).then((details) => {
         res.send(details);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/se/:se_type/coverage SECoverageInEA
-   * @apiName SECoverageInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Given an strategic ecosystem type inside an specific environmental authority, get the coverage
-   * distribution in that area.
-   *
-   * The result is the list of cover types with area and percentage inside the specified strategic
-   * ecosystem in the environmental authority.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
-   * @apiSuccess {Number} result.area Area of the specified coverage
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se/Páramo/coverage
-   * @apiUse SECoverageInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/se/:se_type/coverage',
-    errorHandler((req, res, next) =>
-      eaService.getCoverageInSE(req.params.ea_id, req.params.se_type).then((areas) => {
-        res.send(areas);
         next();
       }),
     ),

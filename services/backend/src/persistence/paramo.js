@@ -6,17 +6,17 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities, geoHFPara
    * @param {Number} year optional year to filter data, 2012 by default
    */
   findAreaByEA: (eaId, year = 2012) =>
-  geoParamoDetails
-    .query()
-    .where({ id_ea: eaId, year_cover: year })
-    .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
+    geoParamoDetails
+      .query()
+      .where({ id_ea: eaId, year_cover: year })
+      .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
 
   /**
-    * Get the area inside the given basin subzone
-    *
-    * @param {String} subzoneId basin subzone id
-    * @param {Number} year optional year to filter data, 2012 by default
-    */
+   * Get the area inside the given basin subzone
+   *
+   * @param {String} subzoneId basin subzone id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
   findAreaBySubzone: (subzoneId, year = 2012) =>
     geoParamoDetails
       .query()
@@ -24,17 +24,17 @@ module.exports = (db, { geoParamoDetails, geoEnvironmentalAuthorities, geoHFPara
       .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
 
   /**
-    * Get the area inside the given state
-    *
-    * @param {String} stateId state id
-    * @param {Number} year optional year to filter data, 2012 by default
-    */
+   * Get the area inside the given state
+   *
+   * @param {String} stateId state id
+   * @param {Number} year optional year to filter data, 2012 by default
+   */
   findAreaByState: (stateId, year = 2012) =>
     geoParamoDetails
       .query()
       .where({ id_state: stateId, year_cover: year })
       .select(db.raw('coalesce(SUM(area_ha), 0) as area')),
-     
+
   /**
    * Find total area
    *

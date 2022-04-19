@@ -19,32 +19,6 @@ module.exports = (basinSubzonePersistence, seService) => {
     getAll: async () => basinSubzonePersistence.findAll(),
 
     /**
-     * Get subzone total area divided by strategic ecosystem type
-     */
-    /* getAreaBySE: async (subzoneId) => {
-      let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-      if (subzoneArea.length === 0) {
-        throw new Error("basin subzone doesn't exists");
-      }
-      subzoneArea = subzoneArea[0].area;
-      const areas = await seService.getAreasBySubzone(subzoneId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / subzoneArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / subzoneArea,
-        type: 'Total',
-      });
-      return result;
-    }, */
-
-    /**
      * Get information about an strategic ecosystem in a basin subzone. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
@@ -60,21 +34,6 @@ module.exports = (basinSubzonePersistence, seService) => {
         total_area: seArea.area,
       };
     },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in a basin subzone
-     *
-     * @param {String} subzoneId subzone id
-     * @param {String} seType strategic ecosystem type
-     */
-    /* getCoverageInSE: async (subzoneId, seType) => {
-      const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
-      const coverAreas = await seService.getSECoverageInSubzone(subzoneId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-    }, */
 
     /**
      * Get protected area distribution in an strategic ecosystem in a basin subzone

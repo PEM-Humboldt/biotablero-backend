@@ -41,12 +41,12 @@ module.exports = (
         .raw(
           `SELECT DISTINCT(st.id_subzone, st.id_ea) as remove,
         st.id_subzone, st.id_ea, st.id_biome,
-        gb.name as biome_name, gea.name as ea_name, gbs.name_subzone as nom_szh
+        gb.name as biome_name, gea.geofence_name as ea_name, gbs.geofence_name as nom_szh
         FROM project_impacted_biomes as pib
         INNER JOIN geo_biomes as gb ON pib.id_biome = gb.id_biome
         INNER JOIN geo_compensation_strategies_2018 as st ON gb.id_main_biome = st.id_biome
-        INNER JOIN geo_basin_subzones AS gbs ON st.id_subzone = gbs.id_subzone
-        INNER JOIN geo_environmental_authorities as gea ON st.id_ea = gea.id_ea
+        INNER JOIN geo_basin_subzones AS gbs ON st.id_subzone = gbs.geofence_id
+        INNER JOIN geo_environmental_authorities as gea ON st.id_ea = gea.geofence_id
         WHERE pib.id_project = ?`,
           projectId,
         )

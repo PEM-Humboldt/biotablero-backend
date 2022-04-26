@@ -83,7 +83,10 @@ module.exports = (
      * Get all environmental authorities id and name
      */
     findAll: () =>
-      geoEnvironmentalAuthorities.query().select('id_ea as id', 'name').orderBy('name'),
+      geoEnvironmentalAuthorities
+        .query()
+        .select('geofence_id as id', 'geofence_name as name')
+        .orderBy('name'),
 
     /**
      * Get the total area for the given environmental authority
@@ -175,7 +178,7 @@ module.exports = (
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_environmental_authorities as ea1
             INNER JOIN (
-              SELECT gid, id_ea, name, area_ha
+              SELECT gid, geofence_id, geofence_name, area_ha
               FROM geo_environmental_authorities
             ) as ea2 ON ea1.gid = ea2.gid
           ) as f
@@ -204,10 +207,10 @@ module.exports = (
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_environmental_authorities as ea1
             INNER JOIN (
-              SELECT gid as id, name as key
+              SELECT gid as id, geofence_name as key
               FROM geo_environmental_authorities
             ) as ea2 ON ea1.gid = ea2.id
-            WHERE ea1.id_ea = ?
+            WHERE ea1.geofence_id = ?
           ) as f
         ) as fc
         `,

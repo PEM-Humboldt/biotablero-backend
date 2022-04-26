@@ -8,10 +8,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
      * Get all basin zones
      */
     findAll: () =>
-      geoBasinSubzones
-        .query()
-        .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
-        .orderBy('name'),
+      geoBasinSubzones.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
 
     /**
      * Get the total area for the given subzone
@@ -103,7 +100,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_basin_subzones as sz1
             INNER JOIN (
-              SELECT gid, id_basin, id_zone, id_subzone, name_subzone, area_ha
+              SELECT gid, geofence_id, geofence_name, geofence_type, area_ha
               FROM geo_basin_subzones
             ) as sz2 ON sz1.gid = sz2.gid
           ) as f
@@ -132,10 +129,10 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_basin_subzones as sz1
             INNER JOIN (
-              SELECT gid as id, name_subzone as key
+              SELECT gid as id, geofence_name as key
               FROM geo_basin_subzones
             ) as sz2 ON sz1.gid = sz2.id
-            WHERE sz1.id_subzone = ?
+            WHERE sz1.geofence_id = ?
           ) as f
         ) as fc
         `,

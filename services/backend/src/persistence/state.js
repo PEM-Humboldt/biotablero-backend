@@ -7,7 +7,8 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
     /**
      * Get all states id and name
      */
-    findAll: () => geoStates.query().select('id_state as id', 'name').orderBy('name'),
+    findAll: () =>
+      geoStates.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
 
     /**
      * Get the total area for the given state
@@ -99,7 +100,7 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_states as s1
             INNER JOIN (
-              SELECT gid, id_country, id_state, name, area_ha
+              SELECT gid, geofence_id, geofence_name, area_ha
               FROM geo_states
             ) as s2 ON s1.gid = s2.gid
           ) as f
@@ -128,10 +129,10 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_states as s1
             INNER JOIN (
-              SELECT gid as id, name as key
+              SELECT gid as id, geofence_name as key
               FROM geo_states
             ) as s2 ON s1.gid = s2.id
-            WHERE s1.id_state = ?
+            WHERE s1.geofence_id = ?
           ) as f
         ) as fc
         `,

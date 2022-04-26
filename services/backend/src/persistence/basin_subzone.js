@@ -8,10 +8,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
      * Get all basin zones
      */
     findAll: () =>
-      geoBasinSubzones
-        .query()
-        .select('geofence_id as id', 'geofence_name as name')
-        .orderBy('name'),
+      geoBasinSubzones.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
 
     /**
      * Get the total area for the given subzone

@@ -83,7 +83,10 @@ module.exports = (
      * Get all environmental authorities id and name
      */
     findAll: () =>
-      geoEnvironmentalAuthorities.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
+      geoEnvironmentalAuthorities
+        .query()
+        .select('geofence_id as id', 'geofence_name as name')
+        .orderBy('name'),
 
     /**
      * Get the total area for the given environmental authority

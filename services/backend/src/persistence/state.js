@@ -7,7 +7,8 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
     /**
      * Get all states id and name
      */
-    findAll: () => geoStates.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
+    findAll: () =>
+      geoStates.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
 
     /**
      * Get the total area for the given state

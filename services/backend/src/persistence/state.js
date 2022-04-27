@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, geoHF }) => {
+module.exports = (db, { geoStates, geoHFPersistence, geoHF }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -14,13 +14,9 @@ module.exports = (db, { geoStates, colombiaCoverageDetails, geoHFPersistence, ge
      * Get the total area for the given state
      *
      * @param {String} stateId state id
-     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaByState: (stateId, year = 2012) =>
-      colombiaCoverageDetails
-        .query()
-        .where({ id_state: stateId, year_cover: year })
-        .sum('area_ha as area'),
+    getTotalAreaByState: (stateId) =>
+      geoStates.query().select('area_ha as area').where({ geofence_id: stateId }),
 
     /**
      * Find the current area distribution for each human footprint category in the

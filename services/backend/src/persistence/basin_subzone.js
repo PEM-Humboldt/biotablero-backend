@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersistence, geoHF }) => {
+module.exports = (db, { geoBasinSubzones, geoHFPersistence, geoHF }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -14,13 +14,9 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
      * Get the total area for the given subzone
      *
      * @param {String} subzoneId subzone id
-     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaBySubzone: (subzoneId, year = 2012) =>
-      colombiaCoverageDetails
-        .query()
-        .where({ id_subzone: subzoneId, year_cover: year })
-        .sum('area_ha as area'),
+    getTotalAreaBySubzone: (subzoneId) =>
+      geoBasinSubzones.query().select('area_ha as area').where({ geofence_id: subzoneId }),
 
     /**
      * Find the current area distribution for each human footprint category in the

@@ -31,11 +31,11 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup geofence_ea
-   * @api {get} /ea/:ea_id EADetails
-   * @apiName EADetails
+   * @api {get} /ea/:ea_id EATotalArea
+   * @apiName EATotalArea
    * @apiVersion 0.1.0
    * @apiDescription
-   * Get details about an specific environmental authority. For now, only the total area is returned
+   * Get the total area of a specific environmental authority.
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
@@ -44,7 +44,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/AMVA
-   * @apiUse GeofenceDetailsExample
+   * @apiUse GeofenceTotalAreaExample
    */
   router.get(
     '/ea/:ea_id',

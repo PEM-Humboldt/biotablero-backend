@@ -36,11 +36,11 @@ module.exports = (errorHandler, stateService) => {
 
   /**
    * @apiGroup geofence_states
-   * @api {get} /states/:category StateDetails
-   * @apiName StateDetails
+   * @api {get} /states/:state_id StateTotalArea
+   * @apiName StateTotalArea
    * @apiVersion 0.1.0
    * @apiDescription
-   * Get details about an specific state. For now, only the total area is returned.
+   * Get the total area of a specifc state.
    *
    * @apiParam (Path params) {Number} state_id state id
    *
@@ -49,7 +49,7 @@ module.exports = (errorHandler, stateService) => {
    *
    * @apiExample {curl} Example usage:
    *  /states/1
-   * @apiUse GeofenceDetailsExample
+   * @apiUse GeofenceTotalAreaExample
    */
   router.get(
     '/states/:state_id',

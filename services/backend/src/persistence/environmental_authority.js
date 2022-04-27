@@ -2,14 +2,7 @@ const config = require('config');
 
 module.exports = (
   db,
-  {
-    colombiaDetails,
-    eaBioticUnits,
-    geoEnvironmentalAuthorities,
-    colombiaCoverageDetails,
-    geoHFPersistence,
-    geoHF,
-  },
+  { colombiaDetails, eaBioticUnits, geoEnvironmentalAuthorities, geoHFPersistence, geoHF },
 ) => {
   const geometriesConfig = config.geometries;
 
@@ -92,13 +85,12 @@ module.exports = (
      * Get the total area for the given environmental authority
      *
      * @param {String} envAuthorityId EA id
-     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaByEA: (envAuthorityId, year = 2012) =>
-      colombiaCoverageDetails
+    getTotalAreaByEA: (envAuthorityId) =>
+      geoEnvironmentalAuthorities
         .query()
-        .where({ id_ea: envAuthorityId, year_cover: year })
-        .sum('area_ha as area'),
+        .select('area_ha as area')
+        .where({ geofence_id: envAuthorityId }),
 
     /**
      * Find the current area distribution for each human footprint category in the

@@ -1,7 +1,7 @@
 // Common responses in geofence requests
 
 /**
- * @apiDefine GeofenceDetailsExample
+ * @apiDefine GeofenceTotalAreaExample
  * @apiSuccessExample {json} Success-Example:
  *  {
  *    "total_area": 319877.03

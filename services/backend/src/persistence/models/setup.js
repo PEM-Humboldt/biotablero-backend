@@ -4,7 +4,6 @@ const config = require('config');
 
 // Models
 const colombiaDetails = require('./colombia_details');
-const colombiaCoverageDetails = require('./colombia_coverage_details');
 const geoBiomes = require('./geo_biomes');
 const geoCompanyProjects = require('./geo_company_projects');
 const geoEaBiomes = require('./geo_ea_biomes');
@@ -84,7 +83,6 @@ const setupModels = () => {
     geoParamoDetails: geoParamoDetails(dbConn),
     geoTropicalDryForestDetails: geoTropicalDryForestDetails(dbConn),
     colombiaWetlandDetails: colombiaWetlandDetails(dbConn),
-    colombiaCoverageDetails: colombiaCoverageDetails(dbConn),
     dglobalBinaryProtectedAreas: dglobalBinaryProtectedAreas(dbConn),
     geoHF: geoHF(dbConn),
     geoHFParamo: geoHFParamo(dbConn),

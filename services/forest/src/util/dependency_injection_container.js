@@ -35,8 +35,8 @@ bottle.factory('SCIHFService', (container) =>
   SCIHFService(container.SCIHFPersistence, container.restAPI),
 );
 
-bottle.factory('ForestLPService', (container) => 
-  ForestLPService(container.ForestLPPersistence, container.restAPI)
+bottle.factory('ForestLPService', (container) =>
+  ForestLPService(container.ForestLPPersistence, container.restAPI),
 );
 
 bottle.factory('routes', (container) => [

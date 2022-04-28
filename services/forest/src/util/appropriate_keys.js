@@ -36,7 +36,7 @@ module.exports = {
       case category === 'no_bosque' && period === '2011-2015':
         return 'no_forest_2011-2015.tif';
       case category === 'no_bosque' && period === '2016-2021':
-        return 'no_forest_2016-2021.tif';  
+        return 'no_forest_2016-2021.tif';
       default:
         return '';
     }

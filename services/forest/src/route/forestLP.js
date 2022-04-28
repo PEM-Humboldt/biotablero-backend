@@ -60,7 +60,7 @@ module.exports = (errorHandler, ForestLPService) => {
    *  /forest/lp/layer?areaType=ea&areaId=CARDER&category=persistencia&period=2000-2005
    * @apiUse ForestLPLayerExample
    */
-   router.get(
+  router.get(
     '/forest/lp/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.category && req.params.period)) {

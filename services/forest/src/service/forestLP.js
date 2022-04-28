@@ -13,50 +13,35 @@ module.exports = (ForestLPPersistence, restAPI) => {
      */
     getForestLP: async (areaType, areaId) => {
       const data = [];
-
-      let periodData = await ForestLPPersistence.findForestLP(
-        areaTypeKeys(areaType),
-        areaId,
-        '2000-2005',
-      );
-
-      const totalArea = periodData.map((i) => i.area).reduce((prev, next) => prev + next);
-      periodData = periodData.map(obj => ({
-          ...obj,
-          percentage: obj.area / totalArea,
-      }));
-
-      data.push({
-        id: '2000-2005',
-        data: periodData,
-      });
-      return data;
-    },
-
-    getForestLP2: async (areaType, areaId) => {
-      const data = [];
-
+      const promises = [];
       const periods = ['2000-2005', '2006-2010', '2011-2015', '2016-2021'];
 
       periods.forEach((period) => {
-        let periodData = ForestLPPersistence.findForestLP(
-          areaTypeKeys(areaType),
-          areaId,
-          period,
-        );
-        const totalArea = periodData.map((i) => i.area).reduce((prev, next) => prev + next);
-        periodData = periodData.map(obj => ({
-            ...obj,
-            percentage: obj.area / totalArea,
-        }));
-
-        data.push({
-          id: period,
-          data: periodData,
-        });
+        promises.push(ForestLPPersistence.findForestLP(areaTypeKeys(areaType), areaId, period));
       });
 
-      return data;
+      return Promise.all(promises)
+        .then((response) => {
+          response.forEach((item, i) => {
+            const totalArea = item.map((o) => o.area).reduce((prev, next) => prev + next);
+            const periodData = item.map((period) => ({
+              ...period,
+              percentage: period.area / totalArea,
+            }));
+            data.push({
+              id: periods[i],
+              data: periodData,
+            });
+          });
+          return data.every((elem) => Array.isArray(elem) && elem.data.length === 0) ? [] : data;
+        })
+        .catch((e) => {
+          throw new Error({
+            code: 500,
+            stack: e.stack,
+            message: 'Error retrieving forest lp data',
+          });
+        });
     },
 
     /**
@@ -72,7 +57,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
      *
      * @returns {Binary} Image with the geometry
      */
-     getForestLPLayer: async (areaType, areaId, category, period) => {
+    getForestLPLayer: async (areaType, areaId, category, period) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return ForestLPPersistence.findForestLPLayer(

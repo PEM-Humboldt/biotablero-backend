@@ -360,65 +360,6 @@ module.exports = (errorHandler, eaService) => {
   );
 
   /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/lp/categories ForestLPInEA
-   * @apiName ForestLPInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Values for the forest loss and persistence inside the given environmental authority
-   *
-   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result list of objects with information about forest LP
-   * @apiSuccess {String} result.id period
-   * @apiSuccess {String} result.data data for forest LP divided by categories
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CDMB/ecoChange/lp/categories
-   * @apiUse ForestLPExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/lp/categories',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangeLP(req.params.ea_id).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/persistence ForestPersistenceInEA
-   * @apiName ForestPersistenceInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Value for the forest persistence inside the given environmental authority
-   *
-   * Value calculated for 2016-2019 period
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object} result object with forest persistence value
-   * @apiSuccess {String} result.area value of forest persistence area
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CDMB/ecoChange/persistence
-   * @apiUse PersistenceAreaExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/persistence',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangePersistenceValue(req.params.ea_id).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/national NationalLayer
    * @apiName EANationalLayer
@@ -587,38 +528,6 @@ module.exports = (errorHandler, eaService) => {
     errorHandler((req, res, next) =>
       eaService.getBiomesLayer(req.params.ea_id).then((biomes) => {
         res.send(biomes);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/layers/lp/period/:period/categories/ LPCategoriesLayerInEA
-   * @apiName LPCategoriesLayerInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the the forest loss and persistence layer for a given period, divided by categories
-   * inside the given environmental authority
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} period period
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type the geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CARDER/ecoChange/layers/lp/period/2016-2019/categories/
-   * @apiUse ForestLPLayerExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
-        res.send(values);
         next();
       }),
     ),

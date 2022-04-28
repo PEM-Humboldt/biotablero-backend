@@ -24,4 +24,5 @@ module.exports = {
     makeGetRequest(`pa/categories/binary_protected?binary_protected=${binaryProtectedValues}`),
   requestBinaryProtectedByCategory: async (category) =>
     makeGetRequest(`pa/${category}/binary_protected`),
+  requestAreaGeometry: async (areaType, areaId) => makeGetRequest(`${areaType}/layers/${areaId}`),
 };

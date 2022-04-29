@@ -4,12 +4,6 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
-const forestLP = require('../tmp/forestLP.json');
-const forestLPLayer20162019 = require('../tmp/forestLPLayer20162019.json');
-const forestLPLayer20112015 = require('../tmp/forestLPLayer20112015.json');
-const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
-const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
-const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -200,45 +194,6 @@ module.exports = (eaPersistence, seService) => {
         })),
       };
     },
-
-    /**
-     * Get the forest loss and persistence data inside an environmental authority
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object[]} Object of forest loss and persistence values
-     */
-    getEcoChangeLP: async () => forestLP,
-
-    /**
-     * Get the forest loss and persistence layer divided by categories in a given period and
-     * an environmental authority
-     * @param {String} eaId environmental authority id
-     * @param {String} period period
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getEcoChangeLPLayer: async (eaId, period) => {
-      switch (period) {
-        case '2016-2019':
-          return forestLPLayer20162019;
-        case '2011-2015':
-          return forestLPLayer20112015;
-        case '2006-2010':
-          return forestLPLayer20062010;
-        case '2000-2005':
-          return forestLPLayer20002005;
-        default:
-          return {};
-      }
-    },
-
-    /**
-     * Get the forest persistence area inside an environmental authority
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object} Object of forest persistence value
-     */
-    getEcoChangePersistenceValue: async () => forestPersistenceArea,
 
     /**
      * Get the national layer divided by environmental authority

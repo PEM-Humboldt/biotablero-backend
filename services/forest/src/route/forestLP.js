@@ -21,7 +21,7 @@ module.exports = (errorHandler, ForestLPService) => {
    * @apiSuccess {Object[]} result.data data for forest LP divided by categories
    * @apiSuccess {String} result.data.area area of the forest loss and persistence category
    * @apiSuccess {Number} result.data.key forest loss and persistence category
-   * @apiSuccess {Number} result.data.percentage percentage of the forest loss and persistence 
+   * @apiSuccess {Number} result.data.percentage percentage of the forest loss and persistence
    * category
    *
    * @apiExample {curl} Example usage:

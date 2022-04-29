@@ -5,7 +5,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/hf SCIHF
+   * @api {get} /forest/sci/hf SCIHF
    * @apiName SCIHF
    * @apiVersion 1.0.0
    * @apiDescription
@@ -24,11 +24,11 @@ module.exports = (errorHandler, SCIHFService) => {
    * @apiSuccess {String} result.area Area inside the given area
    *
    * @apiExample {curl} Example usage:
-   *  /sci/hf?areaType=ea&areaId=DAGMA
+   *  /forest/sci/hf?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFExample
    */
   router.get(
-    '/sci/hf',
+    '/forest/sci/hf',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };
@@ -43,7 +43,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/hf/layer SCIHFLayer
+   * @api {get} /forest/sci/hf/layer SCIHFLayer
    * @apiName SCIHFLayer
    * @apiVersion 1.0.0
    * @apiDescription
@@ -60,11 +60,11 @@ module.exports = (errorHandler, SCIHFService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /sci/hf/layer?areaType=ea&areaId=DAGMA
+   *  /forest/sci/hf/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFLayerExample
    */
   router.get(
-    '/sci/hf/layer',
+    '/forest/sci/hf/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };
@@ -79,7 +79,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /sci/:sci_cat/hf/:hf_pers/layer SCIHFPALayer
+   * @api {get} /forest/sci/:sci_cat/hf/:hf_pers/layer SCIHFPALayer
    * @apiName SCIHFPALayer
    * @apiVersion 1.0.0
    * @apiDescription
@@ -99,11 +99,11 @@ module.exports = (errorHandler, SCIHFService) => {
    * (type, properties, geometry)
    *
    * @apiExample {curl} Example usage:
-   *  /sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA
+   *  /forest/sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFPALayerExample
    */
   router.get(
-    '/sci/:sciCat/hf/:hfPers/layer',
+    '/forest/sci/:sciCat/hf/:hfPers/layer',
     errorHandler((req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId required' };

@@ -11,7 +11,7 @@ module.exports = (errorHandler, ForestLPService) => {
    * @apiDescription
    * Values for the forest loss and persistence inside the given environmental authority
    *
-   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
+   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2021 periods
    *
    * @apiParam (Query params) {String|Number} areaType area type
    * @apiParam (Query params) {String} areaId area id
@@ -52,7 +52,7 @@ module.exports = (errorHandler, ForestLPService) => {
    * @apiParam (Query params) {String} category forest loss and persistence category.
    * (Options: persistencia, perdida, no_bosque)
    * @apiParam (Query params) {String} period period.
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
+   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2021)
    *
    * @apiSuccess {Binary} result image with the geometry
    *

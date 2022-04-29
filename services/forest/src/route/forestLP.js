@@ -19,8 +19,8 @@ module.exports = (errorHandler, ForestLPService) => {
    * @apiSuccess {Object[]} result list of objects with information about forest LP
    * @apiSuccess {String} result.id period
    * @apiSuccess {Object[]} result.data data for forest LP divided by categories
-   * @apiSuccess {String} result.data.area area of the forest loss and persistence category
-   * @apiSuccess {Number} result.data.key forest loss and persistence category
+   * @apiSuccess {Number} result.data.area area of the forest loss and persistence category
+   * @apiSuccess {String} result.data.key forest loss and persistence category
    * @apiSuccess {Number} result.data.percentage percentage of the forest loss and persistence
    * category
    *

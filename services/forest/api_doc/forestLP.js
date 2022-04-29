@@ -1,6 +1,6 @@
 /**
  * @apiDefine s_forest_lp Search > Forest loss and persistence
- * Information related to forest loss ans persistence in a given geofence.
+ * Information related to forest loss and persistence in a given geofence.
  */
 
 /**

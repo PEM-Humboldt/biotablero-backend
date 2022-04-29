@@ -1,4 +1,4 @@
-const { areaTypeKeys, rasterForestLPSEKeys } = require('../util/appropriate_keys');
+const { areaTypeKeys, rasterForestLPKeys } = require('../util/appropriate_keys');
 const { forestLPColorSet } = require('../util/colorSet');
 
 module.exports = (ForestLPPersistence, restAPI) => {
@@ -62,7 +62,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
         return ForestLPPersistence.findForestLPLayer(
           areaGeom.features[0].geometry,
-          rasterForestLPSEKeys(category, period),
+          rasterForestLPKeys(category, period),
           forestLPColorSet(category),
         );
       } catch (e) {

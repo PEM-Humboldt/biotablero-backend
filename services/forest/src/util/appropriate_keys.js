@@ -11,7 +11,7 @@ module.exports = {
         return val;
     }
   },
-  rasterForestLPSEKeys: (category, period) => {
+  rasterForestLPKeys: (category, period) => {
     switch (true) {
       case category === 'persistencia' && period === '2000-2005':
         return 'persistence_2000-2005.tif';

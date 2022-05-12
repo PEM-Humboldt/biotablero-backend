@@ -12,7 +12,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup geofence_states
    * @api {get} /states listAll
    * @apiName listStates
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available states
    *
@@ -38,7 +38,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup geofence_states
    * @api {get} /states/:state_id StateTotalArea
    * @apiName StateTotalArea
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the total area of a specifc state.
    *
@@ -65,7 +65,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup geofence_states
    * @api {get} /states/:state_id/municipalities MunicipalitiesInState
    * @apiName stateByMunicipalities
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all municipalities information in the given state
    *
@@ -93,7 +93,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /states/:state_id/se/:se_type SEDetailInState
    * @apiName SEDetailInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific state, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
@@ -123,7 +123,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/current/categories CategoriesInState
    * @apiName CategoriesInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Area distribution for each human footprint category in the given state
    *
@@ -155,7 +155,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/current/value CurrentValueInState
    * @apiName CurrentValueInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Value and category of the current value of human footprint inside the given state
    *
@@ -187,7 +187,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/persistence PersistenceInState
    * @apiName HFPersistenceInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List the persistence of human footprint inside the given state.
    *
@@ -220,7 +220,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/timeline TimeLineInState
    * @apiName TimeLineInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time inside the given state
    *
@@ -250,7 +250,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/se/:se_type/hf/timeline SETimeLineInState
    * @apiName SETimeLineInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time for a strategic ecosystem inside the given
    * state
@@ -282,7 +282,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup geofence_states
    * @api {get} /states/layers/national NationalLayer
    * @apiName StatesNationalLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the national layer divided by states
    *
@@ -310,7 +310,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup geofence_states
    * @api {get} /states/layers/:state_id StateLayer
    * @apiName StateLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific state
    *
@@ -336,7 +336,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /states/:state_id/se/layers/:se_type SEInStateLayer
    * @apiName SEInStateLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific strategic ecosystem inside an state
    *
@@ -365,7 +365,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/layers/current/categories CategoriesLayerInState
    * @apiName CategoriesLayerInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the current human footprint layer divided by categories in a given state
    *
@@ -394,7 +394,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiGroup s_hf
    * @api {get} /states/:state_id/hf/layers/persistence PersistenceLayerInState
    * @apiName PersistenceLayerInState
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the persistence human footprint layer divided by categories in a given state
    *

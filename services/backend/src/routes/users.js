@@ -29,7 +29,7 @@ module.exports = (errorHandler, userService) => {
    * @apiGroup users
    * @api {post} /users/login loginUser
    * @apiName loginUser
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Authenticate a user. Properties of the returned object varies, since these are defined in the
    *  configuration file, but it includes at least username.

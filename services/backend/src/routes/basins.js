@@ -7,7 +7,7 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinAreas listBasinAreas
    * @apiName listBasinAreas
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available basin areas
    *
@@ -33,7 +33,7 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinZones listBasinZones
    * @apiName listBasinZones
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available basin zones
    *

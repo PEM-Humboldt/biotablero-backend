@@ -7,7 +7,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea listAll
    * @apiName listEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available environmental authorities
    *
@@ -33,7 +33,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/:ea_id EATotalArea
    * @apiName EATotalArea
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the total area of a specific environmental authority.
    *
@@ -60,7 +60,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_compensation_factor
    * @api {get} /ea/:ea_id/compensationFactor CompensationFactorInEA
    * @apiName CompensationFactorInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by compensation factor
    *
@@ -88,7 +88,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_biotic_unit
    * @api {get} /ea/:ea_id/bioticUnit BioticUnitInEA
    * @apiName BioticUnitInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by biotic units
    *
@@ -116,7 +116,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_general_biome
    * @api {get} /ea/:ea_id/generalBiome GeneralBiomeInEA
    * @apiName GeneralBiomeInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by general biome (different from IAvH biomes).
    *
@@ -144,7 +144,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/:ea_id/biome/:name_biome/subzone SubzonesInBiomeInEA
    * @apiName SubzonesInBiomeInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate a selected biome inside an environmental authority by basin subzones
    *
@@ -173,7 +173,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
    * @apiName SEDetailInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific environmental authority, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
@@ -203,7 +203,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/current/categories CategoriesInEA
    * @apiName CategoriesInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Area distribution for each human footprint category in the given environmental authority
    *
@@ -235,7 +235,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
    * @apiName CurrentValueInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Value and category of the current human footprint inside the given environmental authority
    *
@@ -267,7 +267,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/persistence PersistenceInEA
    * @apiName HFPersistenceInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List the persistence of human footprint inside the given environmental authority.
    *
@@ -301,7 +301,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/timeline TimeLineInEA
    * @apiName TimeLineInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time inside the given environmental authority
    *
@@ -331,7 +331,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/se/:se_type/hf/timeline SETimeLineInEA
    * @apiName SETimeLineInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time for a strategic ecosystem inside the given
    * environmental authority
@@ -363,7 +363,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/national NationalLayer
    * @apiName EANationalLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the national layer divided by environmental authority
    *
@@ -391,7 +391,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/:ea_id EALayer
    * @apiName EALayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific environmental authority
    *
@@ -417,7 +417,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /ea/:ea_id/se/layers/:se_type SEInEALayer
    * @apiName SEInEALayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific strategic ecosystem inside an environmental authority
    *
@@ -446,7 +446,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/layers/current/categories CategoriesLayerInEA
    * @apiName CategoriesLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the current human footprint layer divided by categories in a given
    * environmental authority
@@ -476,7 +476,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/layers/persistence PersistenceLayerInEA
    * @apiName PersistenceLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the persistence human footprint layer divided by categories in a given
    * environmental authority
@@ -506,7 +506,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/:ea_id/biomes BiomesLayerInEA
    * @apiName BiomesLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Find all biomes that belong to the given environmental authority.
    *

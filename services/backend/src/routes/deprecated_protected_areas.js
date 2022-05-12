@@ -7,7 +7,7 @@ module.exports = (errorHandler, paService) => {
    * @apiGroup geofence_pa
    * @api {get} /pa/categories/binary_protected listCategoriesByBinaryProtected
    * @apiName listCategoriesByBinaryProtected
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List available protected area categories for the given binary protected values
    *
@@ -39,7 +39,7 @@ module.exports = (errorHandler, paService) => {
    * @apiGroup geofence_pa
    * @api {get} /pa/:category/binary_protected BinaryProtectedByCategory
    * @apiName BinaryProtectedByCategory
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the binary protected value for the given category name
    *

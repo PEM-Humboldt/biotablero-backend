@@ -7,7 +7,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones listBasinSubzones
    * @apiName listBasinSubzones
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available basin sub-zones
    *
@@ -35,7 +35,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/:subzone_id SubzoneTotalArea
    * @apiName SubzoneTotalArea
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the total area of a specific basin subzone.
    *
@@ -62,7 +62,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /basinSubzones/:subzone_id/se/:se_type SEDetailInSubzone
    * @apiName SEDetailInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific basin subzone, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
@@ -94,7 +94,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/current/categories CategoriesInSubzone
    * @apiName CategoriesInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Area distribution for each human footprint category in the given subzone
    *
@@ -126,7 +126,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/current/value CurrentValueInSubzone
    * @apiName CurrentValueInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Value and category of the current value of human footprint inside the given basin subzone
    *
@@ -158,7 +158,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/persistence PersistenceInSubzone
    * @apiName HFPersistenceInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List the persistence of human footprint inside the given basin subzone.
    *
@@ -191,7 +191,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/timeline TimeLineInSubzone
    * @apiName TimeLineInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time inside the given basin subzone
    *
@@ -221,7 +221,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/se/:se_type/hf/timeline SETimeLineInSubzone
    * @apiName SETimeLineInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time for a strategic ecosystem inside the given
    * basin subzone
@@ -255,7 +255,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/national NationalLayer
    * @apiName BasinSubzoneNationalLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the national layer divided by basin subzones
    *
@@ -283,7 +283,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup geofence_bs
    * @api {get} /basinSubzones/layers/:subzone_id SubzoneLayer
    * @apiName SubzoneLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific basin subzone
    *
@@ -309,7 +309,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /basinSubzones/:subzone_id/se/layers/:se_type SEInSubzoneLayer
    * @apiName SEInSubzoneLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific strategic ecosystem inside a basin subzone
    *
@@ -338,7 +338,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/layers/current/categories CategoriesLayerInSubzone
    * @apiName CategoriesLayerInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the current human footprint layer divided by categories in a given basin subzone
    *
@@ -367,7 +367,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiGroup s_hf
    * @api {get} /basinSubzones/:subzone_id/hf/layers/persistence PersistenceLayerInSubzone
    * @apiName PersistenceLayerInSubzone
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the persistence human footprint layer divided by categories in a given basin subzone
    *

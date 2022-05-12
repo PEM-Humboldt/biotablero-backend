@@ -211,7 +211,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects listProjectsByCompany
    * @apiName listProjectsByCompany
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Find all projects that belongs to a given company.
    * If group_props is passed, results will be grouped by the first prop, then by the second, so on.
@@ -253,7 +253,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project getProjectById
    * @apiName getProjectById
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Find a project by its id
    *
@@ -287,7 +287,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects createProject
    * @apiName createProject
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Create a project
    *
@@ -328,7 +328,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {post} /companies/:id_company/projects/:id_project/biomes addImpactedBiomes
    * @apiName addImpactedBiomes
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Associate a set of biomes as impacted by a given project. This automatically updates the
    *  associated project total area
@@ -385,7 +385,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/decisionTree impactedBiomesDecisionTree
    * @apiName impactedBiomesDecisionTree
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the impacted biomes decision tree for a given project
    *
@@ -421,7 +421,7 @@ module.exports = (errorHandler, projectService) => {
    * @apiGroup comp_companiesProjects
    * @api {get} /companies/:id_company/projects/:id_project/biomes getImpactedBiomes
    * @apiName getImpactedBiomes
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the impacted biomes for a given project
    *

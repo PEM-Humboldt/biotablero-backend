@@ -29,4 +29,4 @@ jobs:
     - name: verify docs up to date
       run: |
         yarn all_docs
-        git diff --exit-code --quiet ':(exclude)docs/api_project.js' ':(exclude)docs/api_project.json'
+        git diff --exit-code --quiet ':(exclude)docs/api_project.js' ':(exclude)docs/api_project.json' ':(exclude)docs/assets/main.bundle.js'

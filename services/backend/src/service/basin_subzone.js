@@ -4,12 +4,6 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
-const forestLP = require('../tmp/forestLP.json');
-const forestLPLayer20162019 = require('../tmp/forestLPLayer20162019.json');
-const forestLPLayer20112015 = require('../tmp/forestLPLayer20112015.json');
-const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
-const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
-const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (basinSubzonePersistence, seService) => {
   const basinSubzone = {
@@ -17,32 +11,6 @@ module.exports = (basinSubzonePersistence, seService) => {
      * Get a list with states information
      */
     getAll: async () => basinSubzonePersistence.findAll(),
-
-    /**
-     * Get subzone total area divided by strategic ecosystem type
-     */
-    getAreaBySE: async (subzoneId) => {
-      let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-      if (subzoneArea.length === 0) {
-        throw new Error("basin subzone doesn't exists");
-      }
-      subzoneArea = subzoneArea[0].area;
-      const areas = await seService.getAreasBySubzone(subzoneId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / subzoneArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / subzoneArea,
-        type: 'Total',
-      });
-      return result;
-    },
 
     /**
      * Get information about an strategic ecosystem in a basin subzone. Includes:
@@ -59,90 +27,6 @@ module.exports = (basinSubzonePersistence, seService) => {
         national_percentage: seArea.area / seNationalArea.area,
         total_area: seArea.area,
       };
-    },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in a basin subzone
-     *
-     * @param {String} subzoneId subzone id
-     * @param {String} seType strategic ecosystem type
-     */
-    getCoverageInSE: async (subzoneId, seType) => {
-      const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
-      const coverAreas = await seService.getSECoverageInSubzone(subzoneId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-    },
-
-    /**
-     * Get protected area distribution in an strategic ecosystem in a basin subzone
-     *
-     * @param {String} subzoneId basin subzone id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (subzoneId, seType) => {
-      const seArea = await seService.getSEAreaInSubzone(subzoneId, seType);
-      const paAreas = await seService.getSEPAInSubzone(subzoneId, seType);
-
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: parseFloat(area.area) / parseFloat(seArea.area),
-      }));
-      return result;
-    },
-
-    /**
-     * Get subzone total area divided by protected area type
-     *
-     * @param {String} subzoneId basin subzone id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (subzoneId) => {
-      let subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
-      if (subzoneArea[0].area === null) {
-        throw new Error("basin subzone doesn't exists");
-      }
-      subzoneArea = subzoneArea[0].area;
-      const areas = await basinSubzonePersistence.findAreaByPA(subzoneId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / subzoneArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / subzoneArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
-     * Get subzone total area divided by protected area type
-     *
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the basin subzone
-     */
-    getAreaByCoverage: async (subzoneId) => {
-      let subzoneArea = await basinSubzone.getTotalArea(subzoneId);
-      subzoneArea = subzoneArea.total_area;
-      const areas = await basinSubzonePersistence.findAreaByCoverage(subzoneId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / subzoneArea,
-      }));
-      return result;
     },
 
     /**
@@ -253,45 +137,6 @@ module.exports = (basinSubzonePersistence, seService) => {
     },
 
     /**
-     * Get the forest loss and persistence data inside a basin subzone
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object[]} Object of forest loss and persistence values
-     */
-    getEcoChangeLP: async () => forestLP,
-
-    /**
-     * Get the forest loss and persistence layer divided by categories in a given period and
-     * a basin subzone
-     * @param {Number} subzoneId basin subzone id
-     * @param {String} period period
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getEcoChangeLPLayer: async (subzoneId, period) => {
-      switch (period) {
-        case '2016-2019':
-          return forestLPLayer20162019;
-        case '2011-2015':
-          return forestLPLayer20112015;
-        case '2006-2010':
-          return forestLPLayer20062010;
-        case '2000-2005':
-          return forestLPLayer20002005;
-        default:
-          return {};
-      }
-    },
-
-    /**
-     * Get the forest persistence area inside a basin subzone
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object} Object of forest persistence value
-     */
-    getEcoChangePersistenceValue: async () => forestPersistenceArea,
-
-    /**
      * Get the national layer divided by basin subzones
      */
     getNationalLayer: async () => basinSubzonePersistence.findNationalLayer(),
@@ -347,28 +192,6 @@ module.exports = (basinSubzonePersistence, seService) => {
      */
     getHFPersistenceLayerById: async (subzoneId) => {
       const geom = await basinSubzonePersistence.findHFPersistenceLayerById(subzoneId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given basin subzone
-     *
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await basinSubzonePersistence.findCoverageLayer(eaId);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({
           ...feature,

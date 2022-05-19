@@ -7,7 +7,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea listAll
    * @apiName listEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available environmental authorities
    *
@@ -31,11 +31,11 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup geofence_ea
-   * @api {get} /ea/:ea_id EADetails
-   * @apiName EADetails
-   * @apiVersion 0.1.0
+   * @api {get} /ea/:ea_id EATotalArea
+   * @apiName EATotalArea
+   * @apiVersion 2.0.0
    * @apiDescription
-   * Get details about an specific environmental authority. For now, only the total area is returned
+   * Get the total area of a specific environmental authority.
    *
    * @apiParam (Path params) {String} ea_id environmental authority id
    *
@@ -44,7 +44,7 @@ module.exports = (errorHandler, eaService) => {
    *
    * @apiExample {curl} Example usage:
    *  /ea/AMVA
-   * @apiUse GeofenceDetailsExample
+   * @apiUse GeofenceTotalAreaExample
    */
   router.get(
     '/ea/:ea_id',
@@ -60,7 +60,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_compensation_factor
    * @api {get} /ea/:ea_id/compensationFactor CompensationFactorInEA
    * @apiName CompensationFactorInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by compensation factor
    *
@@ -88,7 +88,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_biotic_unit
    * @api {get} /ea/:ea_id/bioticUnit BioticUnitInEA
    * @apiName BioticUnitInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by biotic units
    *
@@ -116,7 +116,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_general_biome
    * @api {get} /ea/:ea_id/generalBiome GeneralBiomeInEA
    * @apiName GeneralBiomeInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate the environmental authority total area by general biome (different from IAvH biomes).
    *
@@ -144,7 +144,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/:ea_id/biome/:name_biome/subzone SubzonesInBiomeInEA
    * @apiName SubzonesInBiomeInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Separate a selected biome inside an environmental authority by basin subzones
    *
@@ -171,42 +171,9 @@ module.exports = (errorHandler, eaService) => {
 
   /**
    * @apiGroup s_strategic_ecosystems
-   * @api {get} /ea/:ea_id/se SEInEA
-   * @apiName EABySE
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the environmental authority total area by strategic ecosystems.
-   *
-   * The result is the list of strategic ecosystems with area and percentage inside the
-   * environmental authority and an extra element with the total area inside strategic ecosystems on
-   * the environmental authority.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the strategic ecosystem
-   * @apiSuccess {Number} result.area Area of the specified SE in the EA
-   * @apiSuccess {Number} result.percentage Percentage of the specified SE respect to the EA area.
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se
-   * @apiUse SEInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/se',
-    errorHandler((req, res, next) =>
-      eaService.getAreaBySE(req.params.ea_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_strategic_ecosystems
    * @api {get} /ea/:ea_id/se/:se_type SEDetailInEA
    * @apiName SEDetailInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Given an strategic ecosystem type inside an specific environmental authority, get more details
    * about that area, for the moment is just the national percentage of that strategic ecosystem
@@ -233,145 +200,10 @@ module.exports = (errorHandler, eaService) => {
   );
 
   /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/se/:se_type/coverage SECoverageInEA
-   * @apiName SECoverageInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Given an strategic ecosystem type inside an specific environmental authority, get the coverage
-   * distribution in that area.
-   *
-   * The result is the list of cover types with area and percentage inside the specified strategic
-   * ecosystem in the environmental authority.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage
-   * @apiSuccess {Number} result.area Area of the specified coverage
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se/Páramo/coverage
-   * @apiUse SECoverageInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/se/:se_type/coverage',
-    errorHandler((req, res, next) =>
-      eaService.getCoverageInSE(req.params.ea_id, req.params.se_type).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_protected_areas
-   * @api {get} /ea/:ea_id/se/:se_type/pa SEPAInEA
-   * @apiName SEPAInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Given an strategic ecosystem type inside an specific environmental authority, get the
-   * distribution of protected area categories in that area.
-   *
-   * The result is the list of protected area types with area and percentage inside the specified
-   * strategic ecosystem in the environmental authority and two extra elements: the total protected
-   * area inside the specified area and the non protected area.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} se_type strategic ecosystem type
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the protected area type
-   * @apiSuccess {Number} result.percentage Percentage of the specified protected area
-   * @apiSuccess {Number} result.area Area of the specified protected area
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/se/Páramo/pa
-   * @apiUse PAInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/se/:se_type/pa',
-    errorHandler((req, res, next) =>
-      eaService.getPAInSE(req.params.ea_id, req.params.se_type).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_protected_areas
-   * @api {get} /ea/:ea_id/pa PAInEA
-   * @apiName EAByPA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the environmental authority total area by protected areas.
-   *
-   * The result is the list of protected area types with area and percentage inside the
-   * environmental authority and two extra elements: the total protected area inside the
-   * environmental authority and the non protected area
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the protected area
-   * @apiSuccess {Number} result.percentage Percentage of the specified PA respect to the EA area.
-   * @apiSuccess {Number} result.area Area of the specified protected area in the environmental
-   *  authority
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/pa
-   * @apiUse PAInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/pa',
-    errorHandler((req, res, next) =>
-      eaService.getAreaByPA(req.params.ea_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/coverage CoverageInEA
-   * @apiName EAByCoverage
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Separate the environmental authority total area by coverage type.
-   *
-   * The result is the list of cover types with area and percentage inside the environmental
-   * authority and an extra element with the total environmental authority area.
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.type Specifies the coverage type
-   * @apiSuccess {Number} result.percentage Percentage of the specified coverage respect to the EA.
-   * @apiSuccess {Number} result.area Area of the specified coverage in the environmental authority
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/coverage
-   * @apiUse CoverageInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/coverage',
-    errorHandler((req, res, next) =>
-      eaService.getAreaByCoverage(req.params.ea_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
-  );
-
-  /**
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/current/categories CategoriesInEA
    * @apiName CategoriesInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Area distribution for each human footprint category in the given environmental authority
    *
@@ -403,7 +235,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/current/value CurrentValueInEA
    * @apiName CurrentValueInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Value and category of the current human footprint inside the given environmental authority
    *
@@ -435,7 +267,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/persistence PersistenceInEA
    * @apiName HFPersistenceInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List the persistence of human footprint inside the given environmental authority.
    *
@@ -469,7 +301,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/timeline TimeLineInEA
    * @apiName TimeLineInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time inside the given environmental authority
    *
@@ -499,7 +331,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/se/:se_type/hf/timeline SETimeLineInEA
    * @apiName SETimeLineInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the human footprint through time for a strategic ecosystem inside the given
    * environmental authority
@@ -528,69 +360,10 @@ module.exports = (errorHandler, eaService) => {
   );
 
   /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/lp/categories ForestLPInEA
-   * @apiName ForestLPInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Values for the forest loss and persistence inside the given environmental authority
-   *
-   * Values calculated for 2000-2005, 2006-2010, 2011-2015, 2016-2019 periods
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object[]} result list of objects with information about forest LP
-   * @apiSuccess {String} result.id period
-   * @apiSuccess {String} result.data data for forest LP divided by categories
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CDMB/ecoChange/lp/categories
-   * @apiUse ForestLPExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/lp/categories',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangeLP(req.params.ea_id).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/persistence ForestPersistenceInEA
-   * @apiName ForestPersistenceInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Value for the forest persistence inside the given environmental authority
-   *
-   * Value calculated for 2016-2019 period
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess {Object} result object with forest persistence value
-   * @apiSuccess {String} result.area value of forest persistence area
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CDMB/ecoChange/persistence
-   * @apiUse PersistenceAreaExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/persistence',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangePersistenceValue(req.params.ea_id).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/national NationalLayer
    * @apiName EANationalLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the national layer divided by environmental authority
    *
@@ -618,7 +391,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/:ea_id EALayer
    * @apiName EALayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific environmental authority
    *
@@ -644,7 +417,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_strategic_ecosystems
    * @api {get} /ea/:ea_id/se/layers/:se_type SEInEALayer
    * @apiName SEInEALayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the layer for an specific strategic ecosystem inside an environmental authority
    *
@@ -673,7 +446,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/layers/current/categories CategoriesLayerInEA
    * @apiName CategoriesLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the current human footprint layer divided by categories in a given
    * environmental authority
@@ -703,7 +476,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup s_hf
    * @api {get} /ea/:ea_id/hf/layers/persistence PersistenceLayerInEA
    * @apiName PersistenceLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the persistence human footprint layer divided by categories in a given
    * environmental authority
@@ -733,7 +506,7 @@ module.exports = (errorHandler, eaService) => {
    * @apiGroup geofence_ea
    * @api {get} /ea/layers/:ea_id/biomes BiomesLayerInEA
    * @apiName BiomesLayerInEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Find all biomes that belong to the given environmental authority.
    *
@@ -755,67 +528,6 @@ module.exports = (errorHandler, eaService) => {
     errorHandler((req, res, next) =>
       eaService.getBiomesLayer(req.params.ea_id).then((biomes) => {
         res.send(biomes);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_ecoChange
-   * @api {get} /ea/:ea_id/ecoChange/layers/lp/period/:period/categories/ LPCategoriesLayerInEA
-   * @apiName LPCategoriesLayerInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the the forest loss and persistence layer for a given period, divided by categories
-   * inside the given environmental authority
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   * @apiParam (Path params) {String} period period
-   * (Options: 2000-2005, 2006-2010, 2011-2015, 2016-2019)
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type the geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CARDER/ecoChange/layers/lp/period/2016-2019/categories/
-   * @apiUse ForestLPLayerExample
-   */
-  router.get(
-    '/ea/:ea_id/ecoChange/layers/lp/period/:period/categories/',
-    errorHandler((req, res, next) =>
-      eaService.getEcoChangeLPLayer(req.params.ea_id, req.params.period).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
-  );
-
-  /**
-   * @apiGroup s_coverages
-   * @api {get} /ea/:ea_id/coverage/layer CoverageLayerInEA
-   * @apiName CoverageLayerInEA
-   * @apiVersion 0.1.0
-   * @apiDescription
-   * Get the coverage layer divided by categories in a given environmental authority
-   *
-   * @apiParam (Path params) {String} ea_id environmental authority id
-   *
-   * @apiSuccess (geojson) {Object[]} result
-   * @apiSuccess (geojson) {String} result.type The geometry type
-   * @apiSuccess (geojson) {Object[]} result.features features information
-   * (type, properties, geometry)
-   *
-   * @apiExample {curl} Example usage:
-   *  /ea/CORPOBOYACA/coverage/layer
-   * @apiUse CoverageLayerInGeofenceExample
-   */
-  router.get(
-    '/ea/:ea_id/coverage/layer',
-    errorHandler((req, res, next) =>
-      eaService.getCoverageLayer(req.params.ea_id).then((geometry) => {
-        res.send(geometry);
         next();
       }),
     ),

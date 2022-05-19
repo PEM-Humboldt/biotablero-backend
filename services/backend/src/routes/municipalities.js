@@ -7,7 +7,7 @@ module.exports = (errorHandler, municipalityService) => {
    * @apiGroup geofence_states
    * @api {get} /municipalities listAllMunicipalities
    * @apiName listMunicipalities
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available municipalities
    *

@@ -4,12 +4,6 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
-const forestLP = require('../tmp/forestLP.json');
-const forestLPLayer20162019 = require('../tmp/forestLPLayer20162019.json');
-const forestLPLayer20112015 = require('../tmp/forestLPLayer20112015.json');
-const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
-const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
-const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (statePersistence, municipalityService, seService) => {
   const state = {
@@ -26,32 +20,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getMunicipalities: async (stateId) => municipalityService.getByState(stateId),
 
     /**
-     * Get state total area divided by strategic ecosystem type
-     */
-    getAreaBySE: async (stateId) => {
-      let stateArea = await statePersistence.getTotalAreaByState(stateId);
-      if (stateArea.length === 0) {
-        throw new Error("state doesn't exists");
-      }
-      stateArea = stateArea[0].area;
-      const areas = await seService.getAreasByState(stateId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / stateArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / stateArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get information about an strategic ecosystem in an state. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
@@ -66,89 +34,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
         national_percentage: seArea.area / seNationalArea.area,
         total_area: seArea.area,
       };
-    },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in a state
-     *
-     * @param {String} stateId state id
-     * @param {String} seType strategic ecosystem type
-     */
-    getCoverageInSE: async (stateId, seType) => {
-      const seArea = await seService.getSEAreaInState(stateId, seType);
-      const coverAreas = await seService.getSECoverageInState(stateId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-    },
-
-    /**
-     * Get protected area distribution in an strategic ecosystem in a state
-     *
-     * @param {String} stateId state id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (stateId, seType) => {
-      const seArea = await seService.getSEAreaInState(stateId, seType);
-      const paAreas = await seService.getSEPAInState(stateId, seType);
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-      return result;
-    },
-
-    /**
-     * Get state total area divided by protected area type
-     *
-     * @param {Number} stateId state id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (stateId) => {
-      let stateArea = await statePersistence.getTotalAreaByState(stateId);
-      if (stateArea[0].area === null) {
-        throw new Error("state doesn't exists");
-      }
-      stateArea = stateArea[0].area;
-      const areas = await statePersistence.findAreaByPA(stateId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / stateArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / stateArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
-     * Get state total area divided by protected area type
-     *
-     * @param {String} stateId state id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the state
-     */
-    getAreaByCoverage: async (stateId) => {
-      let stateArea = await state.getTotalArea(stateId);
-      stateArea = stateArea.total_area;
-      const areas = await statePersistence.findAreaByCoverage(stateId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / stateArea,
-      }));
-      return result;
     },
 
     /**
@@ -260,45 +145,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
     },
 
     /**
-     * Get the forest loss and persistence data inside an state
-     * @param {Number} stateId state id
-     *
-     * @return {Object[]} Object of forest loss and persistence values
-     */
-    getEcoChangeLP: async () => forestLP,
-
-    /**
-     * Get the forest loss and persistence layer divided by categories in a given period and
-     * an state
-     * @param {Number} stateId state id
-     * @param {String} period period
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getEcoChangeLPLayer: async (stateId, period) => {
-      switch (period) {
-        case '2016-2019':
-          return forestLPLayer20162019;
-        case '2011-2015':
-          return forestLPLayer20112015;
-        case '2006-2010':
-          return forestLPLayer20062010;
-        case '2000-2005':
-          return forestLPLayer20002005;
-        default:
-          return {};
-      }
-    },
-
-    /**
-     * Get the forest persistence area inside an state
-     * @param {Number} stateId state id
-     *
-     * @return {Object} Object of forest persistence value
-     */
-    getEcoChangePersistenceValue: async () => forestPersistenceArea,
-
-    /**
      * Get the national layer divided by states
      */
     getNationalLayer: async () => statePersistence.findNationalLayer(),
@@ -355,28 +201,6 @@ module.exports = (statePersistence, municipalityService, seService) => {
      */
     getHFPersistenceLayerById: async (stateId) => {
       const geom = await statePersistence.findHFPersistenceLayerById(stateId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given state
-     *
-     * @param {Number} stateId state id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await statePersistence.findCoverageLayer(eaId);
       if (geom && geom.features) {
         geom.features = geom.features.map((feature) => ({
           ...feature,

@@ -41,14 +41,38 @@ module.exports = {
     switch (true) {
       case val >= 0 && val <= 15:
         return 'natural';
-      case val > 15 && val <= 30:
+      case val > 15 && val <= 40:
         return 'baja';
-      case val > 30 && val <= 60:
+      case val > 40 && val <= 60:
         return 'media';
       case val > 60 && val <= 100:
         return 'alta';
       default:
         return val;
+    }
+  },
+  globalPAAreaTypes: (val) => {
+    switch (val) {
+      case 'ea':
+        return 'id_ea';
+      case 'basinSubzones':
+        return 'id_subzone';
+      case 'states':
+        return 'id_state';
+      default:
+        return null;
+    }
+  },
+  globalPASEKeys: (val) => {
+    switch (val) {
+      case 'Páramo':
+        return 'paramo';
+      case 'Humedal':
+        return 'wetlands';
+      case 'Bosque Seco Tropical':
+        return 'tropical_dry_forest';
+      default:
+        return null;
     }
   },
 };

@@ -51,7 +51,7 @@ module.exports = (errorHandler, strategiesService) => {
    * @apiGroup comp_strategies
    * @api {post} /strategies/biomeSubzoneEA listStrategiesByBiomeSubzoneEA
    * @apiName listStrategiesByBiomeSubzoneEA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all strategies filtered by biome, sub-basin and environmental authority.
    *  They are grouped by strategy type (id)

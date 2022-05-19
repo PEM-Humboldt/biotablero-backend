@@ -1,6 +1,6 @@
 const config = require('config');
 
-module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersistence, geoHF }) => {
+module.exports = (db, { geoBasinSubzones, geoHFPersistence, geoHF }) => {
   const geometriesConfig = config.geometries;
 
   return {
@@ -8,59 +8,15 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
      * Get all basin zones
      */
     findAll: () =>
-      geoBasinSubzones
-        .query()
-        .select('id_subzone as id', 'name_subzone as name', 'id_zone', 'id_basin')
-        .orderBy('name'),
+      geoBasinSubzones.query().select('geofence_id as id', 'geofence_name as name').orderBy('name'),
 
     /**
      * Get the total area for the given subzone
      *
      * @param {String} subzoneId subzone id
-     * @param {Number} year optional year to filter data, 2012 by default
      */
-    getTotalAreaBySubzone: (subzoneId, year = 2012) =>
-      colombiaCoverageDetails
-        .query()
-        .where({ id_subzone: subzoneId, year_cover: year })
-        .sum('area_ha as area'),
-
-    /**
-     * Get the protected area distribution inside the given basin subzone
-     *
-     * @param {String} subzoneId subzone id
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByPA: async (subzoneId, year = 2012) =>
-      db('colombia_coverage_details as cc')
-        .innerJoin(
-          'global_binary_protected_areas as gbpa',
-          'cc.binary_protected',
-          'gbpa.binary_protected',
-        )
-        .where({ 'cc.id_subzone': subzoneId, 'cc.year_cover': year })
-        .groupBy('gbpa.label', 'gbpa.binary_protected')
-        .orderBy('gbpa.binary_protected', 'desc')
-        .select(
-          db.raw('coalesce(SUM(cc.area_ha), 0) as area'),
-          'gbpa.label as type',
-          'gbpa.binary_protected as bp',
-        ),
-
-    /**
-     * Get the coverage area distribution inside the given basin subzone
-     *
-     * @param {Number} subzoneId basin subzone id
-     * @param {Number} year optional year to filter data, 2012 by default
-     */
-    findAreaByCoverage: async (subzoneId, year = 2012) =>
-      colombiaCoverageDetails
-        .query()
-        .where({ id_subzone: subzoneId, year_cover: year })
-        .groupBy('area_type')
-        .sum('area_ha as area')
-        .select('area_type as type')
-        .orderBy('type'),
+    getTotalAreaBySubzone: (subzoneId) =>
+      geoBasinSubzones.query().select('area_ha as area').where({ geofence_id: subzoneId }),
 
     /**
      * Find the current area distribution for each human footprint category in the
@@ -140,7 +96,7 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?))::json as geometry
             FROM geo_basin_subzones as sz1
             INNER JOIN (
-              SELECT gid, id_basin, id_zone, id_subzone, name_subzone, area_ha
+              SELECT gid, geofence_id, geofence_name, geofence_type, area_ha
               FROM geo_basin_subzones
             ) as sz2 ON sz1.gid = sz2.gid
           ) as f
@@ -169,10 +125,10 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
               ST_AsGeoJSON(ST_SimplifyPreserveTopology(geom, ?), 9, 2)::json as geometry
             FROM geo_basin_subzones as sz1
             INNER JOIN (
-              SELECT gid as id, name_subzone as key
+              SELECT gid as id, geofence_name as key
               FROM geo_basin_subzones
             ) as sz2 ON sz1.gid = sz2.id
-            WHERE sz1.id_subzone = ?
+            WHERE sz1.geofence_id = ?
           ) as f
         ) as fc
         `,
@@ -262,48 +218,6 @@ module.exports = (db, { geoBasinSubzones, colombiaCoverageDetails, geoHFPersiste
                 ON geo.key = prop.key
             ) as f
           ) as fc;
-        `,
-          [subzoneId, subzoneId],
-        )
-        .then((layers) => layers.rows[0].collection),
-
-    /**
-     * Get the coverage layer divided by categories in a given basin subzone
-     * @param {Number} subzoneId basin subzone id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    findCoverageLayer: (subzoneId) =>
-      db
-        .raw(
-          `
-        SELECT row_to_json(fc) AS collection
-        FROM (
-          SELECT 'FeatureCollection' AS type, array_to_json(array_agg(f)) AS features
-          FROM (
-            SELECT
-              'Feature' AS TYPE,
-              row_to_json(prop) AS properties,
-              ST_AsGeoJSON(geom)::json AS geometry
-            FROM (
-              SELECT
-                ST_Collect(geom) AS geom,
-                area_type AS key
-              FROM geo_coverages
-              WHERE id_subzone = ?
-              GROUP BY key
-              ) AS geo
-              INNER JOIN (
-                SELECT
-                  area_type AS key,
-                  sum(area_ha) AS area
-                FROM geo_coverages
-                WHERE id_subzone = ?
-                GROUP BY key
-              ) AS prop
-              ON geo.key = prop.key
-          ) as f
-        ) as fc;
         `,
           [subzoneId, subzoneId],
         )

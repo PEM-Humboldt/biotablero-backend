@@ -4,12 +4,6 @@ const {
   SEKeys,
   HFCategoriesRangeKeys,
 } = require('../util/appropriate_keys');
-const forestLP = require('../tmp/forestLP.json');
-const forestLPLayer20162019 = require('../tmp/forestLPLayer20162019.json');
-const forestLPLayer20112015 = require('../tmp/forestLPLayer20112015.json');
-const forestLPLayer20062010 = require('../tmp/forestLPLayer20062010.json');
-const forestLPLayer20002005 = require('../tmp/forestLPLayer20002005.json');
-const forestPersistenceArea = require('../tmp/forestPersistenceArea.json');
 
 module.exports = (eaPersistence, seService) => {
   const envAuth = {
@@ -76,34 +70,6 @@ module.exports = (eaPersistence, seService) => {
     getAll: async () => eaPersistence.findAll(),
 
     /**
-     * Get EA total area divided by strategic ecosystem type
-     *
-     * @param {String} envAuthorityId environmental authority id
-     */
-    getAreaBySE: async (envAuthorityId) => {
-      let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-      if (eaArea.length === 0) {
-        throw new Error("environmental authority doesn't exists");
-      }
-      eaArea = eaArea[0].area;
-      const areas = await seService.getAreasByEA(envAuthorityId);
-      let totalSE = 0;
-      const result = areas.map((se) => {
-        totalSE += parseFloat(se.area);
-        return {
-          ...se,
-          percentage: se.area / eaArea,
-        };
-      });
-      result.unshift({
-        area: totalSE,
-        percentage: totalSE / eaArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
      * Get information about an strategic ecosystem in an environmental authority. Includes:
      * - percentage of the given strategic ecosystem respect the national area
      *
@@ -118,90 +84,6 @@ module.exports = (eaPersistence, seService) => {
         national_percentage: seArea.area / seNationalArea.area,
         total_area: seArea.area,
       };
-    },
-
-    /**
-     * Get coverage areas in an strategic ecosystem in an environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {String} seType strategic ecosystem type
-     */
-    getCoverageInSE: async (envAuthorityId, seType) => {
-      const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
-      const coverAreas = await seService.getSECoverageInEA(envAuthorityId, seType);
-      return coverAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-    },
-
-    /**
-     * Get protected area distribution in an strategic ecosystem in an environmental authority
-     *
-     * @param {String} envAuthorityId environmental authority id
-     * @param {String} seType strategic ecosystem type
-     */
-    getPAInSE: async (envAuthorityId, seType) => {
-      const seArea = await seService.getSEAreaInEA(envAuthorityId, seType);
-      const paAreas = await seService.getSEPAInEA(envAuthorityId, seType);
-      const result = paAreas.map((area) => ({
-        ...area,
-        percentage: area.area / seArea.area,
-      }));
-      return result;
-    },
-
-    /**
-     * Get EA total area divided by protected area type
-     *
-     * @param {String} enAuthorityId environmental authority id
-     *
-     * @returns {Object[]} list of protected areas + 2 elements: total protected area (and
-     * percentage) and non protected area (and percentage)
-     */
-    getAreaByPA: async (envAuthorityId) => {
-      let eaArea = await eaPersistence.getTotalAreaByEA(envAuthorityId);
-      if (eaArea[0].area === null) {
-        throw new Error("environmental authority doesn't exists");
-      }
-      eaArea = eaArea[0].area;
-      const areas = await eaPersistence.findAreaByPA(envAuthorityId);
-      let totalProtected = 0;
-      const result = areas.map((pa) => {
-        if (pa.bp !== '000000000000000') {
-          totalProtected += parseFloat(pa.area);
-        }
-        return {
-          area: pa.area,
-          type: pa.type,
-          percentage: pa.area / eaArea,
-        };
-      });
-      result.unshift({
-        area: totalProtected,
-        percentage: totalProtected / eaArea,
-        type: 'Total',
-      });
-      return result;
-    },
-
-    /**
-     * Get EA total area divided by coverage type
-     *
-     * @param {String} enAuthorityId environmental authority id
-     *
-     * @returns {Object[]} list of protected areas + 1 element: total area in the environmental
-     * authority
-     */
-    getAreaByCoverage: async (envAuthorityId) => {
-      let eaArea = await envAuth.getTotalArea(envAuthorityId);
-      eaArea = eaArea.total_area;
-      const areas = await eaPersistence.findAreaByCoverage(envAuthorityId);
-      const result = areas.map((cover) => ({
-        ...cover,
-        percentage: cover.area / eaArea,
-      }));
-      return result;
     },
 
     /**
@@ -314,45 +196,6 @@ module.exports = (eaPersistence, seService) => {
     },
 
     /**
-     * Get the forest loss and persistence data inside an environmental authority
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object[]} Object of forest loss and persistence values
-     */
-    getEcoChangeLP: async () => forestLP,
-
-    /**
-     * Get the forest loss and persistence layer divided by categories in a given period and
-     * an environmental authority
-     * @param {String} eaId environmental authority id
-     * @param {String} period period
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getEcoChangeLPLayer: async (eaId, period) => {
-      switch (period) {
-        case '2016-2019':
-          return forestLPLayer20162019;
-        case '2011-2015':
-          return forestLPLayer20112015;
-        case '2006-2010':
-          return forestLPLayer20062010;
-        case '2000-2005':
-          return forestLPLayer20002005;
-        default:
-          return {};
-      }
-    },
-
-    /**
-     * Get the forest persistence area inside an environmental authority
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object} Object of forest persistence value
-     */
-    getEcoChangePersistenceValue: async () => forestPersistenceArea,
-
-    /**
      * Get the national layer divided by environmental authority
      */
     getNationalLayer: async () => eaPersistence.findNationalLayer(),
@@ -433,28 +276,6 @@ module.exports = (eaPersistence, seService) => {
       let geometry = await eaPersistence.findBiomesLayerById(envAuthority);
       if (geometry === null || geometry.features === null) geometry = null;
       return geometry;
-    },
-
-    /**
-     * Get the coverage layer divided by categories in a given environmental authority
-     *
-     * @param {String} eaId environmental authority id
-     *
-     * @return {Object} Geojson object with the geometry
-     */
-    getCoverageLayer: async (eaId) => {
-      const geom = await eaPersistence.findCoverageLayer(eaId);
-      if (geom && geom.features) {
-        geom.features = geom.features.map((feature) => ({
-          ...feature,
-          properties: {
-            ...feature.properties,
-            key: feature.properties.key,
-          },
-        }));
-        return geom;
-      }
-      return {};
     },
   };
 

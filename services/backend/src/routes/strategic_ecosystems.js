@@ -21,7 +21,7 @@ module.exports = (errorHandler, seService) => {
    * @apiGroup geofence_se
    * @api {get} /se listAll
    * @apiName listSE
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all available strategic ecosystems
    *
@@ -48,7 +48,7 @@ module.exports = (errorHandler, seService) => {
    * @apiGroup geofence_se
    * @api {get} /se/primary listPrimarySE
    * @apiName listPrimarySE
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List only primary types of strategic ecosystems
    *
@@ -73,7 +73,7 @@ module.exports = (errorHandler, seService) => {
    * @apiGroup geofence_se
    * @api {get} /se/:ecosystem/national SEDetail
    * @apiName SEDetail
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the ecosystem national information
    *
@@ -104,7 +104,7 @@ module.exports = (errorHandler, seService) => {
    * @apiGroup s_protected_areas
    * @api {get} /se/:ecosystem/pa PAInSE
    * @apiName seByPA
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the strategic ecosystem area separated by protected areas
    *
@@ -135,7 +135,7 @@ module.exports = (errorHandler, seService) => {
    * @apiGroup geofence_se
    * @api {get} /se/layers/national NationalLayer
    * @apiName SENationalLayer
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get the national layer divided by strategic ecosystems
    *

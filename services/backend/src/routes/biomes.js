@@ -25,7 +25,7 @@ module.exports = (errorHandler, biomeService) => {
    * @apiGroup biomes
    * @api {get} /biomes getAll
    * @apiName getAllBiomes
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Get all biomes information (without geometry)
    *

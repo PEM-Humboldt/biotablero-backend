@@ -7,7 +7,7 @@ module.exports = (errorHandler, ForestLPService) => {
    * @apiGroup s_forest_lp
    * @api {get} /forest/lp ForestLP
    * @apiName ForestLP
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Values for the forest loss and persistence inside the given environmental authority
    *

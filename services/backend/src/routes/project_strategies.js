@@ -73,7 +73,7 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiGroup comp_companiesProjectsStrategies
    * @api {post} /companies/:id_company/projects/:id_project/strategies createProjectStrategy
    * @apiName createProjectStrategy
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Create a new strategy as part of the selected strategies of the given project
    *
@@ -121,7 +121,7 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @apiGroup comp_companiesProjectsStrategies
    * @api {get} /companies/:id_company/projects/:id_project/strategies listProjectStrategies
    * @apiName listProjectStrategies
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * List all saved (selected) strategies associated with the given project
    *
@@ -172,7 +172,7 @@ module.exports = (errorHandler, projectStrategyService) => {
    * @api {get} /companies/:id_company/projects/:id_project/strategies/download
    *  downloadSelectedStrategies
    * @apiName downloadSelectedStrategies
-   * @apiVersion 0.1.0
+   * @apiVersion 2.0.0
    * @apiDescription
    * Generate a GeoJson file that includes all selected strategies information for a given project
    *

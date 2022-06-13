@@ -766,9 +766,9 @@ __metadata:
     bottlejs: ~2.0.0
     config: ~3.3.7
     knex: ~0.95.15
-    nodemon: ~2.0.15
+    nodemon: ~2.0.16
     pg: ~8.7.3
-    restify: ~8.6.0
+    restify: ~8.6.1
     restify-cors-middleware: ~1.1.1
     restify-router: ~0.6.2
     winston: ~3.5.1
@@ -1282,6 +1282,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"commander@npm:^9.1.0":
+  version: 9.3.0
+  resolution: "commander@npm:9.3.0"
+  checksum: d421ce66fee25792a1470c69aa8d1b86434bf873a96483aa92c8267f81a6f20c6f7c426f5e82f88ac50a8ec4855d3f2787aebcdef8aa559e1080a2337a95a217
+  languageName: node
+  linkType: hard
+
 "commondir@npm:^1.0.1":
   version: 1.0.1
   resolution: "commondir@npm:1.0.1"
@@ -1341,9 +1348,9 @@ __metadata:
     bottlejs: ~2.0.0
     config: ~3.3.7
     knex: ~0.95.15
-    nodemon: ~2.0.15
+    nodemon: ~2.0.16
     pg: ~8.7.3
-    restify: ~8.6.0
+    restify: ~8.6.1
     restify-cors-middleware: ~1.1.1
     restify-router: ~0.6.2
     winston: ~3.5.1
@@ -1476,15 +1483,15 @@ __metadata:
   languageName: node
   linkType: hard
 
-"debug@npm:4.3.3, debug@npm:^4.0.1":
-  version: 4.3.3
-  resolution: "debug@npm:4.3.3"
+"debug@npm:4.3.4":
+  version: 4.3.4
+  resolution: "debug@npm:4.3.4"
   dependencies:
     ms: 2.1.2
   peerDependenciesMeta:
     supports-color:
       optional: true
-  checksum: 14472d56fe4a94dbcfaa6dbed2dd3849f1d72ba78104a1a328047bb564643ca49df0224c3a17fa63533fd11dd3d4c8636cd861191232a2c6735af00cc2d4de16
+  checksum: 3dbad3f94ea64f34431a9cbf0bafb61853eda57bff2880036153438f50fb5a84f27683ba0d8e5426bf41a8c6ff03879488120cf5b3a761e77953169c0600a708
   languageName: node
   linkType: hard
 
@@ -1494,6 +1501,18 @@ __metadata:
   dependencies:
     ms: ^2.1.1
   checksum: b3d8c5940799914d30314b7c3304a43305fd0715581a919dacb8b3176d024a782062368405b47491516d2091d6462d4d11f2f4974a405048094f8bfebfa3071c
+  languageName: node
+  linkType: hard
+
+"debug@npm:^4.0.1":
+  version: 4.3.3
+  resolution: "debug@npm:4.3.3"
+  dependencies:
+    ms: 2.1.2
+  peerDependenciesMeta:
+    supports-color:
+      optional: true
+  checksum: 14472d56fe4a94dbcfaa6dbed2dd3849f1d72ba78104a1a328047bb564643ca49df0224c3a17fa63533fd11dd3d4c8636cd861191232a2c6735af00cc2d4de16
   languageName: node
   linkType: hard
 
@@ -1596,9 +1615,9 @@ __metadata:
     config: ~3.3.7
     knex: ~0.95.15
     node-fetch: ~2.6.7
-    nodemon: ~2.0.15
+    nodemon: ~2.0.16
     pg: ~8.7.3
-    restify: ~8.6.0
+    restify: ~8.6.1
     restify-cors-middleware: ~1.1.1
     restify-router: ~0.6.2
     winston: ~3.5.1
@@ -1673,9 +1692,9 @@ __metadata:
     bookshelf: ~1.2.0
     bottlejs: ~2.0.0
     config: ~3.3.7
-    knex: ~1.0.3
+    knex: ~1.0.7
     node-fetch: ~2.6.7
-    nodemon: ~2.0.15
+    nodemon: ~2.0.16
     pg: ~8.7.3
     restify: ~8.6.1
     restify-cors-middleware: ~1.1.1
@@ -2567,9 +2586,9 @@ __metadata:
     config: ~3.3.7
     knex: ~0.95.15
     node-fetch: ~2.6.7
-    nodemon: ~2.0.15
+    nodemon: ~2.0.16
     pg: ~8.7.3
-    restify: ~8.6.0
+    restify: ~8.6.1
     restify-cors-middleware: ~1.1.1
     restify-router: ~0.6.2
     winston: ~3.5.1
@@ -2692,6 +2711,13 @@ __metadata:
     has: ^1.0.3
     has-symbols: ^1.0.1
   checksum: a9fe2ca8fa3f07f9b0d30fb202bcd01f3d9b9b6b732452e79c48e79f7d6d8d003af3f9e38514250e3553fdc83c61650851cb6870832ac89deaaceb08e3721a17
+  languageName: node
+  linkType: hard
+
+"get-package-type@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "get-package-type@npm:0.1.0"
+  checksum: bba0811116d11e56d702682ddef7c73ba3481f114590e705fc549f4d868972263896af313c57a25c076e3c0d567e11d919a64ba1b30c879be985fc9d44f96148
   languageName: node
   linkType: hard
 
@@ -3752,15 +3778,16 @@ __metadata:
   languageName: node
   linkType: hard
 
-"knex@npm:~1.0.3":
-  version: 1.0.3
-  resolution: "knex@npm:1.0.3"
+"knex@npm:~1.0.7":
+  version: 1.0.7
+  resolution: "knex@npm:1.0.7"
   dependencies:
     colorette: 2.0.16
-    commander: ^8.3.0
-    debug: 4.3.3
+    commander: ^9.1.0
+    debug: 4.3.4
     escalade: ^3.1.1
     esm: ^3.2.25
+    get-package-type: ^0.1.0
     getopts: 2.3.0
     interpret: ^2.2.0
     lodash: ^4.17.21
@@ -3786,7 +3813,7 @@ __metadata:
       optional: true
   bin:
     knex: bin/cli.js
-  checksum: 351bdb6f9a420c3b087dd7208029b99fe4e279eedcc2a4bf8f99b8ee45185425f0dbeb0c52853bb4b1cee458f61d0802ee7945929d13ba6e9c35becf01e53f2d
+  checksum: 57608a3a6813cb66da6f5a078016338166c53ab2cbaab66e81492352023db88fc158e4ad6bbd2156cd9d7c9cac14a4b1e581dd8232b4f9bab2285ea6f1efc5cf
   languageName: node
   linkType: hard
 
@@ -4312,7 +4339,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemon@npm:^2.0.15, nodemon@npm:~2.0.15":
+"nodemon@npm:^2.0.15":
   version: 2.0.15
   resolution: "nodemon@npm:2.0.15"
   dependencies:
@@ -4329,6 +4356,26 @@ __metadata:
   bin:
     nodemon: bin/nodemon.js
   checksum: 0569b09b713fdcc76f06734d7cc106950e69e02069cbf44bda3fae8d266926bdfa003aeddd22f8fcdf46ea6ff51ca64f5528f8006536e79820a26e648ef346cf
+  languageName: node
+  linkType: hard
+
+"nodemon@npm:~2.0.16":
+  version: 2.0.16
+  resolution: "nodemon@npm:2.0.16"
+  dependencies:
+    chokidar: ^3.5.2
+    debug: ^3.2.7
+    ignore-by-default: ^1.0.1
+    minimatch: ^3.0.4
+    pstree.remy: ^1.1.8
+    semver: ^5.7.1
+    supports-color: ^5.5.0
+    touch: ^3.1.0
+    undefsafe: ^2.0.5
+    update-notifier: ^5.1.0
+  bin:
+    nodemon: bin/nodemon.js
+  checksum: ff818aa91b283bd0f1f6cfb8fdc9b5c3e74d5efa0cb72276dc242b742dc35d3f0720d35d99dbe85ecf6df7185f083ef9b1f7908094e43fd4e2508b6805d644dc
   languageName: node
   linkType: hard
 
@@ -5254,41 +5301,6 @@ resolve@^1.9.0:
   dependencies:
     assert-plus: ^0.1.5
   checksum: 4ede2d63eb5a734e3852fd6845e86e4fc76def0b73c69bf7e253ed96a59868970e1664c15c8b3829c08c972d8c0da535360ca2e48d2a0b0fff98b30f05ba2fb1
-  languageName: node
-  linkType: hard
-
-"restify@npm:~8.6.0":
-  version: 8.6.0
-  resolution: "restify@npm:8.6.0"
-  dependencies:
-    assert-plus: ^1.0.0
-    bunyan: ^1.8.12
-    csv: ^5.1.1
-    dtrace-provider: ^0.8.1
-    escape-regexp-component: ^1.0.2
-    ewma: ^2.0.1
-    find-my-way: ^2.0.1
-    formidable: ^1.2.1
-    http-signature: ^1.2.0
-    lodash: ^4.17.11
-    lru-cache: ^5.1.1
-    mime: ^2.4.3
-    negotiator: ^0.6.2
-    once: ^1.4.0
-    pidusage: ^2.0.17
-    qs: ^6.7.0
-    restify-errors: ^8.0.2
-    semver: ^6.1.1
-    send: ^0.16.2
-    spdy: ^4.0.0
-    uuid: ^3.3.2
-    vasync: ^2.2.0
-  dependenciesMeta:
-    dtrace-provider:
-      optional: true
-  bin:
-    report-latency: bin/report-latency
-  checksum: 15dede2d90a1e81aef7c827911a7d3a66daf8c6ae12ac620618784f72eccba660b8d0255a1caa25e8d7bf4b5bdbc230ae2f96c41a6a4a0d4effe5889af51eefb
   languageName: node
   linkType: hard
 

@@ -18,13 +18,13 @@
     "config": "~3.3.7",
     "knex": "~0.95.15",
     "pg": "~8.7.3",
-    "restify": "~8.6.0",
+    "restify": "~8.6.1",
     "restify-cors-middleware": "~1.1.1",
     "restify-router": "~0.6.2",
     "winston": "~3.5.1"
   },
   "devDependencies": {
-    "nodemon": "~2.0.15"
+    "nodemon": "~2.0.16"
   },
   "apidoc": {
     "name": "Main services for Biotablero",

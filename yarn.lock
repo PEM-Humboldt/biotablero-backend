@@ -726,9 +726,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"aws-sdk@npm:~2.1078.0":
-  version: 2.1078.0
-  resolution: "aws-sdk@npm:2.1078.0"
+"aws-sdk@npm:~2.1152.0":
+  version: 2.1152.0
+  resolution: "aws-sdk@npm:2.1152.0"
   dependencies:
     buffer: 4.9.2
     events: 1.1.1
@@ -737,9 +737,9 @@ __metadata:
     querystring: 0.2.0
     sax: 1.2.1
     url: 0.10.3
-    uuid: 3.3.2
+    uuid: 8.0.0
     xml2js: 0.4.19
-  checksum: 2c06e58fc105865720f25380be859090175b6825597fc2234fe13603608a92c37e829b6a93617704f9d1ad3855737ee2ec493432cfac61e8b001eeca9957e0d4
+  checksum: 77cf65206dd4e7df584eab56bd3c34aa925d12fff4af3aae7e739cc2f4c431d1f3c86b35ce9cc66f9d3957756e8a77980f2b684fe521135da6b5b2b8e3d989aa
   languageName: node
   linkType: hard
 
@@ -761,7 +761,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "backend@workspace:services/backend"
   dependencies:
-    aws-sdk: ~2.1078.0
+    aws-sdk: ~2.1152.0
     bookshelf: ~1.2.0
     bottlejs: ~2.0.0
     config: ~3.3.7
@@ -6397,12 +6397,12 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
-"uuid@npm:3.3.2":
-  version: 3.3.2
-  resolution: "uuid@npm:3.3.2"
+"uuid@npm:8.0.0":
+  version: 8.0.0
+  resolution: "uuid@npm:8.0.0"
   bin:
-    uuid: ./bin/uuid
-  checksum: 8793629d2799f500aeea9fcd0aec6c4e9fbcc4d62ed42159ad96be345c3fffac1bbf61a23e18e2782600884fee05e6d4012ce4b70d0037c8e987533ae6a77870
+    uuid: dist/bin/uuid
+  checksum: 56d4e23aa7ac26fa2db6bd1778db34cb8c9f5a10df1770a27167874bf6705fc8f14a4ac414af58a0d96c7653b2bd4848510b29d1c2ef8c91ccb17429c1872b5e
   languageName: node
   linkType: hard
 

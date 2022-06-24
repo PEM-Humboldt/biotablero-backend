@@ -4,7 +4,7 @@ module.exports = (errorHandler, UtilService) => {
   const router = new Router();
 
   /**
-   * @apiGroup s_texts
+   * @apiGroup s_util
    * @api {get} /util/texts Texts
    * @apiName Texts
    * @apiVersion 1.0.0

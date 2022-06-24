@@ -6424,6 +6424,23 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
+"util@workspace:services/util":
+  version: 0.0.0-use.local
+  resolution: "util@workspace:services/util"
+  dependencies:
+    bookshelf: ~1.2.0
+    bottlejs: ~2.0.0
+    config: ~3.3.7
+    knex: ~1.0.7
+    nodemon: ~2.0.16
+    pg: ~8.7.3
+    restify: ~8.6.1
+    restify-cors-middleware: ~1.1.1
+    restify-router: ~0.6.2
+    winston: ~3.7.2
+  languageName: unknown
+  linkType: soft
+
 "uuid@npm:8.0.0":
   version: 8.0.0
   resolution: "uuid@npm:8.0.0"

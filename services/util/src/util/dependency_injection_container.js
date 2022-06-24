@@ -20,12 +20,8 @@ bottle.factory('TextsPersistence', () =>
   TextsPersistence(bookshelfModels.db, bookshelfModels.models, logger),
 );
 
-bottle.factory('UtilService', (container) =>
-  UtilService(container.TextsPersistence),
-);
+bottle.factory('UtilService', (container) => UtilService(container.TextsPersistence));
 
-bottle.factory('routes', (container) => [
-  UtilRoute(container.errorHandler, container.UtilService),
-]);
+bottle.factory('routes', (container) => [UtilRoute(container.errorHandler, container.UtilService)]);
 
 module.exports = bottle.container;

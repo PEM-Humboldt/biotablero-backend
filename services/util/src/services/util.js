@@ -1,6 +1,4 @@
-module.exports = (
-  TextsPersistence,
-) => {
+module.exports = (TextsPersistence) => {
   const Util = {
     /**
      * Texts that describe one section in the frontend
@@ -13,11 +11,11 @@ module.exports = (
       const rawData = await TextsPersistence.findTexts(key);
       let data = {};
 
-      if(!rawData || rawData.length === 0) {
-        throw new Error("There is not data of texts asociated to the given key");
+      if (!rawData || rawData.length === 0) {
+        throw new Error('There is not data of texts asociated to the given key');
       }
 
-      rawData.forEach(element => {
+      rawData.forEach((element) => {
         data = {
           ...data,
           [element.type]: element.text,

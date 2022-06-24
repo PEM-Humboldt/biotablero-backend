@@ -26,7 +26,7 @@ module.exports = (errorHandler, UtilService) => {
   router.get(
     '/util/texts',
     errorHandler((req, res, next) => {
-      if (!(req.params.key)) {
+      if (!req.params.key) {
         const error = { code: 400, message: 'key is required' };
         throw error;
       }

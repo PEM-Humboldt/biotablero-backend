@@ -1,6 +1,6 @@
 /**
  * @apiDefine s_util Search > Util
- * Information related to text of sections in the frontend
+ * Utilities endpoints related with all other services
  */
 
 /**

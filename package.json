@@ -25,6 +25,7 @@
   ],
   "apidoc": {
     "name": "Biotablero REST API",
-    "version": "1.3.0"
-  }
+    "version": "2.0.0"
+  },
+  "packageManager": "yarn@3.2.1"
 }

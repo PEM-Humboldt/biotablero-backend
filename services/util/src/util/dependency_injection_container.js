@@ -10,6 +10,7 @@ const TextsPersistence = require('../persistence/texts');
 const UtilService = require('../services/util');
 
 const UtilRoute = require('../routes/util');
+const DownloadsRoute = require('../routes/downloads');
 
 const bottle = new Bottlejs();
 
@@ -22,6 +23,9 @@ bottle.factory('TextsPersistence', () =>
 
 bottle.factory('UtilService', (container) => UtilService(container.TextsPersistence));
 
-bottle.factory('routes', (container) => [UtilRoute(container.errorHandler, container.UtilService)]);
+bottle.factory('routes', (container) => [
+  UtilRoute(container.errorHandler, container.UtilService),
+  DownloadsRoute(container.errorHandler),
+]);
 
 module.exports = bottle.container;

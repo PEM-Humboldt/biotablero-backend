@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler) => {
+module.exports = (errorHandler, DownloadsService) => {
   const router = new Router();
 
   /**
@@ -29,12 +29,10 @@ module.exports = (errorHandler) => {
         const error = { code: 400, message: 'reference is required' };
         throw error;
       }
-      res.send({ status: 'Ok', url: 'http://url.to.file' });
-      next();
-      // return UtilService.getTexts(req.params.key).then((value) => {
-      //   res.send(value);
-      //   next();
-      // });
+      return DownloadsService.getFile(req.params.reference).then((value) => {
+        res.send(value);
+        next();
+      });
     }),
   );
 

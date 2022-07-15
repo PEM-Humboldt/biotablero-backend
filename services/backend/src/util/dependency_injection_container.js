@@ -2,6 +2,7 @@ const Bottlejs = require('bottlejs');
 
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
+const restAPI = require('./restAPI');
 
 const bookshelfModels = require('../persistence/models/setup');
 
@@ -55,6 +56,7 @@ const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
+bottle.factory('restAPI', () => restAPI);
 
 bottle.factory('biomePersistence', () =>
   BiomePersistence(bookshelfModels.db, bookshelfModels.models, bookshelfModels.collections),
@@ -104,7 +106,7 @@ bottle.factory('projectService', (container) =>
   ProjectService(container.projectPersistence, container.biomeService),
 );
 bottle.factory('projectStrategyService', (container) =>
-  ProjectStrategyService(container.projectStrategyPersistence),
+  ProjectStrategyService(container.projectStrategyPersistence, container.restAPI),
 );
 bottle.factory('strategyService', (container) =>
   StrategyService(container.strategyPersistence, container.logger),

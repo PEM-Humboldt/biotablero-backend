@@ -10,6 +10,9 @@
     "port": 4000,
     "origins": ["*"]
   },
+  "services": {
+    "util": "http://localhost:4005"
+  },
   "logs": {
     "dir": "logs"
   },

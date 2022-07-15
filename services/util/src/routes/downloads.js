@@ -64,19 +64,23 @@ module.exports = (errorHandler, DownloadsService) => {
    */
   router.post(
     '/downloads/upload-file',
-    upload.single('file'),
     errorHandler((req, res, next) => {
-      if (!req.file || !req.body.service || !req.body.reference) {
-        const error = { code: 400, message: 'file, service and reference are required' };
-        throw error;
-      }
-      return DownloadsService.uploadFile(
-        req.file,
-        req.body.service.replace(/\s+/g, ' ').trim(),
-        req.body.reference.replace(/\s+/g, ' ').trim(),
-      ).then((value) => {
-        res.send(value);
-        next();
+      upload.single('file')(req, res, (err) => {
+        if (err) {
+          throw err;
+        }
+        if (!req.file || !req.body.service || !req.body.reference) {
+          const error = { code: 400, message: 'file, service and reference are required' };
+          throw error;
+        }
+        return DownloadsService.uploadFile(
+          req.file,
+          req.body.service.replace(/\s+/g, ' ').trim(),
+          req.body.reference.replace(/\s+/g, ' ').trim(),
+        ).then((value) => {
+          res.send(value);
+          next();
+        });
       });
     }),
   );

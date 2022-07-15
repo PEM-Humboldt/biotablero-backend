@@ -5,6 +5,7 @@ const config = require('config');
 // Models
 const texts = require('./texts');
 const downloads = require('./downloads');
+const downloadsConfig = require('./downloads_config');
 
 const dbConfig = config.get('db');
 let conn = null;
@@ -34,6 +35,7 @@ const setupModels = () => {
   models = {
     texts: texts(dbConn),
     downloads: downloads(dbConn),
+    downloads_config: downloadsConfig(conn),
   };
   Object.keys(models).forEach((key) => {
     if (models[key].setRelations) models[key].setRelations(models);

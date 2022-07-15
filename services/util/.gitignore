@@ -3,6 +3,7 @@ config/*
 !config/default.json
 logs/*
 docs
+uploads/*
 
 .yarn/*
 !.yarn/releases

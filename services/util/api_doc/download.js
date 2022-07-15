@@ -24,7 +24,6 @@
  * @apiDefine UploadFileExample
  * @apiSuccessExample {json} Error-Example:
  *  {
- *    "status": "500"
- *    "message": "File couldn't be uploaded"
+ *    "url": "http://url.to.file"
  *  }
  */

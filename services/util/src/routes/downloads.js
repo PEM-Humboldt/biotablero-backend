@@ -1,3 +1,4 @@
+const multer = require('multer');
 const { Router } = require('restify-router');
 
 module.exports = (errorHandler, DownloadsService) => {
@@ -36,47 +37,47 @@ module.exports = (errorHandler, DownloadsService) => {
     }),
   );
 
+  const upload = multer({ dest: `${process.cwd()}/uploads/` });
   /**
    * @apiGroup download
    * @api {post} /downloads/upload-file UploadFile
    * @apiName UploadFile
    * @apiVersion 1.0.0
    * @apiDescription
-   * Upload the given file o the corresponding service and return its url
+   * Upload the given file to the corresponding service and return its url
    *
-   * Missing the file parameter
-   * @apiParam (Query params) {String} service microservice making the request
-   * @apiParam (Body params) {Object} [headers] headers to be passed to the storage service
+   * @apiParam (multipart/form-data) {File} file file to be uploaded
+   * @apiParam (multipart/form-data) {String} service microservice making the request
+   * @apiParam (multipart/form-data) {String} reference id to associate to the uploaded file
    *
    * @apiSuccess {Object} result
-   * @apiSuccess {String="Ok","Error"} result.status Result status of the upload
-   * @apiSuccess {String} [result.url] File url if status is "Ok"
-   * @apiSuccess {String} [result.message] Error message if it's the case
+   * @apiSuccess {String} [result.url] File download url
    *
-   * @apiExample {curl} Example usage:
-   *  /downloads/upload-file?service=main
-   * @apiUse GetFileExampleUrl
    * @apiParamExample {json} Request-Example:
-   *  {
-   *    "headers": {
-   *      "ContentType": "application/json"
-   *    }
-   *  }
+   * curl --request POST \
+   *  --url http://localhost/downloads/upload-file \
+   *  --header 'Content-Type: multipart/form-data' \
+   *  --form service=main \
+   *  --form reference=main_c1p1 \
+   *  --form file=@path/to/a/file
    * @apiUse UploadFileExample
    */
-  router.get(
+  router.post(
     '/downloads/upload-file',
+    upload.single('file'),
     errorHandler((req, res, next) => {
-      if (!req.params.service) {
-        const error = { code: 400, message: 'service is required' };
+      if (!req.file || !req.body.service || !req.body.reference) {
+        const error = { code: 400, message: 'file, service and reference are required' };
         throw error;
       }
-      res.send({ status: 'Ok', url: 'http://url.to.file' });
-      next();
-      // return UtilService.getTexts(req.params.key).then((value) => {
-      //   res.send(value);
-      //   next();
-      // });
+      return DownloadsService.uploadFile(
+        req.file,
+        req.body.service.replace(/\s+/g, ' ').trim(),
+        req.body.reference.replace(/\s+/g, ' ').trim(),
+      ).then((value) => {
+        res.send(value);
+        next();
+      });
     }),
   );
 

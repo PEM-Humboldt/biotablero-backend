@@ -8,6 +8,8 @@ const bookshelfModels = require('../persistence/models/setup');
 const TextsPersistence = require('../persistence/texts');
 const DownloadsPersistence = require('../persistence/downloads');
 
+const AWSUtils = require('./AWS');
+
 const UtilService = require('../services/util');
 const DownloadsService = require('../services/downloads');
 
@@ -26,8 +28,12 @@ bottle.factory('DownloadsPersistence', () =>
   DownloadsPersistence(bookshelfModels.db, bookshelfModels.models, logger),
 );
 
+bottle.factory('AWS', () => AWSUtils);
+
 bottle.factory('UtilService', (container) => UtilService(container.TextsPersistence));
-bottle.factory('DownloadsService', (container) => DownloadsService(container.DownloadsPersistence));
+bottle.factory('DownloadsService', (container) =>
+  DownloadsService(container.DownloadsPersistence, { AWS: container.AWS }),
+);
 
 bottle.factory('routes', (container) => [
   UtilRoute(container.errorHandler, container.UtilService),

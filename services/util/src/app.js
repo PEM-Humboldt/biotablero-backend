@@ -18,7 +18,7 @@ const cors = corsMiddleware({
 server.pre(cors.preflight);
 server.use(cors.actual);
 server.use(restify.plugins.queryParser({ mapParams: true }));
-server.use(restify.plugins.bodyParser());
+server.use(restify.plugins.jsonBodyParser());
 
 server.on('NotFound', (req, res, err, cb) => {
   if (err.body.code === 'ResourceNotFound') {

@@ -12,5 +12,10 @@
   },
   "logs": {
     "dir": "logs"
+  },
+  "AWS_S3": {
+    "id": "id",
+    "secret": "secret",
+    "bucket_name": "bucket-name"
   }
 }

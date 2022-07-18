@@ -74,5 +74,13 @@ module.exports = (db, { selectedStrategies }) => ({
       ) as fc`,
         projectId,
       )
-      .then((biomes) => biomes.rows[0].collection),
+      .then((biomes) => biomes.rows[0].collection)
+      .catch((e) => {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }),
 });

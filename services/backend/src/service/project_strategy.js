@@ -1,4 +1,4 @@
-module.exports = (strategyPersistence, { uploadFile }) => ({
+module.exports = (strategyPersistence, restAPI) => ({
   /**
    * Create a new project strategy
    *
@@ -43,30 +43,23 @@ module.exports = (strategyPersistence, { uploadFile }) => ({
       throw error;
     }
 
-    let selectedStrategies;
-    try {
-      selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
-    } catch (e) {
-      const error = {
-        code: 500,
-        stack: e.stack,
-        message: 'Error retrieving layer',
-      };
-      throw error;
+    const reference = `main_c1p${projectId}`;
+    const download = await restAPI.requestDownloadUrl(reference);
+
+    if (download.status === 'Ok') {
+      return { url: download.url };
     }
 
+    const selectedStrategies = await strategyPersistence.findSelectedStrategiesGeoJson(pId);
+
     if (selectedStrategies && selectedStrategies.features) {
-      return uploadFile(selectedStrategies)
-        .then((url) => ({ url }))
-        .catch((e) => {
-          const error = {
-            code: 500,
-            stack: e.stack,
-            message: 'Error connecting cloud services',
-          };
-          throw error;
-        });
+      return restAPI.requestUploadFile(
+        JSON.stringify(selectedStrategies),
+        'strategies.json',
+        reference,
+      );
     }
+
     const error = {
       code: 500,
       message: 'Error getting project',

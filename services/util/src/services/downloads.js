@@ -1,3 +1,5 @@
+const fs = require('fs');
+
 module.exports = (DownloadsPersistence, CloudServices) => {
   const Downloads = {
     /**
@@ -52,6 +54,14 @@ module.exports = (DownloadsPersistence, CloudServices) => {
         uploaded.Location,
         uploaded.exp_date,
       );
+
+      fs.unlink(file.path, (err) => {
+        if (err) {
+          const Error = { message: 'Error by deleting temp file' };
+          throw Error;
+        }
+      });
+
       return { url: saved.file_url };
     },
   };

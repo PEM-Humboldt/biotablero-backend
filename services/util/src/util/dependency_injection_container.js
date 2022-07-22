@@ -32,7 +32,7 @@ bottle.factory('AWS', () => AWSUtils);
 
 bottle.factory('UtilService', (container) => UtilService(container.TextsPersistence));
 bottle.factory('DownloadsService', (container) =>
-  DownloadsService(container.DownloadsPersistence, { AWS: container.AWS }),
+  DownloadsService(container.DownloadsPersistence, { AWS: container.AWS }, logger),
 );
 
 bottle.factory('routes', (container) => [

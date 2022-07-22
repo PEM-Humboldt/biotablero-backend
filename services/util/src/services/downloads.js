@@ -1,6 +1,6 @@
 const fs = require('fs');
 
-module.exports = (DownloadsPersistence, CloudServices) => {
+module.exports = (DownloadsPersistence, CloudServices, logger) => {
   const Downloads = {
     /**
      * Return the file url if there is a unexpired one for the given reference.
@@ -57,8 +57,7 @@ module.exports = (DownloadsPersistence, CloudServices) => {
 
       fs.unlink(file.path, (err) => {
         if (err) {
-          const Error = { message: 'Error by deleting temp file' };
-          throw Error;
+          logger.error('Error by deleting temp file');
         }
       });
 

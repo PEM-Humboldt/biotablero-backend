@@ -215,11 +215,20 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
     getNOSLayer: async (areaType, areaId, group) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessNOSPersistence.findNOSLayer(
+        const layer = await RichnessNOSPersistence.findNOSLayer(
           areaGeom.features[0].geometry,
           rasterNOSKeys(group),
         );
+        if (layer === null) {
+          const error = {
+            code: 404,
+            message: "Layer doesn't exist in the selected area id and area type",
+          };
+          throw error;
+        }
+        return layer;
       } catch (e) {
+        if (e.code) throw e;
         const error = {
           code: 500,
           stack: e.stack,
@@ -268,11 +277,20 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
     getGapsLayer: async (areaType, areaId) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return RichnessGapsPersistence.findGapsLayer(
+        const layer = await RichnessGapsPersistence.findGapsLayer(
           areaGeom.features[0].geometry,
           'GAPS_INDICE_GSI_2020.tif',
         );
+        if (layer === null) {
+          const error = {
+            code: 404,
+            message: "Layer doesn't exist in the selected area id and area type",
+          };
+          throw error;
+        }
+        return layer;
       } catch (e) {
+        if (e.code) throw e;
         const error = {
           code: 500,
           stack: e.stack,

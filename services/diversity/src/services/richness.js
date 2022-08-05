@@ -168,7 +168,17 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
      *
      * @returns {Object} Values of richness species gaps
      */
-    getGaps: (areaType, areaId) => RichnessGapsPersistence.findGaps(areaType, areaId),
+    getGaps: async (areaType, areaId) => {
+      const data = await RichnessGapsPersistence.findGaps(areaType, areaId);
+      if (Object.values(data[0]).some((element) => element === null)) {
+        const error = {
+          code: 404,
+          message: "Gaps data doesn't exist in the selected area id and area type",
+        };
+        throw error;
+      }
+      return data;
+    },
 
     /**
      * Get values for richness species concentration in the given area

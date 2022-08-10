@@ -144,12 +144,21 @@ module.exports = (
     getCoverageLayer: async (areaType, areaId, type) => {
       try {
         const areaGeom = await restAPI.requestAreaGeometry(areaType, areaId);
-        return CoveragePersistence.findCoverageLayer(
+        const layer = await CoveragePersistence.findCoverageLayer(
           areaGeom.features[0].geometry,
           rasterCoverageKeys(type),
           coveragesColorSet(type),
         );
+        if (layer === null) {
+          const error = {
+            code: 404,
+            message: "Layer doesn't exist in the selected area id and area type",
+          };
+          throw error;
+        }
+        return layer;
       } catch (e) {
+        if (e.code) throw e;
         const error = {
           code: 500,
           stack: e.stack,

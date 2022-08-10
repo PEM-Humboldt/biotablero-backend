@@ -1,6 +1,6 @@
 {
   "name": "diversity",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Service for species diversity data",
   "main": "src/app.js",
   "devDependencies": {

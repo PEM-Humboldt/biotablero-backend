@@ -56,6 +56,7 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id protected area name
    * @apiSuccess {String} result.key dpc category
+   * @apiSuccess {String} result.name protected area name
    * @apiSuccess {String} result.value dpc value
    * @apiSuccess {String} result.area area of the protected area
    *

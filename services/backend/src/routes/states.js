@@ -104,6 +104,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
    * percentage with respect to the national area
+   * @apiSuccess {String} result.total_area total area in geofence
    *
    * @apiExample {curl} Example usage:
    *  /states/44/se/Páramo

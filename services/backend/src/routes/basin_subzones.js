@@ -73,6 +73,7 @@ module.exports = (errorHandler, basinSubzoneService) => {
    * @apiSuccess {Object} result
    * @apiSuccess {String} result.national_percentage percentage of the strategic ecosystem inside
    * basin subzone respect to the national area
+   * @apiSuccess {String} result.total_area total area in geofence
    *
    * @apiExample {curl} Example usage:
    *  /basinSubzones/1/se/Páramo

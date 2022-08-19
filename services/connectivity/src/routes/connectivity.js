@@ -56,8 +56,9 @@ module.exports = (errorHandler, connectivityService) => {
    * @apiSuccess {Object[]} result
    * @apiSuccess {String} result.id protected area name
    * @apiSuccess {String} result.key dpc category
-   * @apiSuccess {String} result.value dpc value
-   * @apiSuccess {String} result.area area of the protected area
+   * @apiSuccess {String} result.name protected area name
+   * @apiSuccess {Number} result.value dpc value
+   * @apiSuccess {Number} result.area area of the protected area
    *
    * @apiExample {curl} Example usage:
    *  /connectivity/dpc?areaType=ea&areaId=DAGMA&paNumber=5

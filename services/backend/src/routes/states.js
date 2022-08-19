@@ -102,7 +102,7 @@ module.exports = (errorHandler, stateService) => {
    * @apiParam (Path params) {String} se_type strategic ecosystem type
    *
    * @apiSuccess {Object} result
-   * @apiSuccess {String} result.national_percentage strategic ecosystem inside state
+   * @apiSuccess {Number} result.national_percentage strategic ecosystem inside state
    * percentage with respect to the national area
    * @apiSuccess {String} result.total_area total area in geofence
    *

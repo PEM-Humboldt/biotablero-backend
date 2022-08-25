@@ -29,7 +29,7 @@ module.exports = (errorHandler, paService) => {
         const error = { code: 400, message: 'areaType and areaId required' };
         throw error;
       }
-      paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
+      return paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
         res.send(categories);
         next();
       });
@@ -64,7 +64,7 @@ module.exports = (errorHandler, paService) => {
         const error = { code: 400, message: 'areaType, areaId and seType required' };
         throw error;
       }
-      paService
+      return paService
         .getPAAreas(req.params.areaType, req.params.areaId, req.params.seType)
         .then((binaryProtected) => {
           res.send(binaryProtected);

@@ -41,8 +41,10 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each biotic unit
      */
-    getAreaByBioticUnit: async (envAuthorityId) =>
-      eaPersistence.findAreaByBioticUnit(envAuthorityId),
+    getAreaByBioticUnit: async (envAuthorityId) => {
+      const data = await eaPersistence.findAreaByBioticUnit(envAuthorityId);
+      return data.map((datum) => ({ ...datum, area: Number(datum.area) }));
+    },
 
     /**
      * Get total area grouped by biome for a given environmental authority

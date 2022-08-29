@@ -20,6 +20,15 @@ module.exports = (globalProtectedAreaPersistence) => ({
       areaId.toString(),
       seCol,
     );
+    if (areas.length === 0) {
+      const error = {
+        code: 404,
+        message:
+          'Protected areas data not available in the selected ecosystem, area id and area type',
+      };
+      throw error;
+    }
+
     return areas.map(({ area, ...cats }) => ({
       area,
       type: Object.values(cats)

@@ -1,11 +1,11 @@
-process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
-
 import config from 'config';
 import restify from 'restify';
 import corsMiddleware from 'restify-cors-middleware';
 import { Router } from 'restify-router';
 
 import diContainer from './util/dependency_injection_container';
+
+process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
 
 const server = restify.createServer({
   name: 'biotablero-conservation-porfolios',

@@ -29,5 +29,9 @@
     "restify-cors-middleware": "~1.1.1",
     "restify-router": "~0.6.2",
     "winston": "~3.8.2"
+  },
+  "apidoc": {
+    "name": "Service for conservation portfolios data",
+    "version": "1.0.0"
   }
 }

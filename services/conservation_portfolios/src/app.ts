@@ -3,11 +3,12 @@ process.env.NODE_CONFIG_ENV = process.env.NODE_CONFIG_ENV || 'develop';
 import config from 'config';
 import restify from 'restify';
 import corsMiddleware from 'restify-cors-middleware';
+import { Router } from 'restify-router';
 
 import diContainer from './util/dependency_injection_container';
 
 const server = restify.createServer({
-  name: 'biotablero-backend-porfolios',
+  name: 'biotablero-conservation-porfolios',
   version: '1.0.0',
 });
 const serverConfig: { port: number; origins: Array<string> } = config.get('server');
@@ -27,6 +28,8 @@ server.on('NotFound', (req, res, err, cb) => {
   }
   cb();
 });
+
+diContainer.routes.forEach((router: Router) => router.applyRoutes(server));
 
 server.listen(serverConfig.port, () => {
   diContainer.logger.info(`${server.name} listening at ${server.url}`);

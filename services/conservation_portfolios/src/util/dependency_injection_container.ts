@@ -1,9 +1,15 @@
 import Bottlejs from 'bottlejs';
 
-import logger from './logger';
+import Logger from './logger';
+import ErrorHandler from './error_handler';
+
+import ByTopicRoutes from '../routes/by_topic';
 
 const bottle = new Bottlejs();
 
-bottle.factory('logger', () => logger);
+bottle.factory('logger', () => Logger);
+bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
+
+bottle.factory('routes', (container) => [ByTopicRoutes(container.errorHandler)]);
 
 export default bottle.container;

@@ -1,0 +1,12 @@
+node_modules/*
+config/*
+!config/default.json
+logs/*
+dist/*
+docs
+
+.yarn/*
+!.yarn/releases
+!.yarn/plugins
+!.yarn/versions
+.pnp.*

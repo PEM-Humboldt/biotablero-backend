@@ -3,4 +3,4 @@ export interface PortfoliosByTarget {
   name: string;
   shortName: string;
   value: number;
-};
+}

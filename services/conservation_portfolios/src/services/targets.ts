@@ -9,7 +9,7 @@ export default () => {
      *
      * @returns {Object[]} Values of all portfolios for a specific target
      */
-     getPortfoliosByTarget: async () => ([
+    getPortfoliosByTarget: async () => [
       {
         id: 1,
         name: 'NATURE MAP · WCMC',
@@ -39,8 +39,8 @@ export default () => {
         name: 'ACC · LONG NAME',
         shortName: 'ACC',
         value: 500,
-      }
-     ]),
+      },
+    ],
   };
 
   return Targets;

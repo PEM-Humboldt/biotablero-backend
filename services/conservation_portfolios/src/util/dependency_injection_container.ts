@@ -14,6 +14,8 @@ bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
 
 bottle.factory('TargetsService', () => TargetsService());
 
-bottle.factory('routes', (container) => [TargetsRoutes(container.errorHandler, container.TargetsService)]);
+bottle.factory('routes', (container) => [
+  TargetsRoutes(container.errorHandler, container.TargetsService),
+]);
 
 export default bottle.container;

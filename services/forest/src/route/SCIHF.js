@@ -79,7 +79,7 @@ module.exports = (errorHandler, SCIHFService) => {
 
   /**
    * @apiGroup s_sci_hf
-   * @api {get} /forest/sci/:sci_cat/hf/:hf_pers/layer SCIHFPALayer
+   * @api {get} /forest/sci/:sciCat/hf/:hfPers/layer SCIHFPALayer
    * @apiName SCIHFPALayer
    * @apiVersion 1.0.0
    * @apiDescription

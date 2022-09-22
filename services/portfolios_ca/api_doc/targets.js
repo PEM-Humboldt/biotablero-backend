@@ -45,7 +45,7 @@
  *     },
  *   ],
  * }
-*/
+ */
 
 /**
  * @apiDefine TargetsListExample
@@ -84,4 +84,4 @@
  *     name: "Aguas - Rios"
  *   }
  * ]
-*/
+ */

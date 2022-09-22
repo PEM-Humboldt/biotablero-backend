@@ -57,10 +57,10 @@ export default () => {
      *
      * @returns {Object} List of targets with portfolios values
      */
-     getTargetsList: async () => ([
+    getTargetsList: async () => [
       {
         id: 1,
-        name: 'Especies'
+        name: 'Especies',
       },
       {
         id: 2,
@@ -72,25 +72,25 @@ export default () => {
       },
       {
         id: 4,
-        name: 'Conectividad'
+        name: 'Conectividad',
       },
       {
         id: 5,
-        name: 'Cambio Climático'
+        name: 'Cambio Climático',
       },
       {
         id: 6,
-        name: 'Deforestación'
+        name: 'Deforestación',
       },
       {
         id: 7,
-        name: 'Restauración'
+        name: 'Restauración',
       },
       {
         id: 8,
-        name: 'Aguas - Rios'
-      }
-      ]),
+        name: 'Aguas - Rios',
+      },
+    ],
   };
 
   return Targets;

@@ -14,7 +14,7 @@ export interface PortfoliosByTarget {
     name: string;
     short_name: string;
     value: number;
-  }>
+  }>;
 }
 
 export interface TargetsList {

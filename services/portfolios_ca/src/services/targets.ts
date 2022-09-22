@@ -10,7 +10,7 @@ export default () => {
      * @returns {Object} Values of all portfolios for a specific target
      */
     getPortfoliosByTarget: async () => ({
-      target_id: 1,
+      target_id: 3,
       target_name: 'Servicios Ecosistémicos',
       target_national: 4521,
       target_units_short: 'TC',
@@ -47,7 +47,50 @@ export default () => {
           value: 500,
         },
       ],
-    })
+    }),
+
+    /**
+     * Get list of targets with portfolios values within a given area
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     *
+     * @returns {Object} List of targets with portfolios values
+     */
+     getTargetsList: async () => ([
+      {
+        id: 1,
+        name: 'Especies'
+      },
+      {
+        id: 2,
+        name: 'Ecosistemas',
+      },
+      {
+        id: 3,
+        name: 'Servicios Ecosistémicos',
+      },
+      {
+        id: 4,
+        name: 'Conectividad'
+      },
+      {
+        id: 5,
+        name: 'Cambio Climático'
+      },
+      {
+        id: 6,
+        name: 'Deforestación'
+      },
+      {
+        id: 7,
+        name: 'Restauración'
+      },
+      {
+        id: 8,
+        name: 'Aguas - Rios'
+      }
+      ]),
   };
 
   return Targets;

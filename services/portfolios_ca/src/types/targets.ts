@@ -1,3 +1,8 @@
+export interface TargetsServiceI {
+  getPortfoliosByTarget: () => Promise<PortfoliosByTarget>;
+  getTargetsList: () => Promise<Array<TargetsList>>;
+}
+
 export interface PortfoliosByTarget {
   target_id: number;
   target_name: string;
@@ -10,4 +15,9 @@ export interface PortfoliosByTarget {
     short_name: string;
     value: number;
   }>
+}
+
+export interface TargetsList {
+  id: string;
+  name: string;
 }

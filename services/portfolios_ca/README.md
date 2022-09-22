@@ -30,7 +30,7 @@ Deployment is made with docker, you'll need Docker v17.05.0+ and docker compose 
 
 ### Build image
 
-To build the image run: `docker build -t biotablero-con-portfolios:<version> .`
+To build the image run: `docker build -t biotablero-portfolios-ca:<version> .`
 
 It is recommended to use the [current release](https://github.com/PEM-Humboldt/biotablero-backend/releases) for the image tag version.
 
@@ -45,7 +45,7 @@ After you've built the image, create a copy of the [config](config/default.json)
 Run
 
 ```
-docker run --restart always --name biotablero-con-portfolios -p 4006:4006 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-con-portfolios:<version>
+docker run --restart always --name biotablero-portfolios-ca -p 4006:4006 -v <path/to/your/production.json>:/home/node/app/config/production.json -e NODE_CONFIG_ENV=production -d biotablero-portfolios-ca:<version>
 ```
 
 to start the container.

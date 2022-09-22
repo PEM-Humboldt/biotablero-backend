@@ -1,5 +1,5 @@
 import { Router } from 'restify-router';
-import { EHFunction } from '../types/config';
+import { EHFunction } from '../types/util';
 import { TargetsServiceI } from '../types/targets';
 
 export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {

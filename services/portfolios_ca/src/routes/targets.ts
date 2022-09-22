@@ -7,7 +7,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
 
   /**
    * @apiGroup s_portfolios_ca
-   * @api {get} /portfolios-ca/targets/:target_id/values PortfoliosByTarget
+   * @api {get} /portfolios-ca/targets/:targetId/values PortfoliosByTarget
    * @apiName PortfoliosByTarget
    * @apiVersion 1.0.0
    * @apiDescription
@@ -15,7 +15,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    *
    * @apiParam (Query params) {String} areaType area type
    * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Path params) {Number} target_id target id to filter results
+   * @apiParam (Path params) {Number} targetId target id to filter results
    *
    * @apiSuccess {Object} result
    * @apiSuccess {Number} result.target_id target_id target id
@@ -30,15 +30,15 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    * @apiSuccess {Number} result.portfolios_data.value id portfolio value
    *
    * @apiExample {curl} Example usage:
-   *  /portfolios-ca/targets/:target_id/values?areaType=ea&areaId=CARDER
+   *  /portfolios-ca/targets/:targetId/values?areaType=ea&areaId=CARDER
    *
    * @apiUse PortfoliosByTargetExample
    */
   router.get(
-    '/portfolios-ca/targets/:target_id/values',
+    '/portfolios-ca/targets/:targetId/values',
     errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.target_id)) {
-        const error = { code: 400, message: 'areaType, areaId and target_id are required' };
+      if (!(req.params.areaType && req.params.areaId && req.params.targetId)) {
+        const error = { code: 400, message: 'areaType, areaId and targetId are required' };
         throw error;
       }
       return TargetsService.getPortfoliosByTarget().then((value) => {

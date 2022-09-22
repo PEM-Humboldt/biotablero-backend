@@ -30,7 +30,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    * @apiSuccess {Number} result.portfolios_data.value id portfolio value
    *
    * @apiExample {curl} Example usage:
-   *  /portfolios-ca/targets/:targetId/values?areaType=ea&areaId=CARDER
+   *  /portfolios-ca/targets/1/values?areaType=ea&areaId=CARDER
    *
    * @apiUse PortfoliosByTargetExample
    */

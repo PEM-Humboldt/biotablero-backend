@@ -1,13 +1,13 @@
 export default () => {
   const Targets = {
     /**
-     * Get values of all portfolios for a specific target within a given area
+     * Get target basic information and values of all portfolios for a specific target within a given area
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      * @param {Number} targetId target id
      *
-     * @returns {Object} Values of all portfolios for a specific target
+     * @returns {Object} Target basic information and values of portfolios
      */
     getPortfoliosByTarget: async () => ({
       target_id: 3,
@@ -55,7 +55,7 @@ export default () => {
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      *
-     * @returns {Object} List of targets with portfolios values
+     * @returns {Object[]} List of targets with portfolios values
      */
     getTargetsList: async () => [
       {

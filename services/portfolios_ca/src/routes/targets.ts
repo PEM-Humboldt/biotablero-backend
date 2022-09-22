@@ -1,9 +1,9 @@
 import { Router } from 'restify-router';
-import { EHFunction } from '../util/types_conf';
-import { PortfoliosByTarget } from '../util/types_data';
+import { EHFunction } from '../types/types_conf';
+import { PortfoliosByTarget } from '../types/types_data';
 
 interface TargetsService {
-  getPortfoliosByTarget: () => Promise<Array<PortfoliosByTarget>>;
+  getPortfoliosByTarget: () => Promise<PortfoliosByTarget>;
 }
 
 export default (errorHandler: EHFunction, TargetsService: TargetsService) => {

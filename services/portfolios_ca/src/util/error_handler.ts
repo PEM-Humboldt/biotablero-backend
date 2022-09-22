@@ -1,4 +1,4 @@
-import { Logger, EHFunction } from './types_conf';
+import { Logger, EHFunction } from '../types/types_conf';
 
 /**
  * Wrapper to catch errors from every endpoint. When an error occurs in a lower layer,

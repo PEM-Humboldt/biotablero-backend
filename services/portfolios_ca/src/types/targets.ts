@@ -1,5 +1,5 @@
 export interface TargetsServiceI {
-  getPortfoliosByTarget: (targetId: number) => Promise<Array<PortfoliosByTarget>>;
+  getPortfoliosByTarget: (targetId: number) => Promise<PortfoliosByTarget>;
   getTargetsList: () => Promise<Array<TargetsList>>;
 }
 

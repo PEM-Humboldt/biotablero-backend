@@ -10,10 +10,13 @@ export default () => {
      * @returns {Object} Target basic information and values of portfolios
      */
     getPortfoliosByTarget: async (targetId: number) => {
+      const portfolio = (await Targets.getTargetsList()).filter(
+        (element) => element.id === Number(targetId),
+      );
       const data = [
         {
-          target_id: 2,
-          target_name: 'Ecosistemas',
+          target_id: portfolio[0].id,
+          target_name: `${portfolio[0].name}`,
           target_national: 4521,
           target_units_short: 'TC',
           target_units: 'Toneladas de carbono',
@@ -51,8 +54,8 @@ export default () => {
           ],
         },
         {
-          target_id: 3,
-          target_name: 'Servicios Ecosistémicos',
+          target_id: portfolio[0].id,
+          target_name: `${portfolio[0].name}`,
           target_national: 4521,
           target_units_short: 'TC',
           target_units: 'Toneladas de carbono',
@@ -101,9 +104,9 @@ export default () => {
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      *
-     * @returns {Object[]} List of targets with portfolios values
+     * @returns {Promise<object[]>} List of targets with portfolios values
      */
-    getTargetsList: async (): Promise<object[]> => [
+    getTargetsList: async () => [
       {
         id: 1,
         name: 'Especies',

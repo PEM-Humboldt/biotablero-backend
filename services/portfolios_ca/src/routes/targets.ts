@@ -41,7 +41,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
         const error = { code: 400, message: 'areaType, areaId and targetId are required' };
         throw error;
       }
-      return TargetsService.getPortfoliosByTarget().then((value) => {
+      return TargetsService.getPortfoliosByTarget(req.params.targetId).then((value) => {
         res.send(value);
         next();
       });

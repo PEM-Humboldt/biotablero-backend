@@ -90,7 +90,7 @@ export default () => {
           ],
         },
       ];
-      const elementId = targetId % 2 == 0 ? 0 : 1;
+      const elementId = targetId % 2 === 0 ? 0 : 1;
 
       return data[elementId];
     },

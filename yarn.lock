@@ -307,10 +307,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:~18.7.15":
-  version: 18.7.16
-  resolution: "@types/node@npm:18.7.16"
-  checksum: 01a3d35c764a3f0e7370b56e1ad4203731131883c65784e020009014171b3f53c4649cde6c7aa4f1026b907ee87ef6ae6ece2bc518151dc7b81100fe8b1db3ad
+"@types/node@npm:^18.8.3":
+  version: 18.8.3
+  resolution: "@types/node@npm:18.8.3"
+  checksum: 9201adc6dc389644c9f478f950ef8926a93e5827865dcd80d7d12fefacab665c96879c87cd6ec74d5eccdd998c4603d02e1e07a35d71a63fe4c20670a381f6ef
   languageName: node
   linkType: hard
 
@@ -1099,7 +1099,9 @@ __metadata:
     eslint-config-airbnb-base: ~13.2.0
     eslint-config-prettier: ~8.3.0
     eslint-plugin-import: ~2.25.4
+    file-loader: ^6.2.0
     prettier: ~2.6.2
+    ts-node: ^10.9.1
     yarn-audit-fix: ~9.3.1
   languageName: unknown
   linkType: soft
@@ -2845,6 +2847,18 @@ __metadata:
   dependencies:
     flat-cache: ^2.0.1
   checksum: 9014b17766815d59b8b789633aed005242ef857348c09be558bd85b4a24e16b0ad1e0e5229ccea7a2109f74ef1b3db1a559b58afe12b884f09019308711376fd
+  languageName: node
+  linkType: hard
+
+"file-loader@npm:^6.2.0":
+  version: 6.2.0
+  resolution: "file-loader@npm:6.2.0"
+  dependencies:
+    loader-utils: ^2.0.0
+    schema-utils: ^3.0.0
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: faf43eecf233f4897b0150aaa874eeeac214e4f9de49738a9e0ef734a30b5260059e85b7edadf852b98e415f875bd5f12587768a93fd52aaf2e479ecf95fab20
   languageName: node
   linkType: hard
 
@@ -5464,7 +5478,7 @@ __metadata:
   resolution: "portfolios_ca@workspace:services/portfolios_ca"
   dependencies:
     "@types/config": ~3.3.0
-    "@types/node": ~18.7.15
+    "@types/node": ^18.8.3
     "@types/restify": ~8.5.5
     "@types/restify-cors-middleware": ~1.0.2
     "@typescript-eslint/eslint-plugin": ~1.11.0
@@ -6093,7 +6107,7 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
-"schema-utils@npm:^3.1.0, schema-utils@npm:^3.1.1":
+"schema-utils@npm:^3.0.0, schema-utils@npm:^3.1.0, schema-utils@npm:^3.1.1":
   version: 3.1.1
   resolution: "schema-utils@npm:3.1.1"
   dependencies:
@@ -6898,7 +6912,7 @@ resolve@^1.9.0:
   languageName: node
   linkType: hard
 
-"ts-node@npm:~10.9.1":
+"ts-node@npm:^10.9.1, ts-node@npm:~10.9.1":
   version: 10.9.1
   resolution: "ts-node@npm:10.9.1"
   dependencies:

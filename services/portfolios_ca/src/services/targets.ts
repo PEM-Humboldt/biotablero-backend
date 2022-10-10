@@ -1,10 +1,21 @@
+// const imgMockup11 = require('../tmp/portafolios-ca_layer_1_1.png');
+// const imgMockup13 = require('../tmp/portafolios-ca_layer_1_3.png');
+// const imgMockup51 = require('../tmp/portafolios-ca_layer_5_1.png');
+// const imgMockup53 = require('../tmp/portafolios-ca_layer_5_3.png');
+
+import imgMockup11 from '../tmp/portafolios-ca_layer_1_1.png';
+import imgMockup13 from '../tmp/portafolios-ca_layer_1_3.png';
+import imgMockup51 from '../tmp/portafolios-ca_layer_5_1.png';
+import imgMockup53 from '../tmp/portafolios-ca_layer_5_3.png';
+
+
 export default () => {
   const Targets = {
     /**
      * Get target basic information and values of all portfolios for a specific target within a given area
      *
      * @param {String} areaType area type
-     * @param {String | Number} areaId area id
+     * @param {String | Number} areaId argetPortfoliosLayerea id
      * @param {Number} targetId target id
      *
      * @returns {Object} Target basic information and values of portfolios
@@ -140,7 +151,42 @@ export default () => {
         name: 'Aguas - Rios',
       },
     ],
-  };
 
+   /**
+     * Get a raster layer by target and portfolio
+     *
+     * @param {String} areaType area type
+     * @param {String | Number} areaId area id
+     * @param {Number} portfolioId portfolio id
+     * @param {Number} targetId target id
+     *
+     * @returns {Binary} result image with the geometry
+     */
+    getPortfoliosCALayer: async (targetId: number, portfolioId: number) => {
+      try {
+        if (targetId === 1 && portfolioId === 1){
+          return imgMockup11;
+        }
+        if (targetId === 1 && portfolioId === 3){
+          return imgMockup13;
+        }
+        if (targetId === 5 && portfolioId === 1){
+          return imgMockup51;
+        }
+        if (targetId === 5 && portfolioId === 3){
+          return imgMockup53;
+        }
+        return imgMockup11;
+      } catch (e:any) {
+        const error = {
+          code: 500,
+          stack: e.stack,
+          message: 'Error retrieving layer',
+        };
+        throw error;
+      }
+
+  },
+};
   return Targets;
 };

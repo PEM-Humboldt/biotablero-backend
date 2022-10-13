@@ -1,13 +1,6 @@
-// const imgMockup11 = require('../tmp/portafolios-ca_layer_1_1.png');
-// const imgMockup13 = require('../tmp/portafolios-ca_layer_1_3.png');
-// const imgMockup51 = require('../tmp/portafolios-ca_layer_5_1.png');
-// const imgMockup53 = require('../tmp/portafolios-ca_layer_5_3.png');
-
-import imgMockup11 from '../tmp/portafolios-ca_layer_1_1.png';
-import imgMockup13 from '../tmp/portafolios-ca_layer_1_3.png';
-import imgMockup51 from '../tmp/portafolios-ca_layer_5_1.png';
-import imgMockup53 from '../tmp/portafolios-ca_layer_5_3.png';
-
+import { readFile } from 'fs/promises';
+import path from 'path';
+import { URL } from 'url';
 
 export default () => {
   const Targets = {
@@ -152,41 +145,32 @@ export default () => {
       },
     ],
 
-   /**
-     * Get a raster layer by target and portfolio
+    /**
+     * Get a raster layer by portfolio in a given area
      *
      * @param {String} areaType area type
      * @param {String | Number} areaId area id
      * @param {Number} portfolioId portfolio id
-     * @param {Number} targetId target id
      *
-     * @returns {Binary} result image with the geometry
+     * @returns {Binary} result image with the portfolio cropped by search area
      */
-    getPortfoliosCALayer: async (targetId: number, portfolioId: number) => {
-      try {
-        if (targetId === 1 && portfolioId === 1){
-          return imgMockup11;
-        }
-        if (targetId === 1 && portfolioId === 3){
-          return imgMockup13;
-        }
-        if (targetId === 5 && portfolioId === 1){
-          return imgMockup51;
-        }
-        if (targetId === 5 && portfolioId === 3){
-          return imgMockup53;
-        }
-        return imgMockup11;
-      } catch (e:any) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+    getPortfoliosCALayer: async (portfolioId: number) => {
+      const currentFileUrl = new URL(import.meta.url);
+      const folder = path.join(path.dirname(currentFileUrl.pathname), '../tmp');
+      if (portfolioId === 1) {
+        return readFile(`${folder}/portafolios-ca_layer_1_1.png`);
       }
-
-  },
-};
+      if (portfolioId === 2) {
+        return readFile(`${folder}/portafolios-ca_layer_1_3.png`);
+      }
+      if (portfolioId === 3) {
+        return readFile(`${folder}/portafolios-ca_layer_5_1.png`);
+      }
+      if (portfolioId === 4) {
+        return readFile(`${folder}/portafolios-ca_layer_5_3.png`);
+      }
+      return readFile(`${folder}/portafolios-ca_layer_1_1.png`);
+    },
+  };
   return Targets;
 };

@@ -10,8 +10,9 @@
     "moduleResolution": "node",
     "pretty": true,
     "sourceMap": true,
-    "outDir": "./dist"
+    "outDir": "./dist",
+    "typeRoots": ["node_modules/@types", "src/types"]
   },
   "exclude": ["node_modules", "static", "dist"],
-  "include": ["src"]
+  "include": ["src", "src/types"]
 }

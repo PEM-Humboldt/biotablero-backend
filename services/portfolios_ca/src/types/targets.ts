@@ -5,7 +5,6 @@ export interface TargetsServiceI {
     targetId: number,
   ) => Promise<PortfoliosByTarget>;
   getTargetsList: (areaType: string, areaId: string | number) => Promise<Array<TargetsList>>;
-  getPortfoliosCALayer: (portfolioId: number) => Promise<Buffer>;
 }
 
 export interface PortfoliosByTarget {
@@ -23,6 +22,6 @@ export interface PortfoliosByTarget {
 }
 
 export interface TargetsList {
-  id: string;
+  id: number;
   name: string;
 }

@@ -64,7 +64,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    * @apiParam (Query params) {String|Number} areaId area id
    *
    * @apiSuccess {Object[]} result
-   * @apiSuccess {String} result.id id target id
+   * @apiSuccess {String} result.id target id
    * @apiSuccess {String} result.name target name
    *
    * @apiExample {curl} Example usage:
@@ -81,37 +81,6 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
       }
       return TargetsService.getTargetsList(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
-        next();
-      });
-    }),
-  );
-
-  /**
-   * @apiGroup s_portfolios_ca
-   * @api {get} /portfolios-ca/layer PortfolioLayer
-   * @apiName PortfolioLayer
-   * @apiVersion 1.0.0
-   * @apiDescription
-   * Layer of a portfolio within a given area.
-   *
-   * @apiParam (Query params) {String} areaType area type
-   * @apiParam (Query params) {String|Number} areaId area id
-   * @apiParam (Query params) {Number} portfolioId portfolio id
-   *
-   * @apiSuccess {Image} result image with the geometry
-   *
-   * @apiExample {curl} Example usage:
-   *  /portfolios-ca/layer?areaType=ea&areaId=CARDER&portfolioId=1
-   */
-  router.get(
-    '/portfolios-ca/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.portfolioId)) {
-        const error = { code: 400, message: 'areaType, areaId and portfolioId are required' };
-        throw error;
-      }
-      return TargetsService.getPortfoliosCALayer(Number(req.params.portfolioId)).then((value) => {
-        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
         next();
       });
     }),

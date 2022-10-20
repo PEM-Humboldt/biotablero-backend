@@ -1,7 +1,3 @@
-import { readFile } from 'fs/promises';
-import path from 'path';
-import { URL } from 'url';
-
 export default () => {
   const Targets = {
     /**
@@ -14,9 +10,16 @@ export default () => {
      * @returns {Object} Target basic information and values of portfolios
      */
     getPortfoliosByTarget: async (areaType: string, areaId: string | number, targetId: number) => {
-      const target = (await Targets.getTargetsList(areaType, areaId)).filter(
-        (element) => element.id === Number(targetId),
+      const target = (await Targets.getTargetsList(areaType, areaId)).find(
+        (element) => element.id === targetId,
       );
+      if (!target) {
+        const error = {
+          code: 404,
+          message: 'No portfolios for this area and target',
+        };
+        throw error;
+      }
       const portfoliosOptions = [
         {
           id: 1,
@@ -58,8 +61,8 @@ export default () => {
       }
 
       const data = {
-        target_id: target[0].id,
-        target_name: `${target[0].name}`,
+        target_id: target.id,
+        target_name: `${target.name}`,
         target_national: 4521,
         target_units_short: 'TC',
         target_units: 'Toneladas de carbono',
@@ -116,33 +119,6 @@ export default () => {
         return targets.slice(1);
       }
       return targets;
-    },
-
-    /**
-     * Get a raster layer by portfolio in a given area
-     *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @param {Number} portfolioId portfolio id
-     *
-     * @returns {Binary} result image with the portfolio cropped by search area
-     */
-    getPortfoliosCALayer: async (portfolioId: number) => {
-      const currentFileUrl = new URL(import.meta.url);
-      const folder = path.join(path.dirname(currentFileUrl.pathname), '../tmp');
-      if (portfolioId === 1) {
-        return readFile(`${folder}/portafolios-ca_layer_1_1.png`);
-      }
-      if (portfolioId === 2) {
-        return readFile(`${folder}/portafolios-ca_layer_1_3.png`);
-      }
-      if (portfolioId === 3) {
-        return readFile(`${folder}/portafolios-ca_layer_5_1.png`);
-      }
-      if (portfolioId === 4) {
-        return readFile(`${folder}/portafolios-ca_layer_5_3.png`);
-      }
-      return readFile(`${folder}/portafolios-ca_layer_1_1.png`);
     },
   };
   return Targets;

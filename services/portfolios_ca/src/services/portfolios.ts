@@ -1,9 +1,10 @@
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { URL } from 'url';
+import { PortfoliosServiceI } from '../types/portfolios';
 
 export default () => {
-  const Portfolios = {
+  const Portfolios: PortfoliosServiceI = {
     /**
      * List all the available portfolios in the system
      *

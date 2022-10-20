@@ -1,5 +1,7 @@
+import { TargetsServiceI } from '../types/targets';
+
 export default () => {
-  const Targets = {
+  const Targets: TargetsServiceI = {
     /**
      * Get target basic information and values of all portfolios for a specific target within a given area
      *

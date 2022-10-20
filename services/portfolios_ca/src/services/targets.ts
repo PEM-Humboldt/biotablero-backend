@@ -14,92 +14,56 @@ export default () => {
      * @returns {Object} Target basic information and values of portfolios
      */
     getPortfoliosByTarget: async (areaType: string, areaId: string | number, targetId: number) => {
-      const portfolio = (await Targets.getTargetsList(areaType, areaId)).filter(
+      const target = (await Targets.getTargetsList(areaType, areaId)).filter(
         (element) => element.id === Number(targetId),
       );
-      const data = [
+      const portfoliosOptions = [
         {
-          target_id: portfolio[0].id,
-          target_name: `${portfolio[0].name}`,
-          target_national: 4521,
-          target_units_short: 'TC',
-          target_units: 'Toneladas de carbono',
-          portfolios_data: [
-            {
-              id: 1,
-              name: 'NATURE MAP · WCMC',
-              short_name: 'WCMC',
-              value: 100,
-            },
-            {
-              id: 2,
-              name: 'ELSA · PNUD',
-              short_name: 'ELSA',
-              value: 200,
-            },
-            {
-              id: 3,
-              name: 'WEPLAN FORESTS',
-              short_name: 'WEPLAN',
-              value: 300,
-            },
-            {
-              id: 4,
-              name: 'Especies, Carbono y Agua . LONG NAME',
-              short_name: 'Especies, Carbono y Agua',
-              value: 400,
-            },
-            {
-              id: 5,
-              name: 'ACC · LONG NAME',
-              short_name: 'ACC',
-              value: 500,
-            },
-          ],
+          id: 1,
+          name: 'NATURE MAP · WCMC',
+          short_name: 'WCMC',
+          value: Math.random() * 1000,
         },
         {
-          target_id: portfolio[0].id,
-          target_name: `${portfolio[0].name}`,
-          target_national: 4521,
-          target_units_short: 'TC',
-          target_units: 'Toneladas de carbono',
-          portfolios_data: [
-            {
-              id: 1,
-              name: 'NATURE MAP · WCMC',
-              short_name: 'WCMC',
-              value: 420,
-            },
-            {
-              id: 2,
-              name: 'ELSA · PNUD',
-              short_name: 'ELSA',
-              value: 250,
-            },
-            {
-              id: 3,
-              name: 'WEPLAN FORESTS',
-              short_name: 'WEPLAN',
-              value: 330,
-            },
-            {
-              id: 4,
-              name: 'Especies, Carbono y Agua . LONG NAME',
-              short_name: 'Especies, Carbono y Agua',
-              value: 0,
-            },
-            {
-              id: 5,
-              name: 'ACC · LONG NAME',
-              short_name: 'ACC',
-              value: 80,
-            },
-          ],
+          id: 2,
+          name: 'ELSA · PNUD',
+          short_name: 'ELSA',
+          value: Math.random() * 1000,
+        },
+        {
+          id: 3,
+          name: 'WEPLAN FORESTS',
+          short_name: 'WEPLAN',
+          value: Math.random() * 1000,
+        },
+        {
+          id: 4,
+          name: 'Especies, Carbono y Agua . LONG NAME',
+          short_name: 'Especies, Carbono y Agua',
+          value: Math.random() * 1000,
+        },
+        {
+          id: 5,
+          name: 'ACC · LONG NAME',
+          short_name: 'ACC',
+          value: Math.random() * 1000,
         },
       ];
-      const elementId = targetId % 2 === 0 ? 0 : 1;
 
-      return data[elementId];
+      if (areaType === 'ea' && areaId === 'CARDER') {
+        portfoliosOptions.splice(2, 1);
+      }
+
+      const data = {
+        target_id: target[0].id,
+        target_name: `${target[0].name}`,
+        target_national: 4521,
+        target_units_short: 'TC',
+        target_units: 'Toneladas de carbono',
+        portfolios_data: portfoliosOptions,
+      };
+
+      return data;
     },
 
     /**

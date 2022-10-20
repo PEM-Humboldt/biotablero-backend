@@ -6,7 +6,7 @@ export default () => {
      * Get target basic information and values of all portfolios for a specific target within a given area
      *
      * @param {String} areaType area type
-     * @param {String | Number} areaId argetPortfoliosLayerea id
+     * @param {String | Number} areaId area id
      * @param {Number} targetId target id
      *
      * @returns {Object} Target basic information and values of portfolios

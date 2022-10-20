@@ -53,6 +53,9 @@ export default () => {
       if (areaType === 'ea' && areaId === 'CARDER') {
         portfoliosOptions.splice(2, 1);
       }
+      if (areaType === 'ea' && areaId === 'CARDER' && targetId === 3) {
+        portfoliosOptions.splice(2, 1);
+      }
 
       const data = {
         target_id: target[0].id,

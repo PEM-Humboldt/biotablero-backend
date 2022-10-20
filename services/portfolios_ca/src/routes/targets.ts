@@ -44,7 +44,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
       return TargetsService.getPortfoliosByTarget(
         req.params.areaType,
         req.params.areaId,
-        req.params.targetId,
+        Number(req.params.targetId),
       ).then((value) => {
         res.send(value);
         next();

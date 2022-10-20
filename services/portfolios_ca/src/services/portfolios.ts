@@ -40,7 +40,7 @@ export default () => {
      * @param {String | Number} areaId area id
      * @param {Number} portfolioId portfolio id
      *
-     * @returns {Binary} result image with the portfolio cropped by search area
+     * @returns {Promise<Buffer>} result image with the portfolio cropped by search area
      */
     getPortfoliosCALayer: async (portfolioId: number) => {
       const currentFileUrl = new URL(import.meta.url);

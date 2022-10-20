@@ -1,6 +1,10 @@
 export interface TargetsServiceI {
-  getPortfoliosByTarget: (targetId: number) => Promise<PortfoliosByTarget>;
-  getTargetsList: () => Promise<Array<TargetsList>>;
+  getPortfoliosByTarget: (
+    areaType: string,
+    areaId: string | number,
+    targetId: number,
+  ) => Promise<PortfoliosByTarget>;
+  getTargetsList: (areaType: string, areaId: string | number) => Promise<Array<TargetsList>>;
   getPortfoliosCALayer: (portfolioId: number) => Promise<Buffer>;
 }
 

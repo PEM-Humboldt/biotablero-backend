@@ -13,8 +13,8 @@ export default () => {
      *
      * @returns {Object} Target basic information and values of portfolios
      */
-    getPortfoliosByTarget: async (targetId: number) => {
-      const portfolio = (await Targets.getTargetsList()).filter(
+    getPortfoliosByTarget: async (areaType: string, areaId: string | number, targetId: number) => {
+      const portfolio = (await Targets.getTargetsList(areaType, areaId)).filter(
         (element) => element.id === Number(targetId),
       );
       const data = [
@@ -110,40 +110,46 @@ export default () => {
      *
      * @returns {Promise<object[]>} List of targets with portfolios values
      */
-    getTargetsList: async () => [
-      {
-        id: 1,
-        name: 'Especies',
-      },
-      {
-        id: 2,
-        name: 'Ecosistemas',
-      },
-      {
-        id: 3,
-        name: 'Servicios Ecosistémicos',
-      },
-      {
-        id: 4,
-        name: 'Conectividad',
-      },
-      {
-        id: 5,
-        name: 'Cambio Climático',
-      },
-      {
-        id: 6,
-        name: 'Deforestación',
-      },
-      {
-        id: 7,
-        name: 'Restauración',
-      },
-      {
-        id: 8,
-        name: 'Aguas - Rios',
-      },
-    ],
+    getTargetsList: async (areaType: string, areaId: string | number) => {
+      const targets = [
+        {
+          id: 1,
+          name: 'Especies',
+        },
+        {
+          id: 2,
+          name: 'Ecosistemas',
+        },
+        {
+          id: 3,
+          name: 'Servicios Ecosistémicos',
+        },
+        {
+          id: 4,
+          name: 'Conectividad',
+        },
+        {
+          id: 5,
+          name: 'Cambio Climático',
+        },
+        {
+          id: 6,
+          name: 'Deforestación',
+        },
+        {
+          id: 7,
+          name: 'Restauración',
+        },
+        {
+          id: 8,
+          name: 'Aguas - Rios',
+        },
+      ];
+      if (areaType === 'ea' && areaId === 'CARDER') {
+        return targets.slice(1);
+      }
+      return targets;
+    },
 
     /**
      * Get a raster layer by portfolio in a given area

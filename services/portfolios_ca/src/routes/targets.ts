@@ -41,7 +41,11 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
         const error = { code: 400, message: 'areaType, areaId and targetId are required' };
         throw error;
       }
-      return TargetsService.getPortfoliosByTarget(req.params.targetId).then((value) => {
+      return TargetsService.getPortfoliosByTarget(
+        req.params.areaType,
+        req.params.areaId,
+        req.params.targetId,
+      ).then((value) => {
         res.send(value);
         next();
       });
@@ -75,7 +79,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
         const error = { code: 400, message: 'areaType and areaId are required' };
         throw error;
       }
-      return TargetsService.getTargetsList().then((value) => {
+      return TargetsService.getTargetsList(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });

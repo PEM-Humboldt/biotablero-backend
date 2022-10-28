@@ -56,8 +56,13 @@ export default () => {
       }
       if (portfolioId === 4) {
         return readFile(`${folder}/portafolios-ca_layer_5_3.png`);
+      } else {
+        const error = {
+          code: 404,
+          message: 'No layers for this portfolio',
+        };
+        throw error;
       }
-      return readFile(`${folder}/portafolios-ca_layer_1_1.png`);
     },
   };
   return Portfolios;

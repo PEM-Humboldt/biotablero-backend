@@ -2,6 +2,14 @@
   "extends": [
     "../../.eslintrc",
     "airbnb-typescript/base",
-    "prettier"
-  ]
+    "prettier",
+    "plugin:@typescript-eslint/recommended"
+  ],
+  "plugins": [
+    "@typescript-eslint/eslint-plugin",
+    "eslint-plugin-tsdoc"
+  ],
+  "rules": {
+    "tsdoc/syntax": "warn"
+  }
 }

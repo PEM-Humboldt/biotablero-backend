@@ -17,6 +17,7 @@
     "@types/restify": "~8.5.5",
     "@types/restify-cors-middleware": "~1.0.2",
     "@typescript-eslint/eslint-plugin": "~1.11.0",
+    "@typescript-eslint/parser": "~5.45.0",
     "eslint-config-airbnb-typescript": "~4.0.1",
     "nodemon": "~2.0.19",
     "ts-node": "~10.9.1",
@@ -25,6 +26,7 @@
   "dependencies": {
     "bottlejs": "~2.0.1",
     "config": "~3.3.7",
+    "eslint-plugin-tsdoc": "~0.2.17",
     "restify": "~8.6.1",
     "restify-cors-middleware": "~1.1.1",
     "restify-router": "~0.6.2",

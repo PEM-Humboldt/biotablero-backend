@@ -27,31 +27,31 @@ export default () => {
           id: 1,
           name: 'NATURE MAP · WCMC',
           short_name: 'WCMC',
-          value: Math.random() * 1000,
+          value: Math.random() * 3000,
         },
         {
           id: 2,
           name: 'ELSA · PNUD',
           short_name: 'ELSA',
-          value: Math.random() * 1000,
+          value: Math.random() * 3000,
         },
         {
           id: 3,
           name: 'WEPLAN FORESTS',
           short_name: 'WEPLAN',
-          value: Math.random() * 1000,
+          value: Math.random() * 3000,
         },
         {
           id: 4,
           name: 'Especies, Carbono y Agua . LONG NAME',
           short_name: 'Especies, Carbono y Agua',
-          value: Math.random() * 1000,
+          value: Math.random() * 3000,
         },
         {
           id: 5,
           name: 'ACC · LONG NAME',
           short_name: 'ACC',
-          value: Math.random() * 1000,
+          value: Math.random() * 3000,
         },
       ];
 

@@ -1,12 +1,3 @@
-export interface TargetsServiceI {
-  getPortfoliosByTarget: (
-    areaType: string,
-    areaId: string | number,
-    targetId: number,
-  ) => Promise<PortfoliosByTarget>;
-  getTargetsList: (areaType: string, areaId: string | number) => Promise<Array<TargetsList>>;
-}
-
 export interface PortfoliosByTarget {
   target_id: number;
   target_name: string;
@@ -24,4 +15,13 @@ export interface PortfoliosByTarget {
 export interface TargetsList {
   id: number;
   name: string;
+}
+
+export interface TargetsServiceI {
+  getPortfoliosByTarget: (
+    areaType: string,
+    areaId: string | number,
+    targetId: number,
+  ) => Promise<PortfoliosByTarget>;
+  getTargetsList: (areaType: string, areaId: string | number) => Promise<Array<TargetsList>>;
 }

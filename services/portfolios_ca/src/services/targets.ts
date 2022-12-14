@@ -1,19 +1,23 @@
-import { TargetsServiceI } from '../types/targets';
+import { TargetsServiceI, TargetsList, PortfoliosByTarget } from '../types/targets';
 
-export default () => {
+export default (): TargetsServiceI => {
   const Targets: TargetsServiceI = {
     /**
      * Get target basic information and values of all portfolios for a specific target within a given area
      *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @param {Number} targetId target id
+     * @param areaType - area type
+     * @param areaId - area id
+     * @param targetId - target id
      *
-     * @returns {Object} Target basic information and values of portfolios
+     * @returns Target basic information and values of portfolios
      */
-    getPortfoliosByTarget: async (areaType: string, areaId: string | number, targetId: number) => {
+    getPortfoliosByTarget: async (
+      areaType: string,
+      areaId: string | number,
+      targetId: number,
+    ): Promise<PortfoliosByTarget> => {
       const target = (await Targets.getTargetsList(areaType, areaId)).find(
-        (element) => element.id === targetId,
+        (element): boolean => element.id === targetId,
       );
       if (!target) {
         const error = {
@@ -77,12 +81,15 @@ export default () => {
     /**
      * Get list of targets with portfolios values within a given area
      *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
+     * @param areaType - area type
+     * @param areaId - area id
      *
-     * @returns {Promise<object[]>} List of targets with portfolios values
+     * @returns List of targets with portfolios values
      */
-    getTargetsList: async (areaType: string, areaId: string | number) => {
+    getTargetsList: async (
+      areaType: string,
+      areaId: string | number,
+    ): Promise<Array<TargetsList>> => {
       const targets = [
         {
           id: 1,

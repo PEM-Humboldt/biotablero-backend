@@ -10,6 +10,7 @@
     "eslint-plugin-tsdoc"
   ],
   "rules": {
-    "tsdoc/syntax": "warn"
+    "tsdoc/syntax": "warn",
+    "@typescript-eslint/array-type": ["error", "generic"]
   }
 }

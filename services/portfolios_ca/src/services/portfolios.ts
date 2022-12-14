@@ -1,16 +1,16 @@
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { URL } from 'url';
-import { PortfoliosServiceI } from '../types/portfolios';
+import { PortfoliosServiceI, PortfoliosList } from '../types/portfolios';
 
-export default () => {
-  const Portfolios: PortfoliosServiceI = {
+export default (): PortfoliosServiceI => {
+  const Portfolios = {
     /**
      * List all the available portfolios in the system
      *
-     * @returns {Promise<object[]>} Array of portfolios
+     * @returns Array of portfolios
      */
-    getPortfoliosList: async () => [
+    getPortfoliosList: async (): Promise<Array<PortfoliosList>> => [
       {
         id: 1,
         name: 'WCMC',
@@ -36,13 +36,13 @@ export default () => {
     /**
      * Get a raster layer by portfolio in a given area
      *
-     * @param {String} areaType area type
-     * @param {String | Number} areaId area id
-     * @param {Number} portfolioId portfolio id
+     * @param areaType - area type
+     * @param areaId - area id
+     * @param portfolioId - portfolio id
      *
-     * @returns {Promise<Buffer>} result image with the portfolio cropped by search area
+     * @returns result image with the portfolio cropped by search area
      */
-    getPortfoliosCALayer: async (portfolioId: number) => {
+    getPortfoliosCALayer: async (portfolioId: number): Promise<Buffer> => {
       const currentFileUrl = new URL(import.meta.url);
       const folder = path.join(path.dirname(currentFileUrl.pathname), '../tmp');
       if (portfolioId === 1) {

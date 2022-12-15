@@ -22,7 +22,7 @@ server.use(cors.actual);
 server.use(restify.plugins.queryParser({ mapParams: true }));
 server.use(restify.plugins.bodyParser());
 
-server.on('NotFound', (req, res, err, cb) => {
+server.on('NotFound', (_req, res, err, cb) => {
   if (err.body.code === 'ResourceNotFound') {
     res.setHeader('Access-Control-Allow-Origin', serverConfig.origins);
   }

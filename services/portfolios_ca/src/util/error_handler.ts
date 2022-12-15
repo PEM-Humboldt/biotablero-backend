@@ -5,10 +5,10 @@ import { Logger, EHFunction } from '../types/util';
  * depending on the error it is caught and organized to be thrown again an then log it here,
  * or it's just handled here.
  *
- * @param {Object} logger logger instance.
- * @param {Function} callback the function to execute.
+ * @param logger - logger instance.
+ * @param callback - the function to execute.
  *
- * @returns {Function} router function to continue restify workflow
+ * @returns router function to continue restify workflow
  */
 export default (logger: Logger): EHFunction =>
   (callback) =>

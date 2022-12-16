@@ -24,7 +24,7 @@ export default (errorHandler: EHFunction, PortfoliosService: PortfoliosServiceI)
    */
   router.get(
     '/portfolios-ca/portfolios/list',
-    errorHandler((req, res, next) =>
+    errorHandler((_req, res, next) =>
       PortfoliosService.getPortfoliosList().then((value) => {
         res.send(value);
         next();

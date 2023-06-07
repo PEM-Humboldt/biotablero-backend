@@ -69,6 +69,7 @@ export default (): TargetsServiceI => {
       const data = {
         target_id: target.id,
         target_name: `${target.name}`,
+        target_text_key: `${target.textKey}`,
         target_national: 4521,
         target_units_short: 'TC',
         target_units: 'Toneladas de carbono',
@@ -93,31 +94,33 @@ export default (): TargetsServiceI => {
       const targets = [
         {
           id: 1,
-          name: 'Especies',
+          name: 'Ecosistemas',
+          textKey: 'targetEcosystems'
         },
         {
           id: 2,
-          name: 'Ecosistemas',
+          name: 'Conectividad',
+          textKey: 'targetConectivity'
         },
         {
           id: 3,
-          name: 'Servicios Ecosistémicos',
+          name: 'Almacenamiento de agua',
+          textKey: 'targetWaterStorage'
         },
         {
           id: 4,
-          name: 'Conectividad',
+          name: 'Almacenamiento de carbono',
+          textKey: 'targetCarbonStorage'
         },
         {
           id: 5,
-          name: 'Cambio Climático',
+          name: 'Deforestación evitada',
+          textKey: 'targetAvoidedDeforestation'
         },
         {
           id: 6,
           name: 'Restauración',
-        },
-        {
-          id: 8,
-          name: 'Aguas - Rios',
+          textKey: 'targetRestoration'
         },
       ];
       if (areaType === 'ea' && areaId === 'CARDER') {

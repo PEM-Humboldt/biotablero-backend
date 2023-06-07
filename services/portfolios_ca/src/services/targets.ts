@@ -29,32 +29,32 @@ export default (): TargetsServiceI => {
       const portfoliosOptions = [
         {
           id: 1,
-          name: 'NATURE MAP · WCMC',
-          short_name: 'WCMC',
+          name: 'Biodiversidad, Servicios Ecosistémicos y Riesgos - NatureMap',
+          short_name: 'Biod · SS.EE. · Riesgo',
           value: Math.random() * 3000,
         },
         {
           id: 2,
-          name: 'ELSA · PNUD',
+          name: 'Áreas esenciales de soporte para la vida',
           short_name: 'ELSA',
           value: Math.random() * 3000,
         },
         {
           id: 3,
-          name: 'WEPLAN FORESTS',
-          short_name: 'WEPLAN',
+          name: 'Restauración - WePlan Forests, Colombia',
+          short_name: 'Rest · WePlan',
           value: Math.random() * 3000,
         },
         {
           id: 4,
-          name: 'Especies, Carbono y Agua . LONG NAME',
-          short_name: 'Especies, Carbono y Agua',
+          name: 'Biodiversidad, Carbono y agua - NatureMap',
+          short_name: 'Biod · Carbono · Agua',
           value: Math.random() * 3000,
         },
         {
           id: 5,
-          name: 'ACC · LONG NAME',
-          short_name: 'ACC',
+          name: 'Áreas claves de conservación de la biodiversidad acuática',
+          short_name: 'ACC · Biod. Acuática',
           value: Math.random() * 3000,
         },
       ];
@@ -113,10 +113,6 @@ export default (): TargetsServiceI => {
         },
         {
           id: 6,
-          name: 'Deforestación',
-        },
-        {
-          id: 7,
           name: 'Restauración',
         },
         {

@@ -95,32 +95,32 @@ export default (): TargetsServiceI => {
         {
           id: 1,
           name: 'Ecosistemas',
-          textKey: 'targetEcosystems'
+          textKey: 'targetEcosystems',
         },
         {
           id: 2,
           name: 'Conectividad',
-          textKey: 'targetConectivity'
+          textKey: 'targetConectivity',
         },
         {
           id: 3,
           name: 'Almacenamiento de agua',
-          textKey: 'targetWaterStorage'
+          textKey: 'targetWaterStorage',
         },
         {
           id: 4,
           name: 'Almacenamiento de carbono',
-          textKey: 'targetCarbonStorage'
+          textKey: 'targetCarbonStorage',
         },
         {
           id: 5,
           name: 'Deforestación evitada',
-          textKey: 'targetAvoidedDeforestation'
+          textKey: 'targetAvoidedDeforestation',
         },
         {
           id: 6,
           name: 'Restauración',
-          textKey: 'targetRestoration'
+          textKey: 'targetRestoration',
         },
       ];
       if (areaType === 'ea' && areaId === 'CARDER') {

@@ -14,27 +14,27 @@ export default (): PortfoliosServiceI => {
       {
         id: 1,
         name: 'Biod · SS.EE. · Riesgo',
-        textKey: 'portfoliosBSERN'
+        textKey: 'portfoliosBSERN',
       },
       {
         id: 2,
         name: 'ELSA',
-        textKey: 'portfoliosELSA'
+        textKey: 'portfoliosELSA',
       },
       {
         id: 3,
         name: 'Rest · WePlan',
-        textKey: 'portfoliosRWFC'
+        textKey: 'portfoliosRWFC',
       },
       {
         id: 4,
         name: 'Biod · Carbono · Agua',
-        textKey: 'portfoliosBCAN'
+        textKey: 'portfoliosBCAN',
       },
       {
         id: 5,
         name: 'ACC · Biod. Acuática',
-        textKey: 'portfoliosACCBA'
+        textKey: 'portfoliosACCBA',
       },
     ],
 

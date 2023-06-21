@@ -29,32 +29,32 @@ export default (): TargetsServiceI => {
       const portfoliosOptions = [
         {
           id: 1,
-          name: 'NATURE MAP · WCMC',
-          short_name: 'WCMC',
+          name: 'Biodiversidad, Servicios Ecosistémicos y Riesgos - NatureMap',
+          short_name: 'Biod · SS.EE. · Riesgo',
           value: Math.random() * 3000,
         },
         {
           id: 2,
-          name: 'ELSA · PNUD',
+          name: 'Áreas esenciales de soporte para la vida',
           short_name: 'ELSA',
           value: Math.random() * 3000,
         },
         {
           id: 3,
-          name: 'WEPLAN FORESTS',
-          short_name: 'WEPLAN',
+          name: 'Restauración - WePlan Forests, Colombia',
+          short_name: 'Rest · WePlan',
           value: Math.random() * 3000,
         },
         {
           id: 4,
-          name: 'Especies, Carbono y Agua . LONG NAME',
-          short_name: 'Especies, Carbono y Agua',
+          name: 'Biodiversidad, Carbono y agua - NatureMap',
+          short_name: 'Biod · Carbono · Agua',
           value: Math.random() * 3000,
         },
         {
           id: 5,
-          name: 'ACC · LONG NAME',
-          short_name: 'ACC',
+          name: 'Áreas claves de conservación de la biodiversidad acuática',
+          short_name: 'ACC · Biod. Acuática',
           value: Math.random() * 3000,
         },
       ];
@@ -69,6 +69,7 @@ export default (): TargetsServiceI => {
       const data = {
         target_id: target.id,
         target_name: `${target.name}`,
+        target_text_key: `${target.textKey}`,
         target_national: 4521,
         target_units_short: 'TC',
         target_units: 'Toneladas de carbono',
@@ -93,35 +94,33 @@ export default (): TargetsServiceI => {
       const targets = [
         {
           id: 1,
-          name: 'Especies',
+          name: 'Ecosistemas',
+          textKey: 'targetEcosystems',
         },
         {
           id: 2,
-          name: 'Ecosistemas',
+          name: 'Conectividad',
+          textKey: 'targetConectivity',
         },
         {
           id: 3,
-          name: 'Servicios Ecosistémicos',
+          name: 'Almacenamiento de agua',
+          textKey: 'targetWaterStorage',
         },
         {
           id: 4,
-          name: 'Conectividad',
+          name: 'Almacenamiento de carbono',
+          textKey: 'targetCarbonStorage',
         },
         {
           id: 5,
-          name: 'Cambio Climático',
+          name: 'Deforestación evitada',
+          textKey: 'targetAvoidedDeforestation',
         },
         {
           id: 6,
-          name: 'Deforestación',
-        },
-        {
-          id: 7,
           name: 'Restauración',
-        },
-        {
-          id: 8,
-          name: 'Aguas - Rios',
+          textKey: 'targetRestoration',
         },
       ];
       if (areaType === 'ea' && areaId === 'CARDER') {

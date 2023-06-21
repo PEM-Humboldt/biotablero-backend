@@ -1,6 +1,7 @@
 export interface PortfoliosList {
   id: number;
   name: string;
+  textKey: string;
 }
 
 export interface PortfoliosServiceI {

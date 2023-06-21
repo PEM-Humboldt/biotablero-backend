@@ -13,23 +13,28 @@ export default (): PortfoliosServiceI => {
     getPortfoliosList: async (): Promise<Array<PortfoliosList>> => [
       {
         id: 1,
-        name: 'WCMC',
+        name: 'Biod · SS.EE. · Riesgo',
+        textKey: 'portfoliosBSERN',
       },
       {
         id: 2,
         name: 'ELSA',
+        textKey: 'portfoliosELSA',
       },
       {
         id: 3,
-        name: 'WEPLAN',
+        name: 'Rest · WePlan',
+        textKey: 'portfoliosRWFC',
       },
       {
         id: 4,
-        name: 'Especies, Carbono y Agua',
+        name: 'Biod · Carbono · Agua',
+        textKey: 'portfoliosBCAN',
       },
       {
         id: 5,
-        name: 'ACC',
+        name: 'ACC · Biod. Acuática',
+        textKey: 'portfoliosACCBA',
       },
     ],
 

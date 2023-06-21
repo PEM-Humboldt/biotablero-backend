@@ -1,6 +1,7 @@
 export interface PortfoliosByTarget {
   target_id: number;
   target_name: string;
+  target_text_key: string;
   target_national: number;
   target_units_short: string;
   target_units: string;
@@ -15,6 +16,7 @@ export interface PortfoliosByTarget {
 export interface TargetsList {
   id: number;
   name: string;
+  textKey: string;
 }
 
 export interface TargetsServiceI {

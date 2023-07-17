@@ -16,7 +16,7 @@ After cloning the project, install its dependencies running: `yarn install`
 
 ### Setup
 
-Copy the [config file](config/default.json) with the name of the environment you're running, this name needs to be the same as the env var **NODE_CONFIG_ENV**.
+Copy the [config file](config/default.json) with the name of the environment you're running, this name needs to be the same as the env var **NODE_CONFIG_ENV**(on docker-compose.yml file).
 
 By default **NODE_CONFIG_ENV** is _develop_, so you'll need to create _config/develop.json_ and set minimum the "db" parameters.
 

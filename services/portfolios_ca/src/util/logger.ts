@@ -1,11 +1,9 @@
 import fs from 'fs';
 import path from 'path';
-import { URL } from 'url';
+import { URL, fileURLToPath } from 'url';
 
 import config from 'config';
 import winston from 'winston';
-
-import { fileURLToPath } from 'url';
 
 const currentFileUrl = fileURLToPath(new URL(import.meta.url));
 const currentFolder = path.dirname(currentFileUrl);

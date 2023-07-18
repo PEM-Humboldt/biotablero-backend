@@ -8,6 +8,8 @@ Backend services for BioTablero.
 
 You'll need nodejs v14.15+ and yarn to run the project.
 
+- For a better performance run in SO linux.
+
 ### Install dependencies
 
 After cloning the project, install its dependencies running: `yarn install`

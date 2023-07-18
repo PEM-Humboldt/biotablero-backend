@@ -5,8 +5,10 @@ import { URL } from 'url';
 import config from 'config';
 import winston from 'winston';
 
-const currentFileUrl = new URL(import.meta.url);
-const currentFolder = path.dirname(currentFileUrl.pathname);
+import { fileURLToPath } from 'url';
+
+const currentFileUrl = fileURLToPath(new URL(import.meta.url));
+const currentFolder = path.dirname(currentFileUrl);
 
 const logsConfig: { dir: string } = config.get('logs');
 

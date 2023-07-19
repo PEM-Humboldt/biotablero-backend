@@ -1,16 +1,15 @@
 import fs from 'fs';
 import path from 'path';
-import { URL, fileURLToPath } from 'url';
 
 import config from 'config';
 import winston from 'winston';
 
-const currentFileUrl = fileURLToPath(new URL(import.meta.url));
+const currentFileUrl = process.argv[1];
 const currentFolder = path.dirname(currentFileUrl);
 
 const logsConfig: { dir: string } = config.get('logs');
 
-const logsDir = `${currentFolder}/../../${logsConfig.dir}`;
+const logsDir = `${currentFolder}/../${logsConfig.dir}`;
 
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
 

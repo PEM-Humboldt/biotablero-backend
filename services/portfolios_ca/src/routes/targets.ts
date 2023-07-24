@@ -1,8 +1,7 @@
 import { Router } from 'restify-router';
-import { EHFunction } from '../types/util';
 import { TargetsServiceI } from '../types/targets';
 
-export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
+export default (TargetsService: TargetsServiceI) => {
   const router = new Router();
 
   /**
@@ -36,10 +35,10 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    */
   router.get(
     '/portfolios-ca/targets/:targetId/values',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.targetId)) {
         const error = { code: 400, message: 'areaType, areaId and targetId are required' };
-        throw error;
+        return next(error);
       }
       return TargetsService.getPortfoliosByTarget(
         req.params.areaType,
@@ -49,8 +48,7 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   /**
    * @apiGroup s_portfolios_ca
@@ -74,17 +72,16 @@ export default (errorHandler: EHFunction, TargetsService: TargetsServiceI) => {
    */
   router.get(
     '/portfolios-ca/targets/list',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
         const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
+        return next(error);
       }
       return TargetsService.getTargetsList(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   return router;
 };

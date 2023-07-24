@@ -29,6 +29,8 @@ server.on('NotFound', (_req, res, err, cb) => {
   cb();
 });
 
+server.on('restifyError', diContainer.errorHandler);
+
 diContainer.routes.forEach((router: Router) => router.applyRoutes(server));
 
 server.listen(serverConfig.port, () => {

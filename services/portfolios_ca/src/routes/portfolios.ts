@@ -1,8 +1,7 @@
 import { Router } from 'restify-router';
-import { EHFunction } from '../types/util';
 import { PortfoliosServiceI } from '../types/portfolios';
 
-export default (errorHandler: EHFunction, PortfoliosService: PortfoliosServiceI) => {
+export default (PortfoliosService: PortfoliosServiceI) => {
   const router = new Router();
 
   /**
@@ -24,12 +23,11 @@ export default (errorHandler: EHFunction, PortfoliosService: PortfoliosServiceI)
    */
   router.get(
     '/portfolios-ca/portfolios/list',
-    errorHandler((_req, res, next) =>
+    (_req, res, next) =>
       PortfoliosService.getPortfoliosList().then((value) => {
         res.send(value);
-        next();
+        return next();
       }),
-    ),
   );
 
   /**
@@ -51,10 +49,10 @@ export default (errorHandler: EHFunction, PortfoliosService: PortfoliosServiceI)
    */
   router.get(
     '/portfolios-ca/portfolios/layer',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.portfolioId)) {
         const error = { code: 400, message: 'areaType, areaId and portfolioId are required' };
-        throw error;
+        return next(error);
       }
       return PortfoliosService.getPortfoliosCALayer(Number(req.params.portfolioId)).then(
         (value) => {
@@ -62,8 +60,7 @@ export default (errorHandler: EHFunction, PortfoliosService: PortfoliosServiceI)
           next();
         },
       );
-    }),
-  );
+    });
 
   return router;
 };

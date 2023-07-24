@@ -4,8 +4,8 @@ import path from 'path';
 import config from 'config';
 import winston from 'winston';
 
-const currentFileUrl = process.argv[1];
-const currentFolder = path.dirname(currentFileUrl);
+const absolutePathMain = process.argv[1]; // app.js dir
+const currentFolder = path.dirname(absolutePathMain);
 
 const logsConfig: { dir: string } = config.get('logs');
 

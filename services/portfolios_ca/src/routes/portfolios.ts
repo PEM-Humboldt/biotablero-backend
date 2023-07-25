@@ -21,13 +21,11 @@ export default (PortfoliosService: PortfoliosServiceI) => {
    *
    * @apiUse PortfoliosListExample
    */
-  router.get(
-    '/portfolios-ca/portfolios/list',
-    (_req, res, next) =>
-      PortfoliosService.getPortfoliosList().then((value) => {
-        res.send(value);
-        return next();
-      }),
+  router.get('/portfolios-ca/portfolios/list', (_req, res, next) =>
+    PortfoliosService.getPortfoliosList().then((value) => {
+      res.send(value);
+      return next();
+    }),
   );
 
   /**
@@ -47,20 +45,16 @@ export default (PortfoliosService: PortfoliosServiceI) => {
    * @apiExample {curl} Example usage:
    *  /portfolios-ca/portfolios/layer?areaType=ea&areaId=CARDER&portfolioId=1
    */
-  router.get(
-    '/portfolios-ca/portfolios/layer',
-    (req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.portfolioId)) {
-        const error = { code: 400, message: 'areaType, areaId and portfolioId are required' };
-        return next(error);
-      }
-      return PortfoliosService.getPortfoliosCALayer(Number(req.params.portfolioId)).then(
-        (value) => {
-          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-          next();
-        },
-      );
+  router.get('/portfolios-ca/portfolios/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.portfolioId)) {
+      const error = { code: 400, message: 'areaType, areaId and portfolioId are required' };
+      return next(error);
+    }
+    return PortfoliosService.getPortfoliosCALayer(Number(req.params.portfolioId)).then((value) => {
+      res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+      next();
     });
+  });
 
   return router;
 };

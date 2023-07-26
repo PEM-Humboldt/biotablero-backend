@@ -1,6 +1,9 @@
 import { readFile } from 'fs/promises';
 import path from 'path';
 import { URL } from 'url';
+
+import RestifyErrors from 'restify-errors';
+
 import { PortfoliosServiceI, PortfoliosList } from '../types/portfolios';
 
 export default (): PortfoliosServiceI => {
@@ -63,11 +66,7 @@ export default (): PortfoliosServiceI => {
         return readFile(`${folder}/portafolios-ca_layer_5_3.png`);
       }
 
-      const error = {
-        code: 404,
-        message: 'No layers for this portfolio',
-      };
-      throw error;
+      throw new RestifyErrors.NotFoundError('No layers for this portfolio');
     },
   };
   return Portfolios;

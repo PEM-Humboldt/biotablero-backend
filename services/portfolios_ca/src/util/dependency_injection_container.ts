@@ -18,8 +18,8 @@ bottle.factory('TargetsService', () => TargetsService());
 bottle.factory('PortfoliosService', () => PortfoliosService());
 
 bottle.factory('routes', (container) => [
-  TargetsRoutes(container.errorHandler, container.TargetsService),
-  PortfoliosRoutes(container.errorHandler, container.PortfoliosService),
+  TargetsRoutes(container.TargetsService),
+  PortfoliosRoutes(container.PortfoliosService),
 ]);
 
 export default bottle.container;

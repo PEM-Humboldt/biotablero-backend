@@ -1,3 +1,5 @@
+import RestifyErrors from 'restify-errors';
+
 import { TargetsServiceI, TargetsList, PortfoliosByTarget } from '../types/targets';
 
 export default (): TargetsServiceI => {
@@ -20,11 +22,7 @@ export default (): TargetsServiceI => {
         (element): boolean => element.id === targetId,
       );
       if (!target) {
-        const error = {
-          code: 404,
-          message: 'No portfolios for this area and target',
-        };
-        throw error;
+        throw new RestifyErrors.NotFoundError('No portfolios for this area and target');
       }
       const portfoliosOptions = [
         {

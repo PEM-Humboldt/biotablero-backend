@@ -1,4 +1,4 @@
-import { Logger, EHFunction } from '../types/util';
+import { Logger, ErrorFunction } from '../types/util';
 
 /**
  * Wrapper to catch errors from every endpoint. When an error occurs in a lower layer,
@@ -10,19 +10,13 @@ import { Logger, EHFunction } from '../types/util';
  *
  * @returns router function to continue restify workflow
  */
-export default (logger: Logger): EHFunction =>
-  (callback) =>
-  async (req, res, next) => {
-    logger.info(`[${req.id()}] received - ${req.href()}`);
-    try {
-      await callback(req, res, next);
-      logger.info(`[${req.id()}] finished - ${req.href()}`);
-    } catch (e: any) {
-      const code = typeof e.code === 'number' ? e.code : 500;
-      logger.error(e.stack || e.Error || e.message || e);
-      res.send(code, {
-        code,
-        userMsg: e.userMsg || e.message || 'There was an internal error',
-      });
-    }
+export default (logger: Logger): ErrorFunction =>
+  (_req, res, err, next) => {
+    logger.error(err.stack || err.message || err);
+    const code = err.statusCode || 500;
+    res.send(code, {
+      code,
+      userMsg: err.message || err.userMsg || 'There was an internal error',
+    });
+    next();
   };

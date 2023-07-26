@@ -4,12 +4,12 @@ import path from 'path';
 import config from 'config';
 import winston from 'winston';
 
-const absolutePathMain = process.argv[1]; // app.js dir
-const currentFolder = path.dirname(absolutePathMain);
+const pathMain = process.argv[1];
+const containerFolder = path.dirname(pathMain);
 
 const logsConfig: { dir: string } = config.get('logs');
 
-const logsDir = `${currentFolder}/../${logsConfig.dir}`;
+const logsDir = `${containerFolder}/../${logsConfig.dir}`;
 
 if (!fs.existsSync(logsDir)) fs.mkdirSync(logsDir, { recursive: true });
 

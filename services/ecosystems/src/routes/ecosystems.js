@@ -183,7 +183,6 @@ module.exports = (EcosystemsService) => {
       req.params.coverageType,
       req.params.seType,
     ).then((value) => {
-      console.log('value', value);
       res.sendRaw(200, value, { 'Content-Type': 'image/png' });
       next();
     });

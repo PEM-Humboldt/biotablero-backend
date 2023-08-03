@@ -186,7 +186,6 @@ module.exports = (
           coveragesColorSet(coverageType),
         );
       } catch (e) {
-        console.log('eeeeeeeeeeeeeeeeeeeee', e);
         throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },

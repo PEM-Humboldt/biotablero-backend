@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const {
   areaTypeKeys,
   rasterCoverageKeys,
@@ -26,7 +28,9 @@ module.exports = (
 
       const noCoverageData = rawData.every((item) => Object.values(item).length === 0);
       if (noCoverageData) {
-        throw new Error("Data for coverage doesn't exists in the selected area id and area type");
+        throw new RestifyErrors.NotFoundError(
+          "Data for coverage doesn't exists in the selected area id and area type",
+        );
       }
       const totalArea = rawData.map((i) => i.area_ha).reduce((prev, next) => prev + next);
       const data = Object.keys(rawData).map((key) => ({
@@ -69,7 +73,9 @@ module.exports = (
 
       const noSEData = data.every((item) => Object.values(item).length === 0);
       if (noSEData) {
-        throw new Error("Data for SE Areas doesn't exists in the selected area id and area type");
+        throw new RestifyErrors.NotFoundError(
+          "Data for SE Areas doesn't exists in the selected area id and area type",
+        );
       }
 
       data.unshift({
@@ -112,12 +118,12 @@ module.exports = (
           );
           break;
         default:
-          throw new Error("Data doesn't exist for the given se type");
+          throw new RestifyErrors.NotFoundError("Data doesn't exist for the given se type");
       }
 
       const noCoverageData = rawData.every((item) => Object.values(item).length === 0);
       if (noCoverageData) {
-        throw new Error(
+        throw new RestifyErrors.NotFoundError(
           "Data for coverage doesn't exists in the selected area id, area type and se type",
         );
       }
@@ -150,21 +156,13 @@ module.exports = (
           coveragesColorSet(type),
         );
         if (layer === null) {
-          const error = {
-            code: 404,
-            message: "Layer doesn't exist in the selected area id and area type",
-          };
-          throw error;
+          throw new RestifyErrors.NotFoundError(
+            "Layer doesn't exist in the selected area id and area type",
+          );
         }
         return layer;
       } catch (e) {
-        if (e.code) throw e;
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
 
@@ -188,12 +186,8 @@ module.exports = (
           coveragesColorSet(coverageType),
         );
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        console.log('eeeeeeeeeeeeeeeeeeeee', e);
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
   };

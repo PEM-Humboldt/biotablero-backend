@@ -28,7 +28,7 @@ module.exports = (EcosystemsService) => {
    */
   router.get('/ecosystems/coverage', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId)) {
-      const error = new RestifyErrors.NotFoundError('areaType and areaId required');
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
       return next(error);
     }
     return EcosystemsService.getCoverage(req.params.areaType, req.params.areaId).then((value) => {
@@ -60,7 +60,7 @@ module.exports = (EcosystemsService) => {
    */
   router.get('/ecosystems/se', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId)) {
-      const error = new RestifyErrors.NotFoundError('areaType and areaId required');
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
       return next(error);
     }
     return EcosystemsService.getSEAreas(req.params.areaType, req.params.areaId).then((value) => {
@@ -95,7 +95,7 @@ module.exports = (EcosystemsService) => {
    */
   router.get('/ecosystems/coverage/se', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-      const error = new RestifyErrors.NotFoundError('areaType, areaId and seType required');
+      const error = new RestifyErrors.BadRequestError('areaType, areaId and seType required');
       return next(error);
     }
     return EcosystemsService.getCoverageSE(
@@ -130,7 +130,7 @@ module.exports = (EcosystemsService) => {
    */
   router.get('/ecosystems/coverage/layer', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId && req.params.coverageType)) {
-      const error = new RestifyErrors.NotFoundError(
+      const error = new RestifyErrors.BadRequestError(
         'areaType, areaId and coverageType are required',
       );
       return next(error);
@@ -172,7 +172,7 @@ module.exports = (EcosystemsService) => {
     if (
       !(req.params.areaType && req.params.areaId && req.params.coverageType && req.params.seType)
     ) {
-      const error = new RestifyErrors.NotFoundError(
+      const error = new RestifyErrors.BadRequestError(
         'areaType, areaId, coverageType and seType are required',
       );
       return next(error);

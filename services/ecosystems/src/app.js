@@ -15,6 +15,10 @@ const cors = corsMiddleware({
   origins: serverConfig.origins,
 });
 server.pre(cors.preflight);
+server.pre((req, _res, next) => {
+  diContainer.logger.info(`[${req.id()}] received - ${req.href()}`);
+  next();
+});
 server.use(cors.actual);
 server.use(restify.plugins.queryParser({ mapParams: true }));
 server.use(restify.plugins.bodyParser());
@@ -25,6 +29,10 @@ server.on('NotFound', (req, res, err, cb) => {
   }
   cb();
 });
+server.on('after', (req) => {
+  diContainer.logger.info(`[${req.id()}] finished - ${req.href()}`);
+});
+server.on('restifyError', diContainer.errorHandler);
 
 diContainer.routes.forEach((router) => router.applyRoutes(server));
 

@@ -1,7 +1,8 @@
 const multer = require('multer');
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
-module.exports = (errorHandler, DownloadsService) => {
+module.exports = (DownloadsService) => {
   const router = new Router();
 
   /**
@@ -23,19 +24,16 @@ module.exports = (errorHandler, DownloadsService) => {
    * @apiUse GetFileExampleUrl
    * @apiUse GetFileExampleExpired
    */
-  router.get(
-    '/downloads/get-file',
-    errorHandler((req, res, next) => {
-      if (!req.params.reference) {
-        const error = { code: 400, message: 'reference is required' };
-        throw error;
-      }
-      return DownloadsService.getFile(req.params.reference).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/downloads/get-file', (req, res, next) => {
+    if (!req.params.reference) {
+      const error = new RestifyErrors.BadRequestError('reference is required');
+      return next(error);
+    }
+    return DownloadsService.getFile(req.params.reference).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   const upload = multer({ dest: `${process.cwd()}/uploads/` });
   /**
@@ -62,28 +60,25 @@ module.exports = (errorHandler, DownloadsService) => {
    *  --form file=@path/to/a/file
    * @apiUse UploadFileExample
    */
-  router.post(
-    '/downloads/upload-file',
-    errorHandler((req, res, next) => {
-      upload.single('file')(req, res, (err) => {
-        if (err) {
-          throw err;
-        }
-        if (!req.file || !req.body.service || !req.body.reference) {
-          const error = { code: 400, message: 'file, service and reference are required' };
-          throw error;
-        }
-        return DownloadsService.uploadFile(
-          req.file,
-          req.body.service.replace(/\s+/g, ' ').trim(),
-          req.body.reference.replace(/\s+/g, ' ').trim(),
-        ).then((value) => {
-          res.send(value);
-          next();
-        });
+  router.post('/downloads/upload-file', (req, res, next) => {
+    upload.single('file')(req, res, (err) => {
+      if (err) {
+        return next(err);
+      }
+      if (!req.file || !req.body.service || !req.body.reference) {
+        const error = new RestifyErrors.BadRequestError('file, service and reference are required');
+        return next(error);
+      }
+      return DownloadsService.uploadFile(
+        req.file,
+        req.body.service.replace(/\s+/g, ' ').trim(),
+        req.body.reference.replace(/\s+/g, ' ').trim(),
+      ).then((value) => {
+        res.send(value);
+        next();
       });
-    }),
-  );
+    });
+  });
 
   return router;
 };

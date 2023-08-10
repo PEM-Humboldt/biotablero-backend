@@ -1,6 +1,7 @@
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
-module.exports = (errorHandler, UtilService) => {
+module.exports = (UtilService) => {
   const router = new Router();
 
   /**
@@ -23,19 +24,16 @@ module.exports = (errorHandler, UtilService) => {
    *  /util/texts?key=test
    * @apiUse TextsExample
    */
-  router.get(
-    '/util/texts',
-    errorHandler((req, res, next) => {
-      if (!req.params.key) {
-        const error = { code: 400, message: 'key is required' };
-        throw error;
-      }
-      return UtilService.getTexts(req.params.key).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/util/texts', (req, res, next) => {
+    if (!req.params.key) {
+      const error = new RestifyErrors.BadRequestError('key is required');
+      return next(error);
+    }
+    return UtilService.getTexts(req.params.key).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   return router;
 };

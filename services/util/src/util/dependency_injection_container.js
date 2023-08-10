@@ -36,8 +36,8 @@ bottle.factory('DownloadsService', (container) =>
 );
 
 bottle.factory('routes', (container) => [
-  UtilRoute(container.errorHandler, container.UtilService),
-  DownloadsRoute(container.errorHandler, container.DownloadsService),
+  UtilRoute(container.UtilService),
+  DownloadsRoute(container.DownloadsService),
 ]);
 
 module.exports = bottle.container;

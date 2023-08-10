@@ -7802,6 +7802,7 @@ resolve@^1.9.0:
   version: 0.0.0-use.local
   resolution: "util@workspace:services/util"
   dependencies:
+    "@types/restify-errors": ~4.3.5
     aws-sdk: ~2.1175.0
     bookshelf: ~1.2.0
     bottlejs: ~2.0.0
@@ -7810,8 +7811,9 @@ resolve@^1.9.0:
     multer: ~1.4.5-lts.1
     nodemon: ~2.0.16
     pg: ~8.7.3
-    restify: ~8.6.1
+    restify: ~10.0.0
     restify-cors-middleware: ~1.1.1
+    restify-errors: ~8.0.2
     restify-router: ~0.6.2
     winston: ~3.7.2
   languageName: unknown

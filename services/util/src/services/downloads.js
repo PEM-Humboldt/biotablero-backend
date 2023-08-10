@@ -1,4 +1,5 @@
 const fs = require('fs');
+const RestifyErrors = require('restify-errors');
 
 module.exports = (DownloadsPersistence, CloudServices, logger) => {
   const Downloads = {
@@ -42,8 +43,7 @@ module.exports = (DownloadsPersistence, CloudServices, logger) => {
       if (cloud[0].storage_service === 'aws') {
         uploadFunction = CloudServices.AWS.uploadFile;
       } else {
-        const Error = { message: 'Service not configured' };
-        throw Error;
+        throw new RestifyErrors.InternalServerError('Service not configured');
       }
 
       const uploaded = await uploadFunction(file);

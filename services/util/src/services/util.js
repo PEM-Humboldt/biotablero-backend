@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (TextsPersistence) => {
   const Util = {
     /**
@@ -12,7 +14,9 @@ module.exports = (TextsPersistence) => {
       let data = {};
 
       if (!rawData || rawData.length === 0) {
-        throw new Error('There is not data of texts asociated to the given key');
+        throw new RestifyErrors.NotFoundError(
+          'There is not data of texts asociated to the given key',
+        );
       }
 
       rawData.forEach((element) => {

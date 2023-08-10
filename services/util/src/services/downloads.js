@@ -43,7 +43,7 @@ module.exports = (DownloadsPersistence, CloudServices, logger) => {
       if (cloud[0].storage_service === 'aws') {
         uploadFunction = CloudServices.AWS.uploadFile;
       } else {
-        throw new RestifyErrors.NotFoundError('Service not configured');
+        throw new RestifyErrors.InternalServerError('Service not configured');
       }
 
       const uploaded = await uploadFunction(file);

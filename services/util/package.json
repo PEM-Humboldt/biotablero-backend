@@ -4,7 +4,6 @@
   "description": "Service for utils",
   "main": "src/app.js",
   "devDependencies": {
-    "@types/restify-errors": "~4.3.5",
     "nodemon": "~2.0.16"
   },
   "scripts": {

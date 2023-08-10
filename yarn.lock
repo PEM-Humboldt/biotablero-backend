@@ -352,7 +352,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/restify-errors@npm:^4.3.5, @types/restify-errors@npm:~4.3.5":
+"@types/restify-errors@npm:^4.3.5":
   version: 4.3.5
   resolution: "@types/restify-errors@npm:4.3.5"
   dependencies:
@@ -2166,7 +2166,6 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "ecosystems@workspace:services/ecosystems"
   dependencies:
-    "@types/restify-errors": ~4.3.5
     bookshelf: ~1.2.0
     bottlejs: ~2.0.0
     config: ~3.3.7
@@ -7802,7 +7801,6 @@ resolve@^1.9.0:
   version: 0.0.0-use.local
   resolution: "util@workspace:services/util"
   dependencies:
-    "@types/restify-errors": ~4.3.5
     aws-sdk: ~2.1175.0
     bookshelf: ~1.2.0
     bottlejs: ~2.0.0

@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { downloads, downloads_config: downloadsConfig }, logger) => {
   const DownloadsPersistence = {
     /**
@@ -15,7 +17,7 @@ module.exports = (db, { downloads, downloads_config: downloadsConfig }, logger) 
         .where({ reference_id: referenceId })
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -32,7 +34,7 @@ module.exports = (db, { downloads, downloads_config: downloadsConfig }, logger) 
         .where({ bt_service_name: serviceName })
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -59,7 +61,7 @@ module.exports = (db, { downloads, downloads_config: downloadsConfig }, logger) 
         .then((obj) => obj.attributes)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error updating download');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         });
     },
   };

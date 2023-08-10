@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { texts }, logger) => {
   const TextsPersistence = {
     /**
@@ -14,7 +16,7 @@ module.exports = (db, { texts }, logger) => {
         .where({ key })
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
   };
   return TextsPersistence;

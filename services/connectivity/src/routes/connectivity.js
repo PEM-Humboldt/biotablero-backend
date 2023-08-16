@@ -1,4 +1,5 @@
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
 module.exports = (errorHandler, connectivityService) => {
   const router = new Router();
@@ -25,21 +26,16 @@ module.exports = (errorHandler, connectivityService) => {
    *  /connectivity/current?areaType=ea&areaId=DAGMA
    * @apiUse CurrentExample
    */
-  router.get(
-    '/connectivity/current',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
-      }
-      return connectivityService
-        .getCurrentPAConnectivity(req.params.areaType, req.params.areaId)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/current', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    return connectivityService.getCurrentPAConnectivity(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_pa_connectivity
@@ -64,24 +60,19 @@ module.exports = (errorHandler, connectivityService) => {
    *  /connectivity/dpc?areaType=ea&areaId=DAGMA&paNumber=5
    * @apiUse DPCExample
    */
-  router.get(
-    '/connectivity/dpc',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
-      }
-      if (!req.params.paNumber || req.params.paNumber === 'undefined') {
-        req.params.paNumber = null;
-      }
-      return connectivityService
-        .getPADPC(req.params.areaType, req.params.areaId, req.params.paNumber)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/dpc', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    if (!req.params.paNumber || req.params.paNumber === 'undefined') {
+      req.params.paNumber = null;
+    }
+    return connectivityService.getPADPC(req.params.areaType, req.params.areaId, req.params.paNumber).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_pa_connectivity
@@ -105,24 +96,19 @@ module.exports = (errorHandler, connectivityService) => {
    *  /connectivity/dpc/layer?areaType=ea&areaId=DAGMA&paNumber=5
    * @apiUse DPCLayerExample
    */
-  router.get(
-    '/connectivity/dpc/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
-      }
-      if (!req.params.paNumber || req.params.paNumber === 'undefined') {
-        req.params.paNumber = null;
-      }
-      return connectivityService
-        .getPAConnectivityLayers(req.params.areaType, req.params.areaId, req.params.paNumber)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/dpc/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    if (!req.params.paNumber || req.params.paNumber === 'undefined') {
+      req.params.paNumber = null;
+    }
+    return connectivityService.getPAConnectivityLayers(req.params.areaType, req.params.areaId, req.params.paNumber).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_pa_connectivity
@@ -146,21 +132,16 @@ module.exports = (errorHandler, connectivityService) => {
    *  connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot
    * @apiUse TimelineByCategoryExample
    */
-  router.get(
-    '/connectivity/timeline',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.category)) {
-        const error = { code: 400, message: 'areaType, areaId and category are required' };
-        throw error;
-      }
-      return connectivityService
-        .getTimelinePAConnectivity(req.params.areaType, req.params.areaId, req.params.category)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/timeline', (req, res, next) =>  {
+    if (!(req.params.areaType && req.params.areaId && req.params.category)) {
+      const error = new RestifyErrors.BadRequestError('areaType, areaId and category are required');
+      return next(error);
+    }
+    return connectivityService.getTimelinePAConnectivity(req.params.areaType, req.params.areaId, req.params.category).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_pa_connectivity
@@ -186,21 +167,16 @@ module.exports = (errorHandler, connectivityService) => {
    *  /connectivity/current/se?areaType=ea&areaId=DAGMA&seType=Páramo
    * @apiUse CurrentBySEExample
    */
-  router.get(
-    '/connectivity/current/se',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-        const error = { code: 400, message: 'areaType, areaId and seType required' };
-        throw error;
-      }
-      return connectivityService
-        .getCurrentPAConnectivityBySE(req.params.areaType, req.params.areaId, req.params.seType)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/current/se', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+      const error = RestifyErrors.BadRequestError('areaType, areaId and seType required');
+      return next(error);
+    }
+    return connectivityService.getCurrentPAConnectivityBySE(req.params.areaType, req.params.areaId, req.params.seType).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_pa_connectivity
@@ -225,21 +201,16 @@ module.exports = (errorHandler, connectivityService) => {
    *  /connectivity/se/layer?areaType=ea&areaId=DAGMA&seType=Páramo
    * @apiUse SELayerExample
    */
-  router.get(
-    '/connectivity/se/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-        const error = { code: 400, message: 'areaType, areaId and seType required' };
-        throw error;
-      }
-      return connectivityService
-        .getSELayer(req.params.areaType, req.params.areaId, req.params.seType)
-        .then((value) => {
-          res.send(value);
-          next();
-        });
-    }),
-  );
+  router.get('/connectivity/se/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+      const error = RestifyErrors.BadRequestError('areaType, areaId and seType required');
+      return next(error);
+    }
+    return connectivityService.getSELayer(req.params.areaType, req.params.areaId, req.params.seType).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   return router;
 };

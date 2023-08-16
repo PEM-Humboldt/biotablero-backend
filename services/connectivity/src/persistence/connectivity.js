@@ -1,4 +1,5 @@
 const { areaTypeDBKeys, dpcDBKeys, dpcCategoriesDBKeys } = require('../util/appropriate_keys');
+const RestifyErrors = require('restify-errors');
 
 module.exports = (
   db,
@@ -22,7 +23,7 @@ module.exports = (
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -62,7 +63,7 @@ module.exports = (
       })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -82,7 +83,7 @@ module.exports = (
       .orderBy('prot_year', 'asc')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -103,7 +104,7 @@ module.exports = (
       .orderBy('prot_year', 'asc')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -124,7 +125,7 @@ module.exports = (
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -145,7 +146,7 @@ module.exports = (
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -165,7 +166,7 @@ module.exports = (
       .select('protconn', 'protunconn', 'unprotected', 'area_ha')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -221,7 +222,7 @@ module.exports = (
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -262,7 +263,7 @@ module.exports = (
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -303,7 +304,7 @@ module.exports = (
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -344,6 +345,6 @@ module.exports = (
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 });

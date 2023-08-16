@@ -1,4 +1,5 @@
 const { areaTypeKeys, paConnCategoriesKeys } = require('../util/appropriate_keys');
+const RestifyErrors = require('restify-errors');
 
 module.exports = (connectivityPersistence) => {
   const connectivity = {
@@ -19,7 +20,7 @@ module.exports = (connectivityPersistence) => {
 
       const paConnDataInArea = rawData[0] ? rawData[0] : null;
       if (!paConnDataInArea) {
-        throw new Error(
+        throw new RestifyErrors.NotFoundError(
           "Data for Current PA Connectivity doesn't exists in the selected area id and area type",
         );
       }
@@ -147,7 +148,7 @@ module.exports = (connectivityPersistence) => {
 
       const paConnDataInSE = rawData && rawData[0] ? rawData[0] : null;
       if (!paConnDataInSE) {
-        throw new Error(
+        throw new RestifyErrors.NotFoundError(
           `Data for Current PA Connectivity In ${strategicEcosystem} doesn't exists in the selected area id and area type`,
         );
       }
@@ -181,7 +182,7 @@ module.exports = (connectivityPersistence) => {
         case 'Humedal':
           return connectivityPersistence.findSELayerInWetland(areaTypeKeys(areaType), areaId);
         default:
-          throw new Error(
+          throw new RestifyErrors.NotFoundError(
             "Data for SE Layer doesn't exists in the selected area id, area type and seType",
           );
       }

@@ -1,5 +1,5 @@
-const { areaTypeDBKeys, dpcDBKeys, dpcCategoriesDBKeys } = require('../util/appropriate_keys');
 const RestifyErrors = require('restify-errors');
+const { areaTypeDBKeys, dpcDBKeys, dpcCategoriesDBKeys } = require('../util/appropriate_keys');
 
 module.exports = (
   db,

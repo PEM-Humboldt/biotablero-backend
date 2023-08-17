@@ -1,5 +1,5 @@
-const { areaTypeKeys, paConnCategoriesKeys } = require('../util/appropriate_keys');
 const RestifyErrors = require('restify-errors');
+const { areaTypeKeys, paConnCategoriesKeys } = require('../util/appropriate_keys');
 
 module.exports = (connectivityPersistence) => {
   const connectivity = {

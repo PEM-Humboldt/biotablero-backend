@@ -40,8 +40,8 @@ bottle.factory('ForestLPService', (container) =>
 );
 
 bottle.factory('routes', (container) => [
-  SCIHFRoute(container.errorHandler, container.SCIHFService),
-  ForestLPRoute(container.errorHandler, container.ForestLPService),
+  SCIHFRoute(container.SCIHFService),
+  ForestLPRoute(container.ForestLPService),
 ]);
 
 module.exports = bottle.container;

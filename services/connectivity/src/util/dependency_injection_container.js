@@ -23,8 +23,6 @@ bottle.factory('connectivityService', (container) =>
   ConnectivityService(container.connectivityPersistence),
 );
 
-bottle.factory('routes', (container) => [
-  ConnectivityRoutes(container.connectivityService),
-]);
+bottle.factory('routes', (container) => [ConnectivityRoutes(container.connectivityService)]);
 
 module.exports = bottle.container;

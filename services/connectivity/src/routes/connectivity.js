@@ -31,10 +31,12 @@ module.exports = (errorHandler, connectivityService) => {
       const error = new RestifyErrors.BadRequestError('areaType and areaId required');
       return next(error);
     }
-    return connectivityService.getCurrentPAConnectivity(req.params.areaType, req.params.areaId).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getCurrentPAConnectivity(req.params.areaType, req.params.areaId)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   /**
@@ -68,10 +70,12 @@ module.exports = (errorHandler, connectivityService) => {
     if (!req.params.paNumber || req.params.paNumber === 'undefined') {
       req.params.paNumber = null;
     }
-    return connectivityService.getPADPC(req.params.areaType, req.params.areaId, req.params.paNumber).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getPADPC(req.params.areaType, req.params.areaId, req.params.paNumber)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   /**
@@ -104,10 +108,12 @@ module.exports = (errorHandler, connectivityService) => {
     if (!req.params.paNumber || req.params.paNumber === 'undefined') {
       req.params.paNumber = null;
     }
-    return connectivityService.getPAConnectivityLayers(req.params.areaType, req.params.areaId, req.params.paNumber).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getPAConnectivityLayers(req.params.areaType, req.params.areaId, req.params.paNumber)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   /**
@@ -132,15 +138,17 @@ module.exports = (errorHandler, connectivityService) => {
    *  connectivity/timeline?areaType=ea&areaId=DAGMA&category=prot
    * @apiUse TimelineByCategoryExample
    */
-  router.get('/connectivity/timeline', (req, res, next) =>  {
+  router.get('/connectivity/timeline', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId && req.params.category)) {
       const error = new RestifyErrors.BadRequestError('areaType, areaId and category are required');
       return next(error);
     }
-    return connectivityService.getTimelinePAConnectivity(req.params.areaType, req.params.areaId, req.params.category).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getTimelinePAConnectivity(req.params.areaType, req.params.areaId, req.params.category)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   /**
@@ -172,10 +180,12 @@ module.exports = (errorHandler, connectivityService) => {
       const error = RestifyErrors.BadRequestError('areaType, areaId and seType required');
       return next(error);
     }
-    return connectivityService.getCurrentPAConnectivityBySE(req.params.areaType, req.params.areaId, req.params.seType).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getCurrentPAConnectivityBySE(req.params.areaType, req.params.areaId, req.params.seType)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   /**
@@ -206,10 +216,12 @@ module.exports = (errorHandler, connectivityService) => {
       const error = RestifyErrors.BadRequestError('areaType, areaId and seType required');
       return next(error);
     }
-    return connectivityService.getSELayer(req.params.areaType, req.params.areaId, req.params.seType).then((value) => {
-      res.send(value);
-      next();
-    });
+    return connectivityService
+      .getSELayer(req.params.areaType, req.params.areaId, req.params.seType)
+      .then((value) => {
+        res.send(value);
+        next();
+      });
   });
 
   return router;

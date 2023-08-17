@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (SCIHFPersistence, restAPI) => {
   const SCIHF = {
     /**
@@ -33,7 +35,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error("Data for SCIHF doesn't exists in the selected area id and area type");
+        throw new RestifyErrors.InternalServerError("Data for SCIHF doesn't exists in the selected area id and area type");
       }
 
       try {
@@ -54,12 +56,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
           };
         });
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving SCIHF data',
-        };
-        throw error;
+        throw new RestifyErrors.InternalError('Error retrieving SCIHF data');
       }
     },
 
@@ -95,7 +92,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new Error(
+        throw new RestifyErrors.InternalServerError(
           "Data layer for SCIHF doesn't exists in the selected area id and area type",
         );
       }
@@ -141,7 +138,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data || !data.features) {
-        throw new Error(
+        throw new RestifyErrors.InternalServerError(
           "Data layer for SCIHF PA doesn't exists in the selected area id and area type",
         );
       }

@@ -1,3 +1,4 @@
+const RestifyErrors = require('restify-errors');
 const { areaTypeKeys, rasterForestLPKeys } = require('../util/appropriate_keys');
 const { forestLPColorSet } = require('../util/colorSet');
 
@@ -66,12 +67,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
           forestLPColorSet(category),
         );
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalError('Error retrieving layer');
       }
     },
   };

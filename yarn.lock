@@ -1758,6 +1758,7 @@ __metadata:
     pg: ~8.7.3
     restify: ~10.0.0
     restify-cors-middleware: ~1.1.1
+    restify-errors: ~8.0.2
     restify-router: ~0.6.2
     winston: ~3.7.2
   languageName: unknown

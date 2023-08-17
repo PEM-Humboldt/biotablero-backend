@@ -1,6 +1,7 @@
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
-module.exports = (errorHandler, ForestLPService) => {
+module.exports = (ForestLPService) => {
   const router = new Router();
 
   /**
@@ -30,17 +31,16 @@ module.exports = (errorHandler, ForestLPService) => {
    */
   router.get(
     '/forest/lp',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
+        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+        return next(error);
       }
       return ForestLPService.getForestLP(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   /**
    * @apiGroup s_forest_lp
@@ -66,10 +66,10 @@ module.exports = (errorHandler, ForestLPService) => {
    */
   router.get(
     '/forest/lp/layer',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId && req.params.category && req.params.period)) {
-        const error = { code: 400, message: 'areaType, areaId, category and period are required' };
-        throw error;
+        const error = new RestifyErrors.BadRequestError('areaType, areaId, category and period are required');
+        return next(error);
       }
       return ForestLPService.getForestLPLayer(
         req.params.areaType,
@@ -80,8 +80,7 @@ module.exports = (errorHandler, ForestLPService) => {
         res.sendRaw(200, value, { 'Content-Type': 'image/png' });
         next();
       });
-    }),
-  );
+    });
 
   return router;
 };

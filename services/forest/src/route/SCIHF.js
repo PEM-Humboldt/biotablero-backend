@@ -1,6 +1,7 @@
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
-module.exports = (errorHandler, SCIHFService) => {
+module.exports = (SCIHFService) => {
   const router = new Router();
 
   /**
@@ -29,17 +30,16 @@ module.exports = (errorHandler, SCIHFService) => {
    */
   router.get(
     '/forest/sci/hf',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
+        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+        return next(error);
       }
       return SCIHFService.getSCIHF(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   /**
    * @apiGroup s_sci_hf
@@ -65,17 +65,16 @@ module.exports = (errorHandler, SCIHFService) => {
    */
   router.get(
     '/forest/sci/hf/layer',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
+        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+        return next(error);
       }
       return SCIHFService.getSCIHFLayer(req.params.areaType, req.params.areaId).then((value) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   /**
    * @apiGroup s_sci_hf
@@ -104,10 +103,10 @@ module.exports = (errorHandler, SCIHFService) => {
    */
   router.get(
     '/forest/sci/:sciCat/hf/:hfPers/layer',
-    errorHandler((req, res, next) => {
+    (req, res, next) => {
       if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
+        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+        return next(error);
       }
       return SCIHFService.getSCIHFPALayer(
         req.params.sciCat,
@@ -118,8 +117,7 @@ module.exports = (errorHandler, SCIHFService) => {
         res.send(value);
         next();
       });
-    }),
-  );
+    });
 
   return router;
 };

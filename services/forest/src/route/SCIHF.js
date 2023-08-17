@@ -28,18 +28,16 @@ module.exports = (SCIHFService) => {
    *  /forest/sci/hf?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFExample
    */
-  router.get(
-    '/forest/sci/hf',
-    (req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
-        return next(error);
-      }
-      return SCIHFService.getSCIHF(req.params.areaType, req.params.areaId).then((value) => {
-        res.send(value);
-        next();
-      });
+  router.get('/forest/sci/hf', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    return SCIHFService.getSCIHF(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
     });
+  });
 
   /**
    * @apiGroup s_sci_hf
@@ -63,18 +61,16 @@ module.exports = (SCIHFService) => {
    *  /forest/sci/hf/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFLayerExample
    */
-  router.get(
-    '/forest/sci/hf/layer',
-    (req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
-        return next(error);
-      }
-      return SCIHFService.getSCIHFLayer(req.params.areaType, req.params.areaId).then((value) => {
-        res.send(value);
-        next();
-      });
+  router.get('/forest/sci/hf/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    return SCIHFService.getSCIHFLayer(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
     });
+  });
 
   /**
    * @apiGroup s_sci_hf
@@ -101,23 +97,21 @@ module.exports = (SCIHFService) => {
    *  /forest/sci/baja_moderada/hf/estable_alta/layer?areaType=ea&areaId=DAGMA
    * @apiUse SCIHFPALayerExample
    */
-  router.get(
-    '/forest/sci/:sciCat/hf/:hfPers/layer',
-    (req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = new RestifyErrors.BadRequestError('areaType and areaId required');
-        return next(error);
-      }
-      return SCIHFService.getSCIHFPALayer(
-        req.params.sciCat,
-        req.params.hfPers,
-        req.params.areaType,
-        req.params.areaId,
-      ).then((value) => {
-        res.send(value);
-        next();
-      });
+  router.get('/forest/sci/:sciCat/hf/:hfPers/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId required');
+      return next(error);
+    }
+    return SCIHFService.getSCIHFPALayer(
+      req.params.sciCat,
+      req.params.hfPers,
+      req.params.areaType,
+      req.params.areaId,
+    ).then((value) => {
+      res.send(value);
+      next();
     });
+  });
 
   return router;
 };

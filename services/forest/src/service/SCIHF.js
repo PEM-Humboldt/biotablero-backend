@@ -35,7 +35,9 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new RestifyErrors.InternalServerError("Data for SCIHF doesn't exists in the selected area id and area type");
+        throw new RestifyErrors.InternalServerError(
+          "Data for SCIHF doesn't exists in the selected area id and area type",
+        );
       }
 
       try {

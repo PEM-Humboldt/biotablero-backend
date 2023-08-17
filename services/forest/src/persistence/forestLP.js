@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { forestLP }, logger) => {
   const ForestLPPersistence = {
     /**
@@ -16,7 +18,7 @@ module.exports = (db, { forestLP }, logger) => {
         .where({ geofence_type: areaType, geofence_id: areaId, year: period })
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -37,11 +39,7 @@ module.exports = (db, { forestLP }, logger) => {
       const clip = await ForestLPPersistence.clipRaster(geometry, filename);
       const isEmpty = await ForestLPPersistence.isRasterEmpty(clip);
       if (isEmpty) {
-        const error = {
-          code: 404,
-          message: 'No layer for this area',
-        };
-        throw error;
+        throw new RestifyErrors.NotFoundError('No layer for this area');
       }
       return db
         .raw(
@@ -58,7 +56,7 @@ module.exports = (db, { forestLP }, logger) => {
         .then((rast) => rast.rows[0].image)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         });
     },
 
@@ -88,7 +86,7 @@ module.exports = (db, { forestLP }, logger) => {
         .then((res) => res.rows[0].clip)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -104,7 +102,7 @@ module.exports = (db, { forestLP }, logger) => {
         .then((res) => res.rows[0].isempty)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
   };
   return ForestLPPersistence;

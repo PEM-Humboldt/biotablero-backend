@@ -1,7 +1,7 @@
 const { Router } = require('restify-router');
 const RestifyErrors = require('restify-errors');
 
-module.exports = (errorHandler, connectivityService) => {
+module.exports = (connectivityService) => {
   const router = new Router();
 
   /**

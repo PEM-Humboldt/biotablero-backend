@@ -36,12 +36,8 @@ module.exports = (ForestLPPersistence, restAPI) => {
           });
           return data.every((elem) => Array.isArray(elem) && elem.data.length === 0) ? [] : data;
         })
-        .catch((e) => {
-          throw new Error({
-            code: 500,
-            stack: e.stack,
-            message: 'Error retrieving forest lp data',
-          });
+        .catch(() => {
+          throw new RestifyErrors.InternalError('Error retrieving forest lp data');
         });
     },
 

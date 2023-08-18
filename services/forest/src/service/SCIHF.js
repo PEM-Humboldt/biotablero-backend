@@ -35,7 +35,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new RestifyErrors.InternalServerError(
+        throw new RestifyErrors.NotFoundError(
           "Data for SCIHF doesn't exists in the selected area id and area type",
         );
       }
@@ -94,7 +94,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data) {
-        throw new RestifyErrors.InternalServerError(
+        throw new RestifyErrors.NotFoundError(
           "Data layer for SCIHF doesn't exists in the selected area id and area type",
         );
       }
@@ -140,7 +140,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
       }
 
       if (!data || !data.features) {
-        throw new RestifyErrors.InternalServerError(
+        throw new RestifyErrors.NotFoundError(
           "Data layer for SCIHF PA doesn't exists in the selected area id and area type",
         );
       }

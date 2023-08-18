@@ -8,7 +8,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 ### Prerequisites
 
-You'll need nodejs v14.15+ and yarn to run the project.
+You'll need nodejs v18.15+ and yarn to run the project.
 
 ### Install dependencies
 

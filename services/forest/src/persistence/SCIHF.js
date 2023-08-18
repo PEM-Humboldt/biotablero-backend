@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { geoIntegrity }, logger) => ({
   /**
    * Find the area grouped by SCI, HF persistence and PA categories
@@ -18,7 +20,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .orderBy('binary_protected', 'sci_cat', 'hf_pers')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -40,7 +42,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .orderBy('binary_protected', 'sci_cat', 'hf_pers')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -62,7 +64,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .orderBy('binary_protected', 'sci_cat', 'hf_pers')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -84,7 +86,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .orderBy('binary_protected', 'sci_cat', 'hf_pers')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -136,7 +138,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -188,7 +190,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -240,7 +242,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -292,7 +294,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -350,7 +352,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -407,7 +409,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -464,7 +466,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -521,6 +523,6 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .then((layers) => layers.rows[0].collection)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 });

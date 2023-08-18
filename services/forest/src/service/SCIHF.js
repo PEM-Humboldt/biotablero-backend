@@ -167,12 +167,7 @@ module.exports = (SCIHFPersistence, restAPI) => {
         data.features = newFeatures;
         return data;
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving SCIHFPA layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalError('Error retrieving SCIHFPA layer');
       }
     },
   };

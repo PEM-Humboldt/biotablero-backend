@@ -1,3 +1,4 @@
+const RestifyErrors = require('restify-errors');
 const { rasterNOSKeys } = require('../util/appropriate_keys');
 
 module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
@@ -30,7 +31,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           );
           break;
         default:
-          throw new Error("Data doesn't exist for the given group");
+          throw new RestifyErrors.NotFoundError("Data doesn't exist for the given group");
       }
       return Promise.all(promises)
         .then((response) => {
@@ -46,11 +47,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({
-            code: 500,
-            stack: e.stack,
-            message: 'Error retrieving NOS thresholds data',
-          });
+          throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },
 
@@ -100,11 +97,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({
-            code: 500,
-            stack: e.stack,
-            message: 'Error retrieving NOS thresholds data',
-          });
+          throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },
 
@@ -136,7 +129,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           );
           break;
         default:
-          throw new Error("Data doesn't exist for the given group");
+          throw new RestifyErrors.NotFoundError("Data doesn't exist for the given group");
       }
       return Promise.all(promises)
         .then((response) => {
@@ -152,11 +145,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
         .catch((e) => {
-          throw new Error({
-            code: 500,
-            stack: e.stack,
-            message: 'Error retrieving NOS thresholds data',
-          });
+          throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },
 
@@ -171,11 +160,9 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
     getGaps: async (areaType, areaId) => {
       const data = await RichnessGapsPersistence.findGaps(areaType, areaId);
       if (Object.values(data[0]).some((element) => element === null)) {
-        const error = {
-          code: 404,
-          message: "Gaps data doesn't exist in the selected area id and area type",
-        };
-        throw error;
+        throw new RestifyErrors.NotFoundError(
+          "Gaps data doesn't exist in the selected area id and area type",
+        );
       }
       return data;
     },
@@ -220,21 +207,13 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           rasterNOSKeys(group),
         );
         if (layer === null) {
-          const error = {
-            code: 404,
-            message: "Layer doesn't exist in the selected area id and area type",
-          };
-          throw error;
+          throw new RestifyErrors.NotFoundError(
+            "Layer doesn't exist in the selected area id and area type",
+          );
         }
         return layer;
       } catch (e) {
-        if (e.code) throw e;
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
 
@@ -257,12 +236,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           rasterNOSKeys(group),
         );
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
 
@@ -282,21 +256,13 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           'GAPS_INDICE_GSI_2020.tif',
         );
         if (layer === null) {
-          const error = {
-            code: 404,
-            message: "Layer doesn't exist in the selected area id and area type",
-          };
-          throw error;
+          throw new RestifyErrors.InternalServerError(
+            "Layer doesn't exist in the selected area id and area type",
+          );
         }
         return layer;
       } catch (e) {
-        if (e.code) throw e;
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
 
@@ -316,12 +282,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           'GAPS_INDICE_GSI_2020.tif',
         );
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalServerError('Error retrieving layer');
       }
     },
   };

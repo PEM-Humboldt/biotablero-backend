@@ -1,6 +1,7 @@
+const RestifyErrors = require('restify-errors');
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, Richness) => {
+module.exports = (Richness) => {
   const router = new Router();
 
   /**
@@ -32,23 +33,20 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/number-species?areaType=ea&areaId=CARDER&group=all
    * @apiUse NumberOfSpeciesExample
    */
-  router.get(
-    '/richness/number-species',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getNumberOfSpecies(
-        req.params.areaType,
-        req.params.areaId,
-        req.params.group,
-      ).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/richness/number-species', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getNumberOfSpecies(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.group,
+    ).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -80,23 +78,18 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/number-species/thresholds?areaType=ea&areaId=CARDER&group=total
    * @apiUse NOSThresholdsExample
    */
-  router.get(
-    '/richness/number-species/thresholds',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getNOSThresholds(
-        req.params.areaType,
-        req.params.areaId,
-        req.params.group,
-      ).then((value) => {
+  router.get('/richness/number-species/thresholds', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getNOSThresholds(req.params.areaType, req.params.areaId, req.params.group).then(
+      (value) => {
         res.send(value);
         next();
-      });
-    }),
-  );
+      },
+    );
+  });
 
   /**
    * @apiGroup s_richness
@@ -122,19 +115,16 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/number-species/nationalMax?areaType=ea&group=total
    * @apiUse NOSNationalMaxExample
    */
-  router.get(
-    '/richness/number-species/nationalMax',
-    errorHandler((req, res, next) => {
-      if (!req.params.areaType) {
-        const error = { code: 400, message: 'areaType is required' };
-        throw error;
-      }
-      return Richness.getNOSNationalMax(req.params.areaType, req.params.group).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/richness/number-species/nationalMax', (req, res, next) => {
+    if (!req.params.areaType) {
+      const error = new RestifyErrors.BadRequestError('areaType is required');
+      return next(error);
+    }
+    return Richness.getNOSNationalMax(req.params.areaType, req.params.group).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -163,19 +153,16 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/gaps?areaType=ea&areaId=CARDER
    * @apiUse GapsExample
    */
-  router.get(
-    '/richness/gaps',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getGaps(req.params.areaType, req.params.areaId).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/richness/gaps', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getGaps(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -203,19 +190,16 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/concentration?areaType=ea&areaId=CARDER
    * @apiUse ConcentrationExample
    */
-  router.get(
-    '/richness/concentration',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getConcentration(req.params.areaType, req.params.areaId).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/richness/concentration', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getConcentration(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -237,21 +221,18 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/number-species/layer?areaType=ea&areaId=CARDER&group=total
    * @apiUse NOSLayerExample
    */
-  router.get(
-    '/richness/number-species/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.group)) {
-        const error = { code: 400, message: 'areaType, areaId and group are required' };
-        throw error;
-      }
-      return Richness.getNOSLayer(req.params.areaType, req.params.areaId, req.params.group).then(
-        (value) => {
-          res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-          next();
-        },
-      );
-    }),
-  );
+  router.get('/richness/number-species/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = new RestifyErrors.BadRequestError('areaType, areaId and group are required');
+      return next(error);
+    }
+    return Richness.getNOSLayer(req.params.areaType, req.params.areaId, req.params.group).then(
+      (value) => {
+        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+        next();
+      },
+    );
+  });
 
   /**
    * @apiGroup s_richness
@@ -275,23 +256,20 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/number-species/layer/thresholds?areaType=ea&areaId=CARDER&group=total
    * @apiUse NOSLayerThresholdsExample
    */
-  router.get(
-    '/richness/number-species/layer/thresholds',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.group)) {
-        const error = { code: 400, message: 'areaType, areaId and group are required' };
-        throw error;
-      }
-      return Richness.getNOSLayerThresholds(
-        req.params.areaType,
-        req.params.areaId,
-        req.params.group,
-      ).then((value) => {
-        res.send(value);
-        next();
-      });
-    }),
-  );
+  router.get('/richness/number-species/layer/thresholds', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.group)) {
+      const error = new RestifyErrors.BadRequestError('areaType, areaId and group are required');
+      return next(error);
+    }
+    return Richness.getNOSLayerThresholds(
+      req.params.areaType,
+      req.params.areaId,
+      req.params.group,
+    ).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -310,19 +288,16 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/gaps/layer?areaType=ea&areaId=CARDER
    * @apiUse GapsLayerExample
    */
-  router.get(
-    '/richness/gaps/layer',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getGapsLayer(req.params.areaType, req.params.areaId).then((value) => {
-        res.sendRaw(200, value, { 'Content-Type': 'image/png' });
-        next();
-      });
-    }),
-  );
+  router.get('/richness/gaps/layer', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getGapsLayer(req.params.areaType, req.params.areaId).then((value) => {
+      res.sendRaw(200, value, { 'Content-Type': 'image/png' });
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_richness
@@ -343,21 +318,16 @@ module.exports = (errorHandler, Richness) => {
    *  /richness/gaps/layer/thresholds?areaType=ea&areaId=CARDER
    * @apiUse GapsLayerThresholdsExample
    */
-  router.get(
-    '/richness/gaps/layer/thresholds',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return Richness.getGapsLayerThresholds(req.params.areaType, req.params.areaId).then(
-        (value) => {
-          res.send(value);
-          next();
-        },
-      );
-    }),
-  );
+  router.get('/richness/gaps/layer/thresholds', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return Richness.getGapsLayerThresholds(req.params.areaType, req.params.areaId).then((value) => {
+      res.send(value);
+      next();
+    });
+  });
 
   return router;
 };

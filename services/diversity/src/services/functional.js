@@ -1,4 +1,5 @@
 const RestifyErrors = require('restify-errors');
+
 module.exports = (FunctionalDryForestPersistence) => {
   const Functional = {
     /**

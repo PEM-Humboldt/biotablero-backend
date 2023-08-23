@@ -46,7 +46,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           });
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
-        .catch((e) => {
+        .catch(() => {
           throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },
@@ -96,7 +96,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           });
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
-        .catch((e) => {
+        .catch(() => {
           throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },
@@ -144,7 +144,7 @@ module.exports = (RichnessNOSPersistence, RichnessGapsPersistence, restAPI) => {
           });
           return result.some((elem) => Array.isArray(elem) && elem.length === 0) ? [] : result;
         })
-        .catch((e) => {
+        .catch(() => {
           throw new RestifyErrors.InternalServerError('Error retrieving NOS thresholds data');
         });
     },

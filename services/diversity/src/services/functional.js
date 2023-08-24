@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (FunctionalDryForestPersistence) => {
   const Functional = {
     /**
@@ -12,7 +14,7 @@ module.exports = (FunctionalDryForestPersistence) => {
       const rawData = await FunctionalDryForestPersistence.findDryForestValues(areaType, areaId);
       const values = rawData[0] ? rawData[0] : null;
       if (!values) {
-        throw new Error(
+        throw new RestifyErrors.NotFoundError(
           "Data for functional values in the dry forest doesn't exists in the selected area id and area type",
         );
       }
@@ -33,7 +35,7 @@ module.exports = (FunctionalDryForestPersistence) => {
 
       const features = rawData[0] ? rawData[0] : null;
       if (!features) {
-        throw new Error(
+        throw new RestifyErrors.NotFoundError(
           "Data for functional features in the dry forest doesn't exists in the selected area id and area type",
         );
       }

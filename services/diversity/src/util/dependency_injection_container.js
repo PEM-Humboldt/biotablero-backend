@@ -1,5 +1,4 @@
 const Bottlejs = require('bottlejs');
-
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
@@ -44,8 +43,8 @@ bottle.factory('FunctionalService', (container) =>
 );
 
 bottle.factory('routes', (container) => [
-  RichnessRoute(container.errorHandler, container.RichnessService),
-  FunctionalRoute(container.errorHandler, container.FunctionalService),
+  RichnessRoute(container.RichnessService),
+  FunctionalRoute(container.FunctionalService),
 ]);
 
 module.exports = bottle.container;

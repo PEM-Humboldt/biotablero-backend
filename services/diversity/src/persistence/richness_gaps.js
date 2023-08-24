@@ -1,3 +1,4 @@
+const RestifyErrors = require('restify-errors');
 const { areaTypeKeys } = require('../util/appropriate_keys');
 
 module.exports = (db, logger) => ({
@@ -35,7 +36,7 @@ module.exports = (db, logger) => ({
       return [{ ...thresholds[0], ...values[0] }];
     } catch (e) {
       logger.error(e.stack || e.Error || e.message || e);
-      throw new Error('Error getting data');
+      throw new RestifyErrors.InternalServerError('Error getting data');
     }
   },
 
@@ -76,7 +77,7 @@ module.exports = (db, logger) => ({
       .then((rast) => rast.rows[0].image)
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**

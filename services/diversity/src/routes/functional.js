@@ -1,6 +1,7 @@
+const RestifyErrors = require('restify-errors');
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, FunctionalService) => {
+module.exports = (FunctionalService) => {
   const router = new Router();
 
   /**
@@ -23,21 +24,18 @@ module.exports = (errorHandler, FunctionalService) => {
    *  /functional-diversity/dry-forest/values?areaType=ea&areaId=CARDER
    * @apiUse DryForestValuesExample
    */
-  router.get(
-    '/functional-diversity/dry-forest/values',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return FunctionalService.getDryForestValues(req.params.areaType, req.params.areaId).then(
-        (value) => {
-          res.send(value);
-          next();
-        },
-      );
-    }),
-  );
+  router.get('/functional-diversity/dry-forest/values', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return FunctionalService.getDryForestValues(req.params.areaType, req.params.areaId).then(
+      (value) => {
+        res.send(value);
+        next();
+      },
+    );
+  });
 
   /**
    * @apiGroup s_functional_diversity
@@ -61,21 +59,18 @@ module.exports = (errorHandler, FunctionalService) => {
    *  /functional-diversity/dry-forest/features?areaType=ea&areaId=CARDER
    * @apiUse DryForestFeaturesExample
    */
-  router.get(
-    '/functional-diversity/dry-forest/features',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId are required' };
-        throw error;
-      }
-      return FunctionalService.getDryForestFeatures(req.params.areaType, req.params.areaId).then(
-        (value) => {
-          res.send(value);
-          next();
-        },
-      );
-    }),
-  );
+  router.get('/functional-diversity/dry-forest/features', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
+    }
+    return FunctionalService.getDryForestFeatures(req.params.areaType, req.params.areaId).then(
+      (value) => {
+        res.send(value);
+        next();
+      },
+    );
+  });
 
   return router;
 };

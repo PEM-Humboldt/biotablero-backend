@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { selectedStrategies }) => ({
   /**
    * Create a new project strategy
@@ -75,12 +77,7 @@ module.exports = (db, { selectedStrategies }) => ({
         projectId,
       )
       .then((biomes) => biomes.rows[0].collection)
-      .catch((e) => {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+      .catch(() => {
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 });

@@ -18,7 +18,7 @@ const { Router } = require('restify-router');
  *    }...
  *  ]
  */
-module.exports = (errorHandler, biomeService) => {
+module.exports = (biomeService) => {
   const router = new Router();
 
   /**
@@ -40,14 +40,11 @@ module.exports = (errorHandler, biomeService) => {
    *  /biomes
    * @apiUse getAllBiomesByEAExample
    */
-  router.get(
-    '/biomes',
-    errorHandler((req, res, next) =>
-      biomeService.getAll().then((biomes) => {
-        res.send(biomes);
-        next();
-      }),
-    ),
+  router.get('/biomes', (req, res, next) =>
+    biomeService.getAll().then((biomes) => {
+      res.send(biomes);
+      next();
+    }),
   );
 
   return router;

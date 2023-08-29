@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, municipalityService) => {
+module.exports = (municipalityService) => {
   const router = new Router();
 
   /**
@@ -19,14 +19,11 @@ module.exports = (errorHandler, municipalityService) => {
    *  /municipalities
    * @apiUse getAllMunicipalitiesExample
    */
-  router.get(
-    '/municipalities',
-    errorHandler((req, res, next) =>
-      municipalityService.getAll().then((municipalities) => {
-        res.send(municipalities);
-        next();
-      }),
-    ),
+  router.get('/municipalities', (req, res, next) =>
+    municipalityService.getAll().then((municipalities) => {
+      res.send(municipalities);
+      next();
+    }),
   );
 
   return router;

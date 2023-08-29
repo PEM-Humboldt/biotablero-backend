@@ -22,7 +22,7 @@ const { Router } = require('restify-router');
  *    "name": "Test user"
  *  }
  */
-module.exports = (errorHandler, userService) => {
+module.exports = (userService) => {
   const router = new Router();
 
   /**
@@ -45,15 +45,12 @@ module.exports = (errorHandler, userService) => {
    * @apiUse loginUserExampleUsage
    * @apiUse loginUserExampleResponse
    */
-  router.post(
-    '/users/login',
-    errorHandler((req, res, next) => {
-      const input = req.body || {};
-      const result = userService.login(input.username, input.password);
-      res.send(result);
-      next();
-    }),
-  );
+  router.post('/users/login', (req, res, next) => {
+    const input = req.body || {};
+    const result = userService.login(input.username, input.password);
+    res.send(result);
+    next();
+  });
 
   return router;
 };

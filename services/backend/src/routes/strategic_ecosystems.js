@@ -14,7 +14,7 @@ const { Router } = require('restify-router');
  *    }
  *  ]
  */
-module.exports = (errorHandler, seService) => {
+module.exports = (seService) => {
   const router = new Router();
 
   /**
@@ -34,15 +34,12 @@ module.exports = (errorHandler, seService) => {
    *  /se
    * @apiUse listAllExample
    */
-  router.get(
-    '/se',
-    errorHandler((req, res, next) => {
-      seService.getAll().then((se) => {
-        res.send(se);
-        next();
-      });
-    }),
-  );
+  router.get('/se', (req, res, next) => {
+    seService.getAll().then((se) => {
+      res.send(se);
+      next();
+    });
+  });
 
   /**
    * @apiGroup geofence_se
@@ -59,15 +56,12 @@ module.exports = (errorHandler, seService) => {
    *  /se/primary
    * @apiUse listPrimarySEExample
    */
-  router.get(
-    '/se/primary',
-    errorHandler((req, res, next) => {
-      seService.getPrimary().then((result) => {
-        res.send(result);
-        next();
-      });
-    }),
-  );
+  router.get('/se/primary', (req, res, next) => {
+    seService.getPrimary().then((result) => {
+      res.send(result);
+      next();
+    });
+  });
 
   /**
    * @apiGroup geofence_se
@@ -90,15 +84,12 @@ module.exports = (errorHandler, seService) => {
    *  /se/Páramo/national
    * @apiUse SEDetailExample
    */
-  router.get(
-    '/se/:ecosystem/national',
-    errorHandler((req, res, next) => {
-      seService.getEcosystemNatInfo(req.params.ecosystem).then((result) => {
-        res.send(result);
-        next();
-      });
-    }),
-  );
+  router.get('/se/:ecosystem/national', (req, res, next) => {
+    seService.getEcosystemNatInfo(req.params.ecosystem).then((result) => {
+      res.send(result);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_protected_areas
@@ -121,15 +112,12 @@ module.exports = (errorHandler, seService) => {
    *  /se/Páramo/pa
    * @apiUse PAInGeofenceExample
    */
-  router.get(
-    '/se/:ecosystem/pa',
-    errorHandler((req, res, next) => {
-      seService.getSEByPA(req.params.ecosystem).then((result) => {
-        res.send(result);
-        next();
-      });
-    }),
-  );
+  router.get('/se/:ecosystem/pa', (req, res, next) => {
+    seService.getSEByPA(req.params.ecosystem).then((result) => {
+      res.send(result);
+      next();
+    });
+  });
 
   /**
    * @apiGroup geofence_se
@@ -149,14 +137,11 @@ module.exports = (errorHandler, seService) => {
    *  /se/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get(
-    '/se/layers/national',
-    errorHandler((req, res, next) =>
-      seService.getNationalLayer().then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/se/layers/national', (req, res, next) =>
+    seService.getNationalLayer().then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   return router;

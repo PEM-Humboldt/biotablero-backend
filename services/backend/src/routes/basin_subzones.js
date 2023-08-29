@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, basinSubzoneService) => {
+module.exports = (basinSubzoneService) => {
   const router = new Router();
 
   /**
@@ -21,14 +21,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones
    * @apiUse getAllBasinSubzonesExample
    */
-  router.get(
-    '/basinSubzones',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getAll().then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones', (req, res, next) =>
+    basinSubzoneService.getAll().then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   /**
@@ -48,14 +45,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3502
    * @apiUse GeofenceTotalAreaExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getTotalArea(req.params.subzone_id).then((details) => {
-        res.send(details);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id', (req, res, next) =>
+    basinSubzoneService.getTotalArea(req.params.subzone_id).then((details) => {
+      res.send(details);
+      next();
+    }),
   );
 
   /**
@@ -79,16 +73,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/1/se/Páramo
    * @apiUse SEInGeofenceDetailExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/se/:se_type',
-    errorHandler((req, res, next) =>
-      basinSubzoneService
-        .getSEDetails(req.params.subzone_id, req.params.se_type)
-        .then((details) => {
-          res.send(details);
-          next();
-        }),
-    ),
+  router.get('/basinSubzones/:subzone_id/se/:se_type', (req, res, next) =>
+    basinSubzoneService.getSEDetails(req.params.subzone_id, req.params.se_type).then((details) => {
+      res.send(details);
+      next();
+    }),
   );
 
   /**
@@ -113,14 +102,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/current/categories
    * @apiUse CategoriesInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/current/categories',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getAreaByHFCategory(req.params.subzone_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/current/categories', (req, res, next) =>
+    basinSubzoneService.getAreaByHFCategory(req.params.subzone_id).then((areas) => {
+      res.send(areas);
+      next();
+    }),
   );
 
   /**
@@ -145,14 +131,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/current/value
    * @apiUse CurrentValueInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/current/value',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getCurrentHFValue(req.params.subzone_id).then((value) => {
-        res.send(value);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/current/value', (req, res, next) =>
+    basinSubzoneService.getCurrentHFValue(req.params.subzone_id).then((value) => {
+      res.send(value);
+      next();
+    }),
   );
 
   /**
@@ -178,14 +161,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/1/hf/persistence
    * @apiUse PersistenceInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/persistence',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getAreaByHFPersistence(req.params.subzone_id).then((areas) => {
-        res.send(areas);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/persistence', (req, res, next) =>
+    basinSubzoneService.getAreaByHFPersistence(req.params.subzone_id).then((areas) => {
+      res.send(areas);
+      next();
+    }),
   );
 
   /**
@@ -208,14 +188,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/timeline
    * @apiUse TimelineInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/timeline',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getTotalHFTimeLine(req.params.subzone_id).then((values) => {
-        res.send(values);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/timeline', (req, res, next) =>
+    basinSubzoneService.getTotalHFTimeLine(req.params.subzone_id).then((values) => {
+      res.send(values);
+      next();
+    }),
   );
 
   /**
@@ -240,16 +217,13 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3701/se/Páramo/hf/timeline
    * @apiUse SETimelineInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/se/:se_type/hf/timeline',
-    errorHandler((req, res, next) =>
-      basinSubzoneService
-        .getSEHFTimeline(req.params.subzone_id, req.params.se_type)
-        .then((values) => {
-          res.send(values);
-          next();
-        }),
-    ),
+  router.get('/basinSubzones/:subzone_id/se/:se_type/hf/timeline', (req, res, next) =>
+    basinSubzoneService
+      .getSEHFTimeline(req.params.subzone_id, req.params.se_type)
+      .then((values) => {
+        res.send(values);
+        next();
+      }),
   );
 
   /**
@@ -270,14 +244,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/layers/national
    * @apiUse GeofenceNationalLayerExample
    */
-  router.get(
-    '/basinSubzones/layers/national',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getNationalLayer().then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/layers/national', (req, res, next) =>
+    basinSubzoneService.getNationalLayer().then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   /**
@@ -296,14 +267,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/layers/3502
    * @apiUse SpecificLayerExample
    */
-  router.get(
-    '/basinSubzones/layers/:subzone_id',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getLayer(req.params.subzone_id).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/layers/:subzone_id', (req, res, next) =>
+    basinSubzoneService.getLayer(req.params.subzone_id).then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   /**
@@ -325,14 +293,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/3502/se/layers/Páramo
    * @apiUse SpecificLayerExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/se/layers/:se_type',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getSELayer(req.params.subzone_id, req.params.se_type).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/se/layers/:se_type', (req, res, next) =>
+    basinSubzoneService.getSELayer(req.params.subzone_id, req.params.se_type).then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   /**
@@ -354,14 +319,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/layers/current/categories
    * @apiUse CategoriesLayerInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/layers/current/categories',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/layers/current/categories', (req, res, next) =>
+    basinSubzoneService.getHFCategoriesLayerById(req.params.subzone_id).then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   /**
@@ -383,14 +345,11 @@ module.exports = (errorHandler, basinSubzoneService) => {
    *  /basinSubzones/2903/hf/layers/persistence
    * @apiUse PersistenceLayerInGeofenceExample
    */
-  router.get(
-    '/basinSubzones/:subzone_id/hf/layers/persistence',
-    errorHandler((req, res, next) =>
-      basinSubzoneService.getHFPersistenceLayerById(req.params.subzone_id).then((geometry) => {
-        res.send(geometry);
-        next();
-      }),
-    ),
+  router.get('/basinSubzones/:subzone_id/hf/layers/persistence', (req, res, next) =>
+    basinSubzoneService.getHFPersistenceLayerById(req.params.subzone_id).then((geometry) => {
+      res.send(geometry);
+      next();
+    }),
   );
 
   return router;

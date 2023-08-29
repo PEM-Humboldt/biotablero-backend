@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, paService) => {
+module.exports = (paService) => {
   const router = new Router();
 
   /**
@@ -22,19 +22,16 @@ module.exports = (errorHandler, paService) => {
    *  /pa?areaType=ea&areaId=DAGMA
    * @apiUse PAInGeofenceExample
    */
-  router.get(
-    '/pa',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId)) {
-        const error = { code: 400, message: 'areaType and areaId required' };
-        throw error;
-      }
-      return paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
-        res.send(categories);
-        next();
-      });
-    }),
-  );
+  router.get('/pa', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId)) {
+      const error = { code: 400, message: 'areaType and areaId required' };
+      throw error;
+    }
+    return paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
+      res.send(categories);
+      next();
+    });
+  });
 
   /**
    * @apiGroup s_protected_areas
@@ -57,21 +54,18 @@ module.exports = (errorHandler, paService) => {
    *  /pa/se?areaType=ea&areaId=DAGMA&seType=Páramo
    * @apiUse PAInGeofenceExample
    */
-  router.get(
-    '/pa/se',
-    errorHandler((req, res, next) => {
-      if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-        const error = { code: 400, message: 'areaType, areaId and seType required' };
-        throw error;
-      }
-      return paService
-        .getPAAreas(req.params.areaType, req.params.areaId, req.params.seType)
-        .then((binaryProtected) => {
-          res.send(binaryProtected);
-          next();
-        });
-    }),
-  );
+  router.get('/pa/se', (req, res, next) => {
+    if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
+      const error = { code: 400, message: 'areaType, areaId and seType required' };
+      throw error;
+    }
+    return paService
+      .getPAAreas(req.params.areaType, req.params.areaId, req.params.seType)
+      .then((binaryProtected) => {
+        res.send(binaryProtected);
+        next();
+      });
+  });
 
   return router;
 };

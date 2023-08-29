@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const { globalPAAreaTypes, globalPASEKeys } = require('../util/appropriate_keys');
 
 module.exports = (globalProtectedAreaPersistence) => ({
@@ -21,12 +23,9 @@ module.exports = (globalProtectedAreaPersistence) => ({
       seCol,
     );
     if (areas.length === 0) {
-      const error = {
-        code: 404,
-        message:
-          'Protected areas data not available in the selected ecosystem, area id and area type',
-      };
-      throw error;
+      throw new RestifyErrors.NotFoundError(
+        `Protected areas data not available in the selected ecosystem, area id and area type`,
+      );
     }
 
     return areas.map(({ area, ...cats }) => ({

@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const groupObjects = require('../util/groupObjects');
 
 module.exports = (strategyPersistence, logger) => ({
@@ -15,9 +17,9 @@ module.exports = (strategyPersistence, logger) => ({
     const bId = parseInt(biomeId, 10);
     const sId = parseInt(subzoneId, 10);
     if (!bId || !sId || !envAuthorityId) {
-      const error = new Error('There are missing parameters or unacceptable values');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError(
+        'There are missing parameters or unacceptable values',
+      );
     }
     let geometry = await strategyPersistence.findGeoByBiomeSubzoneEA(bId, sId, envAuthorityId);
     const listStrategies = await strategyPersistence.findByBiomeSubzoneEA(bId, sId, envAuthorityId);

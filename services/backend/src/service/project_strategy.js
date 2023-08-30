@@ -12,7 +12,7 @@ module.exports = (strategyPersistence, restAPI) => ({
   createStrategy: async (projectId, strategy) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      throw new RestifyErrors.NotFoundError('Invalid project id');
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
     return strategyPersistence.createStrategy({ ...strategy, id_project: pId });
   },
@@ -38,7 +38,7 @@ module.exports = (strategyPersistence, restAPI) => ({
   getSelectedStrategiesGeoJson: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      throw new RestifyErrors.NotFoundError('Invalid project id');
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     const reference = `main_c1p${projectId}`;

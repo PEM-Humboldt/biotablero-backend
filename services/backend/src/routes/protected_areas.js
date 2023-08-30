@@ -1,4 +1,5 @@
 const { Router } = require('restify-router');
+const RestifyErrors = require('restify-errors');
 
 module.exports = (paService) => {
   const router = new Router();
@@ -24,8 +25,8 @@ module.exports = (paService) => {
    */
   router.get('/pa', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId)) {
-      const error = { code: 400, message: 'areaType and areaId required' };
-      throw error;
+      const error = new RestifyErrors.BadRequestError('areaType and areaId are required');
+      return next(error);
     }
     return paService.getPAAreas(req.params.areaType, req.params.areaId).then((categories) => {
       res.send(categories);
@@ -56,8 +57,8 @@ module.exports = (paService) => {
    */
   router.get('/pa/se', (req, res, next) => {
     if (!(req.params.areaType && req.params.areaId && req.params.seType)) {
-      const error = { code: 400, message: 'areaType, areaId and seType required' };
-      throw error;
+      const error = new RestifyErrors.BadRequestError('areaType, areaId and seType required');
+      return next(error);
     }
     return paService
       .getPAAreas(req.params.areaType, req.params.areaId, req.params.seType)

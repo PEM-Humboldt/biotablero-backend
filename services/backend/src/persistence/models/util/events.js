@@ -7,7 +7,7 @@ const RestifyErrors = require('restify-errors');
 const saving = (requiredFields, modelFields) => {
   const missing = requiredFields.filter((field) => !modelFields[field]);
   if (missing.length > 0) {
-    throw new RestifyErrors.NotFoundError(
+    throw new RestifyErrors.BadRequestError(
       `The following properties are missing a value: ${missing}`,
     );
   }

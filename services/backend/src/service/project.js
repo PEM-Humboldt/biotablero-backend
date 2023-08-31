@@ -108,7 +108,7 @@ module.exports = (projectPersistence, biomeService) => ({
   getDecisionTree: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      throw new RestifyErrors.NotFoundError('Invalid project id');
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     return biomeService.getImpactedDecisionTree(projectId);

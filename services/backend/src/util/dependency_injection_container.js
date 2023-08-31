@@ -138,19 +138,19 @@ bottle.factory('protectedAreaService', (container) =>
 );
 
 bottle.factory('routes', (container) => [
-  BiomesRoutes(container.errorHandler, container.biomeService),
-  ProjectsRoutes(container.errorHandler, container.projectService),
-  ProjectStrategiesRoutes(container.errorHandler, container.projectStrategyService),
-  StrategiesRoutes(container.errorHandler, container.strategyService),
-  MunicipalitiesRoutes(container.errorHandler, container.municipalityService),
-  UsersRoutes(container.errorHandler, container.userService),
-  EARoutes(container.errorHandler, container.eaService),
-  StatesRoutes(container.errorHandler, container.stateService),
-  DPARoutes(container.errorHandler, container.dpaService),
-  BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
-  BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
-  SERoutes(container.errorHandler, container.seService),
-  ProtectedAreaRoutes(container.errorHandler, container.protectedAreaService),
+  BiomesRoutes(container.biomeService),
+  ProjectsRoutes(container.projectService),
+  ProjectStrategiesRoutes(container.projectStrategyService),
+  StrategiesRoutes(container.strategyService),
+  MunicipalitiesRoutes(container.municipalityService),
+  UsersRoutes(container.userService),
+  EARoutes(container.eaService),
+  StatesRoutes(container.stateService),
+  DPARoutes(container.dpaService),
+  BasinsRoutes(container.basinAreaService, container.basinZoneService),
+  BasinSubzonesRoutes(container.basinSubzoneService),
+  SERoutes(container.seService),
+  ProtectedAreaRoutes(container.protectedAreaService),
 ]);
 
 module.exports = bottle.container;

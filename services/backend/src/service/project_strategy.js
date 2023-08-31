@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (strategyPersistence, restAPI) => ({
   /**
    * Create a new project strategy
@@ -10,9 +12,7 @@ module.exports = (strategyPersistence, restAPI) => ({
   createStrategy: async (projectId, strategy) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
     return strategyPersistence.createStrategy({ ...strategy, id_project: pId });
   },
@@ -38,9 +38,7 @@ module.exports = (strategyPersistence, restAPI) => ({
   getSelectedStrategiesGeoJson: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     const reference = `main_c1p${projectId}`;
@@ -59,11 +57,6 @@ module.exports = (strategyPersistence, restAPI) => ({
         reference,
       );
     }
-
-    const error = {
-      code: 500,
-      message: 'Error getting project',
-    };
-    throw error;
+    throw new RestifyErrors.InternalServerError('Error getting project');
   },
 });

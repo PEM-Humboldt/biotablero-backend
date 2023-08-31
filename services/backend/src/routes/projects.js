@@ -204,7 +204,7 @@ const { Router } = require('restify-router');
  *    }
  *  }
  */
-module.exports = (errorHandler, projectService) => {
+module.exports = (projectService) => {
   const router = new Router();
 
   /**
@@ -236,18 +236,15 @@ module.exports = (errorHandler, projectService) => {
    * @apiUse listProjectsByCompanyExample
    * @apiUse listProjectsByCompanyExample2
    */
-  router.get(
-    '/companies/:id_company/projects',
-    errorHandler((req, res, next) => {
-      const groupProps = req.params.group_props ? req.params.group_props.split(',') : null;
-      return projectService
-        .getProjectsByCompany(req.params.id_company, groupProps)
-        .then((projects) => {
-          res.send(projects);
-          next();
-        });
-    }),
-  );
+  router.get('/companies/:id_company/projects', (req, res, next) => {
+    const groupProps = req.params.group_props ? req.params.group_props.split(',') : null;
+    return projectService
+      .getProjectsByCompany(req.params.id_company, groupProps)
+      .then((projects) => {
+        res.send(projects);
+        next();
+      });
+  });
 
   /**
    * @apiGroup comp_companiesProjects
@@ -273,14 +270,11 @@ module.exports = (errorHandler, projectService) => {
    *  /companies/1/projects/1
    * @apiUse getProjectByIdExample
    */
-  router.get(
-    '/companies/:id_company/projects/:id_project',
-    errorHandler((req, res, next) =>
-      projectService.getProjectById(req.params.id_project).then((projectFound) => {
-        res.send(projectFound);
-        next();
-      }),
-    ),
+  router.get('/companies/:id_company/projects/:id_project', (req, res, next) =>
+    projectService.getProjectById(req.params.id_project).then((projectFound) => {
+      res.send(projectFound);
+      next();
+    }),
   );
 
   /**
@@ -314,14 +308,11 @@ module.exports = (errorHandler, projectService) => {
    * @apiUse createProjectExampleUsage
    * @apiUse createProjectExampleResponse
    */
-  router.post(
-    '/companies/:id_company/projects',
-    errorHandler((req, res, next) =>
-      projectService.createProject(req.body).then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.post('/companies/:id_company/projects', (req, res, next) =>
+    projectService.createProject(req.body).then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   /**
@@ -371,14 +362,11 @@ module.exports = (errorHandler, projectService) => {
    * @apiUse addBiomesProjectExampleUsage
    * @apiUse addBiomesProjectExampleResponse
    */
-  router.post(
-    '/companies/:id_company/projects/:id_project/biomes',
-    errorHandler((req, res, next) =>
-      projectService.addBiomes(req.params.id_project, req.body).then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.post('/companies/:id_company/projects/:id_project/biomes', (req, res, next) =>
+    projectService.addBiomes(req.params.id_project, req.body).then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   /**
@@ -407,14 +395,11 @@ module.exports = (errorHandler, projectService) => {
    *  /companies/1/projects/1/decisionTree
    * @apiUse impactedBiomesDecisionTreeExample
    */
-  router.get(
-    '/companies/:id_company/projects/:id_project/decisionTree',
-    errorHandler((req, res, next) =>
-      projectService.getDecisionTree(req.params.id_project).then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.get('/companies/:id_company/projects/:id_project/decisionTree', (req, res, next) =>
+    projectService.getDecisionTree(req.params.id_project).then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   /**
@@ -449,14 +434,11 @@ module.exports = (errorHandler, projectService) => {
    *  /companies/1/projects/1/biomes
    * @apiUse getImpactedBiomesExample
    */
-  router.get(
-    '/companies/:id_company/projects/:id_project/biomes',
-    errorHandler((req, res, next) =>
-      projectService.getImpactedBiomes(req.params.id_project).then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.get('/companies/:id_company/projects/:id_project/biomes', (req, res, next) =>
+    projectService.getImpactedBiomes(req.params.id_project).then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   return router;

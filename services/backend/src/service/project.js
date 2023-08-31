@@ -1,3 +1,4 @@
+const RestifyErrors = require('restify-errors');
 const groupObjects = require('../util/groupObjects');
 
 /**
@@ -16,13 +17,13 @@ const prettyLabel = (phrase) =>
 
 module.exports = (projectPersistence, biomeService) => ({
   /**
-   * Get projects by a given company, optionally, group those pjects by a list of their properties
+   * Get projects by a given company, optionally, group those projects by a list of their properties
    *
    * @param {String} companyId company id
    * @param {Array} groupProps list of properties to group results by.
    *
    * @return {(Array|Object)} list of projects or an object with projects grouped by groupProps
-   * @throws {ReferenceError} When a property to group by isn't a project property
+   * @throws {RestifyErrors} When a property to group by isn't a project property
    */
   getProjectsByCompany: async (companyId, groupProps) => {
     const projects = await projectPersistence.findProjectsByCompany(companyId);
@@ -37,7 +38,7 @@ module.exports = (projectPersistence, biomeService) => ({
 
     const noProjectProp = groupProps.filter((prop) => !(prop in projects[0]));
     if (noProjectProp.length !== 0) {
-      throw new ReferenceError(`Some of ${groupProps} are not project properties`);
+      throw new RestifyErrors.BadRequestError(`Some of ${groupProps} are not project properties`);
     }
 
     return groupObjects(groupProps, projects);
@@ -53,9 +54,7 @@ module.exports = (projectPersistence, biomeService) => ({
   getProjectById: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Missing or invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Missing or invalid project id');
     }
     const projectFound = await projectPersistence.findProjectById(pId);
     return {
@@ -85,9 +84,7 @@ module.exports = (projectPersistence, biomeService) => ({
   addBiomes: async (projectId, biomes) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     const addedBiomes = await biomeService.bulkAddImpacted(
@@ -111,9 +108,7 @@ module.exports = (projectPersistence, biomeService) => ({
   getDecisionTree: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     return biomeService.getImpactedDecisionTree(projectId);
@@ -129,9 +124,7 @@ module.exports = (projectPersistence, biomeService) => ({
   getImpactedBiomes: async (projectId) => {
     const pId = parseInt(projectId, 10);
     if (!pId) {
-      const error = new Error('Invalid project id');
-      error.code = 400;
-      throw error;
+      throw new RestifyErrors.BadRequestError('Invalid project id');
     }
 
     return biomeService.getImpacted(projectId);

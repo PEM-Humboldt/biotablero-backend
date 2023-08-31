@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, basinAreaService, basinZoneService) => {
+module.exports = (basinAreaService, basinZoneService) => {
   const router = new Router();
 
   /**
@@ -19,14 +19,11 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    *  /basinAreas
    * @apiUse getAllBasinAreasExample
    */
-  router.get(
-    '/basinAreas',
-    errorHandler((req, res, next) =>
-      basinAreaService.getAll().then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.get('/basinAreas', (req, res, next) =>
+    basinAreaService.getAll().then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   /**
@@ -46,14 +43,11 @@ module.exports = (errorHandler, basinAreaService, basinZoneService) => {
    *  /basinZones
    * @apiUse getAllBasinZonesExample
    */
-  router.get(
-    '/basinZones',
-    errorHandler((req, res, next) =>
-      basinZoneService.getAll().then((result) => {
-        res.send(result);
-        next();
-      }),
-    ),
+  router.get('/basinZones', (req, res, next) =>
+    basinZoneService.getAll().then((result) => {
+      res.send(result);
+      next();
+    }),
   );
 
   return router;

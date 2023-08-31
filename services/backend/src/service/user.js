@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const config = require('config');
 
 module.exports = () => {
@@ -19,9 +21,7 @@ module.exports = () => {
       );
 
       if (!user) {
-        const error = new Error('Invalid username or password');
-        error.code = 400;
-        throw error;
+        throw new RestifyErrors.BadRequestError('Invalid username or password');
       }
       const { password: remove, ...rest } = user;
       return rest;

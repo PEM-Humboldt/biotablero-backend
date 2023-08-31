@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, models, logger) => ({
   /**
    * Find the area distribution for each protected area category in a given area
@@ -69,7 +71,7 @@ module.exports = (db, models, logger) => ({
       .orderBy('area', 'desc')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       });
   },
 });

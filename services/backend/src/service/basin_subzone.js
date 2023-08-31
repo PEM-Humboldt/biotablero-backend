@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const {
   persistenceKeysOrder,
   HFCategoriesKeysOrder,
@@ -39,7 +41,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getTotalArea: async (subzoneId) => {
       const subzoneArea = await basinSubzonePersistence.getTotalAreaBySubzone(subzoneId);
       if (subzoneArea[0].area === null) {
-        throw new Error("basin subzone doesn't exists");
+        throw new RestifyErrors.NotFoundError("basin subzone doesn't exists");
       }
       return { total_area: subzoneArea[0].area };
     },
@@ -74,7 +76,7 @@ module.exports = (basinSubzonePersistence, seService) => {
     getCurrentHFValue: async (subzoneId) => {
       const value = await basinSubzonePersistence.findCurrentHFValue(subzoneId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error("basin subzone doesn't exists");
+        throw new RestifyErrors.NotFoundError("basin subzone doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,

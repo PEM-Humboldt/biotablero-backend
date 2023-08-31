@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const {
   persistenceKeysOrder,
   HFCategoriesKeysOrder,
@@ -98,7 +100,7 @@ module.exports = (eaPersistence, seService) => {
     getTotalArea: async (enAuthorityId) => {
       const eaArea = await eaPersistence.getTotalAreaByEA(enAuthorityId);
       if (eaArea[0].area === null) {
-        throw new Error("environmental authority doesn't exists");
+        throw new RestifyErrors.NotFoundError("environmental authority doesn't exists");
       }
       return { total_area: eaArea[0].area };
     },
@@ -133,7 +135,7 @@ module.exports = (eaPersistence, seService) => {
     getCurrentHFValue: async (eaId) => {
       const value = await eaPersistence.findCurrentHFValue(eaId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error("environmental authority doesn't exists");
+        throw new RestifyErrors.NotFoundError("environmental authority doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,

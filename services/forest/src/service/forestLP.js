@@ -27,7 +27,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
             const totalArea = item.map((o) => o.area).reduce((prev, next) => prev + next);
             const periodData = item.map((period) => ({
               ...period,
-              percentage: period.area / totalArea,
+              percentage: (period.area / totalArea) * 100,
             }));
             data.push({
               id: periods[i],

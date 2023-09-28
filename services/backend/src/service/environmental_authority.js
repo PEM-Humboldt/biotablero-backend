@@ -32,9 +32,13 @@ module.exports = (eaPersistence, seService) => {
           values[key] += area.sum;
         }
       });
-      const areaAdd = values.reduce( (prev, nex) => prev + nex, 0)
+      const areaAdd = values.reduce((prev, nex) => prev + nex, 0);
 
-      return keys.map((fc, idx) => ({ key: fc, area: values[idx], percentage: (values[idx] ) / areaAdd }));
+      return keys.map((fc, idx) => ({
+        key: fc,
+        area: values[idx],
+        percentage: values[idx] / areaAdd,
+      }));
     },
 
     /**
@@ -46,9 +50,13 @@ module.exports = (eaPersistence, seService) => {
      */
     getAreaByBioticUnit: async (envAuthorityId) => {
       const data = await eaPersistence.findAreaByBioticUnit(envAuthorityId);
-      const dataToNumber = data.map( (e) => Number(e.area) );
-      const areaAdd = dataToNumber.reduce( (prev, nex) => prev + nex)
-      return data.map((datum) => ({ ...datum, area: Number(datum.area), percentage: Number(datum.area) / areaAdd  }));
+      const dataToNumber = data.map((e) => Number(e.area));
+      const areaAdd = dataToNumber.reduce((prev, nex) => prev + nex);
+      return data.map((datum) => ({
+        ...datum,
+        area: Number(datum.area),
+        percentage: Number(datum.area) / areaAdd,
+      }));
     },
 
     /**
@@ -60,9 +68,9 @@ module.exports = (eaPersistence, seService) => {
      */
     getAreaByBiome: async (envAuthorityId) => {
       const data = await eaPersistence.findAreaByBiome(envAuthorityId);
-      data.forEach(e => console.log("A",e.area," K", e.key))
-      const areaAdd = data.reduce( (pre, nex) => pre + nex.area, 0 );
-      return data.map( e => ({area: e.area, key: e.key, percentage: e.area / areaAdd}) );
+      data.forEach((e) => console.log('A', e.area, ' K', e.key));
+      const areaAdd = data.reduce((pre, nex) => pre + nex.area, 0);
+      return data.map((e) => ({ area: e.area, key: e.key, percentage: e.area / areaAdd }));
     },
 
     /**

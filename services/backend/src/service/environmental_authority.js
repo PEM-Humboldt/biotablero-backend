@@ -68,7 +68,6 @@ module.exports = (eaPersistence, seService) => {
      */
     getAreaByBiome: async (envAuthorityId) => {
       const data = await eaPersistence.findAreaByBiome(envAuthorityId);
-      data.forEach((e) => console.log('A', e.area, ' K', e.key));
       const areaAdd = data.reduce((pre, nex) => pre + nex.area, 0);
       return data.map((e) => ({ area: e.area, key: e.key, percentage: e.area / areaAdd }));
     },

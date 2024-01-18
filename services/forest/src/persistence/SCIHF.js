@@ -17,7 +17,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
       .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+      .orderBy(['binary_protected', 'sci_cat', 'hf_pers'])
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new RestifyErrors.InternalServerError('Error getting data');
@@ -39,7 +39,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
       .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+      .orderBy(['binary_protected', 'sci_cat', 'hf_pers'])
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new RestifyErrors.InternalServerError('Error getting data');
@@ -61,7 +61,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
       .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+      .orderBy(['binary_protected', 'sci_cat', 'hf_pers'])
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new RestifyErrors.InternalServerError('Error getting data');
@@ -83,7 +83,7 @@ module.exports = (db, { geoIntegrity }, logger) => ({
       .select('hf_pers', 'sci_cat', 'binary_protected')
       .sum('area_ha as area')
       .groupBy('binary_protected', 'sci_cat', 'hf_pers')
-      .orderBy('binary_protected', 'sci_cat', 'hf_pers')
+      .orderBy(['binary_protected', 'sci_cat', 'hf_pers'])
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
         throw new RestifyErrors.InternalServerError('Error getting data');

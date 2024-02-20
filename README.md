@@ -38,11 +38,11 @@ There are no guidelines for contribution currently.
 
 ## Authors
 
-Arquitectura informática y manejo de datos - Programa de Evaluación y Monitoreo de la Biodiversidad - Instituto Alexander von Humboldt Colombia
+Gerencia de Información Científica - Dirección de conocimiento - Instituto de Investigación de Recursos Biológicos Alexander von Humboldt - Colombia
 
 - **Erika Suárez** - [Erikasv](https://github.com/erikasv)
 - **Camilo Zapata** - [cazapatamar](https://github.com/cazapatamar)
-- **Angela Checa** - [Trjegul84](https://github.com/Trjegul84)
+- **Manuel Galvez** - [ManuelStardust](https://github.com/ManuelStardust)
 
 See also the list of [contributors](https://github.com/PEM-Humboldt/biotablero-backend/graphs/contributors) who participated in this project.
 

@@ -1,6 +1,6 @@
 {
   "name": "portfolios_ca",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Conservation portfolios services for Biotablero",
   "type": "module",
   "scripts": {

@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const {
   persistenceKeysOrder,
   HFCategoriesKeysOrder,
@@ -30,8 +32,13 @@ module.exports = (eaPersistence, seService) => {
           values[key] += area.sum;
         }
       });
+      const areaAdd = values.reduce((prev, nex) => prev + nex, 0);
 
-      return keys.map((fc, idx) => ({ key: fc, area: values[idx] }));
+      return keys.map((fc, idx) => ({
+        key: fc,
+        area: values[idx],
+        percentage: values[idx] / areaAdd,
+      }));
     },
 
     /**
@@ -41,8 +48,16 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each biotic unit
      */
-    getAreaByBioticUnit: async (envAuthorityId) =>
-      eaPersistence.findAreaByBioticUnit(envAuthorityId),
+    getAreaByBioticUnit: async (envAuthorityId) => {
+      const data = await eaPersistence.findAreaByBioticUnit(envAuthorityId);
+      const dataToNumber = data.map((e) => Number(e.area));
+      const areaAdd = dataToNumber.reduce((prev, nex) => prev + nex);
+      return data.map((datum) => ({
+        ...datum,
+        area: Number(datum.area),
+        percentage: Number(datum.area) / areaAdd,
+      }));
+    },
 
     /**
      * Get total area grouped by biome for a given environmental authority
@@ -51,7 +66,11 @@ module.exports = (eaPersistence, seService) => {
      *
      * @returns {Object[]} total area for each biome
      */
-    getAreaByBiome: async (envAuthorityId) => eaPersistence.findAreaByBiome(envAuthorityId),
+    getAreaByBiome: async (envAuthorityId) => {
+      const data = await eaPersistence.findAreaByBiome(envAuthorityId);
+      const areaAdd = data.reduce((pre, nex) => pre + nex.area, 0);
+      return data.map((e) => ({ area: e.area, key: e.key, percentage: e.area / areaAdd }));
+    },
 
     /**
      * Get total area grouped by sub-basin given environmental authority filtered by a biome
@@ -96,7 +115,7 @@ module.exports = (eaPersistence, seService) => {
     getTotalArea: async (enAuthorityId) => {
       const eaArea = await eaPersistence.getTotalAreaByEA(enAuthorityId);
       if (eaArea[0].area === null) {
-        throw new Error("environmental authority doesn't exists");
+        throw new RestifyErrors.NotFoundError("environmental authority doesn't exists");
       }
       return { total_area: eaArea[0].area };
     },
@@ -131,7 +150,7 @@ module.exports = (eaPersistence, seService) => {
     getCurrentHFValue: async (eaId) => {
       const value = await eaPersistence.findCurrentHFValue(eaId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error("environmental authority doesn't exists");
+        throw new RestifyErrors.NotFoundError("environmental authority doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,

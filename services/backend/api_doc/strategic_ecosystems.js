@@ -8,6 +8,7 @@
  * @apiDefine SEInGeofenceDetailExample
  * @apiSuccessExample {json} Success-Example:
  *  {
- *    "national_percentage": 0.1523
+ *    "national_percentage": 0.1523,
+ *    "total_area": "26087.6250845851"
  *  }
  */

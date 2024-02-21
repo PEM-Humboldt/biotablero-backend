@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { geoCompanyProjects, projectImpactedBiomes }) => ({
   /**
    * Select all projects for a given company
@@ -37,9 +39,7 @@ module.exports = (db, { geoCompanyProjects, projectImpactedBiomes }) => ({
       })
       .then((result) => {
         if (result === null) {
-          const error = new Error('Project not found');
-          error.code = 404;
-          throw error;
+          throw new RestifyErrors.NotFoundError('Project not found');
         }
         return result.toJSON();
       }),

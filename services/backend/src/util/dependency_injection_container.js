@@ -2,7 +2,7 @@ const Bottlejs = require('bottlejs');
 
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
-const AWSUtils = require('./AWS');
+const restAPI = require('./restAPI');
 
 const bookshelfModels = require('../persistence/models/setup');
 
@@ -56,7 +56,7 @@ const bottle = new Bottlejs();
 
 bottle.factory('logger', () => logger);
 bottle.factory('errorHandler', (container) => ErrorHandler(container.logger));
-bottle.factory('aws', () => AWSUtils);
+bottle.factory('restAPI', () => restAPI);
 
 bottle.factory('biomePersistence', () =>
   BiomePersistence(bookshelfModels.db, bookshelfModels.models, bookshelfModels.collections),
@@ -106,7 +106,7 @@ bottle.factory('projectService', (container) =>
   ProjectService(container.projectPersistence, container.biomeService),
 );
 bottle.factory('projectStrategyService', (container) =>
-  ProjectStrategyService(container.projectStrategyPersistence, container.aws),
+  ProjectStrategyService(container.projectStrategyPersistence, container.restAPI),
 );
 bottle.factory('strategyService', (container) =>
   StrategyService(container.strategyPersistence, container.logger),
@@ -138,19 +138,19 @@ bottle.factory('protectedAreaService', (container) =>
 );
 
 bottle.factory('routes', (container) => [
-  BiomesRoutes(container.errorHandler, container.biomeService),
-  ProjectsRoutes(container.errorHandler, container.projectService),
-  ProjectStrategiesRoutes(container.errorHandler, container.projectStrategyService),
-  StrategiesRoutes(container.errorHandler, container.strategyService),
-  MunicipalitiesRoutes(container.errorHandler, container.municipalityService),
-  UsersRoutes(container.errorHandler, container.userService),
-  EARoutes(container.errorHandler, container.eaService),
-  StatesRoutes(container.errorHandler, container.stateService),
-  DPARoutes(container.errorHandler, container.dpaService),
-  BasinsRoutes(container.errorHandler, container.basinAreaService, container.basinZoneService),
-  BasinSubzonesRoutes(container.errorHandler, container.basinSubzoneService),
-  SERoutes(container.errorHandler, container.seService),
-  ProtectedAreaRoutes(container.errorHandler, container.protectedAreaService),
+  BiomesRoutes(container.biomeService),
+  ProjectsRoutes(container.projectService),
+  ProjectStrategiesRoutes(container.projectStrategyService),
+  StrategiesRoutes(container.strategyService),
+  MunicipalitiesRoutes(container.municipalityService),
+  UsersRoutes(container.userService),
+  EARoutes(container.eaService),
+  StatesRoutes(container.stateService),
+  DPARoutes(container.dpaService),
+  BasinsRoutes(container.basinAreaService, container.basinZoneService),
+  BasinSubzonesRoutes(container.basinSubzoneService),
+  SERoutes(container.seService),
+  ProtectedAreaRoutes(container.protectedAreaService),
 ]);
 
 module.exports = bottle.container;

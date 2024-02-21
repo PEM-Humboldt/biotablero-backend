@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const {
   persistenceKeysOrder,
   HFCategoriesKeysOrder,
@@ -46,7 +48,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getTotalArea: async (stateId) => {
       const stateArea = await statePersistence.getTotalAreaByState(stateId);
       if (stateArea[0].area === null) {
-        throw new Error("state doesn't exists");
+        throw new RestifyErrors.NotFoundError("state doesn't exists");
       }
       return { total_area: stateArea[0].area };
     },
@@ -81,7 +83,7 @@ module.exports = (statePersistence, municipalityService, seService) => {
     getCurrentHFValue: async (stateId) => {
       const value = await statePersistence.findCurrentHFValue(stateId);
       if (value[0].CurrentHFValue === null) {
-        throw new Error("state doesn't exists");
+        throw new RestifyErrors.NotFoundError("state doesn't exists");
       }
       return {
         value: value[0].CurrentHFValue,

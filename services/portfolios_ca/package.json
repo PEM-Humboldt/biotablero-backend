@@ -1,0 +1,41 @@
+{
+  "name": "portfolios_ca",
+  "version": "2.1.0",
+  "description": "Conservation portfolios services for Biotablero",
+  "type": "module",
+  "scripts": {
+    "start": "nodemon --watch './**/*.ts' --exec 'node --experimental-specifier-resolution=node --loader ts-node/esm' src/app.ts",
+    "start-prod": "node --experimental-specifier-resolution=node dist/app.js",
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "yarn g:lint src --ext .js,.ts",
+    "docs": "yarn g:docs -i api_doc/ -i src/ -o docs/"
+  },
+  "devDependencies": {
+    "@types/config": "~3.3.0",
+    "@types/node": "^18.8.3",
+    "@types/restify": "~8.5.5",
+    "@types/restify-cors-middleware": "~1.0.2",
+    "@types/restify-errors": "^4.3.5",
+    "@typescript-eslint/eslint-plugin": "~1.11.0",
+    "@typescript-eslint/parser": "~5.45.0",
+    "eslint-config-airbnb-typescript": "~4.0.1",
+    "nodemon": "~2.0.19",
+    "ts-node": "~10.9.1",
+    "typescript": "~4.8.2"
+  },
+  "dependencies": {
+    "bottlejs": "~2.0.1",
+    "config": "~3.3.7",
+    "eslint-plugin-tsdoc": "~0.2.17",
+    "restify": "~10.0.0",
+    "restify-cors-middleware": "~1.1.1",
+    "restify-errors": "~8.0.2",
+    "restify-router": "~0.6.2",
+    "winston": "~3.8.2"
+  },
+  "apidoc": {
+    "name": "Service for conservation portfolios data",
+    "version": "1.0.0"
+  }
+}

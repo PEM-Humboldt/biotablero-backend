@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (paPersistence) => {
   const protectedArea = {
     /**
@@ -19,7 +21,7 @@ module.exports = (paPersistence) => {
     getBinaryProtectedByCategory: async (categoryName) => {
       const binaryProtected = await paPersistence.findBinaryProtectedByCategory(categoryName);
       if (binaryProtected.length === 0) {
-        throw new Error("protected area category doesn't exists");
+        throw new RestifyErrors.NotFoundError("protected area category doesn't exists");
       }
       return binaryProtected[0];
     },

@@ -21,7 +21,8 @@
  * @apiSuccessExample {json} Success-Example:
  * [
  *   {
- *     "id": "Campoalegre",
+ *     "id": "02020014",
+ *     "name": "Campoalegre",
  *     "key": "unprot",
  *     "value": 0.1,
  *     "area": 20548,

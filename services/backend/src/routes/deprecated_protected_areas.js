@@ -1,6 +1,6 @@
 const { Router } = require('restify-router');
 
-module.exports = (errorHandler, paService) => {
+module.exports = (paService) => {
   const router = new Router();
 
   /**
@@ -23,16 +23,13 @@ module.exports = (errorHandler, paService) => {
    *  /pa/categories/binary_protected?binary_protected=000001000000000;010100000000000
    * @apiUse PACategoriesByBinaryProtectedExample
    */
-  router.get(
-    '/pa/categories/binary_protected',
-    errorHandler((req, res, next) =>
-      paService
-        .getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
-        .then((categories) => {
-          res.send(categories);
-          next();
-        }),
-    ),
+  router.get('/pa/categories/binary_protected', (req, res, next) =>
+    paService
+      .getCategoriesByBinaryProtected(req.params.binary_protected.split(';'))
+      .then((categories) => {
+        res.send(categories);
+        next();
+      }),
   );
 
   /**
@@ -52,14 +49,11 @@ module.exports = (errorHandler, paService) => {
    *  /pa/Parques Naturales Regionales/binary_protected
    * @apiUse BinaryProtectedByCategoryExample
    */
-  router.get(
-    '/pa/:category/binary_protected',
-    errorHandler((req, res, next) =>
-      paService.getBinaryProtectedByCategory(req.params.category).then((binaryProtected) => {
-        res.send(binaryProtected);
-        next();
-      }),
-    ),
+  router.get('/pa/:category/binary_protected', (req, res, next) =>
+    paService.getBinaryProtectedByCategory(req.params.category).then((binaryProtected) => {
+      res.send(binaryProtected);
+      next();
+    }),
   );
 
   return router;

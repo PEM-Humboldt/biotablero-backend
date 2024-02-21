@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { coverages }, logger) => {
   const coveragePersistence = {
     /**
@@ -17,7 +19,7 @@ module.exports = (db, { coverages }, logger) => {
         .orderBy('area_type')
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -47,7 +49,7 @@ module.exports = (db, { coverages }, logger) => {
         .then((res) => res.rows[0].clip)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -63,7 +65,7 @@ module.exports = (db, { coverages }, logger) => {
         .then((res) => res.rows[0].isempty)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         }),
 
     /**
@@ -81,11 +83,7 @@ module.exports = (db, { coverages }, logger) => {
       const clip = await coveragePersistence.clipRaster(geometry, filename);
       const isEmpty = await coveragePersistence.isRasterEmpty(clip);
       if (isEmpty) {
-        const error = {
-          code: 404,
-          message: 'No layer for this area',
-        };
-        throw error;
+        throw new RestifyErrors.NotFoundError('No layer for this area');
       }
 
       return db
@@ -103,7 +101,7 @@ module.exports = (db, { coverages }, logger) => {
         .then((rast) => rast.rows[0].image)
         .catch((e) => {
           logger.error(e.stack || e.Error || e.message || e);
-          throw new Error('Error getting data');
+          throw new RestifyErrors.InternalServerError('Error getting data');
         });
     },
   };

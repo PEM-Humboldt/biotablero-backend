@@ -1,5 +1,4 @@
 const Bottlejs = require('bottlejs');
-
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
@@ -24,8 +23,6 @@ bottle.factory('connectivityService', (container) =>
   ConnectivityService(container.connectivityPersistence),
 );
 
-bottle.factory('routes', (container) => [
-  ConnectivityRoutes(container.errorHandler, container.connectivityService),
-]);
+bottle.factory('routes', (container) => [ConnectivityRoutes(container.connectivityService)]);
 
 module.exports = bottle.container;

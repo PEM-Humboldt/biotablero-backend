@@ -1,6 +1,6 @@
 {
   "name": "backend",
-  "version": "2-0.0",
+  "version": "2.1.0",
   "description": "Main backend service for Biotablero (sancochito)",
   "main": "src/app.js",
   "scripts": {
@@ -12,22 +12,24 @@
   },
   "license": "MIT",
   "dependencies": {
-    "aws-sdk": "~2.1078.0",
     "bookshelf": "~1.2.0",
     "bottlejs": "~2.0.0",
     "config": "~3.3.7",
-    "knex": "~0.95.15",
+    "form-data": "~4.0.0",
+    "knex": "~3.1.0",
+    "node-fetch": "~2.6.7",
     "pg": "~8.7.3",
-    "restify": "~8.6.0",
+    "restify": "~10.0.0",
     "restify-cors-middleware": "~1.1.1",
+    "restify-errors": "~8.0.2",
     "restify-router": "~0.6.2",
-    "winston": "~3.5.1"
+    "winston": "~3.7.2"
   },
   "devDependencies": {
-    "nodemon": "~2.0.15"
+    "nodemon": "~2.0.16"
   },
   "apidoc": {
     "name": "Main services for Biotablero",
-    "version": "0.1.0"
+    "version": "2.0.0"
   }
 }

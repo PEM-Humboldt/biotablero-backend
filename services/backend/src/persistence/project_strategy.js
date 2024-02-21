@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { selectedStrategies }) => ({
   /**
    * Create a new project strategy
@@ -74,5 +76,8 @@ module.exports = (db, { selectedStrategies }) => ({
       ) as fc`,
         projectId,
       )
-      .then((biomes) => biomes.rows[0].collection),
+      .then((biomes) => biomes.rows[0].collection)
+      .catch(() => {
+        throw new RestifyErrors.InternalServerError('Error getting data');
+      }),
 });

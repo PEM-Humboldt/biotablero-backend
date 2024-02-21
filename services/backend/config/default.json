@@ -10,16 +10,14 @@
     "port": 4000,
     "origins": ["*"]
   },
+  "services": {
+    "util": "http://localhost:4005"
+  },
   "logs": {
     "dir": "logs"
   },
   "geometries": {
     "tolerance": 0.001,
     "tolerance_heavy": 0.003
-  },
-  "AWS_S3": {
-    "id": "id",
-    "secret": "secret",
-    "bucket_name": "bucket-name"
   }
 }

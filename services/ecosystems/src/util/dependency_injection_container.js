@@ -1,5 +1,4 @@
 const Bottlejs = require('bottlejs');
-
 const ErrorHandler = require('./errorHandler');
 const logger = require('./logger');
 
@@ -44,8 +43,6 @@ bottle.factory('EcosystemsService', (container) =>
   ),
 );
 
-bottle.factory('routes', (container) => [
-  EcosystemsRoute(container.errorHandler, container.EcosystemsService),
-]);
+bottle.factory('routes', (container) => [EcosystemsRoute(container.EcosystemsService)]);
 
 module.exports = bottle.container;

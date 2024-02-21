@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 module.exports = (db, { coverageParamo }, logger) => ({
   /**
    * Find the area distribution for each coverage type in SE Paramo in a given area
@@ -16,7 +18,7 @@ module.exports = (db, { coverageParamo }, logger) => ({
       .orderBy('area_type')
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 
   /**
@@ -35,6 +37,6 @@ module.exports = (db, { coverageParamo }, logger) => ({
       .where({ geofence_type: areaType, geofence_id: areaId, year })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       }),
 });

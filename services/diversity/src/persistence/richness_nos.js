@@ -1,3 +1,5 @@
+const RestifyErrors = require('restify-errors');
+
 const { areaTypeKeys, observedGroupKey, inferredGroupKey } = require('../util/appropriate_keys');
 
 module.exports = (db, { richnessNos }, logger) => ({
@@ -17,7 +19,7 @@ module.exports = (db, { richnessNos }, logger) => ({
 
     if (obsColumn === null || infColumn === null) {
       logger.error(`Undefined group ${group} in database`);
-      throw new Error('Error getting data');
+      throw new RestifyErrors.InternalServerError('Error getting data');
     }
 
     return db('richness_nos as rn')
@@ -32,7 +34,7 @@ module.exports = (db, { richnessNos }, logger) => ({
       .where({ 'rn.geofence_type': areaTypeKeys(areaType), 'rn.geofence_id': areaId })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       });
   },
 
@@ -52,7 +54,7 @@ module.exports = (db, { richnessNos }, logger) => ({
 
     if (obsColumn === null || infColumn === null) {
       logger.error(`Undefined group ${group} in database`);
-      throw new Error('Error getting data');
+      throw new RestifyErrors.InternalServerError('Error getting data');
     }
 
     const regionIdQuery = db('richness_nos as rn')
@@ -73,7 +75,7 @@ module.exports = (db, { richnessNos }, logger) => ({
       })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       });
   },
 
@@ -92,7 +94,7 @@ module.exports = (db, { richnessNos }, logger) => ({
 
     if (obsColumn === null || infColumn === null) {
       logger.error(`Undefined group ${group} in database`);
-      throw new Error('Error getting data');
+      throw new RestifyErrors.InternalServerError('Error getting data');
     }
 
     return richnessNos
@@ -104,7 +106,7 @@ module.exports = (db, { richnessNos }, logger) => ({
       })
       .catch((e) => {
         logger.error(e.stack || e.Error || e.message || e);
-        throw new Error('Error getting data');
+        throw new RestifyErrors.InternalServerError('Error getting data');
       });
   },
 

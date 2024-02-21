@@ -1,3 +1,4 @@
+const RestifyErrors = require('restify-errors');
 const { areaTypeKeys, rasterForestLPKeys } = require('../util/appropriate_keys');
 const { forestLPColorSet } = require('../util/colorSet');
 
@@ -26,7 +27,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
             const totalArea = item.map((o) => o.area).reduce((prev, next) => prev + next);
             const periodData = item.map((period) => ({
               ...period,
-              percentage: period.area / totalArea,
+              percentage: (period.area / totalArea) * 100,
             }));
             data.push({
               id: periods[i],
@@ -35,12 +36,8 @@ module.exports = (ForestLPPersistence, restAPI) => {
           });
           return data.every((elem) => Array.isArray(elem) && elem.data.length === 0) ? [] : data;
         })
-        .catch((e) => {
-          throw new Error({
-            code: 500,
-            stack: e.stack,
-            message: 'Error retrieving forest lp data',
-          });
+        .catch(() => {
+          throw new RestifyErrors.InternalError('Error retrieving forest lp data');
         });
     },
 
@@ -66,12 +63,7 @@ module.exports = (ForestLPPersistence, restAPI) => {
           forestLPColorSet(category),
         );
       } catch (e) {
-        const error = {
-          code: 500,
-          stack: e.stack,
-          message: 'Error retrieving layer',
-        };
-        throw error;
+        throw new RestifyErrors.InternalError('Error retrieving layer');
       }
     },
   };

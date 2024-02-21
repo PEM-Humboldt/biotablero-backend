@@ -1,10 +1,10 @@
 {
   "name": "forest",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Service for forest data",
   "main": "src/app.js",
   "devDependencies": {
-    "nodemon": "~2.0.15"
+    "nodemon": "~2.0.16"
   },
   "scripts": {
     "start": "nodemon --watch src --watch config",
@@ -18,13 +18,14 @@
     "bookshelf": "~1.2.0",
     "bottlejs": "~2.0.0",
     "config": "~3.3.7",
-    "knex": "~0.95.15",
+    "knex": "~3.1.0",
     "node-fetch": "~2.6.7",
     "pg": "~8.7.3",
-    "restify": "~8.6.0",
+    "restify": "~10.0.0",
     "restify-cors-middleware": "~1.1.1",
+    "restify-errors": "~8.0.2",
     "restify-router": "~0.6.2",
-    "winston": "~3.5.1"
+    "winston": "~3.7.2"
   },
   "apidoc": {
     "name": "Service for forest data",

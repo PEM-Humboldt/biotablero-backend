@@ -22,6 +22,10 @@ Check every [service](./services) documentation to correctly config them.
 
 See instructions in every service.
 
+### **Note: To run all services at the same time you can run the following command:** 
+`yarn workspaces foreach -ipv -j unlimited run start`
+
+
 ## Documentation
 
 To generate the global documentation run `yarn all_docs`, it will be located under the _/docs_ folder

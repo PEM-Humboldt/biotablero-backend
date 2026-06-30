@@ -49,6 +49,7 @@ const connect = () => {
       user: dbConfig.user,
       password: dbConfig.password,
       database: dbConfig.database,
+      ssl: dbConfig.ssl,
     },
   });
   conn = bookshelf(knexClient);

@@ -30,5 +30,6 @@ phases:
       - export AWS_SECRET_ACCESS_KEY=$(echo $CREDS | awk '{print $2}')
       - export AWS_SESSION_TOKEN=$(echo $CREDS | awk '{print $3}')
       - echo "Deploying to ECS..."
+      - aws ecs update-service --cluster arn:aws:ecs:us-east-1:005235113454:cluster/humbolt-cluster-dev  --service biotablero-backend-connectivity --force-new-deployment
 artifacts:
     files: imagedefinitions.json

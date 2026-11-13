@@ -1,9 +1,13 @@
 node_modules/*
 config/*
 !config/default.json
+!config/custom-environment-variables.json
 logs/*
 dist/*
 docs
+.env
+.env.*
+!.env.example
 
 .yarn/*
 !.yarn/releases

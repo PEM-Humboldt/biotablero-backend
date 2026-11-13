@@ -1,0 +1,70 @@
+services:
+  backend:
+    build: ./services/backend
+    image: biotablero-backend:2.1.0
+    container_name: biotablero_backend
+    env_file:
+      - ./services/backend/.env
+    ports:
+      - '4500:4000'
+    restart: always
+
+  connectivity:
+    build: ./services/connectivity
+    image: biotablero-connectivity:2.1.0
+    container_name: biotablero_connectivity
+    env_file:
+      - ./services/connectivity/.env
+    ports:
+      - '4502:4002'
+    restart: always
+
+  diversity:
+    build: ./services/diversity
+    image: biotablero-diversity:2.1.0
+    container_name: biotablero_diversity
+    env_file:
+      - ./services/diversity/.env
+    ports:
+      - '4503:4003'
+    restart: always
+
+  ecosystems:
+    build: ./services/ecosystems
+    image: biotablero-ecosystems:2.1.0
+    container_name: biotablero_ecosystems
+    env_file:
+      - ./services/ecosystems/.env
+    ports:
+      - '4504:4004'
+    restart: always
+
+  forest:
+    build: ./services/forest
+    image: biotablero-forest:2.1.0
+    container_name: biotablero_forest
+    env_file:
+      - ./services/forest/.env
+    ports:
+      - '4501:4001'
+    restart: always
+
+  portfolios_ca:
+    build: ./services/portfolios_ca
+    image: biotablero-portfolios-ca:2.1.0
+    container_name: biotablero_portfolios_ca
+    env_file:
+      - ./services/portfolios_ca/.env
+    ports:
+      - '4506:4006'
+    restart: always
+
+  util:
+    build: ./services/util
+    image: biotablero-util:2.1.0
+    container_name: biotablero_util
+    env_file:
+      - ./services/util/.env
+    ports:
+      - '4505:4005'
+    restart: always

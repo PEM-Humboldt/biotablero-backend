@@ -1,0 +1,8 @@
+{
+  "server": {
+    "port": {
+      "__name": "SERVER_PORT",
+      "__format": "number"
+    }
+  }
+}

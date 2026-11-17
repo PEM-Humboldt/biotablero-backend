@@ -4,7 +4,10 @@
     "port": 5432,
     "user": "user",
     "password": "password",
-    "database": "database"
+    "database": "database",
+    "ssl": {
+      "rejectUnauthorized": false
+    }
   },
   "server": {
     "port": 4005,

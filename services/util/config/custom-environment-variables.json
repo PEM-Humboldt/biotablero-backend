@@ -1,0 +1,23 @@
+{
+  "db": {
+    "host": "DB_HOST",
+    "port": {
+      "__name": "DB_PORT",
+      "__format": "number"
+    },
+    "user": "DB_USER",
+    "password": "DB_PASSWORD",
+    "database": "DB_NAME"
+  },
+  "server": {
+    "port": {
+      "__name": "SERVER_PORT",
+      "__format": "number"
+    }
+  },
+  "AWS_S3": {
+    "id": "AWS_S3_ID",
+    "secret": "AWS_S3_SECRET",
+    "bucket_name": "AWS_S3_BUCKET_NAME"
+  }
+}

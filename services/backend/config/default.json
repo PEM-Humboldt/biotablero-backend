@@ -4,8 +4,12 @@
     "port": 5432,
     "user": "user",
     "password": "password",
-    "database": "database"
+    "database": "database",
+    "ssl": {
+      "rejectUnauthorized": false
+    }
   },
+  "users": [],
   "server": {
     "port": 4000,
     "origins": ["*"]

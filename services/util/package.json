@@ -31,6 +31,5 @@
   "apidoc": {
     "name": "Service for utils",
     "version": "1.0.0"
-  },
-  "packageManager": "yarn@3.1.1"
+  }
 }

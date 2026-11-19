@@ -1,3 +1,5 @@
+> This service is deprecated
+
 # Biotablero Conservation Portfolios service
 
 Conservation Portfolios service for biotablero

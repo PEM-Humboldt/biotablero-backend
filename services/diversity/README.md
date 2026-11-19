@@ -1,3 +1,5 @@
+> This service is deprecated
+
 # Biotablero Species Diversity service
 
 Diversity service for biotablero

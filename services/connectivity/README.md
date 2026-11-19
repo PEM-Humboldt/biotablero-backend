@@ -1,3 +1,5 @@
+> This service is deprecated
+
 # Biotablero Connectivity service
 
 Connectivity service for biotablero

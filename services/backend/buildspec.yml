@@ -32,4 +32,4 @@ phases:
       - echo "Deploying to ECS..."
       - aws ecs update-service --cluster arn:aws:ecs:us-east-1:005235113454:cluster/humbolt-cluster-dev  --service biotablero-backend --force-new-deployment
 artifacts:
-    files: imagedefinitions.json
+  files: imagedefinitions.json

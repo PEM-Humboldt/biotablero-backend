@@ -1,0 +1,20 @@
+services:
+  backend:
+    build: ./services/backend
+    image: biotablero-backend:2.2.0
+    container_name: biotablero_backend
+    env_file:
+      - ./services/backend/.env
+    ports:
+      - '4500:4000'
+    restart: always
+
+  util:
+    build: ./services/util
+    image: biotablero-util:2.2.0
+    container_name: biotablero_util
+    env_file:
+      - ./services/util/.env
+    ports:
+      - '4505:4005'
+    restart: always

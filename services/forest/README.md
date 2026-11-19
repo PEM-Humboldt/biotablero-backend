@@ -1,3 +1,5 @@
+> This service is deprecated
+
 # Biotablero Forest service
 
 Forest service for biotablero

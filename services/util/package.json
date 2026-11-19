@@ -1,6 +1,6 @@
 {
   "name": "util",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Service for utils",
   "main": "src/app.js",
   "devDependencies": {
@@ -31,6 +31,5 @@
   "apidoc": {
     "name": "Service for utils",
     "version": "1.0.0"
-  },
-  "packageManager": "yarn@3.1.1"
+  }
 }

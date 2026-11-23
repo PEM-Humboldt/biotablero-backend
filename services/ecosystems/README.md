@@ -1,3 +1,5 @@
+> This service is deprecated
+
 # Biotablero Ecosystems Service
 
 Ecosystems service for biotablero
